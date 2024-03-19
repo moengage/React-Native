@@ -1,0 +1,41 @@
+{
+  "name": "react-native-moengage-geofence",
+  "version": "4.0.1",
+  "description": "MoEngage React Native package to support geofence based campaigns in iOS platform",
+  "main": "src/index.ts",
+  "files": [
+    "android",
+    "iOS",
+    "src",
+    "CHANGELOG.md",
+    "ReactNativeMoEngageGeofence.podspec",
+    "package.json",
+    "!**/__tests__",
+    "!**/__mocks__"
+  ],
+  "peerDependencies": {
+    "react-native-moengage": "^9.0.0"
+  },
+  "keywords": [
+    "moengage",
+    "push-notification",
+    "react-native",
+    "ios",
+    "android",
+    "geofence"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "MoEngage",
+    "email": "mobiledevs@moengage.com"
+  },
+  "contributors": [
+    "MoEngage <mobiledevs@moengage.com>"
+  ],
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "devDependencies": {
+    "@types/react-native": "^0.69.3"
+  }
+}

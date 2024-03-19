@@ -1,0 +1,42 @@
+{
+  "name": "react-native-moengage-inbox",
+  "version": "3.0.1",
+  "description": "Inbox Module for the MoEngage Platform",
+  "main": "src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "ReactNativeMoEngageInbox.podspec",
+    "!lib/typescript/example",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "scripts": {},
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "moengage"
+  ],
+  "repository": "https://github.com/moengage/React-Native",
+  "author": {
+    "name": "MoEngage",
+    "email": "mobiledevs@moengage.com"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "react-native-moengage": "^9.0.0"
+  },
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "devDependencies": {
+    "@types/react-native": "^0.69.3"
+  }
+}

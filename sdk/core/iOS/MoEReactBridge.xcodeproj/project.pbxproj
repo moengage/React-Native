@@ -1,0 +1,315 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ACD518BE28ACAD510014B432 /* MoEReactInitializer.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD518BC28ACAD510014B432 /* MoEReactInitializer.m */; };
+		ACFA62C125D3C4C4003F68AC /* MoEReactConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = ACFA62C025D3C4C4003F68AC /* MoEReactConstants.m */; };
+		AFF22D141DE315A7003DEB74 /* MoEReactBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF22D0F1DE315A7003DEB74 /* MoEReactBridge.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AFEF01DA1DD5D1D90017905F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		ACD518BC28ACAD510014B432 /* MoEReactInitializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoEReactInitializer.m; sourceTree = "<group>"; };
+		ACD518BD28ACAD510014B432 /* MoEReactInitializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoEReactInitializer.h; sourceTree = "<group>"; };
+		ACFA62BD25D3C44F003F68AC /* MoEReactConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoEReactConstants.h; sourceTree = "<group>"; };
+		ACFA62C025D3C4C4003F68AC /* MoEReactConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoEReactConstants.m; sourceTree = "<group>"; };
+		AF5962E423F6CEDB001C36F3 /* MOReactPluginInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOReactPluginInfo.h; sourceTree = "<group>"; };
+		AFB2ED6A1DEC59830054BDA0 /* libMoEngage-iOS-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libMoEngage-iOS-SDK.a"; path = "/Users/Chengappa/Documents/Office/ReactNative/AwesomeProject/ios/Pods/../build/Debug-iphoneos/MoEngage-iOS-SDK/libMoEngage-iOS-SDK.a"; sourceTree = "<absolute>"; };
+		AFEF01DC1DD5D1D90017905F /* libMoEReactBridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMoEReactBridge.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFF22D0E1DE315A7003DEB74 /* MoEReactBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoEReactBridge.h; sourceTree = "<group>"; };
+		AFF22D0F1DE315A7003DEB74 /* MoEReactBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoEReactBridge.m; sourceTree = "<group>"; };
+		AFF22DD61DE422D8003DEB74 /* libReact.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libReact.a; path = "../../../../../../../../Library/Developer/Xcode/DerivedData/AwesomeProject-axxoncjsgtvgyfgtwqbekwlrwodh/Build/Products/Debug-iphonesimulator/libReact.a"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AFEF01D91DD5D1D90017905F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AFEF01D31DD5D1D90017905F = {
+			isa = PBXGroup;
+			children = (
+				AFF22CF91DE315A7003DEB74 /* MoEReactBridge */,
+				AFEF01DD1DD5D1D90017905F /* Products */,
+				AFF22D2D1DE31E76003DEB74 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		AFEF01DD1DD5D1D90017905F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AFEF01DC1DD5D1D90017905F /* libMoEReactBridge.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AFF22CF91DE315A7003DEB74 /* MoEReactBridge */ = {
+			isa = PBXGroup;
+			children = (
+				AF5962E423F6CEDB001C36F3 /* MOReactPluginInfo.h */,
+				AFF22D0E1DE315A7003DEB74 /* MoEReactBridge.h */,
+				AFF22D0F1DE315A7003DEB74 /* MoEReactBridge.m */,
+				ACD518BD28ACAD510014B432 /* MoEReactInitializer.h */,
+				ACD518BC28ACAD510014B432 /* MoEReactInitializer.m */,
+				ACFA62BD25D3C44F003F68AC /* MoEReactConstants.h */,
+				ACFA62C025D3C4C4003F68AC /* MoEReactConstants.m */,
+			);
+			path = MoEReactBridge;
+			sourceTree = "<group>";
+		};
+		AFF22D2D1DE31E76003DEB74 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AFB2ED6A1DEC59830054BDA0 /* libMoEngage-iOS-SDK.a */,
+				AFF22DD61DE422D8003DEB74 /* libReact.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AFEF01DB1DD5D1D90017905F /* MoEReactBridge */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFEF01E51DD5D1D90017905F /* Build configuration list for PBXNativeTarget "MoEReactBridge" */;
+			buildPhases = (
+				AFEF01D81DD5D1D90017905F /* Sources */,
+				AFEF01D91DD5D1D90017905F /* Frameworks */,
+				AFEF01DA1DD5D1D90017905F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MoEReactBridge;
+			productName = MoEngage;
+			productReference = AFEF01DC1DD5D1D90017905F /* libMoEReactBridge.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AFEF01D41DD5D1D90017905F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = MoEngage;
+				TargetAttributes = {
+					AFEF01DB1DD5D1D90017905F = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = BPWYRAF5X7;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = AFEF01D71DD5D1D90017905F /* Build configuration list for PBXProject "MoEReactBridge" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+			);
+			mainGroup = AFEF01D31DD5D1D90017905F;
+			productRefGroup = AFEF01DD1DD5D1D90017905F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AFEF01DB1DD5D1D90017905F /* MoEReactBridge */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AFEF01D81DD5D1D90017905F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACFA62C125D3C4C4003F68AC /* MoEReactConstants.m in Sources */,
+				ACD518BE28ACAD510014B432 /* MoEReactInitializer.m in Sources */,
+				AFF22D141DE315A7003DEB74 /* MoEReactBridge.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AFEF01E31DD5D1D90017905F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../react-native/React/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AFEF01E41DD5D1D90017905F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../react-native/React/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AFEF01E61DD5D1D90017905F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = BPWYRAF5X7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../../../ios/Pods/MoEngage-iOS-SDK/**",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../../../ios/**",
+				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AFEF01E71DD5D1D90017905F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = BPWYRAF5X7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../../../ios/Pods/MoEngage-iOS-SDK/**",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../../../ios/**",
+				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AFEF01D71DD5D1D90017905F /* Build configuration list for PBXProject "MoEReactBridge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFEF01E31DD5D1D90017905F /* Debug */,
+				AFEF01E41DD5D1D90017905F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFEF01E51DD5D1D90017905F /* Build configuration list for PBXNativeTarget "MoEReactBridge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFEF01E61DD5D1D90017905F /* Debug */,
+				AFEF01E71DD5D1D90017905F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AFEF01D41DD5D1D90017905F /* Project object */;
+}

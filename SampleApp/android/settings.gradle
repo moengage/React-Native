@@ -1,0 +1,14 @@
+dependencyResolutionManagement {
+  repositories {
+    mavenCentral()
+  }
+  versionCatalogs {
+    create("moengage") {
+      from("com.moengage:android-dependency-catalog:4.1.0")
+    }
+  }
+}
+rootProject.name = 'SampleApp'
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':app'
+includeBuild('../node_modules/@react-native/gradle-plugin')

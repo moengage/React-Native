@@ -1,0 +1,8 @@
+/build
+react-native-moengage.iml
+.project
+.settings/
+.gradle/
+.idea/
+*.iml
+local.properties
