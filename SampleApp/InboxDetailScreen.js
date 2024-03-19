@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import { MoEngageLogger } from "react-native-moengage";
-import { MOENGAGE_APP_ID } from "./src/key";
+import { MOENGAGE_APP_ID } from "./src/key.js";
 
 import {
   View,
@@ -12,7 +12,6 @@ import {
   StyleSheet,
 } from "react-native";
 import MoEReactInbox from "react-native-moengage-inbox";
-import { MOENGAGE_APP_ID } from "./src/key";
 
 
 export default class InboxDetailScreen extends PureComponent {
