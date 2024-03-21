@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import ReactMoE from "react-native-moengage";
+import { MOENGAGE_APP_ID } from "./src/key";
 
 export class PushNotification extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -45,7 +46,7 @@ export class PushNotification extends React.Component {
                   "gcm_activityName": "com.moe.pushlibrary.activities.MoEActivity",
                   "gcm_alert": "pushtoinbox",
                   "gcm_campaign_id": new Date().getTime(),
-                  "moe_app_id": "DAO6UGZ73D9RTK8B5W96TPYN"
+                  "moe_app_id": MOENGAGE_APP_ID
                 })
               },
             },

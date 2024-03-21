@@ -37,3 +37,9 @@ done
 
 # push tags to remote
 git push origin --tags
+
+# back merge branch to development
+git checkout development
+git pull origin development
+git merge master
+git push origin development
