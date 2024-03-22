@@ -13,7 +13,7 @@
 #import "MoEngageInitializer.h"
 #import "MoEngageReactConstants.h"
 #import <MoEngageSDK/MoEngageSDK.h>
-@import MoEngagePluginBase;
+@import MoEngagePluginBase-Beta;
 @interface MoEReactBridge()
 @end
 

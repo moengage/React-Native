@@ -12,7 +12,7 @@
 #import "MoEngageReactUtils.h"
 #import <MoEngageSDK/MoEngageSDK.h>
 #import <MoEngageObjCUtils/MoEngageObjCUtils.h>
-@import MoEngagePluginBase;
+@import MoEngagePluginBase-Beta;
 @interface MoEngageInitializer() <MoEngagePluginBridgeDelegate>
 
 @end
