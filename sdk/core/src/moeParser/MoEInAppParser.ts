@@ -111,7 +111,7 @@ export function getMoESelfHandledCampaignData(json: { [k: string]: any }, accoun
         var campaign = getMoESelfHandledCampaign(json);
         return new MoESelfHandledCampaignData(accountMeta, platform, campaign, campaignData);
     }
-    else return null
+    else return undefined
 }
 
 
@@ -160,16 +160,13 @@ export function isSelfHandledCampaignValid(obj: { [k: string]: any }) {
     try {
         if (obj[MOE_SELF_HANDLED] != undefined && isValidObject(obj[MOE_SELF_HANDLED])) {
             var selfHandled = obj[MOE_SELF_HANDLED];
-            if (selfHandled[MOE_PAYLOAD] != undefined && selfHandled[MOE_DISMISSINTERVAL] != undefined) {
-                MoEngageLogger.info("SelfHandled campaign has data");
+            if (selfHandled[MOE_PAYLOAD] != undefined && selfHandled[MOE_DISMISSINTERVAL] != undefined)
                 return true;
-            } else {
-                MoEngageLogger.info("SelfHandled campaign has no data");
-                return false;
-            }
+            else throw new Error(MOE_SELF_HANDLED_OBJ_ERROR);
 
-        } else {
-            return false;
+        }
+        else {
+            throw new Error(MOE_SELF_HANDLED_OBJ_ERROR);
         }
     }
     catch (error: any) {

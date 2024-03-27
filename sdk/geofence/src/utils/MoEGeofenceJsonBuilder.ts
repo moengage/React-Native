@@ -1,8 +1,8 @@
 export function getAppIdJson(appId: String) {
-    var json: { [k: string]: any } = {
+    let json: { [k: string]: any } = {
         accountMeta: {
             appId: appId
         }
     }
-    return json;
+    return JSON.stringify(json);
 }

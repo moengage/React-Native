@@ -16,5 +16,5 @@ Pod::Spec.new do |s|
   s.dependency          'MoEngagePluginGeofence', '>=2.7.0', '< 2.8.0'
   s.dependency          'React'
   s.source_files        = "ios/**/*.{h,m,mm,swift}"
-
+  install_modules_dependencies(s)
 end

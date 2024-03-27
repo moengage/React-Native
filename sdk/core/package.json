@@ -36,5 +36,13 @@
   "license": "SEE LICENSE IN LICENSE.txt",
   "devDependencies": {
     "@types/react-native": "^0.69.3"
+  },
+  "codegenConfig": {
+    "name": "NativeMoEngageSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": ""
+    }
   }
 }

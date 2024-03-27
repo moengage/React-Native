@@ -16,53 +16,65 @@ import {
 } from "../Constants";
 import { cardToJson } from "./ModelToJsonMapper";
 
-export function getAccountMetaPayload(appId: string): { [k: string]: any } {
-    return {
-        [keyAccountMeta]: getAppIdPayload(appId)
+export function getAccountMetaPayload(appId: string){
+    let payload =  { 
+        [keyAccountMeta] : getAppIdPayload(appId)
     };
+
+    return JSON.stringify(payload);
 }
 
-export function getCardClickedPayload(card: Card, widgetId: number, appId: string): { [k: string]: any } {
-    return {
+export function getCardClickedPayload(card: Card, widgetId: number, appId: string) {
+    let payload =  {
         [keyAccountMeta]: getAppIdPayload(appId),
         [keyData]: {
             [keyCard]: cardToJson(card),
             [keyWidgetIdentifier]: widgetId
         }
-    };
+    }
+
+    return JSON.stringify(payload);
 }
 
-export function getCardShownPayload(card: Card, appId: string): { [k: string]: any } {
-    return {
+export function getCardShownPayload(card: Card, appId: string) {
+    let payload =  {
         [keyAccountMeta]: getAppIdPayload(appId),
         [keyData]: {
             [keyCard]: cardToJson(card)
         }
-    };
+    }
+
+    return JSON.stringify(payload);
 }
 
-export function getCardsForCategoriesPayload(category: string, appId: string): { [k: string]: any } {
-    return {
+export function getCardsForCategoriesPayload(category: string, appId: string) {
+    let payload =  {
         [keyAccountMeta]: getAppIdPayload(appId),
         [keyData]: {
             [keyCategory]: category
         }
-    };
+    }
+
+    return JSON.stringify(payload);
 }
 
-export function getDeleteCardsPayload(cards: Array<Card>, appId: string): { [k: string]: any } {
-    return {
+export function getDeleteCardsPayload(cards: Array<Card>, appId: string) {
+   let payload = {
         [keyAccountMeta]: getAppIdPayload(appId),
         [keyData]: {
             [keyCards]: cards.map((card) => {
                 return cardToJson(card);
             })
         }
-    };
+    }
+
+    return JSON.stringify(payload);
 }
 
-function getAppIdPayload(appId: string): { [k: string]: any } {
-    return {
-        [keyAppId]: appId
+function getAppIdPayload(appId: string) {
+    let payload = { 
+        [keyAppId] : appId
     };
+    
+    return payload
 }

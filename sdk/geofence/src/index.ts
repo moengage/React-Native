@@ -1,11 +1,8 @@
 import { Platform } from "react-native";
 
 import { MoEngageLogger } from "react-native-moengage";
-import * as MoEGeofenceRNiOS from "./platform/MoEGeofenceRNiOS";
-import { MoEGeofenceRNAndroid } from "./platform/MoEGeofenceRNAndroid";
-
-const PLATFORM_ANDROID = "android";
-const PLATFORM_iOS = "ios";
+import  MoEReactGeofence  from './NativeMoEngageGeofence';
+import { getAppIdJson } from "./utils/MoEGeofenceJsonBuilder";
 
 var ReactMoEGeofence = {
   
@@ -17,11 +14,7 @@ var ReactMoEGeofence = {
    */
   startGeofenceMonitoring: function (appId: string) {
     MoEngageLogger.verbose("Will start geofence monitoring");
-    if (Platform.OS == PLATFORM_iOS) {
-      MoEGeofenceRNiOS.startGeofenceMonitoring(appId);
-    } else if (Platform.OS == PLATFORM_ANDROID) {
-      MoEGeofenceRNAndroid.startGeofenceMonitoring(appId);
-    }
+    MoEReactGeofence.startGeofenceMonitoring(getAppIdJson(appId));
   },
 
   /**
@@ -32,11 +25,7 @@ var ReactMoEGeofence = {
    */
   stopGeofenceMonitoring: function (appId: string) {
     MoEngageLogger.verbose("Will stop geofence monitoring");
-    if (Platform.OS == PLATFORM_ANDROID) {
-      MoEGeofenceRNAndroid.stopGeofenceMonitoring(appId);
-    } else if (Platform.OS == PLATFORM_iOS) {
-      MoEGeofenceRNiOS.stopGeofenceMonitoring(appId)
-    } 
+    MoEReactGeofence.stopGeofenceMonitoring(getAppIdJson(appId));
   }
 
 }

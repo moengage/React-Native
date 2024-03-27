@@ -8,13 +8,15 @@
 #import "MoEngageInitializer.h"
 #import "MoEngageReactPluginInfo.h"
 #import "MoEngageReactConstants.h"
-#import "MoEReactBridge.h"
 #import "MoEngageReactUtils.h"
 #import <MoEngageSDK/MoEngageSDK.h>
 #import <MoEngageObjCUtils/MoEngageObjCUtils.h>
-@import MoEngagePluginBase;
-@interface MoEngageInitializer() <MoEngagePluginBridgeDelegate>
+#import "MoEReactNativeHandler.h"
 
+@import MoEngagePluginBase;
+
+@interface MoEngageInitializer()
+@property(nonatomic, weak) MoEReactNativeHandler *dummyHandler;
 @end
 
 @implementation MoEngageInitializer
@@ -72,7 +74,8 @@
 }
 
 - (void)setPluginBridgeDelegate: (NSString*)identifier {
-    [[MoEngagePluginBridge sharedInstance] setPluginBridgeDelegate:self identifier:identifier];
+    MoEReactNativeHandler* dummy = [MoEReactNativeHandler sharedInstance];
+    [[MoEngagePluginBridge sharedInstance] setPluginBridgeDelegate: dummy identifier:identifier];
 }
 
 -(MoEngageSDKConfig*)fetchSDKConfig {
@@ -110,7 +113,7 @@
         
         if ([moeDict objectForKey:kEnableLogs] != nil && [moeDict objectForKey:kEnableLogs] != [NSNull null]) {
             BOOL isLogsEnabled = [MoEngageReactUtils getBooleanForKey:kEnableLogs dict:moeDict];
-            sdkConfig.consoleLogConfig = [[MoEngageConsoleLogConfig alloc] initWithIsLoggingEnabled:isLogsEnabled loglevel:MoEngageLoggerTypeVerbose];
+//            sdkConfig.consoleLogConfig = [[MoEngageConsoleLogConfig alloc] initWithIsLoggingEnabled:isLogsEnabled loglevel:MoEngageLoggerTypeVerbose];
         }
     }
     
@@ -145,23 +148,5 @@
     
     return dataCenter;
 }
-#pragma mark- MoEPluginBridgeDelegate
-- (void)sendMessageWithEvent:(NSString *)event message:(NSDictionary<NSString *,id> *)message {
-    NSMutableDictionary* updatedDict = [NSMutableDictionary dictionary];
 
-    if (message) {
-        NSError *err;
-        NSData * jsonData = [NSJSONSerialization dataWithJSONObject:message options:0 error:&err];
-        if (jsonData) {
-            NSString* strPayload = [[NSString alloc] initWithData:jsonData  encoding:NSUTF8StringEncoding];
-            updatedDict[kPayload] = strPayload;
-        } else {
-            NSLog(@"Error converting to dictionary to string %@", err.localizedDescription);
-        }
-    }
-    
-    NSDictionary* userInfo = @{kEventName:event,kPayloadDict:updatedDict};
-    MoEReactBridge *reactBridge = [MoEReactBridge allocWithZone: nil];
-    [reactBridge sendEventWithName:userInfo];
-}
 @end

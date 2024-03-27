@@ -4,13 +4,9 @@ import MoEInboxMessage from "../src/model/MoEInboxMessage";
 import MoETextContent from "../src/model/MoETextContent";
 import MoEMedia from "../src/model/MoEMedia";
 import MoEAction from "../src/model/MoEAction";
-import * as MoEInboxRNiOS from "./platform/MoEInboxRNiOS";
 import { fetchEmptyInboxModel } from "./utils/MoEInboxParser"
-import { MoEInboxRNAndroid } from "./platform/MoEInboxRNAndroid";
-import { getMoEInboxMessageJson } from "./utils/MoEInboxJsonBuilder";
+import * as MoEInboxHandler from "./utils/MoEInboxHandler";
 
-const PLATFORM_ANDROID = "android";
-const PLATFORM_iOS = "ios";
 var moeAppId = "";
 var MoEReactInbox = {
 
@@ -20,24 +16,15 @@ var MoEReactInbox = {
 
   fetchAllMessages: async function () {
     try {
-      if (Platform.OS == PLATFORM_iOS) {
-        return await MoEInboxRNiOS.fetchAllMessages(moeAppId);
-      } else if (Platform.OS == PLATFORM_ANDROID) {
-        return await MoEInboxRNAndroid.fetchAllMessages(moeAppId)
+        return await MoEInboxHandler.fetchAllMessages(moeAppId);
+      } catch(e) {
+       return (fetchEmptyInboxModel());
       }
-    }
-    catch (e) {
-      return (fetchEmptyInboxModel());
-    }
   },
 
   getUnClickedCount: async function () {
     try {
-      if (Platform.OS == PLATFORM_iOS) {
-        return await MoEInboxRNiOS.getUnClickedCount(moeAppId);
-      } else if (Platform.OS == PLATFORM_ANDROID) {
-        return await MoEInboxRNAndroid.getUnClickedCount(moeAppId);
-      }
+      return await MoEInboxHandler.getUnClickedCount(moeAppId);
     }
     catch (e) {
       return 0
@@ -45,21 +32,11 @@ var MoEReactInbox = {
   },
 
   trackMessageClicked: function (inboxMessage: MoEInboxMessage) {
-    var json = getMoEInboxMessageJson(inboxMessage,moeAppId);
-    if (Platform.OS == PLATFORM_iOS) {
-      MoEInboxRNiOS.trackMessageClicked(json);
-    } else if (Platform.OS == PLATFORM_ANDROID) {
-      MoEInboxRNAndroid.trackMessageClicked(json)
-    }
+    MoEInboxHandler.trackMessageClicked(inboxMessage, moeAppId);
   },
 
   deleteMessage: function (inboxMessage: MoEInboxMessage) {
-    var json = getMoEInboxMessageJson(inboxMessage,moeAppId);
-    if (Platform.OS == PLATFORM_iOS) {
-      MoEInboxRNiOS.deleteMessage(json);
-    } else if (Platform.OS == PLATFORM_ANDROID) {
-      MoEInboxRNAndroid.deleteMessage(json)
-    }
+    MoEInboxHandler.deleteMessage(inboxMessage, moeAppId);
   }
 };
 

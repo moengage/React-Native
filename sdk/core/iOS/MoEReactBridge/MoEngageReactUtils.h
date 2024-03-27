@@ -11,4 +11,5 @@
 @interface MoEngageReactUtils : NSObject
 +(NSInteger)getIntegerForKey:(NSString *)key dict:(NSDictionary*)dict;
 +(BOOL)getBooleanForKey:(NSString *)key dict:(NSDictionary*)dict;
++(NSDictionary*)getJSONRepresentation:(NSString*)string;
 @end

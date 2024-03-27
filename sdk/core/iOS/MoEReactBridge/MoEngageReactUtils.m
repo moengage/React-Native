@@ -37,4 +37,10 @@
     }
     return [value boolValue];
 }
+
++(NSDictionary*)getJSONRepresentation:(NSString*)string {
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *jsonOutput = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    return jsonOutput;
+}
 @end

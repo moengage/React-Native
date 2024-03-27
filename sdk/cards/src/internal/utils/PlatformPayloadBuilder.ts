@@ -26,14 +26,8 @@ class PlatformPayloadBuilder {
         this.appId = appId;
     }
 
-    getAccountMetaPayload(): string | { [k: string]: any } {
-        if (this.platform === PLATFORM_ANDROID) {
+    getAccountMetaPayload(): string {
             return JSON.stringify(getAccountMetaPayload(this.appId));
-        } else if (this.platform === PLATFORM_iOS) {
-            return getAccountMetaPayload(this.appId);
-        } else {
-            throw new Error("Platform Not Supported");
-        }
     }
 
     getCardClickedPayload(card: Card, widgetId: number): string | { [k: string]: any } {

@@ -1,0 +1,38 @@
+//
+//  MoEReactNativeHandler.m
+//  CocoaAsyncSocket
+//
+//  Created by Rakshitha on 14/03/24.
+//
+
+#import <Foundation/Foundation.h>
+#import "MoEReactNativeGeofenceHandler.h"
+#import "ReactNativeMoEngage/MoEngageReactUtils.h"
+
+@import MoEngagePluginGeofence;
+
+@interface MoEReactNativeGeofenceHandler()
+@end
+
+@implementation MoEReactNativeGeofenceHandler : NSObject
+
++(instancetype)sharedInstance{
+    static dispatch_once_t onceToken;
+    static MoEReactNativeGeofenceHandler *instance;
+    dispatch_once(&onceToken, ^{
+        instance = [[MoEReactNativeGeofenceHandler alloc] init];
+    });
+    return instance;
+}
+
+-(void)startGeofenceMonitoring:(NSString *)payload {
+    NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
+    [[MoEngagePluginGeofenceBridge sharedInstance] startGeofenceMonitoring: jsonPayload];
+}
+
+-(void)stopGeofenceMonitoring:(NSString *)payload {
+    NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
+    [[MoEngagePluginGeofenceBridge sharedInstance] stopGeofenceMonitoring: jsonPayload];
+}
+
+@end

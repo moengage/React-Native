@@ -3,7 +3,6 @@ package com.moengage.react
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.WritableMap
 import com.moengage.core.internal.logger.Logger
-import com.moengage.core.model.AccountMeta
 import com.moengage.inapp.model.ClickData
 import com.moengage.inapp.model.InAppData
 import com.moengage.inapp.model.SelfHandledCampaignData
@@ -52,13 +51,10 @@ internal class PayloadGenerator {
         return map
     }
 
-    fun selfHandledDataToWriteableMap(
-        accountMeta: AccountMeta,
-        data: SelfHandledCampaignData?
-    ): WritableMap {
-        Logger.print { "$tag selfHandledDataToWriteableMap() : $data" }
+    fun selfHandledDataToWriteableMap(data: SelfHandledCampaignData): WritableMap {
         val map = Arguments.createMap()
-        val json = selfHandledDataToJson(accountMeta, data)
+        val json = selfHandledDataToJson(data)
+        Logger.print { "$tag selfHandledDataToWriteableMap() : $data" }
         map.putString(ARGUMENT_PAYLOAD, json.toString())
         return map
     }

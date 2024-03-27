@@ -189,9 +189,9 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
     @ReactMethod
     fun validateSdkVersion(promise: Promise) {
         Logger.print { "$tag validateSdkVersion() : Validating Version" }
-        if (moeSdkVersion > 140000) {
+        if (moeSdkVersion > 130000) {
             Logger.print(LogLevel.ERROR) { "$tag validateSdkVersion() : invalid version" }
-            promise.reject("error", "Use SDK version less than 14.xx.xx")
+            promise.reject("error", "Use SDK version 12.x.xx")
         } else {
             Logger.print { "$tag validateSdkVersion() : valid version" }
             promise.resolve("valid version");
@@ -292,20 +292,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag deleteUser() :" }
             promise.reject(t)
-        }
-    }
-
-    /**
-     * Try to show a non-intrusive In-App nudge
-     * @since Todo: Add Version
-     */
-    @ReactMethod
-    fun showNudge(payload: String) {
-        try {
-            Logger.print { "$tag showNudge() : Payload: $payload" }
-            pluginHelper.showNudge(context, payload)
-        } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag showNudge() :" }
         }
     }
 }

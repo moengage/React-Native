@@ -27,18 +27,4 @@
     }
     return  nil;
 }
-
-+(void)handleDataToReact:(NSDictionary<NSString *,id> * _Nonnull)cardPayload rejecter:(RCTPromiseRejectBlock)rejecter resolver:(RCTPromiseResolveBlock)resolver {
-    NSError *error;
-    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:cardPayload options:0 error:&error];
-    if (jsonData) {
-        NSString *strPayload = [[NSString alloc] initWithData:jsonData  encoding:NSUTF8StringEncoding];
-        resolver(strPayload);
-    } else {
-        rejecter([NSString stringWithFormat:@"%ld", (long)error.code], error.localizedDescription, error);
-    }
-}
-
-
-
 @end

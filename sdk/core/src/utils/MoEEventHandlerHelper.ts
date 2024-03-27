@@ -16,8 +16,7 @@ export function executeHandler(
     type: String
 ) {
     if (handler && type) {
-        const payload = notification[MOE_PAYLOAD];
-        const notificationPayload = JSON.parse(payload);
+        const notificationPayload = notification[MOE_PAYLOAD];
         if (isValidObject(notificationPayload)) {
             if (type == "pushTokenGenerated") {
                 var pushTokenObject = getMoEPushToken(notificationPayload);

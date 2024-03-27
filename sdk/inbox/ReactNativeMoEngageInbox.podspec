@@ -18,4 +18,6 @@ Pod::Spec.new do |s|
   s.dependency "React-Core"
   s.dependency "MoEngagePluginInbox",'>= 2.7.0','< 2.8.0'
 
+  install_modules_dependencies(s)
+
 end
