@@ -61,3 +61,4 @@ buck-out/
 # secrets file
 /src/key.js
 /android/app/google-services.json
+/android/app/.cxx
