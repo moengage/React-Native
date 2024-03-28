@@ -15,6 +15,7 @@ buildscript {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.facebook.react'
 
 android {
   compileSdk 33
@@ -23,6 +24,8 @@ android {
     minSdk 21
     versionCode 1
     versionName "1.0"
+
+    buildConfigField("boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString())
   }
 
   buildTypes {
@@ -41,6 +44,20 @@ android {
   kotlinOptions {
     freeCompilerArgs = ['-Xjvm-default=all']
   }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  sourceSets {
+    main {
+      if (isNewArchitectureEnabled()) {
+        java.srcDirs += ['src/newarch']
+      } else {
+        java.srcDirs += ['src/oldarch']
+      }
+    }
+  }
 }
 
 repositories {
@@ -50,9 +67,13 @@ repositories {
 
 dependencies {
   // noinspection GradleDynamicVersion
-  compileOnly 'com.facebook.react:react-native:+'
+  compileOnly('com.facebook.react:react-native')
   compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
   compileOnly("com.moengage:moe-android-sdk:13.00.01")
   compileOnly("com.moengage:inbox-core:3.0.0")
   implementation("com.moengage:plugin-base-inbox:4.0.0")
+}
+
+def isNewArchitectureEnabled() {
+  return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
 }

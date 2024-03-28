@@ -27,9 +27,7 @@ internal class MoEReactBridgeHandler(private val reactContext: ReactApplicationC
     private val backgroundStateListener =
         AppBackgroundListener { _, _ -> pluginHelper.onFrameworkDetached() }
 
-    fun getName(): String {
-        return "MoEReactBridge"
-    }
+    fun getName() = NAME
 
     fun setAppStatus(payload: String) {
         try {
@@ -259,5 +257,9 @@ internal class MoEReactBridgeHandler(private val reactContext: ReactApplicationC
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag showNudge() :" }
         }
+    }
+
+    companion object {
+        const val NAME = "MoEReactBridge"
     }
 }
