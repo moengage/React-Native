@@ -30,6 +30,7 @@ ext {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.facebook.react'
 
 android {
   compileSdk compileVersion
@@ -40,6 +41,8 @@ android {
     versionName "1.0"
 
     testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+    buildConfigField("boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString())
   }
   buildTypes {
     release {
@@ -59,6 +62,17 @@ android {
   buildFeatures {
     buildConfig true
   }
+
+
+  sourceSets {
+    main {
+      if (isNewArchitectureEnabled()) {
+        java.srcDirs += ['src/newarch']
+      } else {
+        java.srcDirs += ['src/oldarch']
+      }
+    }
+  }
 }
 
 dependencies {
@@ -70,7 +84,7 @@ dependencies {
   api("com.moengage:plugin-base:$basePluginVersion")
   compileOnly("com.moengage:inapp:$moengageInAppVersion")
 
-  compileOnly 'com.facebook.react:react-native:+'
+  compileOnly('com.facebook.react:react-native')
 
 }
 
@@ -78,4 +92,8 @@ apply from: file("./user-agent.gradle")
 
 repositories {
   mavenCentral()
+}
+
+def isNewArchitectureEnabled() {
+  return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
 }
