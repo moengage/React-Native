@@ -5,11 +5,17 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 
+/**
+ * Bridge to communicate with js code in old arch
+ *
+ * @author Abhishek Kumar
+ * @since Todo: Add Version
+ */
+class MoEReactBridge(
+    private val reactContext: ReactApplicationContext
+) : ReactContextBaseJavaModule(reactContext) {
 
-class MoEReactBridge(private val reactContext: ReactApplicationContext) :
-    ReactContextBaseJavaModule(reactContext) {
-
-    private val val moEReactBridgeHandler = MoEReactBridgeHandler(reactContext)
+    private val bridgeHandler = MoEReactBridgeHandler(reactContext)
 
     override fun getName(): String {
         return moEReactBridgeHandler.getName()
@@ -91,13 +97,8 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
     }
 
     @ReactMethod
-    fun optOutTracking(payload: String) {
+    fun optOutDataTracking(payload: String) {
         moEReactBridgeHandler.optOutTracking(payload)
-    }
-
-    @ReactMethod
-    fun validateSdkVersion(promise: Promise) {
-       moEReactBridgeHandler.validateSdkVersion(promise)
     }
 
     @ReactMethod
@@ -121,27 +122,32 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
     }
 
     @ReactMethod
-    fun navigateToSettings() {
+    fun navigateToSettingsAndroid() {
         moEReactBridgeHandler.navigateToSettings()
     }
 
     @ReactMethod
-    fun requestPushPermission() {
+    fun requestPushPermissionAndroid() {
         moEReactBridgeHandler.requestPushPermission()
     }
 
     @ReactMethod
-    fun permissionResponse(payload: String) {
+    fun pushPermissionResponseAndroid(payload: String) {
         moEReactBridgeHandler.permissionResponse(payload)
     }
 
     @ReactMethod
-    fun updatePushPermissionRequestCount(payload: String) {
+    fun updatePushPermissionRequestCountAndroid(payload: String) {
         moEReactBridgeHandler.updatePushPermissionRequestCount(payload)
     }
 
     @ReactMethod
     fun deleteUser(payload: String, promise: Promise) {
         moEReactBridgeHandler.deleteUser(payload, promise)
+    }
+
+    @ReactMethod
+    fun showNudge(payload: String) {
+        moEReactBridgeHandler.showNudge(context, payload)
     }
 }

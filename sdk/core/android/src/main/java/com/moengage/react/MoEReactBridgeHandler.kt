@@ -11,7 +11,13 @@ import com.moengage.plugin.base.internal.PluginHelper
 import com.moengage.plugin.base.internal.setEventEmitter
 import com.moengage.plugin.base.internal.userDeletionDataToJson
 
-class MoEReactBridgeHandler(private val reactContext: ReactApplicationContext) {
+/**
+ * Class to handle all the request from the [MoEReactBridge] from both old and new arch
+ *
+ * @author Abhishek Kumar
+ * @since Todo: Add Version
+ */
+internal class MoEReactBridgeHandler(private val reactContext: ReactApplicationContext) {
 
     private val tag = "${MODULE_TAG}MoEReactBridgeHandler"
 
@@ -54,7 +60,7 @@ class MoEReactBridgeHandler(private val reactContext: ReactApplicationContext) {
 
     fun logout(payload: String) {
         try {
-            Logger.print { "$tag logout() : " }
+            Logger.print { "$tag logout() : $payload" }
             pluginHelper.logout(context, payload)
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag logout() : " }
@@ -126,7 +132,7 @@ class MoEReactBridgeHandler(private val reactContext: ReactApplicationContext) {
 
     fun initialize(payload: String) {
         try {
-            Logger.print { "$tag initialize() : " }
+            Logger.print { "$tag initialize() : $payload" }
             pluginHelper.initialise(payload)
             setEventEmitter(EventEmitterImpl(reactContext))
             if (GlobalCache.lifecycleAwareCallbackEnabled) {
@@ -183,6 +189,7 @@ class MoEReactBridgeHandler(private val reactContext: ReactApplicationContext) {
 
     fun setupNotificationChannels() {
         try {
+            Logger.print { "$tag setupNotificationChannels() : " }
             pluginHelper.setUpNotificationChannels(context)
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag setupNotificationChannel() :" }
@@ -191,6 +198,7 @@ class MoEReactBridgeHandler(private val reactContext: ReactApplicationContext) {
 
     fun navigateToSettings() {
         try {
+            Logger.print { "$tag navigateToSettings() : " }
             pluginHelper.navigateToSettings(context)
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag navigateToSettings() :" }
@@ -199,6 +207,7 @@ class MoEReactBridgeHandler(private val reactContext: ReactApplicationContext) {
 
     fun requestPushPermission() {
         try {
+            Logger.print { "$tag requestPushPermission() : " }
             pluginHelper.requestPushPermission(context)
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag requestPushPermission() :" }
@@ -225,9 +234,6 @@ class MoEReactBridgeHandler(private val reactContext: ReactApplicationContext) {
 
     /**
      * API to delete the user from MoEngage Server
-
-     * @param payload - required key-value pair
-     * @param promise - promise object which will be resolved based on success / failure
      * @since 8.6.0
      */
     fun deleteUser(payload: String, promise: Promise) {
