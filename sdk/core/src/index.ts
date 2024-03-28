@@ -430,7 +430,7 @@ var ReactMoE = {
     MoEngageLogger.verbose("Will process push token");
     if (Platform.OS == PLATFORM_ANDROID) {
     let payload = getMoEPushTokenJson(pushToken, PUSH_SERVICE_FCM, PLATFORM_ANDROID, moeAppId);
-    MoEReactBridge.passFcmPushToken(getAppIdJson(moeAppId));
+    MoEReactBridge.passFcmPushToken(payload);
     }
   },
   /**
@@ -516,7 +516,7 @@ var ReactMoE = {
     MoEngageLogger.verbose("Will enable advertising-id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
     let payload = getAdIdTrackingJson(true, moeAppId);
-    MoEReactBridge.enableAdIdTracking(payload);
+    MoEReactBridge.deviceIdentifierTrackingStatusUpdate(payload);
     }
   },
 
@@ -530,7 +530,7 @@ var ReactMoE = {
     MoEngageLogger.verbose("Will disable advertising-id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
     let payload = getAdIdTrackingJson(false, moeAppId);
-    MoEReactBridge.disableAdIdTracking(payload);
+    MoEReactBridge.deviceIdentifierTrackingStatusUpdate(payload);
     }
   },
 
@@ -541,7 +541,7 @@ var ReactMoE = {
     MoEngageLogger.verbose("Will enable android-id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
     let payload = getAndroidIdTrackingJson(true, moeAppId);
-    MoEReactBridge.enableAndroidIdTracking(payload);
+    MoEReactBridge.deviceIdentifierTrackingStatusUpdate(payload);
     }
   },
 
@@ -555,7 +555,7 @@ var ReactMoE = {
     MoEngageLogger.verbose("Will disable android-id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
     let payload = getAndroidIdTrackingJson(false, moeAppId);
-    MoEReactBridge.disableAndroidIdTracking(payload);
+    MoEReactBridge.deviceIdentifierTrackingStatusUpdate(payload);
     }
   },
 
@@ -612,7 +612,7 @@ var ReactMoE = {
     MoEngageLogger.verbose("Will enable device id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
     let payload = getDeviceIdTrackingJson(true, moeAppId);
-    MoEReactBridge.enableDeviceIdTracking(payload);
+    MoEReactBridge.deviceIdentifierTrackingStatusUpdate(payload);
     }
   },
 
@@ -623,7 +623,7 @@ var ReactMoE = {
     MoEngageLogger.verbose("Will disable device id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
     let payload = getDeviceIdTrackingJson(false, moeAppId);
-    MoEReactBridge.disableDeviceIdTracking(payload);
+    MoEReactBridge.deviceIdentifierTrackingStatusUpdate(payload);
     }
   },
 

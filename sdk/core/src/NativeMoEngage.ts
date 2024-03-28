@@ -15,7 +15,6 @@ export interface Spec extends TurboModule {
   updateSelfHandledInAppStatus:(payload: string) => void;
   setAppContext:(payload: string) => void;
   resetAppContext:(payload: string) => void;
-  disableInbox:(payload: string) => void;
   optOutDataTracking:(payload: string) => void;
   updateSdkState:(payload: string) => void;
 
@@ -23,22 +22,18 @@ export interface Spec extends TurboModule {
   passFcmPushToken:(payload: string) => void;
   passFcmPushPayload:(payload: string) => void;
   passPushKitPushToken:(payload: string) => void;
-  onOrientationChanged:() => void;
-  enableAdIdTracking:(payload: string) => void;
-  disableAdIdTracking:(payload: string) => void;
-  enableAndroidIdTracking:(payload: string) => void;
-  disableAndroidIdTracking:(payload: string) => void;
+  onOrientationChanged:() => void; 
   pushPermissionResponseAndroid:(payload: string) => void;
   setupNotificationChannels:() => void;
   navigateToSettingsAndroid:() => void;
   requestPushPermissionAndroid:() => void;
   updatePushPermissionRequestCountAndroid:(payload: string) => void;
-  enableDeviceIdTracking:(payload: string) => void;
-  disableDeviceIdTracking:(payload: string) => void;
+  deviceIdentifierTrackingStatusUpdate:(payload: string) => void;
   deleteUser(payload: string): Promise<Object | Error> ;
 
   /// ios specific
   registerForPush:() => void;
+  disableInbox:(payload: string) => void;
 
   addListener: (eventType: string) => void;
   removeListeners: (count: number) => void;
