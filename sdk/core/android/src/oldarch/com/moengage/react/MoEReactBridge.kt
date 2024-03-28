@@ -17,9 +17,7 @@ class MoEReactBridge(
 
     private val bridgeHandler = MoEReactBridgeHandler(reactContext)
 
-    override fun getName(): String {
-        return moEReactBridgeHandler.getName()
-    }
+    override fun getName() = bridgeHandler.getName()
 
     @ReactMethod
     fun addListener(eventName: String) {
@@ -33,121 +31,121 @@ class MoEReactBridge(
 
     @ReactMethod
     fun setAppStatus(payload: String) {
-        moEReactBridgeHandler.setAppStatus(payload)
+        bridgeHandler.setAppStatus(payload)
     }
 
     @ReactMethod
     fun trackEvent(payload: String) {
-        moEReactBridgeHandler.trackEvent(payload)
+        bridgeHandler.trackEvent(payload)
     }
 
     @ReactMethod
     fun setUserAttribute(payload: String) {
-        moEReactBridgeHandler.setUserAttribute(payload)
+        bridgeHandler.setUserAttribute(payload)
     }
 
     @ReactMethod
     fun logout(payload: String) {
-        moEReactBridgeHandler.logout(payload)
+        bridgeHandler.logout(payload)
     }
 
     @ReactMethod
     fun setAlias(payload: String) {
-        moEReactBridgeHandler.setAlias(payload)
+        bridgeHandler.setAlias(payload)
     }
 
     @ReactMethod
     fun setAppContext(payload: String) {
-        moEReactBridgeHandler.setAppContext(payload)
+        bridgeHandler.setAppContext(payload)
     }
 
     @ReactMethod
     fun resetAppContext(payload: String) {
-        moEReactBridgeHandler.resetAppContext(payload)
+        bridgeHandler.resetAppContext(payload)
     }
 
     @ReactMethod
     fun showInApp(payload: String) {
-        moEReactBridgeHandler.showInApp(payload)
+        bridgeHandler.showInApp(payload)
     }
 
     @ReactMethod
     fun getSelfHandledInApp(payload: String) {
-       moEReactBridgeHandler.getSelfHandledInApp(payload)
+        bridgeHandler.getSelfHandledInApp(payload)
     }
 
     @ReactMethod
     fun passPushToken(payload: String) {
-        moEReactBridgeHandler.passPushToken(payload)
+        bridgeHandler.passPushToken(payload)
     }
 
     @ReactMethod
     fun passPushPayload(payload: String) {
-        moEReactBridgeHandler.passPushPayload(payload)
+        bridgeHandler.passPushPayload(payload)
     }
 
     @ReactMethod
     fun initialize(payload: String) {
-        moEReactBridgeHandler.initialize(payload)
+        bridgeHandler.initialize(payload)
     }
 
     @ReactMethod
     fun selfHandledCallback(payload: String) {
-        moEReactBridgeHandler.selfHandledCallback(payload)
+        bridgeHandler.selfHandledCallback(payload)
     }
 
     @ReactMethod
     fun optOutDataTracking(payload: String) {
-        moEReactBridgeHandler.optOutTracking(payload)
+        bridgeHandler.optOutTracking(payload)
     }
 
     @ReactMethod
     fun updateSdkState(payload: String) {
-        moEReactBridgeHandler.updateSdkState(payload)
+        bridgeHandler.updateSdkState(payload)
     }
 
     @ReactMethod
     fun onOrientationChanged() {
-        moEReactBridgeHandler.onOrientationChanged(payload)
+        bridgeHandler.onOrientationChanged()
     }
 
     @ReactMethod
     fun deviceIdentifierTrackingStatusUpdate(payload: String) {
-        moEReactBridgeHandler.deviceIdentifierTrackingStatusUpdate(payload)
+        bridgeHandler.deviceIdentifierTrackingStatusUpdate(payload)
     }
 
     @ReactMethod
     fun setupNotificationChannels() {
-        moEReactBridgeHandler.setupNotificationChannels()
+        bridgeHandler.setupNotificationChannels()
     }
 
     @ReactMethod
     fun navigateToSettingsAndroid() {
-        moEReactBridgeHandler.navigateToSettings()
+        bridgeHandler.navigateToSettings()
     }
 
     @ReactMethod
     fun requestPushPermissionAndroid() {
-        moEReactBridgeHandler.requestPushPermission()
+        bridgeHandler.requestPushPermission()
     }
 
     @ReactMethod
     fun pushPermissionResponseAndroid(payload: String) {
-        moEReactBridgeHandler.permissionResponse(payload)
+        bridgeHandler.permissionResponse(payload)
     }
 
     @ReactMethod
     fun updatePushPermissionRequestCountAndroid(payload: String) {
-        moEReactBridgeHandler.updatePushPermissionRequestCount(payload)
+        bridgeHandler.updatePushPermissionRequestCount(payload)
     }
 
     @ReactMethod
     fun deleteUser(payload: String, promise: Promise) {
-        moEReactBridgeHandler.deleteUser(payload, promise)
+        bridgeHandler.deleteUser(payload, promise)
     }
 
     @ReactMethod
     fun showNudge(payload: String) {
-        moEReactBridgeHandler.showNudge(context, payload)
+        bridgeHandler.showNudge(payload)
     }
 }

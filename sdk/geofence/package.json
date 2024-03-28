@@ -43,7 +43,7 @@
       "type": "modules",
       "jsSrcsDir": "src",
       "android": {
-          "javaPackageName": ""
+          "javaPackageName": "com.moengage.react.geofence"
       }
   }
 }

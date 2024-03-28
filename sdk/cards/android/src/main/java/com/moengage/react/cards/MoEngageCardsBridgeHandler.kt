@@ -1,23 +1,8 @@
-/*
- * Copyright (c) 2014-2023 MoEngage Inc.
- *
- * All rights reserved.
- *
- *  Use of source code or binaries contained within MoEngage SDK is permitted only to enable use of the MoEngage platform by customers of MoEngage.
- *  Modification of source code and inclusion in mobile apps is explicitly allowed provided that all other conditions are met.
- *  Neither the name of MoEngage nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
- *  Redistribution of source code or binaries is disallowed except with specific prior written permission. Any such redistribution must retain the above copyright notice, this list of conditions and the following disclaimer.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
 package com.moengage.react.cards
 
 import android.content.Context
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
 import com.moengage.core.LogLevel
 import com.moengage.core.internal.logger.Logger
 import com.moengage.plugin.base.cards.CardsPluginHelper
@@ -26,34 +11,20 @@ import com.moengage.plugin.base.cards.internal.setCardsEventEmitter
 import org.json.JSONObject
 
 /**
- * Bridge to communicate with React-Native Cards Plugin
- *
+ * Class to handle request from react-native-cards plugin
+ * 
  * @author Abhishek Kumar
- * @since 1.0.0
+ * @since Todo: Add Version
  */
-class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
-    ReactContextBaseJavaModule(reactContext) {
+internal class MoEngageCardsBridgeHandler(private val reactContext: ReactApplicationContext) {
 
-    private val tag = "${MODULE_TAG}MoEngageCardsBridge"
+    private val tag = "${MODULE_TAG}MoEngageCardsBridgeHandler"
 
     private val context: Context = reactContext.applicationContext
     private val cardsPluginHelper = CardsPluginHelper()
 
-    override fun getName(): String {
-        return "MoEngageCardsBridge"
-    }
-
-    @ReactMethod
-    fun addListener(eventName: String) {
-        // Keep: Required for RN built in Event Emitter Calls.
-    }
-
-    @ReactMethod
-    fun removeListeners(count: Int) {
-        // Keep: Required for RN built in Event Emitter Calls.
-    }
-
-    @ReactMethod
+    fun getName() = NAME
+    
     fun initialize(payload: String) {
         try {
             Logger.print { "$tag initialize() : $payload" }
@@ -64,7 +35,6 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun refreshCards(payload: String) {
         try {
             Logger.print { "$tag refreshCards() : $payload" }
@@ -74,7 +44,6 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun onCardSectionLoaded(payload: String) {
         try {
             Logger.print { "$tag onCardSectionLoaded() : $payload" }
@@ -84,7 +53,6 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun onCardSectionUnLoaded(payload: String) {
         try {
             Logger.print { "$tag onCardSectionUnLoaded() : $payload" }
@@ -93,8 +61,7 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
             Logger.print(LogLevel.ERROR, t) { "$tag onCardSectionUnLoaded() : " }
         }
     }
-
-    @ReactMethod
+    
     fun getCardsCategories(payload: String, promise: Promise) {
         try {
             Logger.print { "$tag getCardsCategories() : $payload" }
@@ -105,8 +72,7 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
             promise.reject(t)
         }
     }
-
-    @ReactMethod
+    
     fun getCardsInfo(payload: String, promise: Promise) {
         try {
             Logger.print { "$tag getCardsInfo() : $payload" }
@@ -118,7 +84,6 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun cardClicked(payload: String) {
         try {
             Logger.print { "$tag cardClicked() : $payload" }
@@ -128,7 +93,6 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun cardDelivered(payload: String) {
         try {
             Logger.print { "$tag cardDelivered() : $payload" }
@@ -138,7 +102,6 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun cardShown(payload: String) {
         try {
             Logger.print { "$tag cardShown() : $payload" }
@@ -147,8 +110,7 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
             Logger.print(LogLevel.ERROR, t) { "$tag cardShown() : " }
         }
     }
-
-    @ReactMethod
+    
     fun getCardsForCategory(payload: String, promise: Promise) {
         try {
             Logger.print { "$tag getCardsForCategory() : $payload" }
@@ -160,7 +122,6 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun deleteCards(payload: String) {
         try {
             Logger.print { "$tag deleteCards() : $payload" }
@@ -170,7 +131,6 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun isAllCategoryEnabled(payload: String, promise: Promise) {
         try {
             Logger.print { "$tag isAllCategoryEnabled() : $payload" }
@@ -181,8 +141,7 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
             promise.reject(t)
         }
     }
-
-    @ReactMethod
+    
     fun getNewCardsCount(payload: String, promise: Promise) {
         try {
             Logger.print { "$tag getNewCardsCount() : $payload" }
@@ -194,7 +153,6 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun getUnClickedCardsCount(payload: String, promise: Promise) {
         try {
             Logger.print { "$tag getUnClickedCardsCount() : $payload" }
@@ -206,7 +164,6 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun fetchCards(payload: String, promise: Promise) {
         try {
             Logger.print { "$tag fetchCards() : $payload" }
@@ -224,5 +181,9 @@ class MoEngageCardsBridge(private val reactContext: ReactApplicationContext) :
             Logger.print(LogLevel.ERROR, t) { "$tag fetchCards() : " }
             promise.reject(t)
         }
+    }
+
+    companion object {
+        const val NAME = "MoEngageCardsBridge"
     }
 }

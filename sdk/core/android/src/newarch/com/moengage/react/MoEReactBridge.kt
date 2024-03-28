@@ -11,11 +11,9 @@ import com.facebook.react.bridge.ReactApplicationContext
  */
 class MoEReactBridge(reactContext: ReactApplicationContext) : NativeMoEngageSpec(reactContext) {
 
-    private val moEReactBridgeHandler = MoEReactBridgeHandler(reactContext)
+    private val bridgeHandler = MoEReactBridgeHandler(reactContext)
 
-    override fun getName(): String {
-        return moEReactBridgeHandler.getName()
-    }
+    override fun getName() = bridgeHandler.getName()
 
     override fun addListener(eventType: String) {
     }
@@ -24,103 +22,103 @@ class MoEReactBridge(reactContext: ReactApplicationContext) : NativeMoEngageSpec
     }
 
     override fun initialize(payload: String) {
-        moEReactBridgeHandler.initialize(payload)
+        bridgeHandler.initialize(payload)
     }
 
     override fun setAppStatus(payload: String) {
-        moEReactBridgeHandler.setAppStatus(payload)
+        bridgeHandler.setAppStatus(payload)
     }
 
     override fun trackEvent(payload: String) {
-        moEReactBridgeHandler.trackEvent(payload)
+        bridgeHandler.trackEvent(payload)
     }
 
     override fun setUserAttribute(payload: String) {
-        moEReactBridgeHandler.setUserAttribute(payload)
+        bridgeHandler.setUserAttribute(payload)
     }
 
     override fun setAlias(payload: String) {
-        moEReactBridgeHandler.setAlias(payload)
+        bridgeHandler.setAlias(payload)
     }
 
     override fun logout(payload: String) {
-        moEReactBridgeHandler.logout(payload)
+        bridgeHandler.logout(payload)
     }
 
     override fun showInApp(payload: String) {
-        moEReactBridgeHandler.showInApp(payload)
+        bridgeHandler.showInApp(payload)
     }
 
     override fun showNudge(payload: String) {
-        moEReactBridgeHandler.showNudge(payload)
+        bridgeHandler.showNudge(payload)
     }
 
     override fun getSelfHandledInApp(payload: String) {
-        moEReactBridgeHandler.getSelfHandledInApp(payload)
+        bridgeHandler.getSelfHandledInApp(payload)
     }
 
     override fun updateSelfHandledInAppStatus(payload: String) {
-        moEReactBridgeHandler.selfHandledCallback(payload)
+        bridgeHandler.selfHandledCallback(payload)
     }
 
     override fun setAppContext(payload: String) {
-        moEReactBridgeHandler.setAppContext(payload)
+        bridgeHandler.setAppContext(payload)
     }
 
     override fun resetAppContext(payload: String) {
-        moEReactBridgeHandler.resetAppContext(payload)
+        bridgeHandler.resetAppContext(payload)
     }
 
     override fun optOutDataTracking(payload: String) {
-        moEReactBridgeHandler.optOutTracking(payload)
+        bridgeHandler.optOutTracking(payload)
     }
 
     override fun updateSdkState(payload: String) {
-        moEReactBridgeHandler.updateSdkState(payload)
+        bridgeHandler.updateSdkState(payload)
     }
 
     override fun passFcmPushToken(payload: String) {
-        moEReactBridgeHandler.passPushToken(payload)
+        bridgeHandler.passPushToken(payload)
     }
 
     override fun passFcmPushPayload(payload: String) {
-        moEReactBridgeHandler.passPushPayload(payload)
+        bridgeHandler.passPushPayload(payload)
     }
 
     override fun passPushKitPushToken(payload: String) {
-        moEReactBridgeHandler.passPushToken(payload)
+        bridgeHandler.passPushToken(payload)
     }
 
     override fun onOrientationChanged() {
-        moEReactBridgeHandler.onOrientationChanged()
+        bridgeHandler.onOrientationChanged()
     }
 
     override fun pushPermissionResponseAndroid(payload: String) {
-        moEReactBridgeHandler.permissionResponse(payload)
+        bridgeHandler.permissionResponse(payload)
     }
 
     override fun setupNotificationChannels() {
-        moEReactBridgeHandler.setupNotificationChannels()
+        bridgeHandler.setupNotificationChannels()
     }
 
     override fun navigateToSettingsAndroid() {
-        moEReactBridgeHandler.navigateToSettings()
+        bridgeHandler.navigateToSettings()
     }
 
     override fun requestPushPermissionAndroid() {
-        moEReactBridgeHandler.requestPushPermission()
+        bridgeHandler.requestPushPermission()
     }
 
     override fun updatePushPermissionRequestCountAndroid(payload: String) {
-        moEReactBridgeHandler.updatePushPermissionRequestCount(payload)
+        bridgeHandler.updatePushPermissionRequestCount(payload)
     }
 
     override fun deviceIdentifierTrackingStatusUpdate(payload: String) {
-        moEReactBridgeHandler.deviceIdentifierTrackingStatusUpdate(payload)
+        bridgeHandler.deviceIdentifierTrackingStatusUpdate(payload)
     }
 
     override fun deleteUser(payload: String, promise: Promise) {
-        moEReactBridgeHandler.deleteUser(payload, promise)
+        bridgeHandler.deleteUser(payload, promise)
     }
 
     override fun registerForPush() {
