@@ -10,7 +10,7 @@ class MoengageInboxPackage : TurboReactPackage() {
 
     override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
         return if (name == MoEngageInboxHandler.NAME) {
-            MoEngageInbox(reactContext)
+            MoEReactInbox(reactContext)
         } else {
             null
         }

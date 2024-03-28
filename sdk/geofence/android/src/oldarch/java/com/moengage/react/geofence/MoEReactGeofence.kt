@@ -13,7 +13,7 @@ import com.moengage.plugin.base.geofence.internal.GeofencePluginHelper
  * @author Abhishek Kumar
  * @since Todo: Add Version
  */
-class MoEngageGeofence(
+class MoEReactGeofence(
     reactContext: ReactApplicationContext
 ) : ReactContextBaseJavaModule(reactContext) {
 

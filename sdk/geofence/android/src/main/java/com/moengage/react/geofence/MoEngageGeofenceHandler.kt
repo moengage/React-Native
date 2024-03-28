@@ -41,6 +41,6 @@ internal class MoEngageGeofenceHandler(reactContext: ReactApplicationContext) {
     }
 
     companion object {
-        const val NAME = "MoEngageGeofence"
+        const val NAME = "MoEReactGeofence"
     }
 }

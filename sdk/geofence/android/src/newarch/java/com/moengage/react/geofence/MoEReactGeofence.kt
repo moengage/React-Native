@@ -8,7 +8,7 @@ import com.facebook.react.bridge.ReactApplicationContext
  * @author Abhishek Kumar
  * @since Todo: Add Version
  */
-class MoEngageGeofence(reactContext: ReactApplicationContext) :
+class MoEReactGeofence(reactContext: ReactApplicationContext) :
     NativeMoEngageGeofenceSpec(reactContext) {
 
     private val bridgeHandler = MoEngageGeofenceHandler(reactContext)

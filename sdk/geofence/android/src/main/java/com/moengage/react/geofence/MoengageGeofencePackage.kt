@@ -10,7 +10,7 @@ class MoengageGeofencePackage : TurboReactPackage() {
 
     override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
         return if (name == MoEngageGeofenceHandler.NAME) {
-            MoEngageGeofence(reactContext)
+            MoEReactGeofence(reactContext)
         } else {
             null
         }

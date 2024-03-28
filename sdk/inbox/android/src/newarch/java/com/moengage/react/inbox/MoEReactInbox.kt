@@ -9,7 +9,7 @@ import com.facebook.react.bridge.ReactApplicationContext
  * @author Abhishek Kumar
  * @since Todo: Add Version
  */
-class MoEngageInbox(reactContext: ReactApplicationContext) :
+class MoEReactInbox(reactContext: ReactApplicationContext) :
     NativeMoEngageInboxSpec(reactContext) {
 
     private val bridgeHandler = MoEngageInboxHandler(reactContext)

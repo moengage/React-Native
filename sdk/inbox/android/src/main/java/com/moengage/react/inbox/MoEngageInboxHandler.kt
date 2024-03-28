@@ -75,6 +75,6 @@ internal class MoEngageInboxHandler(
     }
 
     companion object {
-        const val NAME = "MoEngageInbox"
+        const val NAME = "MoEReactInbox"
     }
 }

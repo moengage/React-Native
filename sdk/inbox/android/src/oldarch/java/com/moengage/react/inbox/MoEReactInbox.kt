@@ -16,7 +16,7 @@ import com.moengage.plugin.base.inbox.internal.unClickedCountToJson
  * @author Abhishek Kumar
  * @since Todo: Add Version
  */
-class MoEngageInbox(
+class MoEReactInbox(
     reactContext: ReactApplicationContext
 ) : ReactContextBaseJavaModule(reactContext) {
 
