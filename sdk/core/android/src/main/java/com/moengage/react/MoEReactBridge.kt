@@ -294,4 +294,18 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
             promise.reject(t)
         }
     }
+
+    /**
+     * Try to show a non-intrusive In-App nudge
+     * @since Todo: Add Version
+     */
+    @ReactMethod
+    fun showNudge(payload: String) {
+        try {
+            Logger.print { "$tag showNudge() : Payload: $payload" }
+            pluginHelper.showNudge(context, payload)
+        } catch (t: Throwable) {
+            Logger.print(LogLevel.ERROR, t) { "$tag showNudge() :" }
+        }
+    }
 }
