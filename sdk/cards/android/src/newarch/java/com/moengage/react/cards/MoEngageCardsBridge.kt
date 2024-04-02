@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 MoEngage Inc.
+ * Copyright (c) 2014-2024 MoEngage Inc.
  *
  * All rights reserved.
  *
