@@ -15,6 +15,8 @@
 
 @property (nonatomic, weak) RCTEventEmitter *eventEmitter;
 
+-(void)setDelegate:(NSString *)identifier;
+
 -(void)initialize:(NSString *)payload;
 -(void)setAppStatus:(NSString *)payload;
 -(void)trackEvent:(NSString *)payload;

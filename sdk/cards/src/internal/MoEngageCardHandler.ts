@@ -251,7 +251,7 @@ class MoEngageCardHandler {
     private handleCallbackForSyncEvent(syncType: SyncType, data: { [k: string]: any }): void {
         try {
             const payload = data[keyPayload];
-            const dataJson = payload[keyData];
+            const dataJson = JSON.parse(payload)[keyData];
             MoEngageLogger.verbose(`${this.TAG} handleCallbackForSyncEvent() `, dataJson);
             if (dataJson !== undefined) {
                 const syncJson = dataJson[keySyncCompleteData];

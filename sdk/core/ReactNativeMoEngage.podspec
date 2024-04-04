@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.authors             = "MoEngage Inc."
   s.source              = {:file => './' }
   s.platforms = { :ios => "11.0", :tvos => "11.0" }
-  s.source_files        = 'iOS/MoEReactBridge/**/*.{h,m, smm}'
+  s.source_files        = 'iOS/MoEReactBridge/**/*.{h,m,mm}'
   s.dependency          'React'
   s.dependency          'MoEngagePluginBase','>= 4.7.0','< 4.8.0'
   s.ios.dependency  	'MoEngageRichNotification','>= 7.15.0','< 7.16.0'

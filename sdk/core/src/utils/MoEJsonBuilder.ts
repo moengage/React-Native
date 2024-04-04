@@ -7,6 +7,8 @@ import { MoEPropertiesToJson} from "./MoEObjectToJson";
 import {MoEngagePermissionType} from "../models/MoEngagePermissionType";
 import MoEInitConfig from "../models/MoEInitConfig";
 import MoEngageLogger from "../logger/MoEngageLogger";
+import {MoEngageNudgePosition} from "../models/MoEngageNudgePosition";
+
 
 export function getInAppCampaignJson(moEInAppData: MoEInAppData, type: string, appId: String) {
   var json: { [k: string]: any } = {
@@ -264,6 +266,18 @@ export function getInitConfigJson(appId: String, initConfig: MoEInitConfig) {
       pushConfig: {
         shouldDeliverCallbackOnForegroundClick: initConfig.pushConfig.shouldDeliverCallbackOnForegroundClick
       }
+    }
+  }
+  return JSON.stringify(json);
+}
+
+export function getNudgeDisplayJson(nudgePosition: MoEngageNudgePosition, appId: String) {
+  var json: { [k: string]: any } = {
+    accountMeta: {
+      appId: appId
+    },
+    data: {
+      position: nudgePosition.toString()
     }
   }
   return JSON.stringify(json);

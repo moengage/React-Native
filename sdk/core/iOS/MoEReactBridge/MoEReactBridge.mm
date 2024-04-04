@@ -24,7 +24,7 @@
   bool hasListeners;
   NSMutableArray *delayedEvents;
 }
-RCT_EXPORT_MODULE(MoEReactBridges);
+RCT_EXPORT_MODULE(MoEReactBridge);
 
 - (instancetype)init
 {
@@ -45,7 +45,7 @@ RCT_EXPORT_MODULE(MoEReactBridges);
 }
 
 + (BOOL)requiresMainQueueSetup {
-    return true;
+    return false;
 }
 
 #pragma mark- Observers
@@ -148,7 +148,6 @@ RCT_EXPORT_METHOD(updateSelfHandledInAppStatus:(NSString *)payload)  {
 
 RCT_EXPORT_METHOD(setAppContext:(NSString *)payload) {
     [[MoEReactNativeHandler sharedInstance] setAppContext:payload];
-
 }
 
 RCT_EXPORT_METHOD(resetAppContext:(NSString *)payload) {

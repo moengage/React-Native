@@ -26,6 +26,10 @@
     return instance;
 }
 
+-(void)setDelegate:(NSString *)identifier {
+    [[MoEngagePluginBridge sharedInstance] setPluginBridgeDelegate:self identifier:identifier];
+}
+
 -(void)initialize:(NSString *)payload {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginBridge sharedInstance] pluginInitialized:jsonPayload];
@@ -113,10 +117,18 @@
 
 - (void)sendMessageWithEvent:(NSString *)event message:(NSDictionary<NSString *,id> *)message {
     NSMutableDictionary* updatedDict = [NSMutableDictionary dictionary];
-
+    
     if (message) {
-            updatedDict[kPayload] = message;
+        NSError *err;
+        NSData * jsonData = [NSJSONSerialization dataWithJSONObject:message options:0 error:&err];
+        if (jsonData) {
+            NSString* strPayload = [[NSString alloc] initWithData:jsonData  encoding:NSUTF8StringEncoding];
+            updatedDict[kPayload] = strPayload;
+        } else {
+            NSLog(@"Error converting to dictionary to string %@", err.localizedDescription);
+        }
     }
+
     [self.eventEmitter sendEventWithName:event body:updatedDict];
 }
 

@@ -1,4 +1,4 @@
-import {DeviceEventEmitter, EmitterSubscription, NativeEventEmitter, NativeModules, Platform, PushNotificationPermissions} from "react-native";
+import {NativeEventEmitter, Platform} from "react-native";
 import MoEProperties from "./models/MoEProperties";
 import MoEGeoLocation from "./models/MoEGeoLocation";
 import * as MoEHelper from "./utils/MoEHelper";
@@ -25,7 +25,8 @@ import {
     getPushPermissionRequestCountJson,
     getDeviceIdTrackingJson,
     getInitConfigJson,
-    getPermissionResponseJson
+    getPermissionResponseJson,
+    getNudgeDisplayJson
 } from "./utils/MoEJsonBuilder";
 import {
     USER_ATTRIBUTE_UNIQUE_ID,
@@ -50,10 +51,11 @@ import UserDeletionData from "./models/UserDeletionData";
 import MoEAccountMeta from "./models/MoEAccountMeta";
 
 import MoEReactBridge from "./NativeMoEngage";
-import MoEPushToken from "react-native-moengage/src/models/MoEPushToken";
-import MoEPushPayload from "react-native-moengage/src/models/MoEPushPayload";
-import MoEInAppData from "react-native-moengage/src/models/MoEInAppData";
-import { getUserDeletionData } from "react-native-moengage/src/moeParser/MoEngagePayloadParser";
+import MoEPushToken from "../src/models/MoEPushToken";
+import MoEPushPayload from "../src/models/MoEPushPayload";
+import MoEInAppData from "../src/models/MoEInAppData";
+import { getUserDeletionData } from "../src/moeParser/MoEngagePayloadParser";
+import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
 
 const PLATFORM_IOS = "ios";
 const PLATFORM_ANDROID = "android";
@@ -352,6 +354,15 @@ var ReactMoE = {
   showInApp: function () {
     MoEngageLogger.verbose("Will try to show in-app.");
     MoEReactBridge.showInApp(getAppIdJson(moeAppId));
+  },
+
+  /**
+   * Call This method to show the nudge
+   * @param position position at which nudge should be displayed.
+   */
+  showNudge: function(position: MoEngageNudgePosition = MoEngageNudgePosition.Any){
+    let payload =  getNudgeDisplayJson(position, moeAppId);
+    MoEReactBridge.showNudge(payload);
   },
 
   /**
@@ -662,6 +673,7 @@ export {
   MoEngageLogConfig,
   MoEngageLogLevel,
   MoEngageLogger,
+  MoEngageNudgePosition,
 };
 export default ReactMoE;
 

@@ -16,7 +16,7 @@ import {
 } from "../Constants";
 import { cardToJson } from "./ModelToJsonMapper";
 
-export function getAccountMetaPayload(appId: string){
+export function getAccountMetaPayload(appId: string) {
     let payload =  { 
         [keyAccountMeta] : getAppIdPayload(appId)
     };

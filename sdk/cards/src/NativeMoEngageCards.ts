@@ -8,14 +8,14 @@ export interface Spec extends TurboModule {
     onCardSectionLoaded:(payload: string) => void;
     onCardSectionUnLoaded:(payload: string) => void;
 
-    getCardsCategories(payload: string): Promise<Object | Error>;
-    getCardsForCategory(payload: string): Promise<Object | Error>;
-    fetchCards(payload: string): Promise<Object | Error>;
-    isAllCategoryEnabled(payload: string): Promise<Object | Error>;
-    getNewCardsCount(payload: string): Promise<Object | Error>;
-    getUnClickedCardsCount(payload: string): Promise<Object | Error>;
+    getCardsCategories(payload: string): Promise<string>;
+    getCardsForCategory(payload: string): Promise<string>;
+    fetchCards(payload: string): Promise<string>;
+    isAllCategoryEnabled(payload: string): Promise<string>;
+    getNewCardsCount(payload: string): Promise<string>;
+    getUnClickedCardsCount(payload: string): Promise<string>;
   
-    getCardsInfo(payload: string): Promise<Object | Error>;
+    getCardsInfo(payload: string): Promise<string>;
     cardClicked:(payload: string) => void;
     cardDelivered:(payload: string) => void;
     cardShown:(payload: string) => void;

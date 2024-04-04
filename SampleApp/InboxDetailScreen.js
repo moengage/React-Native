@@ -19,20 +19,19 @@ export default class InboxDetailScreen extends PureComponent {
     const { params = {} } = navigation.state;
     return {
       headerTitle: "Inbox",
-      title: "Inbox Title",
-      headerRight: () => (
-        <TouchableOpacity onPress={params.getUnClickedCount}>
-          <View style={{ flex: 1, paddingRight: 10, justifyContent: "center" }}>
-            <Text> <AntIcon name="inbox" size={30} color="white" /></Text>
-          </View>
-        </TouchableOpacity>
-      ),
+      title: "Inbox Title"
     };
   };
 
   setNavigationParams = () => {
-    this.props.navigation.setParams({
-      getUnClickedCount: this.getUnClickedCount,
+    this.props.navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={this.getUnClickedCount}>
+          <View style={{ flex: 1, paddingRight: 10, justifyContent: "center" }}>
+            <Text> <AntIcon name="inbox" size={30} color="white" /></Text>
+          </View>
+        </TouchableOpacity>
+      )
     });
   };
 

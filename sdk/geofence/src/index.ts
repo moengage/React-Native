@@ -1,7 +1,7 @@
 import { Platform } from "react-native";
 
 import { MoEngageLogger } from "react-native-moengage";
-import  MoEReactGeofence  from './NativeMoEngageGeofence';
+import MoEReactGeofence from './NativeMoEngageGeofence';
 import { getAppIdJson } from "./utils/MoEGeofenceJsonBuilder";
 
 var ReactMoEGeofence = {

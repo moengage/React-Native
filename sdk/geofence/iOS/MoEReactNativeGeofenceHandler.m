@@ -1,6 +1,6 @@
 //
 //  MoEReactNativeHandler.m
-//  CocoaAsyncSocket
+//  ReactNativeMoEngageGeofence
 //
 //  Created by Rakshitha on 14/03/24.
 //
@@ -24,6 +24,8 @@
     });
     return instance;
 }
+
+// MARK: Geofence methods
 
 -(void)startGeofenceMonitoring:(NSString *)payload {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];

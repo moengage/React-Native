@@ -11,8 +11,8 @@ import { MOE_DATA } from "../utils/MoEInboxConstants"
 const PLATFORM = 'platform'
 const UNCLICKED_COUNT = 'unClickedCount'
 
-export function inboxDataFromJson(payload: Object) {
-  const inboxJSON = payload;
+export function inboxDataFromJson(payload: string) {
+  const inboxJSON = JSON.parse(payload);
   const inboxData = inboxJSON[InboxConstants.MOE_DATA]
   var platform;
   var messageList:MoEInboxMessage[] = [];

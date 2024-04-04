@@ -25,15 +25,29 @@
 
 -(void)getUnClickedMessageCount:(NSString *)payload resolve:(RCTPromiseResolveBlock) resolve reject:(RCTPromiseRejectBlock)reject {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
-    [[MoEngagePluginInboxBridge sharedInstance] getUnreadMessageCount:jsonPayload completionHandler:^(NSDictionary<NSString *,id> * _Nonnull response) {
-        resolve(response);
+    [[MoEngagePluginInboxBridge sharedInstance] getInboxMessages:jsonPayload completionHandler:^(NSDictionary<NSString *,id> * _Nonnull inboxMessages) {
+        NSError *err;
+        NSData * jsonData = [NSJSONSerialization dataWithJSONObject:inboxMessages options:0 error:&err];
+        if (jsonData) {
+            NSString *strPayload = [[NSString alloc] initWithData:jsonData  encoding:NSUTF8StringEncoding];
+            resolve(strPayload);
+        } else {
+            reject(@"Error", @"Error in fetching inbox messages", [NSError errorWithDomain:@"" code:400 userInfo:@{@"Error reason": @"Error in fetching response"}]);
+        }
     }];
 }
 
 -(void)getInboxMessages:(NSString *)payload resolve:(RCTPromiseResolveBlock) resolve reject:(RCTPromiseRejectBlock)reject {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginInboxBridge sharedInstance] getInboxMessages: jsonPayload completionHandler:^(NSDictionary<NSString *,id> * _Nonnull response) {
-        resolve(response);
+        NSError *err;
+        NSData * jsonData = [NSJSONSerialization dataWithJSONObject:response options:0 error:&err];
+        if (jsonData) {
+            NSString *strPayload = [[NSString alloc] initWithData:jsonData  encoding:NSUTF8StringEncoding];
+            resolve(strPayload);
+        } else {
+            reject(@"Error", @"Error in fetching inbox messages", [NSError errorWithDomain:@"" code:400 userInfo:@{@"Error reason": @"Error in fetching response"}]);
+        }
     }];
 }
 
