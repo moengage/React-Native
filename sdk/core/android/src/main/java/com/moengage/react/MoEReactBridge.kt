@@ -189,9 +189,9 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
     @ReactMethod
     fun validateSdkVersion(promise: Promise) {
         Logger.print { "$tag validateSdkVersion() : Validating Version" }
-        if (moeSdkVersion > 130000) {
+        if (moeSdkVersion > 140000) {
             Logger.print(LogLevel.ERROR) { "$tag validateSdkVersion() : invalid version" }
-            promise.reject("error", "Use SDK version 12.x.xx")
+            promise.reject("error", "Use SDK version less than 14.xx.xx")
         } else {
             Logger.print { "$tag validateSdkVersion() : valid version" }
             promise.resolve("valid version");

@@ -13,7 +13,6 @@ import { APP_ID, MOE_CLICKED_ACTION, MOE_IS_DEFAULT_ACTION, MOE_PAYLOAD, MOE_PLA
  */
 export function isPushTokenValid(tokenPayload: { [k: string]: any }) {
     try {
-        console.log("tokenpayload", tokenPayload)
         if (tokenPayload != undefined && tokenPayload[MOE_PLATFORM] != undefined && tokenPayload[MOE_PUSH_SERVICE] != undefined && tokenPayload[MOE_TOKEN] != undefined)
             return true;
         else {
