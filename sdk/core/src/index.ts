@@ -1,46 +1,46 @@
-import {NativeEventEmitter, Platform} from "react-native";
+import { NativeEventEmitter, Platform } from "react-native";
 import MoEProperties from "./models/MoEProperties";
 import MoEGeoLocation from "./models/MoEGeoLocation";
 import * as MoEHelper from "./utils/MoEHelper";
 
-import {MoEAppStatus} from "./models/MoEAppStatus";
+import { MoEAppStatus } from "./models/MoEAppStatus";
 import MoEInAppCustomAction from "./models/MoEInAppCustomAction";
 import MoEInAppNavigation from "./models/MoEInAppNavigation";
-import {executeHandler} from "./utils/MoEEventHandlerHelper";
+import { executeHandler } from "./utils/MoEEventHandlerHelper";
 import {
-    getAdIdTrackingJson,
-    getAliasJson,
-    getAndroidIdTrackingJson,
-    getAppIdJson,
-    getAppStatusJson,
-    getInAppContextJson,
-    getMoEPropertiesJson,
-    getMoEPushCampaignJson,
-    getMoEPushTokenJson,
-    getOptOutTrackingJson,
-    getSdkStateJson,
-    getSelfHandledJson,
-    getUserAttributeJson,
-    getUserLocAttributeJson,
-    getPushPermissionRequestCountJson,
-    getDeviceIdTrackingJson,
-    getInitConfigJson,
-    getPermissionResponseJson,
-    getNudgeDisplayJson
+  getAdIdTrackingJson,
+  getAliasJson,
+  getAndroidIdTrackingJson,
+  getAppIdJson,
+  getAppStatusJson,
+  getInAppContextJson,
+  getMoEPropertiesJson,
+  getMoEPushCampaignJson,
+  getMoEPushTokenJson,
+  getOptOutTrackingJson,
+  getSdkStateJson,
+  getSelfHandledJson,
+  getUserAttributeJson,
+  getUserLocAttributeJson,
+  getPushPermissionRequestCountJson,
+  getDeviceIdTrackingJson,
+  getInitConfigJson,
+  getPermissionResponseJson,
+  getNudgeDisplayJson
 } from "./utils/MoEJsonBuilder";
 import {
-    USER_ATTRIBUTE_UNIQUE_ID,
-    USER_ATTRIBUTE_USER_BDAY,
-    USER_ATTRIBUTE_USER_EMAIL,
-    USER_ATTRIBUTE_USER_FIRST_NAME,
-    USER_ATTRIBUTE_USER_GENDER,
-    USER_ATTRIBUTE_USER_LAST_NAME,
-    USER_ATTRIBUTE_USER_LOCATION,
-    USER_ATTRIBUTE_USER_MOBILE,
-    USER_ATTRIBUTE_USER_NAME
+  USER_ATTRIBUTE_UNIQUE_ID,
+  USER_ATTRIBUTE_USER_BDAY,
+  USER_ATTRIBUTE_USER_EMAIL,
+  USER_ATTRIBUTE_USER_FIRST_NAME,
+  USER_ATTRIBUTE_USER_GENDER,
+  USER_ATTRIBUTE_USER_LAST_NAME,
+  USER_ATTRIBUTE_USER_LOCATION,
+  USER_ATTRIBUTE_USER_MOBILE,
+  USER_ATTRIBUTE_USER_NAME
 } from "./utils/MoEConstants";
 import MoESelfHandledCampaignData from "./models/MoESelfHandledCampaignData";
-import {MoEngagePermissionType} from "./models/MoEngagePermissionType";
+import { MoEngagePermissionType } from "./models/MoEngagePermissionType";
 import MoEInitConfig from "./models/MoEInitConfig";
 import MoEPushConfig from "./models/MoEPushConfig";
 import MoEngageLogConfig from "./models/MoEngageLogConfig";
@@ -111,7 +111,6 @@ var moeAppId = "";
 
 const eventEmitter = new NativeEventEmitter(MoEReactBridge as any);
 
-
 if (eventEmitter) {
   for (var i = 0; i < eventBroadcastNames.length; i++) {
     let eventName = _eventNames[i];
@@ -128,22 +127,27 @@ function handleEventBroadcast(type: string | String, broadcast: string) {
   });
 }
 
-export type NotificationEventName = 'pushTokenGenerated' | 'pushClicked' | 'inAppCampaignShown' | 'inAppCampaignClicked' | 'inAppCampaignDismissed' | 'inAppCampaignCustomAction'  | 'inAppCampaignSelfHandled' ;
+export type NotificationEventName = 'pushTokenGenerated' | 'pushClicked' | 'inAppCampaignShown' | 'inAppCampaignClicked' | 'inAppCampaignDismissed' | 'inAppCampaignCustomAction' | 'inAppCampaignSelfHandled';
 
 
 type NotificationEventTypeMap = {
   "pushTokenGenerated": MoEPushToken,
   "pushClicked": MoEPushPayload,
-  "inAppCampaignShown": MoEInAppData ,
+  "inAppCampaignShown": MoEInAppData,
   "inAppCampaignClicked": MoEInAppData,
   "inAppCampaignDismissed": MoEInAppData,
   "inAppCampaignCustomAction": MoEInAppData,
-  "inAppCampaignSelfHandled": MoESelfHandledCampaignData 
+  "inAppCampaignSelfHandled": MoESelfHandledCampaignData
 }
 
 var ReactMoE = {
-  setEventListener: function <K extends NotificationEventName>(event: K, listener: (callbacck: NotificationEventTypeMap[K]) => void): void  {
+  setEventListener: function <K extends NotificationEventName>(event: K, listener: (callbacck: NotificationEventTypeMap[K]) => void): void {
     _eventTypeHandler.set(event, listener);
+  },
+
+  removeEventListener: function (type: any) {
+    if (!MoEReactBridge) return;
+    _eventTypeHandler.delete(type);
   },
 
   /**
@@ -360,8 +364,8 @@ var ReactMoE = {
    * Call This method to show the nudge
    * @param position position at which nudge should be displayed.
    */
-  showNudge: function(position: MoEngageNudgePosition = MoEngageNudgePosition.Any){
-    let payload =  getNudgeDisplayJson(position, moeAppId);
+  showNudge: function (position: MoEngageNudgePosition = MoEngageNudgePosition.Any) {
+    let payload = getNudgeDisplayJson(position, moeAppId);
     MoEReactBridge.showNudge(payload);
   },
 
@@ -440,8 +444,8 @@ var ReactMoE = {
   passFcmPushToken: function (pushToken: string) {
     MoEngageLogger.verbose("Will process push token");
     if (Platform.OS == PLATFORM_ANDROID) {
-    let payload = getMoEPushTokenJson(pushToken, PUSH_SERVICE_FCM, PLATFORM_ANDROID, moeAppId);
-    MoEReactBridge.passFcmPushToken(getAppIdJson(moeAppId));
+      let payload = getMoEPushTokenJson(pushToken, PUSH_SERVICE_FCM, PLATFORM_ANDROID, moeAppId);
+      MoEReactBridge.passFcmPushToken(getAppIdJson(moeAppId));
     }
   },
   /**
@@ -453,8 +457,8 @@ var ReactMoE = {
   passFcmPushPayload: function (pushPayload: object) {
     MoEngageLogger.verbose("Will process push payload.");
     if (Platform.OS == PLATFORM_ANDROID) {
-    let payload = getMoEPushCampaignJson(pushPayload, PUSH_SERVICE_FCM, moeAppId);
-    MoEReactBridge.passFcmPushPayload(payload);
+      let payload = getMoEPushCampaignJson(pushPayload, PUSH_SERVICE_FCM, moeAppId);
+      MoEReactBridge.passFcmPushPayload(payload);
     }
   },
 
@@ -463,23 +467,10 @@ var ReactMoE = {
    */
   registerForPush: function () {
     if (Platform.OS == PLATFORM_IOS) {
-    MoEngageLogger.verbose("Will registerForPush");
-    MoEReactBridge.registerForPush();
+      MoEngageLogger.verbose("Will registerForPush");
+      MoEReactBridge.registerForPush();
     }
   },
-
-  /**
-   * Call this method to disable Inbox/ Notification Center feature.
-   */
-  // disableInbox: function () {
-  //   commonValidationCheck();
-  //   MoEngageLogger.verbose("Will disableInbox");
-  //   if (Platform.OS == PLATFORM_ANDROID) {
-  //     MoEngageLogger.debug("This api is not supported on android platform.");
-  //   } else if (Platform.OS == PLATFORM_IOS) {
-  //     MoERNiOS.disableInbox(getAppIdJson(moeAppId));
-  //   }
-  // },
 
   optOutDataTracking: function (shouldOptOutDataTracking: boolean) {
     MoEngageLogger.verbose("Will opt out data tracking");
@@ -496,8 +487,8 @@ var ReactMoE = {
   passPushKitPushToken: function (pushToken: string) {
     MoEngageLogger.verbose("Will process push-kit push token");
     if (Platform.OS == PLATFORM_ANDROID) {
-    let payload = getMoEPushTokenJson(pushToken, PUSH_SERVICE_PUSH_KIT, PLATFORM_ANDROID, moeAppId);
-    MoEReactBridge.passPushKitPushToken(payload);
+      let payload = getMoEPushTokenJson(pushToken, PUSH_SERVICE_PUSH_KIT, PLATFORM_ANDROID, moeAppId);
+      MoEReactBridge.passPushKitPushToken(payload);
     }
   },
 
@@ -516,7 +507,7 @@ var ReactMoE = {
   onOrientationChanged: function () {
     MoEngageLogger.verbose("Will process screen rotation.");
     if (Platform.OS == PLATFORM_ANDROID) {
-    MoEReactBridge.onOrientationChanged();
+      MoEReactBridge.onOrientationChanged();
     }
   },
 
@@ -526,8 +517,8 @@ var ReactMoE = {
   enableAdIdTracking: function () {
     MoEngageLogger.verbose("Will enable advertising-id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
-    let payload = getAdIdTrackingJson(true, moeAppId);
-    MoEReactBridge.enableAdIdTracking(payload);
+      let payload = getAdIdTrackingJson(true, moeAppId);
+      MoEReactBridge.enableAdIdTracking(payload);
     }
   },
 
@@ -540,8 +531,8 @@ var ReactMoE = {
   disableAdIdTracking: function () {
     MoEngageLogger.verbose("Will disable advertising-id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
-    let payload = getAdIdTrackingJson(false, moeAppId);
-    MoEReactBridge.disableAdIdTracking(payload);
+      let payload = getAdIdTrackingJson(false, moeAppId);
+      MoEReactBridge.disableAdIdTracking(payload);
     }
   },
 
@@ -551,8 +542,8 @@ var ReactMoE = {
   enableAndroidIdTracking: function () {
     MoEngageLogger.verbose("Will enable android-id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
-    let payload = getAndroidIdTrackingJson(true, moeAppId);
-    MoEReactBridge.enableAndroidIdTracking(payload);
+      let payload = getAndroidIdTrackingJson(true, moeAppId);
+      MoEReactBridge.enableAndroidIdTracking(payload);
     }
   },
 
@@ -565,37 +556,37 @@ var ReactMoE = {
   disableAndroidIdTracking: function () {
     MoEngageLogger.verbose("Will disable android-id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
-    let payload = getAndroidIdTrackingJson(false, moeAppId);
-    MoEReactBridge.disableAndroidIdTracking(payload);
+      let payload = getAndroidIdTrackingJson(false, moeAppId);
+      MoEReactBridge.disableAndroidIdTracking(payload);
     }
   },
 
   pushPermissionResponseAndroid: function (isGranted: boolean) {
     MoEngageLogger.verbose("Will track permission response");
     if (Platform.OS == PLATFORM_ANDROID) {
-    let payload = getPermissionResponseJson(isGranted, MoEngagePermissionType.PUSH)
-    MoEReactBridge.pushPermissionResponseAndroid(payload);
+      let payload = getPermissionResponseJson(isGranted, MoEngagePermissionType.PUSH)
+      MoEReactBridge.pushPermissionResponseAndroid(payload);
     }
   },
 
   setupNotificationChannelsAndroid: function () {
     MoEngageLogger.verbose("Will setup notification");
     if (Platform.OS == PLATFORM_ANDROID) {
-    MoEReactBridge.setupNotificationChannels();
+      MoEReactBridge.setupNotificationChannels();
     }
   },
 
   navigateToSettingsAndroid: function () {
     MoEngageLogger.verbose("Will navigate to settings");
     if (Platform.OS == PLATFORM_ANDROID) {
-    MoEReactBridge.navigateToSettingsAndroid();
+      MoEReactBridge.navigateToSettingsAndroid();
     }
   },
 
   requestPushPermissionAndroid: function () {
     MoEngageLogger.verbose("Will request push permission.");
     if (Platform.OS == PLATFORM_ANDROID) {
-    MoEReactBridge.requestPushPermissionAndroid();
+      MoEReactBridge.requestPushPermissionAndroid();
     }
   },
 
@@ -608,10 +599,10 @@ var ReactMoE = {
   updatePushPermissionRequestCountAndroid: function (count: number) {
     MoEngageLogger.verbose("Will increment push permission request count");
     if (Platform.OS == PLATFORM_ANDROID) {
-    let payload = getPushPermissionRequestCountJson(count, moeAppId);
-    MoEReactBridge.updatePushPermissionRequestCountAndroid(payload);
+      let payload = getPushPermissionRequestCountJson(count, moeAppId);
+      MoEReactBridge.updatePushPermissionRequestCountAndroid(payload);
     }
-    
+
   },
 
   /**
@@ -622,8 +613,8 @@ var ReactMoE = {
   enableDeviceIdTracking: function () {
     MoEngageLogger.verbose("Will enable device id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
-    let payload = getDeviceIdTrackingJson(true, moeAppId);
-    MoEReactBridge.enableDeviceIdTracking(payload);
+      let payload = getDeviceIdTrackingJson(true, moeAppId);
+      MoEReactBridge.enableDeviceIdTracking(payload);
     }
   },
 
@@ -633,8 +624,8 @@ var ReactMoE = {
   disableDeviceIdTracking: function () {
     MoEngageLogger.verbose("Will disable device id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
-    let payload = getDeviceIdTrackingJson(false, moeAppId);
-    MoEReactBridge.disableDeviceIdTracking(payload);
+      let payload = getDeviceIdTrackingJson(false, moeAppId);
+      MoEReactBridge.disableDeviceIdTracking(payload);
     }
   },
 
@@ -650,10 +641,10 @@ var ReactMoE = {
     const accountMetaJson = getAppIdJson(moeAppId);
     try {
       if (Platform.OS == PLATFORM_ANDROID) {
-      const deleteUserPayload = await MoEReactBridge.deleteUser(accountMetaJson);
-      return getUserDeletionData(deleteUserPayload);
+        const deleteUserPayload = await MoEReactBridge.deleteUser(accountMetaJson);
+        return getUserDeletionData(deleteUserPayload);
       }
-    } catch(error) {
+    } catch (error) {
       MoEngageLogger.error(`deleteUser(): ${error}`)
     }
 

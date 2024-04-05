@@ -1,4 +1,3 @@
-import { Platform } from "react-native";
 import MoEInboxData from "../src/model/MoEInboxData";
 import MoEInboxMessage from "../src/model/MoEInboxMessage";
 import MoETextContent from "../src/model/MoETextContent";

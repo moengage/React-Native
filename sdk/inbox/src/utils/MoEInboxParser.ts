@@ -142,8 +142,8 @@ function textContentFromJson(textContentObject: { [k: string]: any }) {
   else return undefined;
 }
 
-export function unClickedCountFromPayload(payload: Object) {
-  const json = payload;
+export function unClickedCountFromPayload(payload: string) {
+  const json = JSON.parse(payload);
   if (isValidObject(json)) {
     const data = json[MOE_DATA];
     return data[UNCLICKED_COUNT];
