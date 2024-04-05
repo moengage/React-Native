@@ -35,7 +35,7 @@ internal class MoEngageGeofenceHandler(reactContext: ReactApplicationContext) {
 
     fun startGeofenceMonitoring(payload: String) {
         try {
-            Logger.print { "$tag startGeofenceMonitoring()" }
+            Logger.print { "$tag startGeofenceMonitoring() - $payload" }
             pluginHelper.startGeofenceMonitoring(context, payload)
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag startGeofenceMonitoring() : " }
@@ -44,7 +44,7 @@ internal class MoEngageGeofenceHandler(reactContext: ReactApplicationContext) {
 
     fun stopGeofenceMonitoring(payload: String) {
         try {
-            Logger.print { "$tag stopGeofenceMonitoring()" }
+            Logger.print { "$tag stopGeofenceMonitoring() - $payload" }
             pluginHelper.stopGeofenceMonitoring(context, payload)
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag stopGeofenceMonitoring() : " }
