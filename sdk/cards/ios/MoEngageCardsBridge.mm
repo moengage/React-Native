@@ -4,7 +4,7 @@
 #import "MoEngageCardsReactConstants.h"
 #import "MoEReactNativeCardsHandler.h"
 
-@implementation MoEngageCardsBridge  
+@implementation MoEngageCardsBridge
 
 {
     bool hasListeners;
@@ -25,18 +25,19 @@
     return @[kAppOpenCardsSyncListener, kPullToRefreshCardsSyncListener, kInboxOpenCardsSyncListener];
 }
 
-
 RCT_EXPORT_MODULE();
+
+#pragma mark- Initialize methods
 
 RCT_EXPORT_METHOD(initialize:(NSString *) payload) {
     [[MoEReactNativeCardsHandler sharedInstance] initialize:payload];
     [MoEReactNativeCardsHandler sharedInstance].eventEmitter = self;
 }
 
+#pragma mark- Callback method
 RCT_EXPORT_METHOD(isAllCategoryEnabled:(NSString *) payload resolve:(RCTPromiseResolveBlock) resolve reject:(RCTPromiseRejectBlock)reject) {
     [[MoEReactNativeCardsHandler sharedInstance] isAllCategoryEnabled:payload resolve:resolve reject:reject];
 }
-
 
 RCT_EXPORT_METHOD(getCardsCategories:(NSString *) payload resolve:(RCTPromiseResolveBlock) resolve reject:(RCTPromiseRejectBlock)reject) {
     [[MoEReactNativeCardsHandler sharedInstance] getCardsCategories:payload resolve:resolve reject:reject];
@@ -62,6 +63,7 @@ RCT_EXPORT_METHOD(getUnClickedCardsCount:(NSString *) payload resolve:(RCTPromis
     [[MoEReactNativeCardsHandler sharedInstance] getUnClickedCardsCount:payload resolve:resolve reject:reject];
 }
 
+#pragma mark- Listener methods
 RCT_EXPORT_METHOD(refreshCards:(NSString *) payload) {
     [[MoEReactNativeCardsHandler sharedInstance] refreshCards:payload];
 }
@@ -74,6 +76,7 @@ RCT_EXPORT_METHOD(onCardSectionUnLoaded:(NSString *) payload) {
     [[MoEReactNativeCardsHandler sharedInstance] onCardSectionUnLoaded:payload];
 }
 
+#pragma mark- Stats methods
 RCT_EXPORT_METHOD(cardClicked:(NSString *) payload) {
     [[MoEReactNativeCardsHandler sharedInstance] cardClicked:payload];
 }

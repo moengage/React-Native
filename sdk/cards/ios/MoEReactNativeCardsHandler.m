@@ -27,6 +27,7 @@
     return instance;
 }
 
+#pragma mark- Initialize methods
 -(void)initialize:(NSString*)payload {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginCardsBridge sharedInstance] initialize:jsonPayload];
@@ -34,7 +35,7 @@
     [[MoEngagePluginCardsBridge sharedInstance] setSyncEventListnerDelegate:self];
 }
 
-
+#pragma mark- Callback methods
 -(void)isAllCategoryEnabled:(NSString *) payload resolve:(RCTPromiseResolveBlock) resolve reject:(RCTPromiseRejectBlock)reject {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginCardsBridge sharedInstance] isAllCategoryEnabled:jsonPayload completionHandler:^(NSDictionary<NSString *,id> * _Nonnull cardPayload) {
@@ -84,6 +85,7 @@
     }];
 }
 
+#pragma mark- Listener methods
 -(void)refreshCards:(NSString *) payload {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginCardsBridge sharedInstance] refreshCards:jsonPayload];
@@ -99,6 +101,7 @@
     [[MoEngagePluginCardsBridge sharedInstance] onCardsSectionUnLoaded:jsonPayload];
 }
 
+#pragma mark- Stats methods
 -(void)cardClicked:(NSString *) payload {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginCardsBridge sharedInstance] cardClicked:jsonPayload];

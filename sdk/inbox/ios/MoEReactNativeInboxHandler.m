@@ -23,6 +23,7 @@
     return instance;
 }
 
+#pragma mark- Inbox methods
 -(void)getUnClickedMessageCount:(NSString *)payload resolve:(RCTPromiseResolveBlock) resolve reject:(RCTPromiseRejectBlock)reject {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginInboxBridge sharedInstance] getUnreadMessageCount:jsonPayload completionHandler:^(NSDictionary<NSString *,id> * _Nonnull countPayload) {
@@ -51,6 +52,7 @@
     }];
 }
 
+#pragma mark- Stats methods
 -(void)trackInboxClick:(NSString *)payload {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginInboxBridge sharedInstance] trackInboxClick:jsonPayload];

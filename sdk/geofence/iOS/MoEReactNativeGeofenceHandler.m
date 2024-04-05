@@ -26,7 +26,6 @@
 }
 
 // MARK: Geofence methods
-
 -(void)startGeofenceMonitoring:(NSString *)payload {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginGeofenceBridge sharedInstance] startGeofenceMonitoring: jsonPayload];

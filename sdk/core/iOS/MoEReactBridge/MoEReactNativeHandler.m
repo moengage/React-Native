@@ -30,6 +30,8 @@
     [[MoEngagePluginBridge sharedInstance] setPluginBridgeDelegate:self identifier:identifier];
 }
 
+#pragma mark- Initialize methods
+
 -(void)initialize:(NSString *)payload {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginBridge sharedInstance] pluginInitialized:jsonPayload];
@@ -63,7 +65,6 @@
 -(void)registerForPush {
     [[MoEngagePluginBridge sharedInstance] registerForPush];
 }
-
 
 #pragma mark Show InApp
 -(void)showInApp:(NSString *)payload {
@@ -115,6 +116,7 @@
     [[MoEngagePluginBridge sharedInstance] updateSDKState:jsonPayload];
 }
 
+#pragma mark- Delegate Method
 - (void)sendMessageWithEvent:(NSString *)event message:(NSDictionary<NSString *,id> *)message {
     NSMutableDictionary* updatedDict = [NSMutableDictionary dictionary];
     

@@ -15,10 +15,6 @@
 
 @import MoEngagePluginBase;
 
-@interface MoEngageInitializer()
-@property(nonatomic, weak) MoEReactNativeHandler *dummyHandler;
-@end
-
 @implementation MoEngageInitializer
 
 #pragma mark- Initialization

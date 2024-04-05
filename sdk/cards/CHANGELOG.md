@@ -1,7 +1,7 @@
 # Next Release Date
 
 ## Next Version
-- Added Suuport for Turbo Architecture
+- Added support for Turbo Architecture
     
 # 18-03-2024
 

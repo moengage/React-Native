@@ -1,7 +1,7 @@
 # Next Release Date
 
 ## Next Version
-- Added Suuport for Turbo Architecture
+- Added support for Turbo Architecture
 - iOS
     - Removed support for SDK initialization from Info.plist.
     - Removed APIs

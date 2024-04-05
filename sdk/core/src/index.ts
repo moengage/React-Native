@@ -141,7 +141,7 @@ type NotificationEventTypeMap = {
 }
 
 var ReactMoE = {
-  setEventListener: function <K extends NotificationEventName>(event: K, listener: (callbacck: NotificationEventTypeMap[K]) => void): void {
+  setEventListener: function <T extends NotificationEventName>(event: T, listener: (callbacck: NotificationEventTypeMap[T]) => void): void {
     _eventTypeHandler.set(event, listener);
   },
 
@@ -159,7 +159,13 @@ var ReactMoE = {
   initialize: function (appId: string, initConfig: MoEInitConfig = MoEInitConfig.defaultConfig()) {
     moeAppId = appId;
     MoEngageGlobalCache.updateInitConfig(initConfig);
-    MoEReactBridge.initialize(getAppIdJson(appId));
+    let payload;
+    if (Platform.OS == PLATFORM_ANDROID) {
+      payload = getInitConfigJson(appId, initConfig);
+    } else if (Platform.OS == PLATFORM_IOS) {
+      payload = getAppIdJson(appId);
+    }
+    MoEReactBridge.initialize(payload);
   },
 
   /**
