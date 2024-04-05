@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <React/RCTEventEmitter.h>
+#import "MoEReactBridge.h"
 
 @interface MoEReactNativeHandler : NSObject
 +(instancetype)sharedInstance;
 
-@property (nonatomic, weak) RCTEventEmitter *eventEmitter;
+@property (nonatomic, weak) MoEReactBridge *reactBridge;
 
 -(void)setDelegate:(NSString *)identifier;
 

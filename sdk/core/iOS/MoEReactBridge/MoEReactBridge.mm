@@ -35,15 +35,6 @@ RCT_EXPORT_MODULE(MoEReactBridge);
     return self;
 }
 
-+ (id)allocWithZone:(NSZone *)zone {
-    static MoEReactBridge *sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [super allocWithZone:zone];
-    });
-    return sharedInstance;
-}
-
 + (BOOL)requiresMainQueueSetup {
     return false;
 }
@@ -52,9 +43,8 @@ RCT_EXPORT_MODULE(MoEReactBridge);
 // Will be called when this module's first listener is added.
 -(void)startObserving {
     hasListeners = YES;
-    [MoEReactNativeHandler sharedInstance].eventEmitter = self;
     [self flushDelayedEvents];
-
+    [MoEReactNativeHandler sharedInstance].reactBridge = self;
 }
 
 // Will be called when this module's last listener is removed, or on dealloc.
@@ -242,6 +232,9 @@ RCT_EXPORT_METHOD(updatePushPermissionRequestCountAndroid:(NSString *)payload) {
     RCTLogInfo(@"Warning: This is an Android only feature.");
 }
 
+RCT_EXPORT_METHOD(deleteUser:(NSString *)payload resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) { 
+    RCTLogInfo(@"Warning: This is an Android only feature.");
+}
 
 #ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const facebook::react::ObjCTurboModule::InitParams &)params {

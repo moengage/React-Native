@@ -128,9 +128,9 @@
             NSLog(@"Error converting to dictionary to string %@", err.localizedDescription);
         }
     }
-
-    [self.eventEmitter sendEventWithName:event body:updatedDict];
+    
+    NSDictionary* userInfo = @{kEventName:event,kPayloadDict:updatedDict};
+    [self.reactBridge sendEventWithName:userInfo];
 }
-
 
 @end

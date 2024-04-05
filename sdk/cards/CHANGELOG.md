@@ -1,3 +1,8 @@
+# Next Release Date
+
+## Next Version
+- Added Suuport for Turbo Architecture
+    
 # 18-03-2024
 
 ## 2.0.1

@@ -1,3 +1,18 @@
+# Next Release Date
+
+## Next Version
+- Added Suuport for Turbo Architecture
+- iOS
+    - Removed support for SDK initialization from Info.plist.
+    - Removed APIs
+
+    | Removed APIs                |
+    |:---------------------------:|
+    | - (void)initializeDefaultInstance:(NSDictionary*)launchOptions; |
+    | - (void)initializeDefaultInstanceWithState:(MoEngageSDKState)sdkState andLaunchOptions:(NSDictionary*)launchOptions;            |
+    | - (void)initializeDefaultInstance:(BOOL)isSdkEnabled andLaunchOptions:(NSDictionary*)launchOptions;  |
+    | - (void)initializeDefaultSDKConfig:(MoEngageSDKConfig*)sdkConfig withSDKState:(BOOL)isSdkEnabled andLaunchOptions:(NSDictionary*)launchOptions    |
+  
 # 18-03-2024
 
 ## 9.0.0
