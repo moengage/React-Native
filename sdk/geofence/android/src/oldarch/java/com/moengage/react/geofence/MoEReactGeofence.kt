@@ -30,7 +30,7 @@ class MoEReactGeofence(
     reactContext: ReactApplicationContext
 ) : ReactContextBaseJavaModule(reactContext) {
 
-    private val bridgeHandler = MoEngageGeofenceHandler(reactContext)
+    private val bridgeHandler = MoEngageGeofenceHandler(reactContext.applicationContext)
 
     override fun getName() = bridgeHandler.getName()
 

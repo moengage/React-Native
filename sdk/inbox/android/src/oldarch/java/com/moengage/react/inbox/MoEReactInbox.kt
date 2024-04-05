@@ -33,7 +33,7 @@ class MoEReactInbox(
     reactContext: ReactApplicationContext
 ) : ReactContextBaseJavaModule(reactContext) {
 
-    private val bridgeHandler = MoEngageInboxHandler(reactContext)
+    private val bridgeHandler = MoEngageInboxHandler(reactContext.applicationContext)
 
 
     override fun getName() = bridgeHandler.getName()

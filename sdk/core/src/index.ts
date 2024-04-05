@@ -26,7 +26,8 @@ import {
   getDeviceIdTrackingJson,
   getInitConfigJson,
   getPermissionResponseJson,
-  getNudgeDisplayJson
+  getNudgeDisplayJson,
+  getInitConfigJson
 } from "./utils/MoEJsonBuilder";
 import {
   USER_ATTRIBUTE_UNIQUE_ID,

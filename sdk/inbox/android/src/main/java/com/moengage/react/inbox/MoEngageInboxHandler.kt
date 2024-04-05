@@ -13,8 +13,8 @@
 
 package com.moengage.react.inbox
 
+import android.content.Context
 import com.facebook.react.bridge.Promise
-import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.moengage.core.internal.logger.Logger
 import com.moengage.core.LogLevel
@@ -28,16 +28,13 @@ import com.moengage.plugin.base.inbox.internal.unClickedCountToJson
  * @author Abhishek Kumar
  * @since Todo: Add Version
  */
-internal class MoEngageInboxHandler(
-    reactContext: ReactApplicationContext
-) : ReactContextBaseJavaModule(reactContext) {
+internal class MoEngageInboxHandler(private val context: Context){
 
     private val tag = "MoEngageInboxHandler"
 
-    private val context = reactContext.applicationContext
     private val pluginHelper = InboxPluginHelper()
 
-    override fun getName() = NAME
+    fun getName() = NAME
 
     fun getUnClickedCount(payload: String, promise: Promise) {
         try {

@@ -25,9 +25,9 @@ import com.facebook.react.bridge.ReactApplicationContext
 class MoEReactInbox(reactContext: ReactApplicationContext) :
     NativeMoEngageInboxSpec(reactContext) {
 
-    private val bridgeHandler = MoEngageInboxHandler(reactContext)
+    private val bridgeHandler = MoEngageInboxHandler(reactContext.applicationContext)
 
-    override fun getName() = bridgeHandler.name
+    override fun getName() = bridgeHandler.getName()
 
     override fun getUnClickedCount(payload: String, promise: Promise) {
         bridgeHandler.getUnClickedCount(payload, promise)

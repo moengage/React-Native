@@ -13,7 +13,7 @@
 
 package com.moengage.react.geofence
 
-import com.facebook.react.bridge.ReactApplicationContext
+import android.content.Context
 import com.moengage.core.internal.logger.Logger
 import com.moengage.core.LogLevel
 import com.moengage.plugin.base.geofence.internal.GeofencePluginHelper
@@ -24,11 +24,10 @@ import com.moengage.plugin.base.geofence.internal.GeofencePluginHelper
  * @author Abhishek Kumar
  * @since Todo: Add Version
  */
-internal class MoEngageGeofenceHandler(reactContext: ReactApplicationContext) {
+internal class MoEngageGeofenceHandler(private val context: Context) {
 
     private val tag = "MoEngageGeofenceHandler"
 
-    private val context = reactContext.applicationContext
     private val pluginHelper = GeofencePluginHelper()
 
     fun getName() = NAME

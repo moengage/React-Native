@@ -44,7 +44,6 @@ class MoEngageCardsPackage : TurboReactPackage() {
                 MoEngageCardsBridgeHandler.NAME,
                 false,  // canOverrideExistingModule
                 false,  // needsEagerInit
-                true,  // hasConstants
                 false,  // isCxxModule
                 isTurboModule // isTurboModule
             )
