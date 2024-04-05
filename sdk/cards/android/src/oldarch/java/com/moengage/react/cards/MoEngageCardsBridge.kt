@@ -71,12 +71,12 @@ class MoEngageCardsBridge(
 
     @ReactMethod
     fun getCardsCategories(payload: String, promise: Promise) {
-        bridgeHandler.getCardsCategories(payload)
+        bridgeHandler.getCardsCategories(payload, promise)
     }
 
     @ReactMethod
     fun getCardsInfo(payload: String, promise: Promise) {
-        bridgeHandler.getCardsInfo(payload)
+        bridgeHandler.getCardsInfo(payload, promise)
     }
 
     @ReactMethod
@@ -96,7 +96,7 @@ class MoEngageCardsBridge(
 
     @ReactMethod
     fun getCardsForCategory(payload: String, promise: Promise) {
-        bridgeHandler.getCardsForCategory(payload)
+        bridgeHandler.getCardsForCategory(payload, promise)
     }
 
     @ReactMethod
@@ -106,7 +106,7 @@ class MoEngageCardsBridge(
 
     @ReactMethod
     fun isAllCategoryEnabled(payload: String, promise: Promise) {
-        bridgeHandler.isAllCategoryEnabled(payload)
+        bridgeHandler.isAllCategoryEnabled(payload, promise)
     }
 
     @ReactMethod

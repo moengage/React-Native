@@ -15,6 +15,7 @@ package com.moengage.react
 
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
+import com.moengage.core.internal.logger.Logger
 
 /**
  * Bridge to communicate with js code in new arch
@@ -24,6 +25,7 @@ import com.facebook.react.bridge.ReactApplicationContext
  */
 class MoEReactBridge(reactContext: ReactApplicationContext) : NativeMoEngageSpec(reactContext) {
 
+    private val tag = "${MODULE_TAG}MoEReactBridge"
     private val bridgeHandler = MoEReactBridgeHandler(reactContext)
 
     override fun getName() = bridgeHandler.getName()
@@ -35,6 +37,7 @@ class MoEReactBridge(reactContext: ReactApplicationContext) : NativeMoEngageSpec
     }
 
     override fun initialize(payload: String) {
+        Logger.print { "$tag initializing module in new arch" }
         bridgeHandler.initialize(payload)
     }
 

@@ -17,6 +17,7 @@ import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
+import com.moengage.core.internal.logger.Logger
 
 /**
  * Bridge to communicate with js code in old arch
@@ -28,6 +29,7 @@ class MoEReactBridge(
     private val reactContext: ReactApplicationContext
 ) : ReactContextBaseJavaModule(reactContext) {
 
+    private val tag = "${MODULE_TAG}MoEReactBridge"
     private val bridgeHandler = MoEReactBridgeHandler(reactContext)
 
     override fun getName() = bridgeHandler.getName()
@@ -88,22 +90,28 @@ class MoEReactBridge(
     }
 
     @ReactMethod
-    fun passPushToken(payload: String) {
+    fun passFcmPushToken(payload: String) {
         bridgeHandler.passPushToken(payload)
     }
 
     @ReactMethod
-    fun passPushPayload(payload: String) {
+    fun passPushKitPushToken(payload: String) {
+        bridgeHandler.passPushToken(payload)
+    }
+
+    @ReactMethod
+    fun passFcmPushPayload(payload: String) {
         bridgeHandler.passPushPayload(payload)
     }
 
     @ReactMethod
     fun initialize(payload: String) {
+        Logger.print { "$tag initializing module in old arch" }
         bridgeHandler.initialize(payload)
     }
 
     @ReactMethod
-    fun selfHandledCallback(payload: String) {
+    fun updateSelfHandledInAppStatus(payload: String) {
         bridgeHandler.selfHandledCallback(payload)
     }
 

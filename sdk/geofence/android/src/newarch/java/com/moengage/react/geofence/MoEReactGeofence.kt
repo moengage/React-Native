@@ -16,7 +16,7 @@ package com.moengage.react.geofence
 import com.facebook.react.bridge.ReactApplicationContext
 
 /**
- * Bridge to communicate with React-Native Goefence Plugin in old arch
+ * Bridge to communicate with React-Native Goefence Plugin in new arch
  *
  * @author Abhishek Kumar
  * @since Todo: Add Version
