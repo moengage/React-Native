@@ -197,7 +197,7 @@ export const HomeScreen = (props) => {
             id: "19",
             title: "Stop Geofence Monitoring",
             action: () => {
-              ReactMoEGeofence.stopGeofenceMonitoring("DAO6UGZ73D9RTK8B5W96TPYN");
+              ReactMoEGeofence.stopGeofenceMonitoring(MOENGAGE_APP_ID);
             }
           },
           {
