@@ -141,7 +141,7 @@ type NotificationEventTypeMap = {
 }
 
 var ReactMoE = {
-  setEventListener: function <T extends NotificationEventName>(event: T, listener: (callbacck: NotificationEventTypeMap[T]) => void): void {
+  setEventListener: function <T extends NotificationEventName>(event: T, listener: (callback: NotificationEventTypeMap[T]) => void): void {
     _eventTypeHandler.set(event, listener);
   },
 
@@ -159,12 +159,14 @@ var ReactMoE = {
   initialize: function (appId: string, initConfig: MoEInitConfig = MoEInitConfig.defaultConfig()) {
     moeAppId = appId;
     MoEngageGlobalCache.updateInitConfig(initConfig);
-    let payload;
+    let payload: string = "";
     if (Platform.OS == PLATFORM_ANDROID) {
       payload = getInitConfigJson(appId, initConfig);
     } else if (Platform.OS == PLATFORM_IOS) {
       payload = getAppIdJson(appId);
     }
+
+    MoEngageLogger.verbose("Initializing the MoEngage Plugin");
     MoEReactBridge.initialize(payload);
   },
 
@@ -371,6 +373,7 @@ var ReactMoE = {
    * @param position position at which nudge should be displayed.
    */
   showNudge: function (position: MoEngageNudgePosition = MoEngageNudgePosition.Any) {
+    MoEngageLogger.verbose("Will try to show nudge");
     let payload = getNudgeDisplayJson(position, moeAppId);
     MoEReactBridge.showNudge(payload);
   },
@@ -379,6 +382,7 @@ var ReactMoE = {
    * Call this method to get the campaign info for self handled inApps
    */
   getSelfHandledInApp: function () {
+    MoEngageLogger.verbose("Will try to fetch self handled inapp");
     MoEReactBridge.getSelfHandledInApp(getAppIdJson(moeAppId));
   },
 
@@ -452,6 +456,8 @@ var ReactMoE = {
     if (Platform.OS == PLATFORM_ANDROID) {
       let payload = getMoEPushTokenJson(pushToken, PUSH_SERVICE_FCM, PLATFORM_ANDROID, moeAppId);
       MoEReactBridge.passFcmPushToken(getAppIdJson(moeAppId));
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
     }
   },
   /**
@@ -465,22 +471,46 @@ var ReactMoE = {
     if (Platform.OS == PLATFORM_ANDROID) {
       let payload = getMoEPushCampaignJson(pushPayload, PUSH_SERVICE_FCM, moeAppId);
       MoEReactBridge.passFcmPushPayload(payload);
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
     }
   },
 
   /**
    * Call this method to register for push notification in iOS
+   * Note: This API is only for iOS platform and is a no-operation method for other plaforms.
    */
   registerForPush: function () {
     if (Platform.OS == PLATFORM_IOS) {
       MoEngageLogger.verbose("Will registerForPush");
       MoEReactBridge.registerForPush();
+    } else {
+      MoEngageLogger.debug("This api is not supported on Android platform.");
     }
   },
 
-  optOutDataTracking: function (shouldOptOutDataTracking: boolean) {
+  /**
+   * Call this method to enable the data tracking
+   * 
+   * Note: By default data tracking is enabled.
+   * 
+   * @since 10.0.0
+   */
+  enableDataTracking: function () {
+    MoEngageLogger.verbose("Will opt in data tracking");
+    let payload = getOptOutTrackingJson("data", false, moeAppId);
+    MoEReactBridge.optOutDataTracking(payload);
+  },
+
+  /**
+   * Call this method to disable the data tracking
+   * Note: When data tracking is opted out no custom event or user attribute is tracked on MoEngage Platform.
+   * 
+   * @since 10.0.0
+   */
+  disableDataTracking: function () {
     MoEngageLogger.verbose("Will opt out data tracking");
-    let payload = getOptOutTrackingJson("data", shouldOptOutDataTracking, moeAppId);
+    let payload = getOptOutTrackingJson("data", true, moeAppId);
     MoEReactBridge.optOutDataTracking(payload);
   },
 
@@ -495,21 +525,34 @@ var ReactMoE = {
     if (Platform.OS == PLATFORM_ANDROID) {
       let payload = getMoEPushTokenJson(pushToken, PUSH_SERVICE_PUSH_KIT, PLATFORM_ANDROID, moeAppId);
       MoEReactBridge.passPushKitPushToken(payload);
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
     }
   },
 
+  /**
+   * API to enable all features of the SDK for the account configured as default.
+   * Note: All the feature is enabled by default.
+   */
   enableSdk: function () {
     MoEngageLogger.verbose("Will enable SDK");
     let payload = getSdkStateJson(true, moeAppId);
     MoEReactBridge.updateSdkState(payload);
   },
 
+  /**
+   * API to disable all features of the SDK for the account configured as default.
+   */
   disableSdk: function () {
     MoEngageLogger.verbose("Will disable SDK");
     let payload = getSdkStateJson(false, moeAppId);
     MoEReactBridge.updateSdkState(payload);
   },
 
+  /**
+   * Notifiy the MoEngage SDK about the device orientation change
+   * Note: This API is only for Android platform and is a no-operation method for other plaforms.
+   */
   onOrientationChanged: function () {
     MoEngageLogger.verbose("Will process screen rotation.");
     if (Platform.OS == PLATFORM_ANDROID) {
@@ -519,12 +562,15 @@ var ReactMoE = {
 
   /**
    * API to enable Advertising Id tracking for Android.
+   * Note: This API is only for Android platform and is a no-operation method for other plaforms.
    */
   enableAdIdTracking: function () {
     MoEngageLogger.verbose("Will enable advertising-id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
       let payload = getAdIdTrackingJson(true, moeAppId);
       MoEReactBridge.enableAdIdTracking(payload);
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
     }
   },
 
@@ -533,23 +579,30 @@ var ReactMoE = {
    *
    * By default Advertising Id tracking is disabled, call this method only if you have enabled
    * Advertising Id tracking at some point.
+   * 
+   * Note: This API is only for Android platform and is a no-operation method for other plaforms.
    */
   disableAdIdTracking: function () {
     MoEngageLogger.verbose("Will disable advertising-id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
       let payload = getAdIdTrackingJson(false, moeAppId);
       MoEReactBridge.disableAdIdTracking(payload);
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
     }
   },
 
   /**
    * API to enable Android Id tracking for Android.
+   * Note: This API is only for Android platform and is a no-operation method for other plaforms.
    */
   enableAndroidIdTracking: function () {
     MoEngageLogger.verbose("Will enable android-id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
       let payload = getAndroidIdTrackingJson(true, moeAppId);
       MoEReactBridge.enableAndroidIdTracking(payload);
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
     }
   },
 
@@ -558,12 +611,16 @@ var ReactMoE = {
    *
    * By default Android Id tracking is disabled, call this method only if you have enabled
    * Advertising Id tracking at some point.
+   * 
+   * Note: This API is only for Android platform and is a no-operation method for other plaforms.
    */
   disableAndroidIdTracking: function () {
     MoEngageLogger.verbose("Will disable android-id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
       let payload = getAndroidIdTrackingJson(false, moeAppId);
       MoEReactBridge.disableAndroidIdTracking(payload);
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
     }
   },
 
@@ -572,6 +629,8 @@ var ReactMoE = {
     if (Platform.OS == PLATFORM_ANDROID) {
       let payload = getPermissionResponseJson(isGranted, MoEngagePermissionType.PUSH)
       MoEReactBridge.pushPermissionResponseAndroid(payload);
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
     }
   },
 
@@ -579,6 +638,8 @@ var ReactMoE = {
     MoEngageLogger.verbose("Will setup notification");
     if (Platform.OS == PLATFORM_ANDROID) {
       MoEReactBridge.setupNotificationChannels();
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
     }
   },
 
@@ -586,6 +647,8 @@ var ReactMoE = {
     MoEngageLogger.verbose("Will navigate to settings");
     if (Platform.OS == PLATFORM_ANDROID) {
       MoEReactBridge.navigateToSettingsAndroid();
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
     }
   },
 
@@ -593,6 +656,8 @@ var ReactMoE = {
     MoEngageLogger.verbose("Will request push permission.");
     if (Platform.OS == PLATFORM_ANDROID) {
       MoEReactBridge.requestPushPermissionAndroid();
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
     }
   },
 
@@ -607,31 +672,38 @@ var ReactMoE = {
     if (Platform.OS == PLATFORM_ANDROID) {
       let payload = getPushPermissionRequestCountJson(count, moeAppId);
       MoEReactBridge.updatePushPermissionRequestCountAndroid(payload);
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
     }
-
   },
 
   /**
    * API to enable Device Id tracking for Android.
    *
-   * Note: By default Device Id tracking is enabled
+   * Note: By default Device Id tracking is enabled.This API is only for Android platform and is a no-operation method for other plaforms.
    */
   enableDeviceIdTracking: function () {
     MoEngageLogger.verbose("Will enable device id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
       let payload = getDeviceIdTrackingJson(true, moeAppId);
       MoEReactBridge.enableDeviceIdTracking(payload);
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
     }
   },
 
   /**
    * API to disable Device Id tracking for Android.
+   * 
+   * Note: This API is only for Android platform and is a no-operation method for other plaforms.
    */
   disableDeviceIdTracking: function () {
     MoEngageLogger.verbose("Will disable device id tracking");
     if (Platform.OS == PLATFORM_ANDROID) {
       let payload = getDeviceIdTrackingJson(false, moeAppId);
       MoEReactBridge.disableDeviceIdTracking(payload);
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
     }
   },
 
@@ -649,6 +721,8 @@ var ReactMoE = {
       if (Platform.OS == PLATFORM_ANDROID) {
         const deleteUserPayload = await MoEReactBridge.deleteUser(accountMetaJson);
         return getUserDeletionData(deleteUserPayload);
+      } else {
+        MoEngageLogger.debug("This api is not supported on iOS platform.");
       }
     } catch (error) {
       MoEngageLogger.error(`deleteUser(): ${error}`)

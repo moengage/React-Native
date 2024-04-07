@@ -9,18 +9,31 @@ import * as MoEInboxHandler from "./utils/MoEInboxHandler";
 var moeAppId = "";
 var MoEReactInbox = {
 
-  initialize: function (appId:string) {
-    moeAppId=appId;
+  initialize: function (appId: string) {
+    moeAppId = appId;
   },
 
+  /**
+   * API to fetch all the inbox messages.
+   * 
+   * @returns instance of {@link MoEInboxData}
+   * 
+   */
   fetchAllMessages: async function () {
     try {
-        return await MoEInboxHandler.fetchAllMessages(moeAppId);
-      } catch(e) {
-       return (fetchEmptyInboxModel());
-      }
+      return await MoEInboxHandler.fetchAllMessages(moeAppId);
+    } catch (e) {
+      return (fetchEmptyInboxModel());
+    }
   },
 
+  /**
+   * 
+   * API to get the count of unclicked inbox messages.
+   * 
+   * @returns Unclicked message count.
+   * 
+   */
   getUnClickedCount: async function () {
     try {
       return await MoEInboxHandler.getUnClickedCount(moeAppId);
@@ -30,10 +43,20 @@ var MoEReactInbox = {
     }
   },
 
+  /**
+   * API to track the click on inbox message.
+   * 
+   * @param inboxMessage instance of {@link MoEInboxMessage}
+   */
   trackMessageClicked: function (inboxMessage: MoEInboxMessage) {
     MoEInboxHandler.trackMessageClicked(inboxMessage, moeAppId);
   },
 
+  /**
+    * API to delete a particular message from the list of messages
+    * 
+    * @param inboxMessage instance of {@link MoEInboxMessage}
+    */
   deleteMessage: function (inboxMessage: MoEInboxMessage) {
     MoEInboxHandler.deleteMessage(inboxMessage, moeAppId);
   }

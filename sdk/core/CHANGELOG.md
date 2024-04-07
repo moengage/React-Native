@@ -2,6 +2,14 @@
 
 ## Next Version
 - Added support for Turbo Architecture
+- Breaking APIs in Javascript
+
+| Then         | Now               |
+|:------------:|:-----------------:|
+| optOutDataTracking(false) | enableDataTracking() |
+| optOutDataTracking(true) | disableDataTracking() |
+
+
 - iOS
     - Removed support for SDK initialization from Info.plist.
     - Removed APIs

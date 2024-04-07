@@ -16,16 +16,16 @@ import {
 } from "../Constants";
 import { cardToJson } from "./ModelToJsonMapper";
 
-export function getAccountMetaPayload(appId: string) {
-    let payload =  { 
-        [keyAccountMeta] : getAppIdPayload(appId)
+export function getAccountMetaPayload(appId: string): string {
+    let payload = {
+        [keyAccountMeta]: getAppIdPayload(appId)
     };
 
     return JSON.stringify(payload);
 }
 
-export function getCardClickedPayload(card: Card, widgetId: number, appId: string) {
-    let payload =  {
+export function getCardClickedPayload(card: Card, widgetId: number, appId: string): string {
+    let payload = {
         [keyAccountMeta]: getAppIdPayload(appId),
         [keyData]: {
             [keyCard]: cardToJson(card),
@@ -36,8 +36,8 @@ export function getCardClickedPayload(card: Card, widgetId: number, appId: strin
     return JSON.stringify(payload);
 }
 
-export function getCardShownPayload(card: Card, appId: string) {
-    let payload =  {
+export function getCardShownPayload(card: Card, appId: string): string {
+    let payload = {
         [keyAccountMeta]: getAppIdPayload(appId),
         [keyData]: {
             [keyCard]: cardToJson(card)
@@ -47,8 +47,8 @@ export function getCardShownPayload(card: Card, appId: string) {
     return JSON.stringify(payload);
 }
 
-export function getCardsForCategoriesPayload(category: string, appId: string) {
-    let payload =  {
+export function getCardsForCategoriesPayload(category: string, appId: string): string {
+    let payload = {
         [keyAccountMeta]: getAppIdPayload(appId),
         [keyData]: {
             [keyCategory]: category
@@ -58,8 +58,8 @@ export function getCardsForCategoriesPayload(category: string, appId: string) {
     return JSON.stringify(payload);
 }
 
-export function getDeleteCardsPayload(cards: Array<Card>, appId: string) {
-   let payload = {
+export function getDeleteCardsPayload(cards: Array<Card>, appId: string): string {
+    let payload = {
         [keyAccountMeta]: getAppIdPayload(appId),
         [keyData]: {
             [keyCards]: cards.map((card) => {
@@ -72,9 +72,7 @@ export function getDeleteCardsPayload(cards: Array<Card>, appId: string) {
 }
 
 function getAppIdPayload(appId: string) {
-    let payload = { 
-        [keyAppId] : appId
-    };
-    
-    return payload
+    return {
+        [keyAppId]: appId
+    }
 }
