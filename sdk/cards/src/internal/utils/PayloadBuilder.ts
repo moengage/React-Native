@@ -71,7 +71,7 @@ export function getDeleteCardsPayload(cards: Array<Card>, appId: string): string
     return JSON.stringify(payload);
 }
 
-function getAppIdPayload(appId: string) {
+function getAppIdPayload(appId: string): { [k: string]: any } {
     return {
         [keyAppId]: appId
     }

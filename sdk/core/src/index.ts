@@ -550,7 +550,7 @@ var ReactMoE = {
   },
 
   /**
-   * Notifiy the MoEngage SDK about the device orientation change
+   * Notify the MoEngage SDK about the device orientation change
    * Note: This API is only for Android platform and is a no-operation method for other plaforms.
    */
   onOrientationChanged: function () {
