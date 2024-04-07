@@ -13,6 +13,7 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
   MoEngageSDKConfig* sdkConfig = [[MoEngageSDKConfig alloc] initWithAppId:@"YOUR APP ID" dataCenter: MoEngageDataCenterData_center_01];
+  sdkConfig.appGroupID = @"group.com.alphadevs.MoEngage.NotificationServices";
   sdkConfig.consoleLogConfig = [[MoEngageConsoleLogConfig alloc] initWithIsLoggingEnabled:true loglevel:MoEngageLoggerTypeVerbose];
   [[MoEngageInitializer sharedInstance] initializeDefaultSDKConfig:sdkConfig andLaunchOptions:launchOptions];
  
