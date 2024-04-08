@@ -1,3 +1,10 @@
+# Next Release date
+
+## Next version
+- Added Intrusive InApp support for tvOS.
+- iOS
+    - MoEngage-iOS-SDK version updated to `~>9.17.0`.
+
 # 18-03-2024
 
 ## 9.0.0
