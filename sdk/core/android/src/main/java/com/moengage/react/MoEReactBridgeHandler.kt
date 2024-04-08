@@ -1,49 +1,47 @@
+/*
+ * Copyright (c) 2014-2024 MoEngage Inc.
+ *
+ * All rights reserved.
+ *
+ *  Use of source code or binaries contained within MoEngage SDK is permitted only to enable use of the MoEngage platform by customers of MoEngage.
+ *  Modification of source code and inclusion in mobile apps is explicitly allowed provided that all other conditions are met.
+ *  Neither the name of MoEngage nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+ *  Redistribution of source code or binaries is disallowed except with specific prior written permission. Any such redistribution must retain the above copyright notice, this list of conditions and the following disclaimer.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 package com.moengage.react
 
 import android.content.Context
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
 import com.moengage.core.LogLevel
 import com.moengage.core.MoECoreHelper
 import com.moengage.core.internal.logger.Logger
-import com.moengage.core.internal.utils.getSdkVersion
 import com.moengage.core.listeners.AppBackgroundListener
 import com.moengage.plugin.base.internal.PluginHelper
 import com.moengage.plugin.base.internal.setEventEmitter
 import com.moengage.plugin.base.internal.userDeletionDataToJson
 
 /**
- * @author Umang Chamaria
+ * Class to handle all the request from the [MoEReactBridge] from both old and new arch
+ *
+ * @author Abhishek Kumar
+ * @since Todo: Add Version
  */
-class MoEReactBridge(private val reactContext: ReactApplicationContext) :
-    ReactContextBaseJavaModule(reactContext) {
+internal class MoEReactBridgeHandler(private val reactContext: ReactApplicationContext) {
 
-    private val tag = "${MODULE_TAG}MoEReactBridge"
+    private val tag = "${MODULE_TAG}MoEReactBridgeHandler"
 
     private val context: Context = reactContext.applicationContext
     private val pluginHelper = PluginHelper()
-    private val moeSdkVersion = getSdkVersion()
 
     private val backgroundStateListener =
         AppBackgroundListener { _, _ -> pluginHelper.onFrameworkDetached() }
 
-    override fun getName(): String {
-        return "MoEReactBridge"
-    }
+    fun getName() = NAME
 
-    @ReactMethod
-    fun addListener(eventName: String) {
-        // Keep: Required for RN built in Event Emitter Calls.
-    }
-
-    @ReactMethod
-    fun removeListeners(count: Int) {
-        // Keep: Required for RN built in Event Emitter Calls.
-    }
-
-    @ReactMethod
     fun setAppStatus(payload: String) {
         try {
             Logger.print { "$tag setAppStatus() : Payload: $payload" }
@@ -53,7 +51,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun trackEvent(payload: String) {
         try {
             Logger.print { "$tag trackEvent() : Payload: $payload" }
@@ -63,7 +60,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun setUserAttribute(payload: String) {
         try {
             Logger.print { "$tag setUserAttribute() : Payload: $payload" }
@@ -73,17 +69,15 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun logout(payload: String) {
         try {
-            Logger.print { "$tag logout() : " }
+            Logger.print { "$tag logout() : $payload" }
             pluginHelper.logout(context, payload)
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag logout() : " }
         }
     }
 
-    @ReactMethod
     fun setAlias(payload: String) {
         try {
             Logger.print { "$tag setAlias() : Payload: $payload" }
@@ -93,7 +87,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun setAppContext(payload: String) {
         try {
             Logger.print { "$tag setAppContext() : Payload: $payload" }
@@ -103,7 +96,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun resetAppContext(payload: String) {
         try {
             Logger.print { "$tag resetAppContext() : $payload" }
@@ -113,7 +105,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun showInApp(payload: String) {
         try {
             Logger.print { "$tag showInApp() : $payload" }
@@ -123,7 +114,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun getSelfHandledInApp(payload: String) {
         try {
             Logger.print { "$tag getSelfHandledInApp() : $payload" }
@@ -133,7 +123,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun passPushToken(payload: String) {
         try {
             Logger.print { "$tag passPushToken() : $payload" }
@@ -143,7 +132,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun passPushPayload(payload: String) {
         try {
             Logger.print { "$tag passPushPayload() : $payload" }
@@ -153,10 +141,9 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun initialize(payload: String) {
         try {
-            Logger.print { "$tag initialize() : " }
+            Logger.print { "$tag initialize() : $payload" }
             pluginHelper.initialise(payload)
             setEventEmitter(EventEmitterImpl(reactContext))
             if (GlobalCache.lifecycleAwareCallbackEnabled) {
@@ -167,7 +154,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun selfHandledCallback(payload: String) {
         try {
             Logger.print { "$tag selfHandledCallback() : $payload" }
@@ -177,7 +163,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun optOutTracking(payload: String) {
         try {
             pluginHelper.optOutTracking(context, payload)
@@ -186,19 +171,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
-    fun validateSdkVersion(promise: Promise) {
-        Logger.print { "$tag validateSdkVersion() : Validating Version" }
-        if (moeSdkVersion > 140000) {
-            Logger.print(LogLevel.ERROR) { "$tag validateSdkVersion() : invalid version" }
-            promise.reject("error", "Use SDK version less than 14.xx.xx")
-        } else {
-            Logger.print { "$tag validateSdkVersion() : valid version" }
-            promise.resolve("valid version");
-        }
-    }
-
-    @ReactMethod
     fun updateSdkState(payload: String) {
         try {
             Logger.print { "$tag updateSdkState() : $payload" }
@@ -208,7 +180,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun onOrientationChanged() {
         try {
             Logger.print { "$tag onOrientationChanged() : " }
@@ -218,7 +189,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun deviceIdentifierTrackingStatusUpdate(payload: String) {
         try {
             Logger.print { "$tag deviceIdentifierTrackingStatusUpdate() : $payload" }
@@ -228,34 +198,33 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun setupNotificationChannels() {
         try {
+            Logger.print { "$tag setupNotificationChannels() : " }
             pluginHelper.setUpNotificationChannels(context)
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag setupNotificationChannel() :" }
         }
     }
 
-    @ReactMethod
     fun navigateToSettings() {
         try {
+            Logger.print { "$tag navigateToSettings() : " }
             pluginHelper.navigateToSettings(context)
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag navigateToSettings() :" }
         }
     }
 
-    @ReactMethod
     fun requestPushPermission() {
         try {
+            Logger.print { "$tag requestPushPermission() : " }
             pluginHelper.requestPushPermission(context)
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag requestPushPermission() :" }
         }
     }
 
-    @ReactMethod
     fun permissionResponse(payload: String) {
         try {
             Logger.print { "$tag permissionResponse() : Payload: $payload" }
@@ -265,7 +234,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    @ReactMethod
     fun updatePushPermissionRequestCount(payload: String) {
         try {
             Logger.print { "$tag updatePushPermissionRequestCount() : Payload: $payload" }
@@ -275,14 +243,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    /**
-     * API to delete the user from MoEngage Server
-
-     * @param payload - required key-value pair
-     * @param promise - promise object which will be resolved based on success / failure
-     * @since 8.6.0
-     */
-    @ReactMethod
     fun deleteUser(payload: String, promise: Promise) {
         try {
             Logger.print { "$tag deleteUser() : Payload: $payload" }
@@ -295,11 +255,6 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         }
     }
 
-    /**
-     * Try to show a non-intrusive In-App nudge
-     * @since Todo: Add Version
-     */
-    @ReactMethod
     fun showNudge(payload: String) {
         try {
             Logger.print { "$tag showNudge() : Payload: $payload" }
@@ -307,5 +262,9 @@ class MoEReactBridge(private val reactContext: ReactApplicationContext) :
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag showNudge() :" }
         }
+    }
+
+    companion object {
+        const val NAME = "MoEReactBridge"
     }
 }
