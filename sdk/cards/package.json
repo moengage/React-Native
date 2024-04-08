@@ -1,6 +1,6 @@
 {
   "name": "react-native-moengage-cards",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Cards Module for the MoEngage Platform",
   "main": "src/index.ts",
   "keywords": [
