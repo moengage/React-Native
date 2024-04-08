@@ -140,8 +140,4 @@ class MoEReactBridge(reactContext: ReactApplicationContext) : NativeMoEngageSpec
     override fun registerForPush() {
         // iOS only
     }
-
-    override fun disableInbox(payload: String) {
-        // iOS only
-    }
 }

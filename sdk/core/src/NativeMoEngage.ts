@@ -93,18 +93,19 @@ export interface Spec extends TurboModule {
   setAppContext: (payload: string) => void;
 
   /**
-     * Call this method to the reset current context for inApp module.
-     *
-     * @param payload Stringified JSON payload
-     *
-     */
+   * Call this method to the reset current context for inApp module.
+   *
+   * @param payload Stringified JSON payload
+   *
+   */
   resetAppContext: (payload: string) => void;
+
   /**
-     * API to opt out/in from data tracking.
-     *
-     * @param payload Stringified JSON payload
-     *
-     */
+   * API to opt out/in from data tracking.
+   *
+   * @param payload Stringified JSON payload
+   *
+   */
   optOutDataTracking: (payload: string) => void;
 
   /**
@@ -120,73 +121,64 @@ export interface Spec extends TurboModule {
   /**
    * Pass the FCM push token to the MoEngage SDK.
    *
-   * @param payload Stringified JSON payload
-   *
+   * @param payload Stringfied JSON with data as FCM token
    */
   passFcmPushToken: (payload: string) => void;
 
   /**
    * Pass push payload to the MoEngage SDK.
    *
-   * @param payload Stringified JSON payload
-   *
+   * @param payload Stringified JSON with data as Push Notification Payload
    */
   passFcmPushPayload: (payload: string) => void;
 
   /**
    * Pass the HMS PushKit push token to the MoEngage SDK.
    *
-   * @param payload Stringified JSON payload
-   *
+   * @param payload Stringified JSON with data as Push Kit token
    */
   passPushKitPushToken: (payload: string) => void;
 
   /**
    * Notify the MoEngage SDK about the device orientation change
-   *
-   * @param payload Stringified JSON payload
-   *
    */
   onOrientationChanged: () => void;
 
   /**
+   * Notify the SDK when the push permission is granted from user
    *
-   *
-   * @param payload Stringified JSON payload
-   *
+   * @param payload Stringified JSON with data as permission state
    */
   pushPermissionResponseAndroid: (payload: string) => void;
 
   /**
-   *
-   * @param payload Stringified JSON payload
-   *
+   * API to create the MoEngage default notification channel
    */
   setupNotificationChannels: () => void;
 
   /**
-   *
-   * @param payload Stringified JSON payload
-   *
+   * API to redirect user to Notification permission page
    */
   navigateToSettingsAndroid: () => void;
 
   /**
-   *
-   *
-   * @param payload Stringified JSON payload
-   *
+   * API to request the push permission on Android 13 and above.
    */
   requestPushPermissionAndroid: () => void;
 
   /**
-   * API to update push permission request count. The count will be incremented on every call.
+   * Updates the Notification request attempt count, the request attempt count will be incremented by the passed fresh count.
    *
-   * @param payload Stringified JSON payload
-   *
+   * @param payload Stringified JSON with data as incremented count
    */
   updatePushPermissionRequestCountAndroid: (payload: string) => void;
 
+  /**
+   * 
+   * Update the Device identifier tracking status
+   * 
+   * @param payload Stringified JSON with data as tracking status
+   */
   deviceIdentifierTrackingStatusUpdate:(payload: string) => void;
 
   /**
