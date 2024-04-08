@@ -1,3 +1,9 @@
+# Next Release date
+
+## Next version
+- iOS
+    - MoEngageCards dependency updated to `4.16.0` and above.
+
 # 18-03-2024
 
 ## 2.0.1

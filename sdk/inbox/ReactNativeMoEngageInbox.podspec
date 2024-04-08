@@ -16,6 +16,6 @@ Pod::Spec.new do |s|
   s.source_files = "ios/**/*.{h,m,mm,swift}"
 
   s.dependency "React-Core"
-  s.dependency "MoEngagePluginInbox",'>= 2.7.0','< 2.8.0'
+  s.dependency "MoEngagePluginInbox",'>= 2.8.0','< 2.9.0'
 
 end

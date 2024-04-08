@@ -20,6 +20,6 @@ Pod::Spec.new do |s|
   s.dependency          'React'
   
   #Note update dependency
-  s.dependency          'MoEngagePluginCards','>= 1.4.0','< 1.5.0'
+  s.dependency          'MoEngagePluginCards','>= 1.5.0','< 1.6.0'
 end
 
