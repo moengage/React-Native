@@ -1,6 +1,6 @@
-# Next Release date
+# 08-04-2024
 
-## Next version
+## 3.1.0
 - iOS
     - MoEngageInbox SDK version updated to `~>2.16.0`.
     
