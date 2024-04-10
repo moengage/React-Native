@@ -3,6 +3,12 @@
 ## Next Version
 - Added support for Turbo Architecture
     
+# 08-04-2024
+
+## 2.1.0
+- iOS
+    - MoEngageCards dependency updated to `4.16.0` and above.
+
 # 18-03-2024
 
 ## 2.0.1

@@ -3,6 +3,12 @@
 ## Next Version
 - Added support for Turbo Architecture
 
+# 08-04-2024
+
+## 3.1.0
+- iOS
+    - MoEngageInbox SDK version updated to `~>2.16.0`.
+    
 # 18-03-2024
 
 ## 3.0.1

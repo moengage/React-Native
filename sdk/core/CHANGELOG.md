@@ -21,6 +21,13 @@
     | - (void)initializeDefaultInstance:(BOOL)isSdkEnabled andLaunchOptions:(NSDictionary*)launchOptions;  |
     | - (void)initializeDefaultSDKConfig:(MoEngageSDKConfig*)sdkConfig withSDKState:(BOOL)isSdkEnabled andLaunchOptions:(NSDictionary*)launchOptions    |
   
+# 08-04-2024
+
+## 9.1.0
+- Added Intrusive InApp support for TV.
+- iOS
+    - MoEngage-iOS-SDK version updated to `~>9.17.0`.
+
 # 18-03-2024
 
 ## 9.0.0

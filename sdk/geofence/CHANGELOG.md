@@ -3,6 +3,12 @@
 ## Next Version
 - Added support for Turbo Architecture
 
+# 08-04-2024
+
+## 4.1.0
+- iOS
+    - MoEngageGeofence SDK version updated to `~>5.16.0`. 
+
 # 18-03-2024
 
 ## 4.0.1
