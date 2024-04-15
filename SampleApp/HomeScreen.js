@@ -155,14 +155,14 @@ export const HomeScreen = (props) => {
             id: "13",
             title: "Opt in data",
             action: () => {
-              ReactMoE.optOutDataTracking(false);
+              ReactMoE.enableDataTracking()
             }
           },
           {
             id: "14",
             title: "Opt out data",
             action: () => {
-              ReactMoE.optOutDataTracking(true);
+              ReactMoE.disableDataTracking();
             }
           },
           {
