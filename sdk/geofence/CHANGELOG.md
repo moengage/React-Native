@@ -2,6 +2,8 @@
 
 ## Next Version
 - Added support for Turbo Architecture
+- Android
+    - Making `geofence` dependecies as implementation
 
 # 08-04-2024
 

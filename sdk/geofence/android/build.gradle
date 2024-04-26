@@ -13,6 +13,13 @@ buildscript {
     }
 }
 
+ext {
+  //dependency version
+  moengageCoreVersion = "13.00.02"
+  moengageGeofenceVersion = "4.0.1"
+  pluginBaseGeofenceVersion = "2.0.0"
+}
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.facebook.react'
@@ -70,9 +77,9 @@ dependencies {
     // noinspection GradleDynamicVersion
     compileOnly('com.facebook.react:react-native')
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    compileOnly("com.moengage:moe-android-sdk:13.00.01")
-    compileOnly("com.moengage:geofence:4.0.0")
-    implementation("com.moengage:plugin-base-geofence:2.0.0")
+    compileOnly("com.moengage:moe-android-sdk:$moengageCoreVersion")
+    api("com.moengage:geofence:$moengageGeofenceVersion")
+    implementation("com.moengage:plugin-base-geofence:$pluginBaseGeofenceVersion")
 }
 
 def isNewArchitectureEnabled() {

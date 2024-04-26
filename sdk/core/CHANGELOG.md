@@ -20,7 +20,9 @@
     | - (void)initializeDefaultInstanceWithState:(MoEngageSDKState)sdkState andLaunchOptions:(NSDictionary*)launchOptions;            |
     | - (void)initializeDefaultInstance:(BOOL)isSdkEnabled andLaunchOptions:(NSDictionary*)launchOptions;  |
     | - (void)initializeDefaultSDKConfig:(MoEngageSDKConfig*)sdkConfig withSDKState:(BOOL)isSdkEnabled andLaunchOptions:(NSDictionary*)launchOptions    |
-  
+- Android
+    - Making `moe-android-sdk` and `inapp` dependecies as implementation
+
 # 08-04-2024
 
 ## 9.1.0
