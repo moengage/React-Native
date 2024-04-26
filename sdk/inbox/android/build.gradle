@@ -77,7 +77,7 @@ dependencies {
   compileOnly('com.facebook.react:react-native')
   compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
   compileOnly("com.moengage:moe-android-sdk:$moengageCoreVersion")
-  compileOnly("com.moengage:inbox-core:$moengageInboxCoreVersion")
+  api("com.moengage:inbox-core:$moengageInboxCoreVersion")
   implementation("com.moengage:plugin-base-inbox:$pluginBaseInboxVersion")
 }
 
