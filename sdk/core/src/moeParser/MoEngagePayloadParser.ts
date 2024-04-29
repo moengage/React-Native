@@ -37,7 +37,7 @@ export function getMoEAccountMeta(payload: { [k: string]: any }): MoEAccountMeta
  * @returns instance of {@link UserDeletionData}
  * @since 8.6.0
  */
-export function getUserDeletionData(payload: string): UserDeletionData {
+export function getUserDeletionData(payload: Object): UserDeletionData {
     const payloadJsonObject = JSON.parse(payload);
     return new UserDeletionData(
         getMoEAccountMeta(payloadJsonObject[ACCOUNT_META]),

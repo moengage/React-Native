@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 MoEngage Inc.
+ * Copyright (c) 2014-2024 MoEngage Inc.
  *
  * All rights reserved.
  *
@@ -13,10 +13,11 @@
 
 package com.moengage.react.cards
 
-import com.facebook.react.ReactPackage
+import com.facebook.react.TurboReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.uimanager.ViewManager
+import com.facebook.react.module.model.ReactModuleInfo
+import com.facebook.react.module.model.ReactModuleInfoProvider
 
 /**
  * MoEngage Card Plugin React-Native Package
@@ -24,12 +25,29 @@ import com.facebook.react.uimanager.ViewManager
  * @author Abhishek Kumar
  * @since 1.0.0
  */
-class MoEngageCardsPackage : ReactPackage {
-    override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
-        return listOf(MoEngageCardsBridge(reactContext))
+class MoEngageCardsPackage : TurboReactPackage() {
+
+    override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
+        return if (name == MoEngageCardsBridgeHandler.NAME) {
+            MoEngageCardsBridge(reactContext)
+        } else {
+            null
+        }
     }
 
-    override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
-        return emptyList()
+    override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
+        return ReactModuleInfoProvider {
+            val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
+            val isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
+            moduleInfos[MoEngageCardsBridgeHandler.NAME] = ReactModuleInfo(
+                MoEngageCardsBridgeHandler.NAME,
+                MoEngageCardsBridgeHandler.NAME,
+                false,  // canOverrideExistingModule
+                false,  // needsEagerInit
+                false,  // isCxxModule
+                isTurboModule // isTurboModule
+            )
+            moduleInfos
+        }
     }
 }

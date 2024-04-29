@@ -1,3 +1,26 @@
+# Next Release Date
+
+## Next Version
+- Added support for Turbo Architecture
+- Breaking APIs in Javascript
+
+| Then         | Now               |
+|:------------:|:-----------------:|
+| optOutDataTracking(false) | enableDataTracking() |
+| optOutDataTracking(true) | disableDataTracking() |
+
+
+- iOS
+    - Removed support for SDK initialization from Info.plist.
+    - Removed APIs
+
+    | Removed APIs                |
+    |:---------------------------:|
+    | - (void)initializeDefaultInstance:(NSDictionary*)launchOptions; |
+    | - (void)initializeDefaultInstanceWithState:(MoEngageSDKState)sdkState andLaunchOptions:(NSDictionary*)launchOptions;            |
+    | - (void)initializeDefaultInstance:(BOOL)isSdkEnabled andLaunchOptions:(NSDictionary*)launchOptions;  |
+    | - (void)initializeDefaultSDKConfig:(MoEngageSDKConfig*)sdkConfig withSDKState:(BOOL)isSdkEnabled andLaunchOptions:(NSDictionary*)launchOptions    |
+  
 # 08-04-2024
 
 ## 9.1.0

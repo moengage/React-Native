@@ -1,65 +1,64 @@
-import { Platform } from "react-native";
 import MoEInboxData from "../src/model/MoEInboxData";
 import MoEInboxMessage from "../src/model/MoEInboxMessage";
 import MoETextContent from "../src/model/MoETextContent";
 import MoEMedia from "../src/model/MoEMedia";
 import MoEAction from "../src/model/MoEAction";
-import * as MoEInboxRNiOS from "./platform/MoEInboxRNiOS";
 import { fetchEmptyInboxModel } from "./utils/MoEInboxParser"
-import { MoEInboxRNAndroid } from "./platform/MoEInboxRNAndroid";
-import { getMoEInboxMessageJson } from "./utils/MoEInboxJsonBuilder";
+import * as MoEInboxHandler from "./utils/MoEInboxHandler";
 
-const PLATFORM_ANDROID = "android";
-const PLATFORM_iOS = "ios";
 var moeAppId = "";
 var MoEReactInbox = {
 
-  initialize: function (appId:string) {
-    moeAppId=appId;
+  initialize: function (appId: string) {
+    moeAppId = appId;
   },
 
+  /**
+   * API to fetch all the inbox messages.
+   * 
+   * @returns instance of {@link MoEInboxData}
+   * 
+   */
   fetchAllMessages: async function () {
     try {
-      if (Platform.OS == PLATFORM_iOS) {
-        return await MoEInboxRNiOS.fetchAllMessages(moeAppId);
-      } else if (Platform.OS == PLATFORM_ANDROID) {
-        return await MoEInboxRNAndroid.fetchAllMessages(moeAppId)
-      }
-    }
-    catch (e) {
+      return await MoEInboxHandler.fetchAllMessages(moeAppId);
+    } catch (e) {
       return (fetchEmptyInboxModel());
     }
   },
 
+  /**
+   * 
+   * API to get the count of unclicked inbox messages.
+   * 
+   * @returns Unclicked message count.
+   * 
+   */
   getUnClickedCount: async function () {
     try {
-      if (Platform.OS == PLATFORM_iOS) {
-        return await MoEInboxRNiOS.getUnClickedCount(moeAppId);
-      } else if (Platform.OS == PLATFORM_ANDROID) {
-        return await MoEInboxRNAndroid.getUnClickedCount(moeAppId);
-      }
+      return await MoEInboxHandler.getUnClickedCount(moeAppId);
     }
     catch (e) {
       return 0
     }
   },
 
+  /**
+   * API to track the click on inbox message.
+   * 
+   * @param inboxMessage instance of {@link MoEInboxMessage}
+   */
   trackMessageClicked: function (inboxMessage: MoEInboxMessage) {
-    var json = getMoEInboxMessageJson(inboxMessage,moeAppId);
-    if (Platform.OS == PLATFORM_iOS) {
-      MoEInboxRNiOS.trackMessageClicked(json);
-    } else if (Platform.OS == PLATFORM_ANDROID) {
-      MoEInboxRNAndroid.trackMessageClicked(json)
-    }
+    MoEInboxHandler.trackMessageClicked(inboxMessage, moeAppId);
   },
 
+  /**
+    * API to delete a particular message from the list of messages
+    * 
+    * @param inboxMessage instance of {@link MoEInboxMessage}
+    */
   deleteMessage: function (inboxMessage: MoEInboxMessage) {
-    var json = getMoEInboxMessageJson(inboxMessage,moeAppId);
-    if (Platform.OS == PLATFORM_iOS) {
-      MoEInboxRNiOS.deleteMessage(json);
-    } else if (Platform.OS == PLATFORM_ANDROID) {
-      MoEInboxRNAndroid.deleteMessage(json)
-    }
+    MoEInboxHandler.deleteMessage(inboxMessage, moeAppId);
   }
 };
 

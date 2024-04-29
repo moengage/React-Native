@@ -4,8 +4,10 @@
 //
 //  Created by Rakshitha on 09/08/23.
 //
+
+#import <Foundation/Foundation.h>
 #import <React/RCTBridgeModule.h>
-#import <React/RCTEventEmitter.h>
+
 
 @import MoEngagePluginCards;
 

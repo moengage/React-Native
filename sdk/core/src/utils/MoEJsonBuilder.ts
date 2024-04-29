@@ -7,7 +7,8 @@ import { MoEPropertiesToJson} from "./MoEObjectToJson";
 import {MoEngagePermissionType} from "../models/MoEngagePermissionType";
 import MoEInitConfig from "../models/MoEInitConfig";
 import MoEngageLogger from "../logger/MoEngageLogger";
-import { MoEngageNudgePosition } from "../models/MoEngageNudgePosition";
+import {MoEngageNudgePosition} from "../models/MoEngageNudgePosition";
+
 
 export function getInAppCampaignJson(moEInAppData: MoEInAppData, type: string, appId: String) {
   var json: { [k: string]: any } = {
@@ -22,7 +23,7 @@ export function getInAppCampaignJson(moEInAppData: MoEInAppData, type: string, a
       platform: moEInAppData.platform
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getSelfHandledJson(moESelfHandledCampaignData: MoESelfHandledCampaignData, type: string, appId: String) {
@@ -40,7 +41,7 @@ export function getSelfHandledJson(moESelfHandledCampaignData: MoESelfHandledCam
     }
   }
   MoEngageLogger.verbose("getSelfHandledJson(): payload json: ", json);
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getInAppClickDataJson(moEClickData: MoEClickData, type: string, appId: String) {
@@ -56,7 +57,7 @@ export function getInAppClickDataJson(moEClickData: MoEClickData, type: string, 
       platform: moEClickData.platform
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getMoEPropertiesJson(moEProperties: MoEProperties, eventName: String, appId: String) {
@@ -69,7 +70,7 @@ export function getMoEPropertiesJson(moEProperties: MoEProperties, eventName: St
       eventName,
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getMoEPushCampaignJson(pushPayload: object, service: string, appId: String) {
@@ -82,7 +83,7 @@ export function getMoEPushCampaignJson(pushPayload: object, service: string, app
       service:service
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getMoEPushTokenJson(pushToken: string, pushService: string, platform: string, appId: String) {
@@ -97,7 +98,7 @@ export function getMoEPushTokenJson(pushToken: string, pushService: string, plat
 
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getAliasJson(alias: String, appId: String) {
@@ -108,7 +109,7 @@ export function getAliasJson(alias: String, appId: String) {
     data:
       { alias: alias }
   }
-  return json;
+  return JSON.stringify(json);
 }
 export function getAppStatusJson(appStatus: String, appId: String) {
   var json: { [k: string]: any } = {
@@ -119,7 +120,7 @@ export function getAppStatusJson(appStatus: String, appId: String) {
       appStatus: appStatus
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getUserAttributeJson(name: String, value: String | Number | Boolean | Array<String> | Array<Number>, type: String, appId: String) {
@@ -133,7 +134,7 @@ export function getUserAttributeJson(name: String, value: String | Number | Bool
       type: type,
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getUserLocAttributeJson(name: String, latitude: Number, longitude: Number, appId: String) {
@@ -150,7 +151,7 @@ export function getUserLocAttributeJson(name: String, latitude: Number, longitud
       }
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getInAppContextJson(contexts: Array<String>, appId: String) {
@@ -162,7 +163,7 @@ export function getInAppContextJson(contexts: Array<String>, appId: String) {
       contexts: contexts
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getSdkStateJson(isSdkEnabled: Boolean, appId: String) {
@@ -175,7 +176,7 @@ export function getSdkStateJson(isSdkEnabled: Boolean, appId: String) {
 
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getAdIdTrackingJson(isAdIdTrackingEnabled: Boolean, appId: String) {
@@ -187,7 +188,7 @@ export function getAdIdTrackingJson(isAdIdTrackingEnabled: Boolean, appId: Strin
       isAdIdTrackingEnabled: isAdIdTrackingEnabled,
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getAndroidIdTrackingJson(isAndroidIdTrackingEnabled: Boolean, appId: String) {
@@ -199,7 +200,7 @@ export function getAndroidIdTrackingJson(isAndroidIdTrackingEnabled: Boolean, ap
       isAndroidIdTrackingEnabled: isAndroidIdTrackingEnabled
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getAppIdJson(appId: String) {
@@ -208,7 +209,7 @@ export function getAppIdJson(appId: String) {
       appId: appId
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getOptOutTrackingJson(type: string, state: boolean, appId: string) {
@@ -221,7 +222,7 @@ export function getOptOutTrackingJson(type: string, state: boolean, appId: strin
       state: state
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getPermissionResponseJson(isGranted: boolean, permissionType: MoEngagePermissionType) {
@@ -229,7 +230,7 @@ export function getPermissionResponseJson(isGranted: boolean, permissionType: Mo
         isGranted: isGranted,
         type: permissionType.toLowerCase()
     }
-    return json;
+    return JSON.stringify(json);
 }
 
 export function getPushPermissionRequestCountJson(count: number, appId: String) {
@@ -241,7 +242,7 @@ export function getPushPermissionRequestCountJson(count: number, appId: String) 
       pushOptinInAttemptCount: count
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getDeviceIdTrackingJson(isDeviceIdTrackingEnabled: Boolean, appId: String) {
@@ -253,7 +254,7 @@ export function getDeviceIdTrackingJson(isDeviceIdTrackingEnabled: Boolean, appI
       isDeviceIdTrackingEnabled: isDeviceIdTrackingEnabled
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getInitConfigJson(appId: String, initConfig: MoEInitConfig) {
@@ -267,7 +268,7 @@ export function getInitConfigJson(appId: String, initConfig: MoEInitConfig) {
       }
     }
   }
-  return json;
+  return JSON.stringify(json);
 }
 
 export function getNudgeDisplayJson(nudgePosition: MoEngageNudgePosition, appId: String) {
@@ -279,5 +280,5 @@ export function getNudgeDisplayJson(nudgePosition: MoEngageNudgePosition, appId:
       position: nudgePosition.toString()
     }
   }
-  return json;
+  return JSON.stringify(json);
 }

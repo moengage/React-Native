@@ -155,14 +155,14 @@ export const HomeScreen = (props) => {
             id: "13",
             title: "Opt in data",
             action: () => {
-              ReactMoE.optOutDataTracking(false);
+              ReactMoE.enableDataTracking()
             }
           },
           {
             id: "14",
             title: "Opt out data",
             action: () => {
-              ReactMoE.optOutDataTracking(true);
+              ReactMoE.disableDataTracking();
             }
           },
           {
@@ -213,6 +213,27 @@ export const HomeScreen = (props) => {
             action: async () => {
               const userDeletionData = await ReactMoE.deleteUser();
               console.log("User Deletion State: ", userDeletionData);
+            }
+          },
+          {
+            id: "22",
+            title: "Enable Device Id (Android)",
+            action: async () => {
+              ReactMoE.enableDeviceIdTracking();
+            }
+          },
+          {
+            id: "23",
+            title: "Disable Device Id (Android)",
+            action: async () => {
+              ReactMoE.disableDeviceIdTracking();
+            }
+          },
+          {
+            id: "24",
+            title: "Update Push Permission Count (Android)",
+            action: async () => {
+              ReactMoE.updatePushPermissionRequestCountAndroid(1);
             }
           }
         ]}

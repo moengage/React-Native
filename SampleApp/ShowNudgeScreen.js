@@ -12,7 +12,6 @@ import {
   Dimensions
 } from "react-native";
 import ReactMoE from "react-native-moengage";
-import { validateArrayOfString } from "./helper/SampleAppHelper";
 
 export default class ShowNudgeScreen extends PureComponent {
   static navigationOptions = ({ navigation }) => {

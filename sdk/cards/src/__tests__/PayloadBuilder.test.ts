@@ -18,31 +18,31 @@ import {
 describe('PayloadBuilder', () => {
     describe('getAccountMetaPayload', () => {
         it('should return AccountMeta payload', () => {
-            expect(getAccountMetaPayload(appId)).toEqual(accountMetaJson);
+            expect(getAccountMetaPayload(appId)).toEqual(JSON.stringify(accountMetaJson));
         });
     });
 
     describe('getCardClickedPayload', () => {
         it('should return CardClicked payload', () => {
-            expect(getCardClickedPayload(illustrationCardObject, -1, appId)).toEqual(cardClickedJson);
+            expect(getCardClickedPayload(illustrationCardObject, -1, appId)).toEqual(JSON.stringify(cardClickedJson));
         });
     });
 
     describe('getCardShowPayload', () => {
         it('should return CardShow payload', () => {
-            expect(getCardShownPayload(illustrationCardObject, appId)).toEqual(cardShowJson);
+            expect(getCardShownPayload(illustrationCardObject, appId)).toEqual(JSON.stringify(cardShowJson));
         });
     });
 
     describe('getCardsForCategoriesPayload', () => {
         it('should return CardsForCategory payload', () => {
-            expect(getCardsForCategoriesPayload(categoriesArray[0] ?? "", appId)).toEqual(getCardsForCategoryJson);
+            expect(getCardsForCategoriesPayload(categoriesArray[0] ?? "", appId)).toEqual(JSON.stringify(getCardsForCategoryJson));
         });
     });
 
     describe('getDeleteCardsPayload', () => {
         it('should return DeleteCards payload', () => {
-            expect(getDeleteCardsPayload([illustrationCardObject], appId)).toEqual(deleteCardJson);
+            expect(getDeleteCardsPayload([illustrationCardObject], appId)).toEqual(JSON.stringify(deleteCardJson));
         });
     });
 });
