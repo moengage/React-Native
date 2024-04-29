@@ -16,7 +16,7 @@ buildscript {
 
 ext {
   //dependency version
-  moengageCoreVersion = "13.00.02"
+  moengageCoreVersion = "13.00.03"
   moengageCardsCoreVersion = "2.0.2"
   pluginBaseCardVersion = "2.0.0"
 }
