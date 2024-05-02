@@ -2,7 +2,9 @@
 
 ## Next Version
 - Added support for Turbo Architecture
-    
+- Android
+    - Making `cards-core` dependecies as implementation
+
 # 08-04-2024
 
 ## 2.1.0

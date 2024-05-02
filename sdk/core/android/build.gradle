@@ -20,8 +20,8 @@ rootProject.allprojects {
 
 ext {
   //dependency version
-  moengageCoreVersion = "13.00.01"
-  moengageInAppVersion = "8.1.0"
+  moengageCoreVersion = "13.00.03"
+  moengageInAppVersion = "8.2.1"
   basePluginVersion = "4.0.0"
   //build versions
   minimumVersion = 21
@@ -78,14 +78,12 @@ android {
 dependencies {
   implementation fileTree(include: ['*.jar'], dir: 'libs')
 
+  compileOnly('com.facebook.react:react-native')
   compileOnly("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
   
-  compileOnly ("com.moengage:moe-android-sdk:$moengageCoreVersion")
+  api("com.moengage:moe-android-sdk:$moengageCoreVersion")
+  api("com.moengage:inapp:$moengageInAppVersion")
   api("com.moengage:plugin-base:$basePluginVersion")
-  compileOnly("com.moengage:inapp:$moengageInAppVersion")
-
-  compileOnly('com.facebook.react:react-native')
-
 }
 
 apply from: file("./user-agent.gradle")

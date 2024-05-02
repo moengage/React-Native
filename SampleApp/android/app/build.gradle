@@ -168,11 +168,6 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
     // MoEngage Dependencies
-    implementation(moengage.core)
-    implementation(moengage.inapp)
-    implementation(moengage.inboxCore)
-    implementation(moengage.cardsCore)
-    implementation(moengage.geofence)
     implementation(moengage.richNotification)
 
     // Other Dependencies
