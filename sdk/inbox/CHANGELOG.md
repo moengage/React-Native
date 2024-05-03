@@ -1,6 +1,6 @@
-# Next Release Date
+# 06-05-2024
 
-## Next Version
+## 4.0.0
 - Added support for Turbo Architecture
 - Android
     - Making `inbox-core` dependecies as implementation

@@ -1,6 +1,6 @@
-# Next Release Date
+# 06-05-2024
 
-## Next Version
+## 10.0.0
 - Added support for Turbo Architecture
 - Breaking APIs in Javascript
 
