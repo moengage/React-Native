@@ -1,6 +1,6 @@
-# Next Release Date
+# 06-05-2024
 
-## Next Version
+## 5.0.0
 - Added support for Turbo Architecture
 - Android
     - Making `geofence` dependecies as implementation
