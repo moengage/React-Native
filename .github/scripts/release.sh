@@ -1,6 +1,11 @@
 # Pre-Release
 workingDir=$(pwd)
+git checkout development
+git pull origin development
 git checkout master
+git pull origin master
+git merge development
+git push origin master
 
 # Release
 latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
