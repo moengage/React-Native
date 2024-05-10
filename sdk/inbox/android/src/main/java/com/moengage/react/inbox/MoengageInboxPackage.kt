@@ -38,6 +38,7 @@ class MoengageInboxPackage : TurboReactPackage() {
                 MoEngageInboxHandler.NAME,
                 false,  // canOverrideExistingModule
                 false,  // needsEagerInit
+                true,  // hasConstants
                 false,  // isCxxModule
                 isTurboModule // isTurboModule
             )
