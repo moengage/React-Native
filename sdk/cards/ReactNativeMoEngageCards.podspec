@@ -20,7 +20,12 @@ Pod::Spec.new do |s|
   s.dependency          'React'
   
   s.dependency          'MoEngagePluginCards','>= 1.5.0','< 1.6.0'
-  install_modules_dependencies(s)
 
+
+  if defined?(install_modules_dependencies()) != nil
+    install_modules_dependencies(s);
+  else
+    s.dependency "React-Core"
+  end
 end
 

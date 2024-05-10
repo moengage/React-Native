@@ -23,7 +23,10 @@ Pod::Spec.new do |s|
     echo "#define MOE_REACT_PLUGIN_VERSION @\\"#{package["version"]}\\"" >> iOS/MoEReactBridge/MoEngageReactPluginInfo.h
   CMD
 
-  install_modules_dependencies(s)
- 
 
+  if defined?(install_modules_dependencies()) != nil
+    install_modules_dependencies(s);
+  else
+    s.dependency "React-Core"
+  end
 end
