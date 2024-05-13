@@ -1,3 +1,10 @@
+# Next Release Date
+
+## Next version
+- iOS
+  - BugFix
+    - `pod install` command fails if react version is < 0.71.
+    
 # 07-05-2024
 
 ## 5.0.0
