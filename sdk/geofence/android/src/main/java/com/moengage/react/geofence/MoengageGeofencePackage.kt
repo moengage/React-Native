@@ -38,6 +38,7 @@ class MoengageGeofencePackage : TurboReactPackage() {
                 MoEngageGeofenceHandler.NAME,
                 false,  // canOverrideExistingModule
                 false,  // needsEagerInit
+                true,  // hasConstants
                 false,  // isCxxModule
                 isTurboModule // isTurboModule
             )

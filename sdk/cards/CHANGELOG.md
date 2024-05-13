@@ -1,6 +1,8 @@
 # Next Release Date
 
 ## Next version
+- Android
+    - Adding backward compatibility support for react-native version with react-native-moengage-cards `3.x.x`
 - iOS
   - BugFix
     - `pod install` command fails if react version is < 0.71.
