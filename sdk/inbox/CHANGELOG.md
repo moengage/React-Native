@@ -1,11 +1,8 @@
-# Next Release Date
+# 14-05-2024
 
-## Next version
-- Android
+## 4.0.1
+- BugFix
     - Adding backward compatibility support for react-native version with react-native-moengage-inbox `4.x.x`
-- iOS
-  - BugFix
-    - `pod install` command fails if react version is < 0.71.
     
 # 07-05-2024
 
