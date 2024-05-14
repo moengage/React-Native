@@ -1,11 +1,8 @@
-# Next Release Date
+# 14-05-2024
 
-## Next version
-- Android
-    - Adding backward compatibility support for react-native version with react-native-moengage-cards `3.x.x`
-- iOS
-  - BugFix
-    - `pod install` command fails if react version is < 0.71.
+## 3.0.1
+- BugFix
+    - Adding backward compatibility support for react-native version with react-native-moengage `10.x.x`
     
 # 07-05-2024
 
