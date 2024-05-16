@@ -2,6 +2,7 @@
 
 ## 10.1.0
 - Android
+  - Support for Data Center 6
   - `moe-android-sdk` version updated to `13.01.00`
   - `inapp` version updated to `8.3.0`
 
