@@ -44,7 +44,9 @@ export class TrackEvent extends React.Component {
                 booked.addAttribute("price", 699);
                 booked.addAttribute("new_item", true);
                 booked.addDateAttribute("purchase_date", "2020-06-10T12:42:10Z");
-
+                booked.addAttribute("object", { "strKey": "str", "intKey": 1, "boolKey": false });
+                booked.addAttribute("nestedObject", { "strKey": "str", "intKey": 1, "boolKey": false, "nestedKey": { "nestedKeyStr": "str" } });
+                booked.addAttribute("objectJsonArray", [{ "strKey": "str", "intKey": 1, "boolKey": false}]);
                 ReactMoE.trackEvent("samplevent", booked);
               },
             },

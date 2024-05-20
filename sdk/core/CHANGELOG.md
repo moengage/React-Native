@@ -1,3 +1,8 @@
+# Next Release
+
+## Next Version
+- Support for JSONArray and JSONObject in Event & User Attributes.
+
 # 16-05-2024
 
 ## 10.1.0

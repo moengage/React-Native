@@ -2,6 +2,7 @@
 import MoEngageLogger from "../logger/MoEngageLogger";
 import { MoEGeoLocationToJson } from "../utils/MoEObjectToJson";
 import MoEGeoLocation from "./MoEGeoLocation";
+import { MoESupportedAttributes } from "./MoESupportedAttributes";
 
 export default class MoEProperties {
   private generalAttributes: { [k: string]: any }
@@ -33,18 +34,12 @@ export default class MoEProperties {
   /**
    * Call this method to add general attributes
    * @param {String}key : key for the attribute
-   * @param {String | Number | Boolean | Array<String> |  Array<Number>}value : value for the attribute
+   * @param {MoESupportedAttributes}value : value for the attribute
    */
-  addAttribute(key: String, value: String | Number | Boolean | Array<String> | Array<Number>) {
+  addAttribute(key: String, value: MoESupportedAttributes) {
 
     if (!this.validateKeyValue(key, value)) {
       return;
-    }
-    if (Array.isArray(value)) {
-      value = (value as Array<any>).filter(e => (this.validateType(["string", "number"], e)));
-    } else if (!this.validateType(["string", "number", "boolean"], value)) {
-      MoEngageLogger.warn("MoEProperties->addAttribute: invalid attribute");
-      return
     }
 
     this.generalAttributes[key.toString()] = value;
