@@ -5,7 +5,6 @@ import {
   View,
   FlatList,
   TouchableOpacity,
-  Alert,
 } from "react-native";
 import { AlertBox, fire } from "react-native-alertbox";
 import ReactMoE, {
@@ -63,8 +62,8 @@ export class UserAttribute extends React.Component {
                   title: 'Enter UniqueID',
                   message: null,
                   actions: [
-                   {text: 'Cancel'},
-                   {text: 'OK', onPress: result => ReactMoE.setUserUniqueID(result.uniqueid)},
+                    { text: 'Cancel' },
+                    { text: 'OK', onPress: result => ReactMoE.setUserUniqueID(result.uniqueid) },
                   ],
                   fields: [
                     {
@@ -83,8 +82,8 @@ export class UserAttribute extends React.Component {
                   title: 'Enter Alias',
                   message: null,
                   actions: [
-                   {text: 'Cancel'},
-                   {text: 'OK', onPress: result => ReactMoE.setAlias(result.alias)},
+                    { text: 'Cancel' },
+                    { text: 'OK', onPress: result => ReactMoE.setAlias(result.alias) },
                   ],
                   fields: [
                     {
@@ -103,8 +102,8 @@ export class UserAttribute extends React.Component {
                   title: 'Enter FirstName',
                   message: null,
                   actions: [
-                   {text: 'Cancel'},
-                   {text: 'OK', onPress: result => ReactMoE.setUserFirstName(result.firstname)},
+                    { text: 'Cancel' },
+                    { text: 'OK', onPress: result => ReactMoE.setUserFirstName(result.firstname) },
                   ],
                   fields: [
                     {
@@ -123,8 +122,8 @@ export class UserAttribute extends React.Component {
                   title: 'Enter Lastname',
                   message: null,
                   actions: [
-                   {text: 'Cancel'},
-                   {text: 'OK', onPress: result => ReactMoE.setUserLastName(result.lastname)},
+                    { text: 'Cancel' },
+                    { text: 'OK', onPress: result => ReactMoE.setUserLastName(result.lastname) },
                   ],
                   fields: [
                     {
@@ -143,8 +142,8 @@ export class UserAttribute extends React.Component {
                   title: 'Enter EmailId',
                   message: null,
                   actions: [
-                   {text: 'Cancel'},
-                   {text: 'OK', onPress: result => ReactMoE.setUserEmailID(result.emailid)},
+                    { text: 'Cancel' },
+                    { text: 'OK', onPress: result => ReactMoE.setUserEmailID(result.emailid) },
                   ],
                   fields: [
                     {
@@ -163,8 +162,8 @@ export class UserAttribute extends React.Component {
                   title: 'Enter Number',
                   message: null,
                   actions: [
-                   {text: 'Cancel'},
-                   {text: 'OK', onPress: result => ReactMoE.setUserContactNumber(result.number)},
+                    { text: 'Cancel' },
+                    { text: 'OK', onPress: result => ReactMoE.setUserContactNumber(result.number) },
                   ],
                   fields: [
                     {
@@ -179,9 +178,9 @@ export class UserAttribute extends React.Component {
               id: "7",
               title: "Set Birthday",
               action: () => {
-                    ReactMoE.setUserBirthday("1970-01-01T12:00:00Z");
-                  }
-              },
+                ReactMoE.setUserBirthday("1970-01-01T12:00:00Z");
+              }
+            },
             {
               id: "8",
               title: "Set Gender",
@@ -190,8 +189,8 @@ export class UserAttribute extends React.Component {
                   title: 'Enter Gender',
                   message: null,
                   actions: [
-                   {text: 'Cancel'},
-                   {text: 'OK', onPress: result => ReactMoE.setUserGender(result.gender)},
+                    { text: 'Cancel' },
+                    { text: 'OK', onPress: result => ReactMoE.setUserGender(result.gender) },
                   ],
                   fields: [
                     {
@@ -214,13 +213,12 @@ export class UserAttribute extends React.Component {
               title: "Set Custom UserAtrribute",
               action: () => {
                 ReactMoE.setUserAttribute("qazAttribute", "qaz123");
-                ReactMoE.setUserAttribute("intAttribute",77);
-                ReactMoE.setUserAttribute("floatAttribute",77.333);
+                ReactMoE.setUserAttribute("intAttribute", 77);
+                ReactMoE.setUserAttribute("floatAttribute", 77.333);
                 ReactMoE.setUserAttribute("booleanAttribute", false);
-                ReactMoE.setUserAttribute("arrayOfInt",[1,2,3]);
-                ReactMoE.setUserAttribute("arrayOfString",['sample','sampledd','sampleg']);
-                ReactMoE.setUserAttribute("arrayOfFloat",[23.44, 56.33, 34.44, 24.44]);
-                ReactMoE.setUserAttribute("invalidAttribute", [{"key1":"value1"}]);
+                ReactMoE.setUserAttribute("arrayOfInt", [1, 2, 3]);
+                ReactMoE.setUserAttribute("arrayOfString", ['sample', 'sampledd', 'sampleg']);
+                ReactMoE.setUserAttribute("arrayOfFloat", [23.44, 56.33, 34.44, 24.44]);
               }
             },
             {
@@ -232,7 +230,7 @@ export class UserAttribute extends React.Component {
                   new Date().toISOString()
                 );
               }
-            }, 
+            },
             {
               id: "13",
               title: "Set Custom Location",
@@ -243,7 +241,74 @@ export class UserAttribute extends React.Component {
                 );
               }
             },
-
+            {
+              id: "14",
+              title: "set JSONArray",
+              action: () => {
+                ReactMoE.setUserAttribute(
+                  "moe_user_attr_int_json_array",
+                  [1, 2, 3]
+                );
+                ReactMoE.setUserAttribute(
+                  "moe_user_attr_string_json_array",
+                  ["str1", "str2", "str3"]
+                );
+                ReactMoE.setUserAttribute(
+                  "moe_user_attr_float_json_array",
+                  [1.1, 2.2, 3.3]
+                );
+                ReactMoE.setUserAttribute(
+                  "moe_user_attr_empty_json_array",
+                  []
+                );
+                ReactMoE.setUserAttribute(
+                  "moe_user_attr_null_json_array",
+                  [1, null, 2]
+                );
+                ReactMoE.setUserAttribute(
+                  "moe_user_attr_undefined_json_array",
+                  [1, undefined, 2]
+                );
+                ReactMoE.setUserAttribute(
+                  "moe_user_attr_mix_json_array",
+                  [1, "str1", 2.2]
+                );
+                ReactMoE.setUserAttribute(
+                  "moe_user_attr_nested_json_array",
+                  ["str0", "str1", ["str3", "str4"]]
+                );
+                ReactMoE.setUserAttribute(
+                  "moe_user_attr_json_array_with_obj",
+                  [{ "intKey": 1 }, { "strKey": "str" }, { "boolKey": true }]
+                );
+              }
+            },
+            {
+              id: "15",
+              title: "set JSONObject",
+              action: () => {
+                ReactMoE.setUserAttribute(
+                  "moe_user_attr_single_lvl_json_object",
+                  { "intKey": 1, "stringKey": "str2", "boolKey": false }
+                );
+                ReactMoE.setUserAttribute(
+                  "moe_user_attr_double_lvl_json_object",
+                  { "intKey": 1, "stringKey": "str2", "boolKey": false, "nested_key": { "nKStr": "str", "nKInt": 1, "doubleNK": { "dNK": 1 } } }
+                );
+                ReactMoE.setUserAttribute(
+                  "moe_user_attr_empty_json_object",
+                  {}
+                );
+                ReactMoE.setUserAttribute(
+                  "moe_user_attr_null_json_object",
+                  { "intKey": 1, "undefined_key": undefined, "nullKey": null }
+                );
+                ReactMoE.setUserAttribute(
+                  "moe_user_attr_nested_json_object_with_array",
+                  { "intKey": 1, "stringKey": "str2", "boolKey": false, "nested_key": [1, 2, 3, { "array_key": 1 }] }
+                );
+              }
+            },
           ]}
           renderItem={({ item, separators }) => (
             <TouchableOpacity

@@ -56,6 +56,7 @@ import MoEPushPayload from "../src/models/MoEPushPayload";
 import MoEInAppData from "../src/models/MoEInAppData";
 import { getUserDeletionData } from "../src/moeParser/MoEngagePayloadParser";
 import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
+import { MoESupportedAttributes } from "./models/MoESupportedAttributes";
 
 const PLATFORM_IOS = "ios";
 const PLATFORM_ANDROID = "android";
@@ -311,7 +312,7 @@ var ReactMoE = {
    * @param userAttributeName attribute name
    * @param userAttributeValue attribute value
    */
-  setUserAttribute: function (userAttributeName: string, userAttributeValue: String | Number | Boolean | Array<String> | Array<Number>) {
+  setUserAttribute: function (userAttributeName: string, userAttributeValue: MoESupportedAttributes) {
     MoEngageLogger.verbose(
       "Will track user attribute [attributeName]: " +
       userAttributeName +
