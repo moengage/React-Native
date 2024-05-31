@@ -13,9 +13,12 @@ import {
 import ReactMoE, {
   MoEAppStatus,
 } from "react-native-moengage";
+import RNRestart from 'react-native-restart';
 
 import ReactMoEGeofence from 'react-native-moengage-geofence';
-import { MOENGAGE_APP_ID } from "./src/key";
+import { MOENGAGE_APP_ID, SECONDARY_APP_ID } from "./src/key";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { updateAppId } from "./src/AndroidPlatform";
 
 const onAppExit = () => {
   Alert.alert(
@@ -234,6 +237,16 @@ export const HomeScreen = (props) => {
             title: "Update Push Permission Count (Android)",
             action: async () => {
               ReactMoE.updatePushPermissionRequestCountAndroid(1);
+            }
+          },
+          {
+            id: "25",
+            title: "Reload Application (with different Id)",
+            action: async () => {
+              ReactMoE.logout();
+              await AsyncStorage.setItem('AppId', SECONDARY_APP_ID);
+              updateAppId(SECONDARY_APP_ID);
+              RNRestart.restart();
             }
           }
         ]}

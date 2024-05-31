@@ -12,6 +12,7 @@ import ReactMoE from "react-native-moengage";
 import { MoEPushConfig, MoEInitConfig, MoEngageLogConfig, MoEngageLogLevel, MoEngageLogger } from "react-native-moengage";
 import * as RootNavigation from './RootNavigation.js';
 import { MOENGAGE_APP_ID } from "./src/key.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
@@ -67,30 +68,19 @@ const moEInitConfig = new MoEInitConfig(
   new MoEngageLogConfig(MoEngageLogLevel.VERBOSE, false)
 );
 
+
+async function initialiseSDK() {
+  var appId = await AsyncStorage.getItem('AppId');
+  if (appId == null) appId = MOENGAGE_APP_ID;
+
+  console.log(appId);
+  ReactMoE.initialize(appId, moEInitConfig);
+}
+
 export const App = () => {
 
-  const appState = useRef(AppState.currentState);
-  useEffect(() => {
-    const appStateListener = AppState.addEventListener('change', nextAppState => {
-      if (
-        appState.current.match(/inactive|background/) &&
-        nextAppState === 'active'
-      ) {
-        if (Platform.OS === 'android') {
-          MoEngageLogger.debug("App comes to foreground");
-          ReactMoE.initialize(MOENGAGE_APP_ID, moEInitConfig);
-        }
-      }
-
-      appState.current = nextAppState;
-    });
-
-    MoEngageLogger.debug("App Mounted");
-    ReactMoE.initialize(MOENGAGE_APP_ID, moEInitConfig);
-
-    return () => {
-      appStateListener.remove();
-    };
+  useEffect(() => { 
+    initialiseSDK();
   }, []);
 
   return (

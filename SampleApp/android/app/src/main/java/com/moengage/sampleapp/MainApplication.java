@@ -1,6 +1,7 @@
 package com.moengage.sampleapp;
 
 import android.app.Application;
+import android.util.Log;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
@@ -34,6 +35,8 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+
+          packages.add(new AppReactPackage());
           return packages;
         }
 
@@ -67,9 +70,14 @@ public class MainApplication extends Application implements ReactApplication {
       DefaultNewArchitectureEntryPoint.load(true, false);
     }
     ReactNativeFlipper.initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
-    // replace DataCenter.DATA_CENTER_1 with your data center.
+
+    // Access AppId saved shared preferences
+    String appId = getSharedPreferences("MoESampleAppPref", MODE_PRIVATE)
+        .getString("AppId", BuildConfig.MOENAGE_APP_ID);
+    DataCenter dataCenter = appId == BuildConfig.MOENAGE_APP_ID ? DataCenter.DATA_CENTER_1 : DataCenter.DATA_CENTER_3;
+    Log.d("MoEngageSampleApp", "Initialising SDK with " + appId);
     MoEngage.Builder moEngage =
-        new MoEngage.Builder(this, BuildConfig.MOENAGE_APP_ID, DataCenter.DATA_CENTER_1)
+        new MoEngage.Builder(this, appId, dataCenter)
             .configureLogs(new LogConfig(LogLevel.VERBOSE, true))
             .configureNotificationMetaData(
                 new NotificationConfig(
