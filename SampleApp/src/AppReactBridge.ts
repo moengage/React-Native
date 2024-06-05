@@ -1,6 +1,6 @@
 import { NativeEventEmitter } from "react-native";
 
-const AppReactBridge = require("react-native").NativeModules.AppReactBridge;
+export const AppReactBridge = require("react-native").NativeModules.AppReactBridge;
 let AppEventEmitter = new NativeEventEmitter(AppReactBridge);
 
 export function updateAppId(appId: String) {

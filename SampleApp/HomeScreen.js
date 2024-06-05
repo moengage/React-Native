@@ -14,11 +14,10 @@ import ReactMoE, {
   MoEAppStatus,
 } from "react-native-moengage";
 import RNRestart from 'react-native-restart';
-
 import ReactMoEGeofence from 'react-native-moengage-geofence';
 import { MOENGAGE_APP_ID, SECONDARY_APP_ID } from "./src/key";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getEmitter, updateAppId } from "./src/AndroidPlatform";
+import { getEmitter, updateAppId, AppReactBridge } from "./src/AppReactBridge";
 
 const onAppExit = () => {
   Alert.alert(
@@ -243,7 +242,11 @@ export const HomeScreen = (props) => {
             id: "25",
             title: "Reload Application (with different Id)",
             action: async () => {
-              ReactMoE.logout();
+              if (Platform.OS == "ios") {
+                AppReactBridge.logout();
+              } else {
+                ReactMoE.logout();
+              }
               await AsyncStorage.setItem('AppId', SECONDARY_APP_ID);
               getEmitter().addListener("logOutComplete", () => {
                 console.log("Logout Completed, Restarting App");

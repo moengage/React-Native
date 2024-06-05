@@ -21,6 +21,9 @@
 		AC43AE8626CBF1FA00C025AE /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = AC43AE8526CBF1FA00C025AE /* NotificationService.m */; };
 		AC43AE8A26CBF1FA00C025AE /* NotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AC43AE8226CBF1F900C025AE /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AC53C9F62BBEAB620038EDB9 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = AC53C9F52BBEAB620038EDB9 /* AppDelegate.mm */; };
+		AC64C2F72C0F219E004F27A7 /* AppReactBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = AC64C2F62C0F219E004F27A7 /* AppReactBridge.m */; };
+		AC8A79D02C102E77007289F2 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8A79CF2C102E77007289F2 /* Utility.m */; };
+		AC8A79D22C103152007289F2 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8A79D12C103152007289F2 /* Constants.m */; };
 		BFAC313F972664552572FB6B /* libPods-SampleApp-SampleAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9479BCC3B91C51072749E6FA /* libPods-SampleApp-SampleAppTests.a */; };
 		D7B4AB581119A3D32F00948A /* libPods-NotificationService.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7689800979D124EA2F821E03 /* libPods-NotificationService.a */; };
 /* End PBXBuildFile section */
@@ -98,6 +101,12 @@
 		AC43AE8E26CBF22700C025AE /* NotificationService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotificationService.entitlements; sourceTree = "<group>"; };
 		AC43AE8F26CBF26600C025AE /* MORichNotification.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MORichNotification.framework; path = Pods/MORichNotification/Frameworks/MORichNotification.framework; sourceTree = "<group>"; };
 		AC53C9F52BBEAB620038EDB9 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = SampleApp/AppDelegate.mm; sourceTree = "<group>"; };
+		AC64C2F52C0F215D004F27A7 /* AppReactBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppReactBridge.h; sourceTree = "<group>"; };
+		AC64C2F62C0F219E004F27A7 /* AppReactBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppReactBridge.m; sourceTree = "<group>"; };
+		AC8A79CE2C102E6B007289F2 /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		AC8A79CF2C102E77007289F2 /* Utility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		AC8A79D12C103152007289F2 /* Constants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		AC8A79D32C10315F007289F2 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		ACE7B8D926E0BFC800AECFC3 /* MORichNotification.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MORichNotification.xcframework; path = Pods/MORichNotification/Frameworks/MORichNotification.xcframework; sourceTree = "<group>"; };
 		ACF27C5926D3C50900B0849C /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		ACF27C5A26D3C50900B0849C /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
@@ -186,6 +195,9 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				AC64C2F52C0F215D004F27A7 /* AppReactBridge.h */,
+				AC64C2F62C0F219E004F27A7 /* AppReactBridge.m */,
+				AC8A79D42C103164007289F2 /* Utils */,
 			);
 			name = SampleApp;
 			sourceTree = "<group>";
@@ -277,6 +289,17 @@
 				AC43AE8726CBF1FA00C025AE /* Info.plist */,
 			);
 			path = NotificationService;
+			sourceTree = "<group>";
+		};
+		AC8A79D42C103164007289F2 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				AC8A79CE2C102E6B007289F2 /* Utility.h */,
+				AC8A79CF2C102E77007289F2 /* Utility.m */,
+				AC8A79D32C10315F007289F2 /* Constants.h */,
+				AC8A79D12C103152007289F2 /* Constants.m */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		ACF27C5826D3C45400B0849C /* Resources */ = {
@@ -671,6 +694,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC8A79D22C103152007289F2 /* Constants.m in Sources */,
+				AC8A79D02C102E77007289F2 /* Utility.m in Sources */,
+				AC64C2F72C0F219E004F27A7 /* AppReactBridge.m in Sources */,
 				AC53C9F62BBEAB620038EDB9 /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -894,14 +920,8 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = (
-					"$(inherited)",
-					" ",
-				);
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_CFLAGS = "$(inherited)  ";
+				OTHER_CPLUSPLUSFLAGS = "$(inherited)  ";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-Wl",
@@ -966,14 +986,8 @@
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CFLAGS = (
-					"$(inherited)",
-					" ",
-				);
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_CFLAGS = "$(inherited)  ";
+				OTHER_CPLUSPLUSFLAGS = "$(inherited)  ";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-Wl",
