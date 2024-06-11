@@ -1,3 +1,9 @@
+# Next Release
+
+## Next Version
+- Android
+    - `geofence` version updated to `4.0.2`
+
 # 14-05-2024
 
 ## 5.0.1
