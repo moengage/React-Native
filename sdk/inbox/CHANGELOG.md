@@ -1,3 +1,9 @@
+# Next Release
+
+## Next Version
+- Android
+    - `inbox-core` version updated to `3.0.2`
+
 # 14-05-2024
 
 ## 4.0.1

@@ -1,3 +1,10 @@
+# Next Release
+
+## Next Version
+- Android
+  - `moe-android-sdk` version updated to `13.02.00`
+  - `inapp` version updated to `8.3.1`
+
 # 16-05-2024
 
 ## 10.1.0
