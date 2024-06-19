@@ -265,6 +265,9 @@ export function getInitConfigJson(appId: String, initConfig: MoEInitConfig) {
     initConfig: {
       pushConfig: {
         shouldDeliverCallbackOnForegroundClick: initConfig.pushConfig.shouldDeliverCallbackOnForegroundClick
+      },
+      analyticsConfig: {
+        shouldTrackUserAttributeBooleanAsNumber: initConfig.analyticsConfig.shouldTrackUserAttributeBoolAsNumber
       }
     }
   }
