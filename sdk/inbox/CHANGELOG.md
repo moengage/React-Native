@@ -1,3 +1,9 @@
+# Next Release Date
+
+## Next Version
+- iOS
+    - Updated internal library dependency.
+    
 # 14-05-2024
 
 ## 4.0.1
