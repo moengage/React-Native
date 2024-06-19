@@ -1,3 +1,9 @@
+# Next Release(major)
+
+## Next version
+- iOS
+  - BugFix: Resolved the issue of tracking User Attribute TRUE/FALSE as 0/1.
+  
 # 16-05-2024
 
 ## 10.1.0

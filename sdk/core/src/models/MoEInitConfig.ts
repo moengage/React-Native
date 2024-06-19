@@ -1,9 +1,9 @@
 import MoEngageLogConfig from "./MoEngageLogConfig";
 import MoEPushConfig from "./MoEPushConfig";
+import MoEAnalyticsConfig from "./MoEAnalyticsConfig"
 
 /**
  * Config class for MoEngage SDK
- * Note: This Config is only for Android platform and is a no-operation method for other plaforms.
  */
 export default class MoEInitConfig {
 
@@ -11,17 +11,22 @@ export default class MoEInitConfig {
 
     logConfig: MoEngageLogConfig = MoEngageLogConfig.defaultConfig();
 
+    analyticsConfig = MoEAnalyticsConfig.defaultConfig();
+
     /**
      * Create an instance of {@link MoEInitConfig}
      * 
      * @param pushConfig instance of {@link MoEPushConfig}
      * @param logConfig instance of {@link MoEngageLogConfig}
+     * @param analyticsConfig instance of {@link MoEAnalyticsConfig}
      */
     constructor(pushConfig: MoEPushConfig = MoEPushConfig.defaultConfig(),
-        logConfig: MoEngageLogConfig = MoEngageLogConfig.defaultConfig()
+        logConfig: MoEngageLogConfig = MoEngageLogConfig.defaultConfig(),
+        analyticsConfig: MoEAnalyticsConfig = MoEAnalyticsConfig.defaultConfig()
     ) {
         this.pushConfig = pushConfig;
         this.logConfig = logConfig;
+        this.analyticsConfig = analyticsConfig;
     }
 
     /**
@@ -30,7 +35,8 @@ export default class MoEInitConfig {
     static defaultConfig() {
         return new MoEInitConfig(
             MoEPushConfig.defaultConfig(),
-            MoEngageLogConfig.defaultConfig()
+            MoEngageLogConfig.defaultConfig(),
+            MoEAnalyticsConfig.defaultConfig()
         );
     }
 }
