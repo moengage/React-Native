@@ -48,6 +48,7 @@
     config.isTestEnvironment = reactConfig.isTestEnvironment;
     config.sdkState = reactConfig.sdkState;
     config.launchOptions = reactConfig.launchOptions;
+    config.isDefaultInstance = reactConfig.isDefaultInstance;
     MoEngagePlugin *plugin = [[MoEngagePlugin alloc] init];
     [plugin initializeInstanceWithConfig:config];
     [self commonSetUp: plugin identifier:config.sdkConfig.appId];
