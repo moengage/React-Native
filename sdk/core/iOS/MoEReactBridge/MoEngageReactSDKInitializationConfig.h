@@ -1,9 +1,8 @@
 //
-//  MoEngageInitializer.h
+//  MoEngageReactSDKInitializationConfig.h
 //  ReactNativeMoEngage
 //
-//  Created by Chengappa C D on 14/02/20.
-//
+//  Created by Babul on 24/06/24.
 
 #import <Foundation/Foundation.h>
 @class MoEngageSDKConfig;

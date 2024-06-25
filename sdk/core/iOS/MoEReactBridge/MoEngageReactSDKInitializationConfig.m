@@ -1,23 +1,14 @@
 //
-//  MoEngageReact.m
+//  MoEngageReactSDKInitializationConfig.m
 //  ReactNativeMoEngage
 //
-//  Created by Chengappa C D on 14/02/20.
+//  Created by Babul on 24/06/24.
 //
 
 
 #import <Foundation/Foundation.h>
 #import <MoEngageSDK/MoEngageSDK.h>
 #import "MoEngageReactSDKInitializationConfig.h"
-
-// Assuming MoEngageSDKConfig is an NSObject, adjust it to match its actual type.
-
-// Assuming enum is defined somewhere correctly.
-// typedef NS_ENUM(NSInteger, MoEngageSDKState) {
-//     MoEngageSDKStateEnabled,
-//     MoEngageSDKStateDisabled,
-//     // ... any other states
-// };
 
 @implementation MoEngageReactSDKInitializationConfig
 

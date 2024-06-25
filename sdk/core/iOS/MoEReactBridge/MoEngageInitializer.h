@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// @version 8.1.0 and above
 - (void)initializeDefaultSDKConfigWithState:(MoEngageSDKConfig*)sdkConfig withSDKState:(MoEngageSDKState)sdkState andLaunchOptions:(NSDictionary*)launchOptions;
 
+/// Initialize SDK with MoEngageReactSDKInitializationConfig instance.
+/// @param reactConfig MoEngageSDKConfig instance for SDK configuration
 - (void)initializeInstance:(MoEngageReactSDKInitializationConfig*)reactConfig;
 @end
 
