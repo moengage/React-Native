@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol SFSafariViewControllerDelegate;
+@class MoEngageReactSDKInitializationConfig;
 #import <MoEngageSDK/MoEngageSDK.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -31,6 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// @warning Make sure to call only one of the initialization methods available (either with plist OR with MOSDKConfig instance)
 /// @version 8.1.0 and above
 - (void)initializeDefaultSDKConfigWithState:(MoEngageSDKConfig*)sdkConfig withSDKState:(MoEngageSDKState)sdkState andLaunchOptions:(NSDictionary*)launchOptions;
+
+/// Initialize SDK with MoEngageReactSDKInitializationConfig instance.
+/// @param reactConfig MoEngageSDKConfig instance for SDK configuration
+- (void)initializeInstance:(MoEngageReactSDKInitializationConfig*)reactConfig;
 @end
 
 NS_ASSUME_NONNULL_END
