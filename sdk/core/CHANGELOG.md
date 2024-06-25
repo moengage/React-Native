@@ -1,7 +1,8 @@
 # Next Release
 
-## Next Version
 - Support for JSONArray and JSONObject in Event & User Attributes.
+- Handled environment updates with the same installation
+
 - Android
   - `moe-android-sdk` version updated to `13.02.00`
   - `inapp` version updated to `8.3.1`
