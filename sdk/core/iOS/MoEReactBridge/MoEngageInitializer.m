@@ -12,6 +12,7 @@
 #import <MoEngageSDK/MoEngageSDK.h>
 #import <MoEngageObjCUtils/MoEngageObjCUtils.h>
 #import "MoEReactNativeHandler.h"
+#import "MoEngageReactSDKInitializationConfig.h"
 
 @import MoEngagePluginBase;
 
@@ -40,6 +41,16 @@
     MoEngagePlugin *plugin = [[MoEngagePlugin alloc] init];
     [plugin initializeDefaultInstanceWithSdkConfig:sdkConfig sdkState:sdkState launchOptions:launchOptions];
     [self commonSetUp: plugin identifier:sdkConfig.appId];
+}
+
+- (void)initializeInstance:(MoEngageReactSDKInitializationConfig*)reactConfig {
+    MoEngageSDKInitializationConfig *config = [[MoEngageSDKInitializationConfig alloc] initWithSdkConfig:reactConfig.sdkConfig];
+    config.isTestEnvironment = reactConfig.isTestEnvironment;
+    config.sdkState = reactConfig.sdkState;
+    config.launchOptions = reactConfig.launchOptions;
+    MoEngagePlugin *plugin = [[MoEngagePlugin alloc] init];
+    [plugin initializeInstanceWithConfig:config];
+    [self commonSetUp: plugin identifier:config.sdkConfig.appId];
 }
 
 #pragma mark- Utils

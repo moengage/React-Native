@@ -1,3 +1,7 @@
+
+# Next Release
+ - Handled environment updates with the same installation
+
 # 16-05-2024
 
 ## 10.1.0
