@@ -1,3 +1,9 @@
+# Next Release
+
+## Next Version
+
+- Fixing the typescript configuration warnings.
+
 # 03-07-2024
 
 ## 10.2.0
