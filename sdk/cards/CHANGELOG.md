@@ -1,3 +1,9 @@
+# Next Release
+
+## Next Version
+- Android
+    - `cards-core` version updated to `2.0.1`
+
 # 14-05-2024
 
 ## 3.0.1
