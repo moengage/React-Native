@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.platforms = { :ios => "11.0", :tvos => "11.0" }
   s.source_files        = 'iOS/MoEReactBridge/**/*.{h,m,mm}'
   s.dependency          'React'
-  s.dependency          'MoEngagePluginBase','>= 4.8.0','< 4.9.0'
+  s.dependency          'MoEngagePluginBase','>= 4.9.0','< 4.10.0'
   s.ios.dependency  	'MoEngageRichNotification','>= 7.16.0','< 7.17.0'
 
   s.prepare_command = <<-CMD

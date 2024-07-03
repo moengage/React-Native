@@ -2,6 +2,7 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <ReactNativeMoEngage/MoEngageInitializer.h>
+#import <ReactNativeMoEngage/MoEngageReactSDKInitializationConfig.h>
 #import <MoEngageSDK/MoEngageSDK.h>
 
 @implementation AppDelegate
@@ -15,7 +16,9 @@
   MoEngageSDKConfig* sdkConfig = [[MoEngageSDKConfig alloc] initWithAppId:@"YOUR APP ID" dataCenter: MoEngageDataCenterData_center_01];
   sdkConfig.appGroupID = @"group.com.alphadevs.MoEngage.NotificationServices";
   sdkConfig.consoleLogConfig = [[MoEngageConsoleLogConfig alloc] initWithIsLoggingEnabled:true loglevel:MoEngageLoggerTypeVerbose];
-  [[MoEngageInitializer sharedInstance] initializeDefaultSDKConfig:sdkConfig andLaunchOptions:launchOptions];
+
+  MoEngageReactSDKInitializationConfig *initConfig = [[MoEngageReactSDKInitializationConfig alloc] initWithSdkConfig:sdkConfig];
+  [[MoEngageInitializer sharedInstance] initializeInstance:initConfig];
  
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
