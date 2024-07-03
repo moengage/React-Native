@@ -1,8 +1,10 @@
-# Next Release
+# 03-07-2024
 
-## Next Version
+## 5.0.2
 - Android
     - `geofence` version updated to `4.0.2`
+- iOS
+    - `MoEngageGeofence` version updated to `~>5.16.0`
 
 # 14-05-2024
 

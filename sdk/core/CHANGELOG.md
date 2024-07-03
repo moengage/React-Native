@@ -1,7 +1,9 @@
-# Next Release
+# 03-07-2024
+
+## 10.2.0
 
 - Support for JSONArray and JSONObject in Event & User Attributes.
-- Handled environment updates with the same installation
+- Support for forcing SDK to a specific MoEngage Environment.
 
 - Android
   - `moe-android-sdk` version updated to `13.02.00`
