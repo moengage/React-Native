@@ -17,7 +17,9 @@
     "!**/__fixtures__",
     "!**/__mocks__"
   ],
-  "scripts": {},
+  "scripts": {
+    "test": "echo \"Test cases not available\" && exit 0"
+  },
   "keywords": [
     "react-native",
     "ios",

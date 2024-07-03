@@ -1,0 +1,38 @@
+name: Verify Pull Request
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [ opened, reopened, ready_for_review, synchronize ]
+    branches: [ "development", "master" ]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.pull_request.draft }}
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.5.1
+          registry-url: 'https://registry.npmjs.org'
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 17
+      - name: Set up gradle cache
+        uses: gradle/gradle-build-action@v2
+        with:
+          cache-read-only: ${{ github.ref != 'refs/heads/master' && github.ref != 'refs/heads/development'}}
+      - name: Setup script
+        run: |
+          chmod +x .github/scripts/common-utils.main.kts
+          chmod +x .github/scripts/verify-plugins.main.kts
+      - name: Verify
+        run: |
+          kotlinc -script .github/scripts/verify-plugins.main.kts
