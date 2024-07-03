@@ -16,9 +16,9 @@ buildscript {
 
 ext {
   //dependency version
-  moengageCoreVersion = "13.00.03"
+  moengageCoreVersion = "13.02.00"
   moengageCardsCoreVersion = "2.0.2"
-  pluginBaseCardVersion = "2.0.0"
+  pluginBaseCardVersion = "2.0.1"
 }
 
 apply plugin: 'com.android.library'
