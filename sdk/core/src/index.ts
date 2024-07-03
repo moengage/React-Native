@@ -721,7 +721,7 @@ var ReactMoE = {
     try {
       if (Platform.OS == PLATFORM_ANDROID) {
         const deleteUserPayload = await MoEReactBridge.deleteUser(accountMetaJson);
-        return getUserDeletionData(deleteUserPayload);
+        return getUserDeletionData(deleteUserPayload as string);
       } else {
         MoEngageLogger.debug("This api is not supported on iOS platform.");
       }

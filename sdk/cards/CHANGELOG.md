@@ -1,6 +1,7 @@
-# Next Release 
+# Next Release
 
 ## Next Version
+- Fixing the typescript configuration warnings.
 - Android
     - `cards-core` version updated to `2.1.0`
     - Added support for AGP `8.4.0` and above

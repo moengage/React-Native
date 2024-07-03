@@ -1,6 +1,7 @@
-# Next Release 
+# Next Release
 
 ## Next Version
+- Fixing the typescript configuration warnings.
 - Android
   - `moe-android-sdk` version updated to `13.03.00`
   - `inapp` version updated to `8.4.1`
