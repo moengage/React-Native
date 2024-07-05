@@ -28,6 +28,7 @@ do
   fi
 done
 filteredModules=($(echo "${moduleNameArray[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+echo "## Released Modules! :rocket:" >> $GITHUB_STEP_SUMMARY
 for modulePath in "${filteredModules[@]}"
 do
   moduleName=$(cut -f 2 -d "/"<<<$modulePath)
@@ -38,8 +39,8 @@ do
   git tag -a $moduleName-v$publishingVersion -m "$publishingVersion"
   cd $workingDir
   echo "Released version: $publishingVersion for $moduleName"
-  echo "Released version: $publishingVersion for $moduleName" >> $GITHUB_STEP_SUMMARY
   echo "::endgroup::"
+  echo "### $moduleName: $publishingVersion" >> $GITHUB_STEP_SUMMARY
 done
 
 # push tags to remote

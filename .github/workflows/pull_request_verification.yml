@@ -32,6 +32,9 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: ${{ github.ref != 'refs/heads/master' && github.ref != 'refs/heads/development'}}
+      - name: Set up repository
+        run: |
+          echo moengageAppId="Dummy MoEngage Key" >> ./local.properties
       - name: Setup script
         run: |
           chmod +x .github/scripts/common-utils.main.kts
