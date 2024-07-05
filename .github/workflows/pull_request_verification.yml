@@ -5,9 +5,6 @@ on:
   pull_request:
     types: [ opened, reopened, ready_for_review, synchronize ]
     branches: [ "development", "master" ]
-  push:
-    branches:
-      - MOEN-32740_ci_setup
 
 jobs:
   verify:
