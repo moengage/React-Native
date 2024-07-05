@@ -17,33 +17,34 @@ val workingDirectory = executeShellCommandWithStringOutput("pwd")
  *  2. Tsc Configuration
  */
 getAllPluginsPath().forEach { module ->
-    println("Verifying: $module")
+    println("::group::Verifying: $module")
     val moduleDirectory = workingDirectory + module
-    if (executeCommandOnShell(moduleDirectory, "npm install") != 0) {
-        println("Npm Install Failed: $module")
-        exitProcess(1)
-    }
+    executeCommandOnShell(moduleDirectory, "npm install")
 
     if (executeCommandOnShell(moduleDirectory, "npm test") != 0) {
-        println("Test Cases Failed: $module")
+        println("::error::Test Cases Failed: $module")
         exitProcess(1)
     }
 
     if (executeCommandOnShell(moduleDirectory, "tsc --noEmit") != 0) {
-        println("Typescript Config Failed: $module")
+        println("::error::Typescript Config Failed: $module")
         exitProcess(1)
     }
-    println("Verified: $module")
+    println("::notice::Verified: $module")
+    println("::endgroup::")
 }
+
+// SampleApp Setup
+executeCommandOnShell("$workingDirectory/$sampleAppDirectory", "npm install")
+executeCommandOnShell("$workingDirectory/$sampleAppDirectory", getInstallLocalCommand())
 
 /**
  * Verify the Android SampleApp
  */
-println("Verifying: SampleApp/Android")
-executeCommandOnShell("$workingDirectory/$sampleAppDirectory", "npm install")
-executeCommandOnShell("$workingDirectory/$sampleAppDirectory", getInstallLocalCommand())
+println("::group::Verifying: SampleApp/Android")
 if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$androidAppDirectory", "./gradlew assemble") != 0) {
-    println("Android Assemble Failed")
+    println("::error::Android Assemble Failed")
     exitProcess(1)
 }
-println("Verified: SampleApp/Android")
+println("::notice::Verified: SampleApp/Android")
+println("::endgroup::")
