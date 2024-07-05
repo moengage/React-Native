@@ -4,10 +4,11 @@
 
 import kotlin.system.exitProcess
 
-val sampleAppDirectory = "sampleapp"
+val sampleAppDirectory = "SampleApp"
 val androidAppDirectory = "android"
 
 val workingDirectory = executeShellCommandWithStringOutput("pwd")
+println(workingDirectory)
 
 /**
  * Verify the react-native plugins
