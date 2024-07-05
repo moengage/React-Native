@@ -57,3 +57,10 @@ fun getInstallLocalCommand(): String {
     }
     return command
 }
+
+/**
+ * Create the local.properties file in given directory
+ */
+fun createLocalPropertiesFile(directory: String) {
+    executeCommandOnShell(directory, "echo moengageAppId=\"Dummy MoEngage Key\" >> ./local.properties")
+}

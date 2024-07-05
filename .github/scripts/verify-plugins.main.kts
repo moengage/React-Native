@@ -38,6 +38,7 @@ getAllPluginsPath().forEach { module ->
 // SampleApp Setup
 executeCommandOnShell("$workingDirectory/$sampleAppDirectory", "npm install")
 executeCommandOnShell("$workingDirectory/$sampleAppDirectory", getInstallLocalCommand())
+createLocalPropertiesFile("$workingDirectory/$sampleAppDirectory/$androidAppDirectory")
 
 /**
  * Verify the Android SampleApp
