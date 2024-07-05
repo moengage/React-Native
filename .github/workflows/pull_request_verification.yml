@@ -34,6 +34,7 @@ jobs:
           cache-read-only: ${{ github.ref != 'refs/heads/master' && github.ref != 'refs/heads/development'}}
       - name: Set up repository
         run: |
+          cd SampleApp/Android
           echo moengageAppId="Dummy MoEngage Key" >> ./local.properties
       - name: Setup script
         run: |
