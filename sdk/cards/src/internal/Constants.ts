@@ -83,4 +83,4 @@ export const keyUnClickedCardsCount = "unClickedCardsCount";
 //JSON Values export constants
 export const argumentPullToRefreshSync = "onPullToRefreshCardsSync";
 export const argumentInboxOpenSync = "onInboxOpenCardsSync";
-export const argumentAppOpenSync = "onAppOpenCardsSync";
+export const argumentGenericSync = "onCardsSync";

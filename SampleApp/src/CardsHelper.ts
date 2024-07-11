@@ -9,7 +9,7 @@ class CardsHelper {
     appId = MOENGAGE_APP_ID;
 
     initialise(): void {
-        ReactMoEngageCards.setAppOpenSyncListener((data) => {
+        ReactMoEngageCards.setSyncCompleteListener((data) => {
             MoEngageLogger.debug("App Open Sync Listener Called: ", data);
         });
         ReactMoEngageCards.initialize(this.appId);

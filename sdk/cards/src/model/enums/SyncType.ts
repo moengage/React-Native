@@ -22,7 +22,13 @@ enum SyncType {
      * Sync when SwipeToRefresh widget is pulled.
      * @since 1.0.0
      */
-    PULL_TO_REFRESH = "PULL_TO_REFRESH"
+    PULL_TO_REFRESH = "PULL_TO_REFRESH",
+
+    /**
+     * Sync when User logins .
+     * @since 4.0.0
+     */
+    IMMEDIATE = "IMMEDIATE"
 }
 
 export default SyncType;

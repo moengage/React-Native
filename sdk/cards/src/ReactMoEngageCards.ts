@@ -6,7 +6,7 @@ import CardInfo from "./model/CardInfo";
 import CardsData from "./model/CardsData";
 import SyncCompleteData from "./model/SyncData";
 import { MoEngageLogger } from "react-native-moengage";
-import SyncType from "./model/enums/SyncType";
+import CardListenerEvent from "./model/enums/CardListenerEvent";
 
 /**
  * Helper to interact with the cards feature.
@@ -33,15 +33,15 @@ namespace ReactMoEngageCards {
     }
 
     /**
-     * Set a listener to receive callback for cards refresh on App open
+     * Set a listener to receive callback for cards refresh on App open , or on user logs in
      * Notes: This method must be call before initialize to get callback properly
      * 
      * @param onSyncComplete - Callback to be trigger on sync complete
-     * @since 1.0.0
+     * @since 4.0.0
      */
-    export function setAppOpenSyncListener(onSyncComplete: (data: SyncCompleteData | null) => void): void {
-        MoEngageLogger.verbose(`${TAG} setAppOpenSyncListener() : `);
-        MoEngageCardsCache.cacheEventListenerCallback(SyncType.APP_OPEN, onSyncComplete);
+    export function setSyncCompleteListener(onSyncComplete: (data: SyncCompleteData | null) => void): void {
+        MoEngageLogger.verbose(`${TAG} setSyncCompleteListener() : `);
+        MoEngageCardsCache.cacheEventListenerCallback(CardListenerEvent.GENERIC, onSyncComplete);
     }
 
     /**

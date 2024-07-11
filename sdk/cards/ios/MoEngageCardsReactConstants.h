@@ -9,6 +9,6 @@
 
 
 extern NSString* const kPayload;
-extern NSString* const kAppOpenCardsSyncListener;
+extern NSString* const kCardsSyncListener;
 extern NSString* const kPullToRefreshCardsSyncListener;
 extern NSString* const kInboxOpenCardsSyncListener;
