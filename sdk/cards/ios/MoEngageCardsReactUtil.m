@@ -17,7 +17,8 @@
             return kPullToRefreshCardsSyncListener;
     
         case MoEngageCardsSyncEventTypeAppOpen:
-            return kAppOpenCardsSyncListener;
+        case MoEngageCardsSyncEventTypeImmediate: 
+            return kCardsSyncListener;
             
         case MoEngageCardsSyncEventTypeInboxOpen:
             return kInboxOpenCardsSyncListener;

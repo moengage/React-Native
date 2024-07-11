@@ -31,7 +31,7 @@
 -(void)initialize:(NSString*)payload {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginCardsBridge sharedInstance] initialize:jsonPayload];
-    [[MoEngagePluginCardsBridge sharedInstance] setAppOpenSyncListener:jsonPayload];
+    [[MoEngagePluginCardsBridge sharedInstance] setSyncListener:jsonPayload];
     [[MoEngagePluginCardsBridge sharedInstance] setSyncEventListnerDelegate:self];
 }
 
