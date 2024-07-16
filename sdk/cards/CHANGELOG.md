@@ -1,3 +1,12 @@
+# Next Release 
+
+## Next Version
+- Android
+    - `cards-core` version updated to `2.1.0`
+    - Added support for AGP `8.4.0` and above
+    - Kotlin version updated to `1.9.23`
+    - Compile SDK version updated to `34`
+
 # 03-07-2024
 
 ## 3.0.2
