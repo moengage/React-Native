@@ -1,12 +1,12 @@
 buildscript {
-  ext.kotlinVersion = '1.7.10'
+  ext.kotlinVersion = '1.9.23'
   repositories {
     google()
     mavenCentral()
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:8.2.2'
+    classpath 'com.android.tools.build:gradle:8.4.0'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
   }
 }
@@ -20,12 +20,12 @@ rootProject.allprojects {
 
 ext {
   //dependency version
-  moengageCoreVersion = "13.02.00"
-  moengageInAppVersion = "8.3.1"
-  basePluginVersion = "4.0.2"
+  moengageCoreVersion = "13.03.00"
+  moengageInAppVersion = "8.4.0"
+  basePluginVersion = "4.1.0"
   //build versions
   minimumVersion = 21
-  compileVersion = 33
+  compileVersion = 34
 }
 
 apply plugin: 'com.android.library'

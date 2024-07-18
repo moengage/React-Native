@@ -1,5 +1,5 @@
 buildscript {
-  ext.kotlinVersion = '1.7.10'
+  ext.kotlinVersion = '1.9.23'
 
   repositories {
     google()
@@ -7,7 +7,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:8.2.2'
+    classpath 'com.android.tools.build:gradle:8.4.0'
     // noinspection DifferentKotlinGradleVersion
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
   }
@@ -15,9 +15,9 @@ buildscript {
 
 ext {
   //dependency version
-  moengageCoreVersion = "13.02.00"
-  moengageInboxCoreVersion = "3.0.2"
-  pluginBaseInboxVersion = "4.0.1"
+  moengageCoreVersion = "13.03.00"
+  moengageInboxCoreVersion = "3.1.0"
+  pluginBaseInboxVersion = "4.1.0"
 }
 
 apply plugin: 'com.android.library'
@@ -25,7 +25,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.facebook.react'
 
 android {
-  compileSdk 33
+  compileSdk 34
   namespace "com.moengage.react.inbox"
   defaultConfig {
     minSdk 21
