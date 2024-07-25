@@ -64,7 +64,7 @@ println("::group::Verifying: SampleApp/iOS")
         println("::notice::CocoaPods installed successfully")
     }
 
-if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "pod install") != 0) {
+if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "NO_FLIPPER=1 pod install") != 0) {
     println("::error::iOS Pod install Failed")
     exitProcess(1)
 }
