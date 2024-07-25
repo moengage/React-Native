@@ -56,9 +56,6 @@ println("::endgroup::")
  
 println("::group::Verifying: SampleApp/iOS")
 
-if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "pod --version") != 0) {
-    println("::notice::CocoaPods is not installed. Attempting to install...")
-    
     // Attempt to install CocoaPods
     if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "sudo gem install cocoapods") != 0) {
         println("::error::Failed to install CocoaPods")
@@ -66,12 +63,6 @@ if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirector
     } else {
         println("::notice::CocoaPods installed successfully")
     }
-}
-
-if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "pod install") != 0) {
-    println("::error::iOS Pod install Failed")
-    exitProcess(1)
-}
 
 if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "pod install") != 0) {
     println("::error::iOS Pod install Failed")
