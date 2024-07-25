@@ -55,12 +55,12 @@ println("::endgroup::")
  */
  
 println("::group::Verifying: SampleApp/iOS")
-if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$ios", "pod install") != 0) {
+if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "pod install") != 0) {
     println("::error::iOS Pod install Failed")
     exitProcess(1)
 }
 
-if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$ios",
+if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory",
     "xcodebuild -workspace SampleApp.xcworkspace " +
     "-scheme SampleApp " +
     "-sdk iphonesimulator") != 0) {
