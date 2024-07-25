@@ -60,11 +60,11 @@ if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$ios", "pod ins
     exitProcess(1)
 }
 
-if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$ios", "xcodebuild -workspace SampleApp.xcworkspace\
-   -scheme SampleApp\
-   -sdk iphonesimulator") != 0) {
-    println("::error:: iOS Build Failed")
-    exitProcess(1)
+if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$ios",
+    "xcodebuild -workspace SampleApp.xcworkspace" +
+    "-scheme SampleApp" +
+    "-sdk iphonesimulator")) != 0) {
+        exitProcess(1)
 }
 println("::notice::Verified: SampleApp/ios")
 println("::endgroup::")
