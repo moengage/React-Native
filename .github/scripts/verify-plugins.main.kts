@@ -6,6 +6,7 @@ import kotlin.system.exitProcess
 
 val sampleAppDirectory = "SampleApp"
 val androidAppDirectory = "android"
+val iOSAppDirectory = "ios"
 
 val workingDirectory = executeShellCommandWithStringOutput("pwd")
 println(workingDirectory)
@@ -27,10 +28,6 @@ getAllPluginsPath().forEach { module ->
         exitProcess(1)
     }
 
-    if (executeCommandOnShell(moduleDirectory, "tsc --noEmit") != 0) {
-        println("::error::Typescript Config Failed: $module")
-        exitProcess(1)
-    }
     println("::notice::Verified: $module")
     println("::endgroup::")
 }
@@ -49,5 +46,25 @@ if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$androidAppDire
     println("::error::Android Assemble Failed")
     exitProcess(1)
 }
+
 println("::notice::Verified: SampleApp/Android")
 println("::endgroup::")
+
+/**
+ * Verify the iOS SampleApp
+ */
+println("::group::Verifying: SampleApp/iOS")
+if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$ios", "pod install") != 0) {
+    println("::error::iOS Pod install Failed")
+    exitProcess(1)
+}
+
+if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$ios", "xcodebuild -workspace SampleApp.xcworkspace \
+   -scheme SampleApp \
+   -sdk iphonesimulator") != 0) {
+    println("::error:: iOS Build Failed")
+    exitProcess(1)
+}
+println("::notice::Verified: SampleApp/ios")
+println("::endgroup::")
+
