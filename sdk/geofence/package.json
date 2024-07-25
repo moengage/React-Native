@@ -36,7 +36,7 @@
   ],
   "license": "SEE LICENSE IN LICENSE.txt",
   "devDependencies": {
-    "@types/react-native": "^0.69.3"
+    "react-native": "0.73.0"
   },
   "codegenConfig": {
       "name": "NativeMoEngageGeofenceSpec",

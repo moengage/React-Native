@@ -8,6 +8,7 @@ import {MoEngagePermissionType} from "../models/MoEngagePermissionType";
 import MoEInitConfig from "../models/MoEInitConfig";
 import MoEngageLogger from "../logger/MoEngageLogger";
 import {MoEngageNudgePosition} from "../models/MoEngageNudgePosition";
+import { MoESupportedAttributes } from "../models/MoESupportedAttributes";
 
 
 export function getInAppCampaignJson(moEInAppData: MoEInAppData, type: string, appId: String) {
