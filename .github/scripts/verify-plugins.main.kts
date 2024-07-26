@@ -65,8 +65,6 @@ println("::group::Verifying: SampleApp/iOS")
         println("::notice::CocoaPods installed successfully")
     }
     
-    val podfileLock = File("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory/Podfile.lock")
-
 // Remove Podfile Lock
 val removePodfileLockResult = executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "rm -f Podfile.lock")
 if (removePodfileLockResult != 0) {
