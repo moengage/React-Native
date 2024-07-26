@@ -1,4 +1,3 @@
-
 #!/usr/bin/env kotlin
 
 @file:Import("common-utils.main.kts")
@@ -65,6 +64,7 @@ println("::group::Verifying: SampleApp/iOS")
         println("::notice::CocoaPods installed successfully")
     }
     
+
 // Remove Podfile Lock
 val removePodfileLockResult = executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "rm -f Podfile.lock")
 if (removePodfileLockResult != 0) {
