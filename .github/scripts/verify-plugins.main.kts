@@ -63,6 +63,23 @@ println("::group::Verifying: SampleApp/iOS")
     } else {
         println("::notice::CocoaPods installed successfully")
     }
+    
+    val podfileLock = File("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory/Podfile.lock")
+
+// Check if Podfile.lock exists and delete it if it does
+if (podfileLock.exists()) {
+    if (!podfileLock.delete()) {
+        println("::error::Failed to delete Podfile.lock")
+        exitProcess(1)
+    }
+}
+
+// Update the pod repository
+val updateRepoResult = executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "pod repo update")
+if (updateRepoResult != 0) {
+    println("::error::Failed to update pod repo")
+    exitProcess(1)
+}
 
 if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "NO_FLIPPER=1 pod install") != 0) {
     println("::error::iOS Pod install Failed")
