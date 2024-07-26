@@ -1,8 +1,6 @@
 
 #!/usr/bin/env kotlin
 
-import java.io.File
-
 @file:Import("common-utils.main.kts")
 
 import kotlin.system.exitProcess
@@ -69,12 +67,11 @@ println("::group::Verifying: SampleApp/iOS")
     
     val podfileLock = File("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory/Podfile.lock")
 
-// Check if Podfile.lock exists and delete it if it does
-if (podfileLock.exists()) {
-    if (!podfileLock.delete()) {
-        println("::error::Failed to delete Podfile.lock")
-        exitProcess(1)
-    }
+// Remove Podfile Lock
+val removePodfileLockResult = executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "rm -f Podfile.lock")
+if (removePodfileLockResult != 0) {
+    println("::error::Failed to delete Podfile.lock")
+    exitProcess(1)
 }
 
 // Update the pod repository
