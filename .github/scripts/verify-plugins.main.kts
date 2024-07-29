@@ -79,7 +79,7 @@ if (updateRepoResult != 0) {
     exitProcess(1)
 }
 
-if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "pod install") != 0) {
+if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "NO_FLIPPER=1 pod install") != 0) {
     println("::error::iOS Pod install Failed")
     exitProcess(1)
 }
