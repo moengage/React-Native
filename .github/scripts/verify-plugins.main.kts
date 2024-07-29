@@ -27,6 +27,11 @@ getAllPluginsPath().forEach { module ->
         println("::error::Test Cases Failed: $module")
         exitProcess(1)
     }
+    
+    if (executeCommandOnShell(moduleDirectory, "tsc --noEmit") != 0) {
+        println("::error::Typescript Config Failed: $module")
+        exitProcess(1)
+    }
 
     println("::notice::Verified: $module")
     println("::endgroup::")
