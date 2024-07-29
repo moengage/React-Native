@@ -15,7 +15,8 @@ jobs:
     if: ${{ !github.event.pull_request.draft }}
     strategy:
       fail-fast: false
-      xcode: ["15.3"]
+      matrix:
+        xcode: ["15.3"]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
