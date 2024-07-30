@@ -1,8 +1,12 @@
 # Next Release
 
 ## Next Version
-
 - Fixing the typescript configuration warnings.
+- Android
+    - `geofence` version updated to `4.1.0`
+    - Added support for AGP `8.4.0` and above
+    - Kotlin version updated to `1.9.23`
+    - Compile SDK version updated to `34`
 
 # 03-07-2024
 
