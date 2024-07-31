@@ -4,7 +4,7 @@
 - Fixing the typescript configuration warnings.
 - Android
   - `moe-android-sdk` version updated to `13.04.00`
-  - `inapp` version updated to `8.4.1`
+  - `inapp` version updated to `8.5.0`
   - Added support for AGP `8.4.0` and above
   - Kotlin version updated to `1.9.23`
   - Compile SDK version updated to `34`
