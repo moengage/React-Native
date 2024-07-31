@@ -1,6 +1,6 @@
-# Next Release
+# 31-07-2024
 
-## Next Version
+## 4.1.0
 - Fixing the typescript configuration warnings.
 - Android
     - `inbox-core` version updated to `3.1.0`
