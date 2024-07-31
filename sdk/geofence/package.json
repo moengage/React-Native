@@ -1,6 +1,6 @@
 {
   "name": "react-native-moengage-geofence",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "description": "MoEngage React Native package to support geofence based campaigns in iOS platform",
   "main": "src/index.ts",
   "files": [

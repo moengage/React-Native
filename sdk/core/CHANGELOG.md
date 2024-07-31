@@ -1,13 +1,15 @@
-# Next Release
+# 31-07-2024
 
-## Next Version
+## 10.3.0
 - Fixing the typescript configuration warnings.
 - Android
-  - `moe-android-sdk` version updated to `13.03.00`
-  - `inapp` version updated to `8.4.1`
+  - `moe-android-sdk` version updated to `13.04.00`
+  - `inapp` version updated to `8.5.0`
   - Added support for AGP `8.4.0` and above
   - Kotlin version updated to `1.9.23`
   - Compile SDK version updated to `34`
+- iOS
+    - MoEngage-iOS-SDK version updated to `~>9.18.0`.
 
 # 03-07-2024
 
