@@ -1,5 +1,7 @@
 #!/usr/bin/env kotlin
 
+@file:Import("../../../sdk-automation-scripts/scripts/common-utils.main.kts")
+
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
