@@ -24,7 +24,7 @@ getAllPluginsPath().forEach { module ->
     println("::group::Verifying: $module")
     val moduleDirectory = "$workingDirectory/$module"
     executeCommandOnShell(moduleDirectory, "npm install")
-    if (module != coreModule) executeCommandOnShell(moduleDirectory, "install-local ./core")
+    if (module != coreModule) executeCommandOnShell(moduleDirectory, "install-local ./../core")
 
     if (executeCommandOnShell(moduleDirectory, "npm test") != 0) {
         println("::error::Test Cases Failed: $module")
