@@ -20,25 +20,26 @@ println(workingDirectory)
  *  2. Testcases
  *  2. Tsc Configuration
  */
-// getAllPluginsPath().forEach { module ->
-//     println("::group::Verifying: $module")
-//     val moduleDirectory = "$workingDirectory/$module"
-//     executeCommandOnShell(moduleDirectory, "npm install")
-//     if (module != coreModule) executeCommandOnShell(moduleDirectory, "install-local ./../core")
+getAllPluginsPath().forEach { module ->
+    println("::group::Verifying: $module")
+    val moduleDirectory = "$workingDirectory/$module"
+    executeCommandOnShell(moduleDirectory, "npm install")
+    if (module != coreModule) 
+        executeCommandOnShell(moduleDirectory, "install-local ./../core")
 
-//     if (executeCommandOnShell(moduleDirectory, "npm test") != 0) {
-//         println("::error::Test Cases Failed: $module")
-//         exitProcess(1)
-//     }
+    if (executeCommandOnShell(moduleDirectory, "npm test") != 0) {
+        println("::error::Test Cases Failed: $module")
+        exitProcess(1)
+    }
     
-//     if (executeCommandOnShell(moduleDirectory, "tsc --noEmit") != 0) {
-//         println("::error::Typescript Config Failed: $module")
-//         exitProcess(1)
-//     }
+    if (executeCommandOnShell(moduleDirectory, "tsc --noEmit") != 0) {
+        println("::error::Typescript Config Failed: $module")
+        exitProcess(1)
+    }
 
-//     println("::notice::Verified: $module")
-//     println("::endgroup::")
-// }
+    println("::notice::Verified: $module")
+    println("::endgroup::")
+}
 
 // SampleApp Setup
 executeCommandOnShell("$workingDirectory/$sampleAppDirectory", "npm install")
