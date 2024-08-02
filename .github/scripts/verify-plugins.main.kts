@@ -1,7 +1,6 @@
 #!/usr/bin/env kotlin
 
 @file:Import("utils.main.kts")
-
 @file:Import("../../../sdk-automation-scripts/scripts/common-utils.main.kts")
 
 import kotlin.system.exitProcess
@@ -22,7 +21,7 @@ println(workingDirectory)
  */
 getAllPluginsPath().forEach { module ->
     println("::group::Verifying: $module")
-    val moduleDirectory = workingDirectory + module
+    val moduleDirectory = "$workingDirectory/$module"
     executeCommandOnShell(moduleDirectory, "npm install")
 
     if (executeCommandOnShell(moduleDirectory, "npm test") != 0) {
@@ -88,4 +87,11 @@ if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirector
 }
 println("::notice::Verified: SampleApp/ios")
 println("::endgroup::")
+
+/**
+ * Create the local.properties file in given directory
+ */
+fun createLocalPropertiesFile(directory: String) {
+    executeCommandOnShell(directory, "echo moengageAppId=\"Dummy MoEngage Key\" >> ./local.properties")
+}
 

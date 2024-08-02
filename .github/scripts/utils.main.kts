@@ -1,16 +1,14 @@
 #!/usr/bin/env kotlin
 
-@file:Import("../../../sdk-automation-scripts/scripts/common-utils.main.kts")
-
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 
 private val pluginsPath = setOf(
-    "/sdk/cards",
-    "/sdk/core",
-    "/sdk/geofence",
-    "/sdk/inbox"
+    "sdk/cards",
+    "sdk/core",
+    "sdk/geofence",
+    "sdk/inbox"
 )
 
 /**
@@ -27,11 +25,4 @@ fun getInstallLocalCommand(): String {
         command += "../$module "
     }
     return command
-}
-
-/**
- * Create the local.properties file in given directory
- */
-fun createLocalPropertiesFile(directory: String) {
-    executeCommandOnShell(directory, "echo moengageAppId=\"Dummy MoEngage Key\" >> ./local.properties")
 }
