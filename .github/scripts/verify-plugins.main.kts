@@ -1,6 +1,7 @@
 #!/usr/bin/env kotlin
 
-@file:Import("common-utils.main.kts")
+@file:Import("utils.main.kts")
+@file:Import("../../../sdk-automation-scripts/scrtips/common-utils.main.kts")
 
 import kotlin.system.exitProcess
 
@@ -60,16 +61,6 @@ println("::endgroup::")
  */
  
 println("::group::Verifying: SampleApp/iOS")
-
-    // Attempt to install CocoaPods
-    if (executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "sudo gem install cocoapods") != 0) {
-        println("::error::Failed to install CocoaPods")
-        exitProcess(1)
-    } else {
-        println("::notice::CocoaPods installed successfully")
-    }
-    
-
 // Remove Podfile Lock
 val removePodfileLockResult = executeCommandOnShell("$workingDirectory/$sampleAppDirectory/$iOSAppDirectory", "rm -f Podfile.lock")
 if (removePodfileLockResult != 0) {
