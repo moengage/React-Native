@@ -1,6 +1,6 @@
 {
   "name": "react-native-moengage-geofence",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "MoEngage React Native package to support geofence based campaigns in iOS platform",
   "main": "src/index.ts",
   "files": [
@@ -25,7 +25,7 @@
     "geofence"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Test cases not available\" && exit 0"
   },
   "author": {
     "name": "MoEngage",
@@ -36,7 +36,7 @@
   ],
   "license": "SEE LICENSE IN LICENSE.txt",
   "devDependencies": {
-    "@types/react-native": "^0.69.3"
+    "react-native": "0.73.0"
   },
   "codegenConfig": {
       "name": "NativeMoEngageGeofenceSpec",

@@ -1,6 +1,6 @@
 {
   "name": "react-native-moengage-inbox",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "Inbox Module for the MoEngage Platform",
   "main": "src/index.ts",
   "files": [
@@ -17,7 +17,9 @@
     "!**/__fixtures__",
     "!**/__mocks__"
   ],
-  "scripts": {},
+  "scripts": {
+    "test": "echo \"Test cases not available\" && exit 0"
+  },
   "keywords": [
     "react-native",
     "ios",
@@ -37,7 +39,7 @@
   },
   "license": "SEE LICENSE IN LICENSE.txt",
   "devDependencies": {
-    "@types/react-native": "^0.69.3"
+    "react-native": "0.73.0"
   },
   "codegenConfig": {
     "name": "NativeMoEngageInboxSpec",

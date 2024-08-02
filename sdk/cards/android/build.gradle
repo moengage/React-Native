@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlinVersion = '1.7.10'
+    ext.kotlinVersion = '1.9.23'
 
     repositories {
         google()
@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.2'
+        classpath 'com.android.tools.build:gradle:8.4.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:11.4.0"
     }
@@ -16,9 +16,9 @@ buildscript {
 
 ext {
   //dependency version
-  moengageCoreVersion = "13.00.03"
-  moengageCardsCoreVersion = "2.0.2"
-  pluginBaseCardVersion = "2.0.0"
+  moengageCoreVersion = "13.04.00"
+  moengageCardsCoreVersion = "2.2.0"
+  pluginBaseCardVersion = "2.1.0"
 }
 
 apply plugin: 'com.android.library'
@@ -27,7 +27,7 @@ apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: 'com.facebook.react'
 
 android {
-    compileSdk 33
+    compileSdk 34
     namespace "com.moengage.react.cards"
     defaultConfig {
         minSdk 21

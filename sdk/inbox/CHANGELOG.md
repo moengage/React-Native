@@ -4,12 +4,32 @@
 - iOS
     - Updated internal library dependency.
     
+# 31-07-2024
+
+## 4.1.0
+- Fixing the typescript configuration warnings.
+- Android
+    - `inbox-core` version updated to `3.1.0`
+    - Added support for AGP `8.4.0` and above
+    - Kotlin version updated to `1.9.23`
+    - Compile SDK version updated to `34`
+-iOS
+    - `MoEngageInbox` version updated to `~>2.17.0`
+
+# 03-07-2024
+
+## 4.0.2
+- Android
+    - `inbox-core` version updated to `3.0.2`
+-iOS
+    - `MoEngageInbox` version updated to `~>2.16.0`
+
 # 14-05-2024
 
 ## 4.0.1
 - BugFix
     - Adding backward compatibility support for react-native version with react-native-moengage-inbox `4.x.x`
-    
+
 # 07-05-2024
 
 ## 4.0.0
@@ -22,7 +42,7 @@
 ## 3.1.0
 - iOS
     - MoEngageInbox SDK version updated to `~>2.16.0`.
-    
+
 # 18-03-2024
 
 ## 3.0.1
@@ -43,7 +63,7 @@
 ## 2.6.0
 - iOS
     - MoEngageInbox SDK version updated to `~>2.14.0`.
-    
+
 # 29-11-2023
 
 ## 2.5.0
@@ -73,7 +93,7 @@
 
 - iOS
     - MoEngageInbox SDK version updated to `~>2.10.0`.
-    
+
 # 25-05-2023
 
 ## 2.4.0
@@ -81,19 +101,19 @@
     - Target & Compile SDK version updated to 33
 - iOS
     - MoEngageInbox SDK version updated to `~>2.8.0`.
-    
+
 # 16-02-2023
 
 ## 2.3.0
 - iOS
     - MoEngageInbox SDK version updated to `~>2.4.0`.
-    
+
 # 16-01-2023
 
 ## 2.2.0
 - iOS
     - MoEngageInbox SDK version updated to `~>2.2.0`.
-    
+
 # 09-11-2022
 
 ## 2.1.1
@@ -125,20 +145,20 @@
 - Breaking Changes
     - `MoEReactInbox.initialize("YOUR_APP_ID");` should be called before calling any other method.
 
-### 1.2.0 
+### 1.2.0
 Release Date: 12th May 2022
-- iOS 
+- iOS
     - Native SDK version updated to `~>7.2.0`.
     - Base plugin version dependency updated to `~>2.3.0`.
-    
-### 1.1.0 
+
+### 1.1.0
 Release Date: 16th September 2021
-- iOS 
+- iOS
     - Native SDK version updated to `~>7.1.0`.
     - Base plugin version dependency updated to `~>2.1.0`.
 - Android
     - Base plugin version dependency updated to `2.2.0`.
 
-### 1.0.0 
+### 1.0.0
 Release Date: 31st August 2021
 - First Release

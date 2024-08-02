@@ -8,6 +8,7 @@ import {MoEngagePermissionType} from "../models/MoEngagePermissionType";
 import MoEInitConfig from "../models/MoEInitConfig";
 import MoEngageLogger from "../logger/MoEngageLogger";
 import {MoEngageNudgePosition} from "../models/MoEngageNudgePosition";
+import { MoESupportedAttributes } from "../models/MoESupportedAttributes";
 
 
 export function getInAppCampaignJson(moEInAppData: MoEInAppData, type: string, appId: String) {
@@ -123,7 +124,7 @@ export function getAppStatusJson(appStatus: String, appId: String) {
   return JSON.stringify(json);
 }
 
-export function getUserAttributeJson(name: String, value: String | Number | Boolean | Array<String> | Array<Number>, type: String, appId: String) {
+export function getUserAttributeJson(name: String, value: MoESupportedAttributes, type: String, appId: String) {
   var json: { [k: string]: any } = {
     accountMeta: {
       appId: appId

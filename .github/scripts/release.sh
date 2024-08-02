@@ -11,9 +11,9 @@ git push origin master
 latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
 lastReleaseCommitId=$(git rev-parse $latestTag)
 masterCommitId=$(git rev-parse master)
-echo "latestTag: $latestTag"
-echo "lastReleaseCommitId: $lastReleaseCommitId"
-echo "masterCommitId: $masterCommitId"
+echo "::notice::latestTag: $latestTag"
+echo "::notice::lastReleaseCommitId: $lastReleaseCommitId"
+echo "::notice::masterCommitId: $masterCommitId"
 diffFiles=$(git diff --name-only $masterCommitId $lastReleaseCommitId)
 filesArray=( $diffFiles )
 moduleNameArray=()
@@ -28,16 +28,19 @@ do
   fi
 done
 filteredModules=($(echo "${moduleNameArray[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+echo "## Released Modules! :rocket:" >> $GITHUB_STEP_SUMMARY
 for modulePath in "${filteredModules[@]}"
 do
   moduleName=$(cut -f 2 -d "/"<<<$modulePath)
-  echo "Releasing path: $modulePath name:$moduleName"
+  echo "::group::Releasing path: $modulePath name:$moduleName"
   cd $modulePath
   publishingVersion=$(node -p "require('./package.json').version")
   npm publish
   git tag -a $moduleName-v$publishingVersion -m "$publishingVersion"
   cd $workingDir
   echo "Released version: $publishingVersion for $moduleName"
+  echo "::endgroup::"
+  echo "### $moduleName: $publishingVersion" >> $GITHUB_STEP_SUMMARY
 done
 
 # push tags to remote

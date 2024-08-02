@@ -33,11 +33,11 @@ export function getMoEAccountMeta(payload: { [k: string]: any }): MoEAccountMeta
 /**
  * Create an instance of {@link UserDeletionData} from json object
  * 
- * @param payload - JSON Object with required key
+ * @param payload - stringified JSON Object with required key
  * @returns instance of {@link UserDeletionData}
  * @since 8.6.0
  */
-export function getUserDeletionData(payload: Object): UserDeletionData {
+export function getUserDeletionData(payload: string): UserDeletionData {
     const payloadJsonObject = JSON.parse(payload);
     return new UserDeletionData(
         getMoEAccountMeta(payloadJsonObject[ACCOUNT_META]),
