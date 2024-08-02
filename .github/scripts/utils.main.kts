@@ -5,10 +5,10 @@ import java.io.File
 import java.io.InputStreamReader
 
 private val pluginsPath = setOf(
-    "/sdk/cards",
-    "/sdk/core",
-    "/sdk/geofence",
-    "/sdk/inbox"
+    "sdk/cards",
+    "sdk/core",
+    "sdk/geofence",
+    "sdk/inbox"
 )
 
 /**

@@ -1,7 +1,7 @@
 #!/usr/bin/env kotlin
 
 @file:Import("utils.main.kts")
-@file:Import("../../../sdk-automation-scripts/scrtips/common-utils.main.kts")
+@file:Import("../../../sdk-automation-scripts/scripts/common-utils.main.kts")
 
 import kotlin.system.exitProcess
 
