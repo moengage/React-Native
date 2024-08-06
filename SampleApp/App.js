@@ -9,7 +9,7 @@ import React, { Component, useEffect, useRef } from "react";
 import { Dimensions, Platform, StyleSheet, View, Alert, AppState } from "react-native";
 import AppNavigator from "./AppNavigator";
 import ReactMoE from "react-native-moengage";
-import { MoEPushConfig, MoEInitConfig, MoEngageLogConfig, MoEngageLogLevel, MoEngageLogger } from "react-native-moengage";
+import { MoEPushConfig, MoEInitConfig, MoEngageLogConfig, MoEngageLogLevel, MoEngageLogger, MoEAnalyticsConfig } from "react-native-moengage";
 import * as RootNavigation from './RootNavigation.js';
 import { MOENGAGE_APP_ID } from "./src/key.js";
 
@@ -64,7 +64,8 @@ ReactMoE.setEventListener("inAppCampaignSelfHandled", (payload) => {
 
 const moEInitConfig = new MoEInitConfig(
   new MoEPushConfig(true),
-  new MoEngageLogConfig(MoEngageLogLevel.VERBOSE, false)
+  new MoEngageLogConfig(MoEngageLogLevel.VERBOSE, false),
+  new MoEAnalyticsConfig(false)
 );
 
 export const App = () => {

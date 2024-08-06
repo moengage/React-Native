@@ -56,6 +56,7 @@ import MoEPushPayload from "../src/models/MoEPushPayload";
 import MoEInAppData from "../src/models/MoEInAppData";
 import { getUserDeletionData } from "../src/moeParser/MoEngagePayloadParser";
 import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
+import MoEAnalyticsConfig from "../src/models/MoEAnalyticsConfig";
 import { MoESupportedAttributes } from "./models/MoESupportedAttributes";
 
 const PLATFORM_IOS = "ios";
@@ -160,13 +161,7 @@ var ReactMoE = {
   initialize: function (appId: string, initConfig: MoEInitConfig = MoEInitConfig.defaultConfig()) {
     moeAppId = appId;
     MoEngageGlobalCache.updateInitConfig(initConfig);
-    let payload: string = "";
-    if (Platform.OS == PLATFORM_ANDROID) {
-      payload = getInitConfigJson(appId, initConfig);
-    } else if (Platform.OS == PLATFORM_IOS) {
-      payload = getAppIdJson(appId);
-    }
-
+    let payload: string = getInitConfigJson(appId, initConfig);
     MoEngageLogger.verbose("Initializing the MoEngage Plugin");
     MoEReactBridge.initialize(payload);
   },
@@ -746,6 +741,7 @@ export {
   MoEngageLogLevel,
   MoEngageLogger,
   MoEngageNudgePosition,
+  MoEAnalyticsConfig
 };
 export default ReactMoE;
 

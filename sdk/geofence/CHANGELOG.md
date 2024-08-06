@@ -1,3 +1,10 @@
+# Next Release Date
+
+## Next Version
+- iOS
+    - Pinned plugin dependency version
+    - MoEngageGeofence SDK version updated to `5.17.1`. 
+
 # 31-07-2024
 
 ## 5.1.0

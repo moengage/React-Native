@@ -1,3 +1,11 @@
+# Next Release(major)
+
+## Next version
+- iOS
+  - BugFix: Resolved the issue of tracking User Attribute TRUE/FALSE as 0/1.
+  - Pinned plugin dependency version
+  - MoEngage-iOS-SDK version updated to `9.18.1`.
+
 # 31-07-2024
 
 ## 10.3.0
