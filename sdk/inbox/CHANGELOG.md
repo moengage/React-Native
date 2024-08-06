@@ -2,7 +2,8 @@
 
 ## Next Version
 - iOS
-    - Updated internal library dependency.
+    - Pinned plugin dependency version
+    - `MoEngageInbox` version updated to `2.17.1`
     
 # 31-07-2024
 

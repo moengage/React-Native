@@ -2,7 +2,8 @@
 
 ## Next Version
 - iOS
-    - Updated internal library dependency.
+    - `MoEngageCards` version updated to `4.17.1`
+    - Pinned plugin dependency version
     
 # 31-07-2024
 
