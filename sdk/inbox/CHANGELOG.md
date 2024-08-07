@@ -1,6 +1,6 @@
-# Next Release Date
+# 07-08-2024
 
-## Next Version
+## 5.0.0
 - iOS
     - Pinned plugin dependency version
     - `MoEngageInbox` version updated to `2.17.1`

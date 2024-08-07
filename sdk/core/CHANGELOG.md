@@ -1,6 +1,6 @@
-# Next Release(major)
+# 07-08-2024
 
-## Next version
+## 11.0.0
 - iOS
   - BugFix: Resolved the issue of tracking User Attribute TRUE/FALSE as 0/1.
   - Pinned plugin dependency version
