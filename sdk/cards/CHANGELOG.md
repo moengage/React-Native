@@ -1,6 +1,6 @@
-# Next Release Date
+# 07-08-2024
 
-## Next Version
+## 4.0.0
 - iOS
     - `MoEngageCards` version updated to `4.17.1`
     - Pinned plugin dependency version
