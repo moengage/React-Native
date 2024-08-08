@@ -28,9 +28,9 @@ jobs:
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Script setup
         run: |
-          chmod +x .github/scripts/release.sh
+          chmod +x .github/scripts/release.main.kts
       - name: Publishing plugins
         run: |
-          .github/scripts/release.sh
+          .github/scripts/release.main.kts
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -15,14 +15,3 @@ private val pluginsPath = setOf(
  * Returns all the plugins list
  */
 fun getAllPluginsPath(): Set<String> = pluginsPath
-
-/**
- * Returns the install-local command to install all plugins into sampleapp directory
- */
-fun getInstallLocalCommand(): String {
-    var command = "install-local "
-    pluginsPath.forEach { module ->
-        command += "../$module "
-    }
-    return command
-}
