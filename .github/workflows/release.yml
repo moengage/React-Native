@@ -11,26 +11,26 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(fromJSON('["umangmoe", "arshiya-moengage"]'), github.actor)
     steps:
-      - name: Checkout code
+      - name: Checkout sdk automation scripts
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Clone the complete code
-          fetch-tags: true # Clone code with all tags
-          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}          
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20.5.1
-          registry-url: 'https://registry.npmjs.org'
-      - name: Configure git
+          repository: moengage/sdk-automation-scripts
+          path: sdk-automation-scripts
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Automation script setup
+        uses: ./sdk-automation-scripts/actions/npm-repository-setup    
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with: 
+          path: source
+          fetch-depth: 0
+          fetch-tags: true
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Script setup
         run: |
-          git config --local user.name "sdk-bot-user"
-          git config --local user.email "sdk.bot@moengage.com"
-      - name: Release setup
-        run: |
-          chmod +x .github/scripts/release.sh
+          chmod +x .github/scripts/release.main.kts
       - name: Publishing plugins
         run: |
-          .github/scripts/release.sh
+          .github/scripts/release.main.kts
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
