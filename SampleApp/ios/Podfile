@@ -1,22 +1,9 @@
-# Resolve react_native_pods.rb with node to allow for hoisting
-require Pod::Executable.execute_command('node', ['-p',
-  'require.resolve(
-    "react-native/scripts/react_native_pods.rb",
-    {paths: [process.argv[1]]},
-  )', __dir__]).strip
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 platform :ios, min_ios_version_supported
-prepare_react_native_project!
+install! 'cocoapods', :deterministic_uuids => false
 
-# If you are using a `react-native-flipper` your iOS build will fail when `NO_FLIPPER=1` is set.
-# because `react-native-flipper` depends on (FlipperKit,...) that will be excluded
-#
-# To fix this you can also exclude `react-native-flipper` using a `react-native.config.js`
-# ```js
-# module.exports = {
-#   dependencies: {
-#     ...(process.env.NO_FLIPPER ? { 'react-native-flipper': { platforms: { ios: null } } } : {}),
-# ```
 flipper_config = ENV['NO_FLIPPER'] == "1" ? FlipperConfiguration.disabled : FlipperConfiguration.enabled
 
 linkage = ENV['USE_FRAMEWORKS']
@@ -26,8 +13,7 @@ if linkage != nil
 end
 
 target 'SampleApp' do
-  
-config = use_native_modules!
+  config = use_native_modules!
 
   use_react_native!(
     :path => config[:reactNativePath],
@@ -40,25 +26,28 @@ config = use_native_modules!
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'SampleAppTests' do
-    inherit! :complete
-    # Pods for testing
-  end
-
   post_install do |installer|
-    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
     react_native_post_install(
       installer,
-      config[:reactNativePath],
+      # Set `mac_catalyst_enabled` to `true` in order to apply patches
+      # necessary for Mac Catalyst builds
       :mac_catalyst_enabled => false
     )
+
+    # Fix for Xcode 14 / CocoaPods 1.11.X (see: https://github.com/CocoaPods/CocoaPods/issues/11402)
+    installer.pods_project.targets.each do |target|
+      if target.respond_to?(:product_type) and target.product_type == "com.apple.product-type.bundle"
+        target.build_configurations.each do |config|
+            config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+        end
+      end
+    end
   end
 end
 
-target ‘NotificationService’ do
+target 'NotificationService' do
   pod 'MoEngageRichNotification'
 end
 target 'NotificationContent' do
   pod 'MoEngageRichNotification'
 end
-

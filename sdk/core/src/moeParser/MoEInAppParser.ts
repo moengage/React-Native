@@ -1,5 +1,4 @@
 import MoEngageLogger from "../logger/MoEngageLogger";
-import MoEAccountMeta from "../models/MoEAccountMeta";
 import MoECampaignContext from "../models/MoECampaignContext";
 import MoECampaignData from "../models/MoECampaignData";
 import MoEClickData from "../models/MoEClickData";
@@ -10,7 +9,6 @@ import MoESelfHandledCampaign from "../models/MoESelfHandledCampaign";
 import MoESelfHandledCampaignData from "../models/MoESelfHandledCampaignData";
 import {
     ACTION_TYPE,
-    APP_ID,
     FORMATTED_CAMPAIGN_ID,
     MOE_CAMPAIGN_CONTEXT,
     MOE_CAMPAIGN_ID,
@@ -26,7 +24,6 @@ import {
     MOE_PAYLOAD,
     MOE_PLATFORM,
     MOE_SELF_HANDLED,
-    MOE_SELF_HANDLED_OBJ_ERROR,
     MOE_NAVIGATION_VALUE
 } from "../utils/MoEConstants";
 import { isValidObject } from "../utils/MoEHelper";

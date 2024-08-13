@@ -1,3 +1,22 @@
+# 07-08-2024
+
+## 6.0.0
+- iOS
+    - Pinned plugin dependency version
+    - MoEngageGeofence SDK version updated to `5.17.1`. 
+
+# 31-07-2024
+
+## 5.1.0
+- Fixing the typescript configuration warnings.
+- Android
+    - `geofence` version updated to `4.2.0`
+    - Added support for AGP `8.4.0` and above
+    - Kotlin version updated to `1.9.23`
+    - Compile SDK version updated to `34`
+- iOS
+    - MoEngageGeofence SDK version updated to `~>5.17.0`. 
+
 # 03-07-2024
 
 ## 5.0.2

@@ -1,15 +1,16 @@
-name: Release Plugins
+name: Verify Pull Request
 
 on:
-  workflow_dispatch: # manual trigger
-  # push: # on push to master branch
-    # branches:
-      # - master
-
+  workflow_dispatch:
+  pull_request:
+    types: [ opened, reopened, ready_for_review, synchronize ]
+    branches: [ "development", "master" ]
 jobs:
-  release:
-    runs-on: ubuntu-latest
-    if: contains(fromJSON('["umangmoe", "arshiya-moengage"]'), github.actor)
+  verify:
+    runs-on: macos-latest
+    if: ${{ !github.event.pull_request.draft }}
+    strategy:
+      fail-fast: true
     steps:
       - name: Checkout sdk automation scripts
         uses: actions/checkout@v3
@@ -26,11 +27,12 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      - name: Script setup
+      - name: Setup script
+        working-directory: source
         run: |
-          chmod +x .github/scripts/release.main.kts
-      - name: Publishing plugins
+          chmod +x .github/scripts/utils.main.kts
+          chmod +x .github/scripts/verify-plugins.main.kts
+      - name: Verify
+        working-directory: source
         run: |
-          .github/scripts/release.main.kts
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          kotlinc -script .github/scripts/verify-plugins.main.kts

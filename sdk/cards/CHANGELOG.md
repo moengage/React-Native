@@ -8,6 +8,25 @@
 |:------------:|:-----------------:|
 |ReactMoEngageCards.setAppOpenSyncListener() | ReactMoEngageCards.setSyncCompleteListener()|
 
+# 07-08-2024
+
+## 4.0.0
+- iOS
+    - `MoEngageCards` version updated to `4.17.1`
+    - Pinned plugin dependency version
+    
+# 31-07-2024
+
+## 3.1.0
+- Fixing the typescript configuration warnings.
+- Android
+    - `cards-core` version updated to `2.2.0`
+    - Added support for AGP `8.4.0` and above
+    - Kotlin version updated to `1.9.23`
+    - Compile SDK version updated to `34`
+- iOS
+    - `MoEngageCards` version updated to `~>4.17.0`
+
 # 03-07-2024
 
 ## 3.0.2

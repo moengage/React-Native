@@ -1,6 +1,6 @@
 {
   "name": "react-native-moengage",
-  "version": "10.2.0",
+  "version": "11.0.0",
   "description": "MoEngage is a mobile marketing automation company. This react-native SDK helps you track events, trigger smart notifications and in-apps, provides a drop-in Inbox Controller for notifications.",
   "main": "src/index.ts",
   "files": [
@@ -24,7 +24,7 @@
     "events"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Test cases not available\" && exit 0"
   },
   "author": {
     "name": "MoEngage",
@@ -35,7 +35,7 @@
   ],
   "license": "SEE LICENSE IN LICENSE.txt",
   "devDependencies": {
-    "@types/react-native": "^0.69.3"
+    "react-native": "0.73.0"
   },
   "codegenConfig": {
     "name": "NativeMoEngageSpec",

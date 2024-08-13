@@ -1,5 +1,4 @@
-import { NativeEventEmitter, Platform } from "react-native";
-import PlatformPayloadBuilder from "./utils/PlatformPayloadBuilder";
+import { NativeEventEmitter } from "react-native";
 import SyncCompleteData from "../model/SyncData";
 import MoEngageCardsCache from "./MoEngageCardsCache";
 import {

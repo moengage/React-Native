@@ -16,9 +16,8 @@ Pod::Spec.new do |s|
   s.source_files = "ios/**/*.{h,m,mm,swift}"
 
   s.dependency "React-Core"
-  s.dependency "MoEngagePluginInbox",'>= 2.9.0','< 2.10.0'
+  s.dependency "MoEngagePluginInbox",'3.0.0'
 
-  
   if defined?(install_modules_dependencies()) != nil
     install_modules_dependencies(s);
   else

@@ -1,3 +1,24 @@
+# 07-08-2024
+
+## 11.0.0
+- iOS
+  - BugFix: Resolved the issue of tracking User Attribute TRUE/FALSE as 0/1.
+  - Pinned plugin dependency version
+  - MoEngage-iOS-SDK version updated to `9.18.1`.
+
+# 31-07-2024
+
+## 10.3.0
+- Fixing the typescript configuration warnings.
+- Android
+  - `moe-android-sdk` version updated to `13.04.00`
+  - `inapp` version updated to `8.5.0`
+  - Added support for AGP `8.4.0` and above
+  - Kotlin version updated to `1.9.23`
+  - Compile SDK version updated to `34`
+- iOS
+    - MoEngage-iOS-SDK version updated to `~>9.18.0`.
+
 # 03-07-2024
 
 ## 10.2.0

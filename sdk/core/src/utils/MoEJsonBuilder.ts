@@ -8,6 +8,7 @@ import {MoEngagePermissionType} from "../models/MoEngagePermissionType";
 import MoEInitConfig from "../models/MoEInitConfig";
 import MoEngageLogger from "../logger/MoEngageLogger";
 import {MoEngageNudgePosition} from "../models/MoEngageNudgePosition";
+import { MoESupportedAttributes } from "../models/MoESupportedAttributes";
 
 
 export function getInAppCampaignJson(moEInAppData: MoEInAppData, type: string, appId: String) {
@@ -265,6 +266,9 @@ export function getInitConfigJson(appId: String, initConfig: MoEInitConfig) {
     initConfig: {
       pushConfig: {
         shouldDeliverCallbackOnForegroundClick: initConfig.pushConfig.shouldDeliverCallbackOnForegroundClick
+      },
+      analyticsConfig: {
+        shouldTrackUserAttributeBooleanAsNumber: initConfig.analyticsConfig.shouldTrackUserAttributeBoolAsNumber
       }
     }
   }
