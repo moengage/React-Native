@@ -56,7 +56,7 @@ class EventEmitterImpl(private val reactContext: ReactContext) : CardsEventEmitt
 }
 
 val eventMapping = mapOf(
-    CardEventType.APP_OPEN_SYNC to EVENT_APP_OPEN_CARDS_SYNC,
+    CardEventType.GENERIC_SYNC to EVENT_GENERIC_CARDS_SYNC,
     CardEventType.INBOX_OPEN_SYNC to EVENT_METHOD_INBOX_OPEN_CARDS_SYNC,
     CardEventType.PULL_TO_REFRESH_SYNC to EVENT_PULL_TO_REFRESH_CARDS_SYNC,
 )
