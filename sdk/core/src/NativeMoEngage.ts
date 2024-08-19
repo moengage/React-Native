@@ -77,6 +77,13 @@ export interface Spec extends TurboModule {
   getSelfHandledInApp: (payload: string) => void;
 
   /**
+   * Call this method to get the multiple eligible Self Handled Campaigns.
+   * @param payload : Stringified JSON payload
+   * @returns Stringified list of Self Handled campaigns
+   */
+  getSelfHandledInApps: (payload: string) => Promise<string>;
+
+  /**
    * Call this method to update the impressions of self handled inapps.
    *
    * @param payload Stringified JSON payload

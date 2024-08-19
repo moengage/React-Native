@@ -78,6 +78,20 @@
     [[MoEngagePluginBridge sharedInstance] getSelfHandledInApp:jsonPayload];
 }
 
+-(void)getSelfHandledInApps:(NSString *)payload resolve:(RCTPromiseResolveBlock) resolve reject:(RCTPromiseRejectBlock)reject {
+    NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
+    [[MoEngagePluginBridge sharedInstance] getSelfHandledInApps:jsonPayload completionBlock:^(NSDictionary<NSString *,id> * _Nonnull campaignPayload) {
+        NSError *err;
+        NSData * jsonData = [NSJSONSerialization dataWithJSONObject:campaignPayload options:0 error:&err];
+        if (jsonData) {
+            NSString *strPayload = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            resolve(strPayload);
+        } else {
+            reject(@"Error", @"Error in parsing Self Handled Campaign Payload", [NSError errorWithDomain:@"" code:400 userInfo:@{@"Error reason": @"Error in parsing Self Handled Campaign Payload"}]);
+        }
+    }];
+}
+
 -(void)updateSelfHandledInAppStatus:(NSString *)payload {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginBridge sharedInstance] updateSelfHandledImpression:jsonPayload];

@@ -27,6 +27,7 @@
 -(void)showInApp:(NSString *)payload;
 -(void)showNudge:(NSString *)payload ;
 -(void)getSelfHandledInApp:(NSString *)payload;
+-(void)getSelfHandledInApps:(NSString *)payload resolve:(RCTPromiseResolveBlock) resolve reject:(RCTPromiseRejectBlock)reject;
 -(void)updateSelfHandledInAppStatus:(NSString *)payload;
 -(void)setAppContext:(NSString *)payload;
 -(void)resetAppContext:(NSString *)payload;

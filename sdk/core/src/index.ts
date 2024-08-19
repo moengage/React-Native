@@ -58,6 +58,10 @@ import { getUserDeletionData } from "../src/moeParser/MoEngagePayloadParser";
 import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
 import MoEAnalyticsConfig from "../src/models/MoEAnalyticsConfig";
 import { MoESupportedAttributes } from "./models/MoESupportedAttributes";
+import * as MoECoreHandler from "./utils/MoECoreHandler";
+import MoESelfHandledCampaignInfo from "../src/models/MoESelfHandledCampaignInfo";
+import { MoEPlatform } from "../src/models/MoEPlatform";
+
 
 const PLATFORM_IOS = "ios";
 const PLATFORM_ANDROID = "android";
@@ -383,6 +387,14 @@ var ReactMoE = {
   },
 
   /**
+  * Call this method to get the multiple self handled campaigns.
+  */
+  getSelfHandledInApps: async function () {
+    MoEngageLogger.verbose("Will try to fetch multiple self handled inapps", moeAppId);
+    return await MoECoreHandler.getSelfHandledInApps(moeAppId);
+  },
+
+  /**
    * Call this method when you show the self handled in-app so we can update impressions.
    * @param {MoESelfHandledCampaignData}campInfo : campaign information object
    */
@@ -393,6 +405,21 @@ var ReactMoE = {
     }
     let campaignJson = getSelfHandledJson(inAppCampaign, "impression", moeAppId);
     MoEReactBridge.updateSelfHandledInAppStatus(campaignJson);
+  },
+
+  /**
+  * Call this method when you show the self handled in-app so we can update impressions.
+  * @param {MoESelfHandledCampaignData}selfHandledInfo : campaign information object
+  * @param {MoEAccountMeta}accountMeta : MoEngage Account Information
+  */
+  selfHandledInAppShown: function (selfHandledInfo: MoESelfHandledCampaignInfo, accountMeta: MoEAccountMeta) {
+    if (!(selfHandledInfo instanceof MoESelfHandledCampaignInfo)) {
+      MoEngageLogger.warn("selfHandledInAppShown: selfHandledInfo must of MoESelfHandledCampaignInfo type");
+      return;
+    }
+    const platform = (Platform.OS == PLATFORM_ANDROID) ? MoEPlatform.Android : MoEPlatform.IOS;
+    const inAppCampaign = new MoESelfHandledCampaignData(accountMeta, platform, selfHandledInfo.campaign, selfHandledInfo.campaignData)
+    ReactMoE.selfHandledShown(inAppCampaign);
   },
 
   /**
@@ -409,6 +436,21 @@ var ReactMoE = {
   },
 
   /**
+   * Call this method to track when self handled in app widget(other than Primary Widget) is clicked.
+   * @param {MoESelfHandledCampaignData}selfHandledInfo : campaign information object
+   * @param {MoEAccountMeta}accountMeta : MoEngage Account Information
+   */
+  selfHandledInAppClicked: function (selfHandledInfo: MoESelfHandledCampaignInfo, accountMeta: MoEAccountMeta) {
+    if (!(selfHandledInfo instanceof MoESelfHandledCampaignInfo)) {
+      MoEngageLogger.warn("selfHandledInAppClicked: selfHandledInfo must of MoESelfHandledCampaignInfo type");
+      return;
+    }
+    const platform = (Platform.OS == PLATFORM_ANDROID) ? MoEPlatform.Android : MoEPlatform.IOS
+    const inAppCampaign = new MoESelfHandledCampaignData(accountMeta, platform, selfHandledInfo.campaign, selfHandledInfo.campaignData);
+    ReactMoE.selfHandledClicked(inAppCampaign);
+  },
+  
+  /**
    * Call this method to track dismiss actions on the inApp.
    * @param {MoESelfHandledCampaignData}campInfo : campaign information object
    */
@@ -419,6 +461,21 @@ var ReactMoE = {
     }
     let campaignJson = getSelfHandledJson(inAppCampaign, "dismissed", moeAppId);
     MoEReactBridge.updateSelfHandledInAppStatus(campaignJson);
+  },
+
+  /**
+    * Call this method to track dismiss actions on the inApp.
+    * @param {MoESelfHandledCampaignData}selfHandledInfo : campaign information object
+    * @param {MoEAccountMeta}accountMeta : MoEngage Account Information
+    */
+  selfHandledInAppDismissed: function (selfHandledInfo: MoESelfHandledCampaignInfo, accountMeta: MoEAccountMeta) {
+    if (!(selfHandledInfo instanceof MoESelfHandledCampaignInfo)) {
+      MoEngageLogger.warn("selfHandledInAppDismissed: selfHandledInfo must of MoESelfHandledCampaignInfo type");
+      return;
+    }
+    const platform = (Platform.OS == PLATFORM_ANDROID) ? MoEPlatform.Android : MoEPlatform.IOS;
+    const inAppCampaign = new MoESelfHandledCampaignData(accountMeta, platform, selfHandledInfo.campaign, selfHandledInfo.campaignData)
+    ReactMoE.selfHandledDismissed(inAppCampaign);
   },
 
   /**

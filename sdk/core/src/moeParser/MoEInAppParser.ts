@@ -1,3 +1,4 @@
+import MoESelfHandledCampaignInfo from "../models/MoESelfHandledCampaignInfo";
 import MoEngageLogger from "../logger/MoEngageLogger";
 import MoECampaignContext from "../models/MoECampaignContext";
 import MoECampaignData from "../models/MoECampaignData";
@@ -5,8 +6,10 @@ import MoEClickData from "../models/MoEClickData";
 import MoEInAppCustomAction from "../models/MoEInAppCustomAction";
 import MoEInAppData from "../models/MoEInAppData";
 import MoEInAppNavigation from "../models/MoEInAppNavigation";
+import MoEInAppRules from "../models/MoEInAppRules";
 import MoESelfHandledCampaign from "../models/MoESelfHandledCampaign";
 import MoESelfHandledCampaignData from "../models/MoESelfHandledCampaignData";
+import MoESelfHandledCampaignsData from "../models/MoESelfHandledCampaignsData";
 import {
     ACTION_TYPE,
     FORMATTED_CAMPAIGN_ID,
@@ -24,7 +27,10 @@ import {
     MOE_PAYLOAD,
     MOE_PLATFORM,
     MOE_SELF_HANDLED,
-    MOE_NAVIGATION_VALUE
+    MOE_NAVIGATION_VALUE,
+    MOE_INAPP_DISPLAY_RULES,
+    MOE_INAPP_SCREEN_NAME,
+    MOE_INAPP_CONTEXTS
 } from "../utils/MoEConstants";
 import { isValidObject } from "../utils/MoEHelper";
 import { getMoEAccountMeta } from "./MoEngagePayloadParser";
@@ -64,7 +70,17 @@ function getMoESelfHandledCampaign(json: { [k: string]: any }) {
     var selfHandled = json[MOE_SELF_HANDLED];
     var payload = selfHandled[MOE_PAYLOAD];
     var dismissInterval = selfHandled[MOE_DISMISSINTERVAL];
-    return new MoESelfHandledCampaign(payload, dismissInterval);
+
+    let displayRulesPayload = selfHandled[MOE_INAPP_DISPLAY_RULES];
+    let displayRules = getMoEInAppRules(displayRulesPayload);
+
+    return new MoESelfHandledCampaign(payload, dismissInterval, displayRules);
+}
+
+function getMoEInAppRules(json: { [k: string]: any }) {
+    const screenName = json[MOE_INAPP_SCREEN_NAME];
+    const contexts = json[MOE_INAPP_CONTEXTS];
+    return new MoEInAppRules(screenName, contexts);
 }
 
 function getMoEInAppCustomAction(json: { [k: string]: any }) {
@@ -203,7 +219,25 @@ export function getNavigationObj(json: { [k: string]: any }, accountMetaPayload:
         var accountMeta = getMoEAccountMeta(accountMetaPayload);
         var action = getMoEInAppNavigation(json);
         return new MoEClickData(accountMeta, platform, campaignData, action);
-
     }
     else return undefined
+}
+
+export function getSelfHandledCampaignDataObj(payload: string) {
+    const jsonPayload = JSON.parse(payload);
+    const { accountMeta: accountMetaPayload, data: dataPayload } = jsonPayload;
+    const accountMeta = getMoEAccountMeta(accountMetaPayload);
+
+    const { campaigns } = dataPayload;
+    const selfHandledCampaigs: Array<MoESelfHandledCampaignInfo> = [];
+    for (let i = 0; i < campaigns.length; i++) {
+        const campaignPayload = campaigns[i];
+        if (isSelfHandledCampaignValid(campaignPayload)) {
+            const campaign = getMoESelfHandledCampaign(campaignPayload);
+            const campaignData = getMoECampaignData(campaignPayload);
+            const campaignInfo = new MoESelfHandledCampaignInfo(campaignData, campaign);
+            selfHandledCampaigs.push(campaignInfo);
+        }
+    }
+    return new MoESelfHandledCampaignsData(accountMeta, dataPayload[MOE_PLATFORM], selfHandledCampaigs);
 }
