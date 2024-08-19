@@ -49,12 +49,16 @@ export default class InAppDetailScreen extends PureComponent {
         key: "resetCurrentContext",
         value: "Reset Current Context",
       },
+      {
+        key: "multipleSelfHandledInApps",
+        value: "Mutiple SelfHandled InApps"
+      }
     ];
   }
 
   _keyExtractor = (item, index) => `${index}_${item.key}`;
 
-  handleRowTapped = (index) => {
+  handleRowTapped = async (index) => {
     let data = this.dataList[index];
     switch (data.key) {
       case "showInApp":
@@ -102,6 +106,8 @@ export default class InAppDetailScreen extends PureComponent {
       case "showNudge":
         props.navigation.navigate("ShowNudgeScreen");
         break;
+      case "multipleSelfHandledInApps":
+        this.props.navigation.navigate("MultipleInAppsScreen");
     }
   };
 

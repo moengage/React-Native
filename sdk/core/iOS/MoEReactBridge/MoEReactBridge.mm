@@ -130,6 +130,10 @@ RCT_EXPORT_METHOD(getSelfHandledInApp:(NSString *)payload) {
     [[MoEReactNativeHandler sharedInstance] getSelfHandledInApp:payload];
 }
 
+RCT_EXPORT_METHOD(getSelfHandledInApps:(NSString *)payload resolve:(RCTPromiseResolveBlock) resolve reject:(RCTPromiseRejectBlock)reject) {
+    [[MoEReactNativeHandler sharedInstance] getSelfHandledInApps:payload resolve:resolve reject:reject];
+}
+
 RCT_EXPORT_METHOD(updateSelfHandledInAppStatus:(NSString *)payload)  {
     [[MoEReactNativeHandler sharedInstance] updateSelfHandledInAppStatus:payload];
 }
