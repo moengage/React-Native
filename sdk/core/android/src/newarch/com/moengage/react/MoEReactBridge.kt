@@ -140,4 +140,8 @@ class MoEReactBridge(reactContext: ReactApplicationContext) : NativeMoEngageSpec
     override fun registerForPush() {
         // iOS only
     }
+
+    override fun getSelfHandledInApps(payload: String, promise: Promise) {
+        bridgeHandler.getSelfHandledInApps(payload, promise)
+    }
 }
