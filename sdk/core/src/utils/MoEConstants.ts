@@ -26,6 +26,7 @@ export const MOE_KEY_VALUE_PAIR = 'kvPair'
 //IN APP SELF HANDLED 
 export const MOE_DISMISSINTERVAL = 'dismissInterval'
 export const MOE_IS_CANCELLABLE = 'isCancellable'
+export const MOE_CAMPAIGNS = 'campaigns'
 
 // INAPP DISPLAY RULES
 export const MOE_INAPP_DISPLAY_RULES = 'displayRules'

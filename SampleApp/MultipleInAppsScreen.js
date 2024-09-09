@@ -115,11 +115,11 @@ export default class MultipleInAppsScreen extends PureComponent {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    paddingBottom: 50
   },
   rowItemMainContainer: {
-    minHeight: 200,
     backgroundColor: '#f0ffff',
-    padding: 10,
+    padding: 10
   },
   rowItemText: {
     padding: 10,
