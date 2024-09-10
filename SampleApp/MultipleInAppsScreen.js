@@ -24,15 +24,15 @@ export default class MultipleInAppsScreen extends PureComponent {
   };
 
   trackClick = (campaign) => {
-    ReactMoE.selfHandledInAppClicked(campaign, this.state.dataSource.accountMeta);
+    ReactMoE.selfHandledClicked(campaign);
   }
 
   trackShown = (campaign) => {
-    ReactMoE.selfHandledInAppShown(campaign, this.state.dataSource.accountMeta);
+    ReactMoE.selfHandledShown(campaign);
   }
 
   trackDismissed = (campaign) => {
-    ReactMoE.selfHandledInAppDismissed(campaign, this.state.dataSource.accountMeta);
+    ReactMoE.selfHandledDismissed(campaign);
   }
 
   constructor(props) {
@@ -66,7 +66,7 @@ export default class MultipleInAppsScreen extends PureComponent {
   }
   _renderRowItem = ({ item, index }) => {
     return (
-      <View key = {index} style={styles.rowItemMainContainer} >
+      <View key={index} style={styles.rowItemMainContainer} >
         <Text style={styles.rowItemText}>cid = {item.campaignData.campaignId} </Text>
         <Text style={styles.rowItemText}>CampaignName = {item.campaignData.campaignName} </Text>
         <Text style={styles.rowItemText}>Payload = {item.campaign.payload} </Text>
@@ -77,7 +77,7 @@ export default class MultipleInAppsScreen extends PureComponent {
             <TouchableOpacity onPress={() => this.trackShown(item)}>
               <Text style={styles.text} >Shown</Text>
             </TouchableOpacity>
-          </View> 
+          </View>
 
           <View style={styles.buttonView}>
             <TouchableOpacity onPress={() => this.trackClick(item)}>
@@ -98,7 +98,7 @@ export default class MultipleInAppsScreen extends PureComponent {
 
   render() {
     let { dataSource } = this.state;
-    if (dataSource ==  undefined) { return }
+    if (dataSource == undefined) { return }
     return (
       <View style={styles.mainContainer}>
         <FlatList
@@ -115,11 +115,11 @@ export default class MultipleInAppsScreen extends PureComponent {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    paddingBottom: 50
   },
   rowItemMainContainer: {
-    minHeight: 200,
     backgroundColor: '#f0ffff',
-    padding: 10,
+    padding: 10
   },
   rowItemText: {
     padding: 10,

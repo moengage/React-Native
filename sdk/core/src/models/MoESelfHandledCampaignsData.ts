@@ -1,18 +1,15 @@
 import MoEAccountMeta from "./MoEAccountMeta";
-import { MoEPlatform } from "./MoEPlatform";
-import MoESelfHandledCampaignInfo from "./MoESelfHandledCampaignInfo";
+import MoESelfHandledCampaignData from "./MoESelfHandledCampaignData";
 
 /**
  * Model for Multiple SelfHandled Data
  */
 export default class MoESelfHandledCampaignsData {
     accountMeta: MoEAccountMeta;
-    platform: MoEPlatform;
-    campaigns: Array<MoESelfHandledCampaignInfo>
+    campaigns: Array<MoESelfHandledCampaignData>
 
-    constructor(accountMeta: MoEAccountMeta, platform: MoEPlatform, campaigns: Array<MoESelfHandledCampaignInfo>) {
+    constructor(accountMeta: MoEAccountMeta, campaigns: Array<MoESelfHandledCampaignData>) {
         this.accountMeta = accountMeta;
-        this.platform = platform;
         this.campaigns = campaigns;
     }
 }

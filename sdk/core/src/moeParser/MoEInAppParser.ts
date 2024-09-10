@@ -1,4 +1,3 @@
-import MoESelfHandledCampaignInfo from "../models/MoESelfHandledCampaignInfo";
 import MoEngageLogger from "../logger/MoEngageLogger";
 import MoECampaignContext from "../models/MoECampaignContext";
 import MoECampaignData from "../models/MoECampaignData";
@@ -10,6 +9,7 @@ import MoEInAppRules from "../models/MoEInAppRules";
 import MoESelfHandledCampaign from "../models/MoESelfHandledCampaign";
 import MoESelfHandledCampaignData from "../models/MoESelfHandledCampaignData";
 import MoESelfHandledCampaignsData from "../models/MoESelfHandledCampaignsData";
+
 import {
     ACTION_TYPE,
     FORMATTED_CAMPAIGN_ID,
@@ -30,7 +30,10 @@ import {
     MOE_NAVIGATION_VALUE,
     MOE_INAPP_DISPLAY_RULES,
     MOE_INAPP_SCREEN_NAME,
-    MOE_INAPP_CONTEXTS
+    MOE_INAPP_CONTEXTS,
+    MOE_CAMPAIGNS,
+    MOE_DATA,
+    ACCOUNT_META
 } from "../utils/MoEConstants";
 import { isValidObject } from "../utils/MoEHelper";
 import { getMoEAccountMeta } from "./MoEngagePayloadParser";
@@ -70,7 +73,6 @@ function getMoESelfHandledCampaign(json: { [k: string]: any }) {
     var selfHandled = json[MOE_SELF_HANDLED];
     var payload = selfHandled[MOE_PAYLOAD];
     var dismissInterval = selfHandled[MOE_DISMISSINTERVAL];
-
     let displayRulesPayload = selfHandled[MOE_INAPP_DISPLAY_RULES];
     let displayRules = getMoEInAppRules(displayRulesPayload);
 
@@ -78,8 +80,11 @@ function getMoESelfHandledCampaign(json: { [k: string]: any }) {
 }
 
 function getMoEInAppRules(json: { [k: string]: any }) {
-    const screenName = json[MOE_INAPP_SCREEN_NAME];
-    const contexts = json[MOE_INAPP_CONTEXTS];
+    var screenName = null;
+    if (json[MOE_INAPP_SCREEN_NAME] != undefined) {
+        screenName = json[MOE_INAPP_SCREEN_NAME];
+    }
+    var contexts = json[MOE_INAPP_CONTEXTS];
     return new MoEInAppRules(screenName, contexts);
 }
 
@@ -223,21 +228,22 @@ export function getNavigationObj(json: { [k: string]: any }, accountMetaPayload:
     else return undefined
 }
 
-export function getSelfHandledCampaignDataObj(payload: string) {
+export function getMoESelfHandledCampaignsDataObj(payload: string) {
     const jsonPayload = JSON.parse(payload);
-    const { accountMeta: accountMetaPayload, data: dataPayload } = jsonPayload;
-    const accountMeta = getMoEAccountMeta(accountMetaPayload);
+    const accountMeta = getMoEAccountMeta(jsonPayload[ACCOUNT_META]);
+    const selfHandledCampaigns: Array<MoESelfHandledCampaignData> = [];
 
-    const { campaigns } = dataPayload;
-    const selfHandledCampaigs: Array<MoESelfHandledCampaignInfo> = [];
-    for (let i = 0; i < campaigns.length; i++) {
-        const campaignPayload = campaigns[i];
+    for (let i = 0; i < jsonPayload.campaigns.length; i++) {
+        const campaignJson = jsonPayload.campaigns[i];
+        const campaignPayload = campaignJson[MOE_DATA];
+
         if (isSelfHandledCampaignValid(campaignPayload)) {
             const campaign = getMoESelfHandledCampaign(campaignPayload);
+            var platform = campaignPayload[MOE_PLATFORM];
             const campaignData = getMoECampaignData(campaignPayload);
-            const campaignInfo = new MoESelfHandledCampaignInfo(campaignData, campaign);
-            selfHandledCampaigs.push(campaignInfo);
+            const campaignInfo = new MoESelfHandledCampaignData(accountMeta, platform, campaign, campaignData);
+            selfHandledCampaigns.push(campaignInfo);
         }
     }
-    return new MoESelfHandledCampaignsData(accountMeta, dataPayload[MOE_PLATFORM], selfHandledCampaigs);
+    return new MoESelfHandledCampaignsData(accountMeta, selfHandledCampaigns);
 }

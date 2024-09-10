@@ -1,11 +1,12 @@
 /**
  * DisplayRules for Campaign
+ * @since TODO
  */
 export default class MoEInAppRules {
     /**
      * Screenname for which InApp was configured to be shown.
      */
-    screenName: string
+    screenName: string | null
 
     /**
      *  contexts for which InApp was configured to be shown.
