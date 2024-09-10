@@ -31,7 +31,6 @@ import {
     MOE_INAPP_DISPLAY_RULES,
     MOE_INAPP_SCREEN_NAME,
     MOE_INAPP_CONTEXTS,
-    MOE_CAMPAIGNS,
     MOE_DATA,
     ACCOUNT_META
 } from "../utils/MoEConstants";
