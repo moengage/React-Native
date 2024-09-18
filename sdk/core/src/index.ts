@@ -58,6 +58,7 @@ import { getUserDeletionData } from "../src/moeParser/MoEngagePayloadParser";
 import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
 import MoEAnalyticsConfig from "../src/models/MoEAnalyticsConfig";
 import { MoESupportedAttributes } from "./models/MoESupportedAttributes";
+import * as MoECoreHandler from "./utils/MoECoreHandler";
 
 const PLATFORM_IOS = "ios";
 const PLATFORM_ANDROID = "android";
@@ -384,7 +385,7 @@ var ReactMoE = {
 
   /**
    * Call this method when you show the self handled in-app so we can update impressions.
-   * @param {MoESelfHandledCampaignData}campInfo : campaign information object
+   * @param {MoESelfHandledCampaignData}inAppCampaign : campaign information object
    */
   selfHandledShown: function (inAppCampaign: MoESelfHandledCampaignData) {
     if (!(inAppCampaign instanceof MoESelfHandledCampaignData)) {
@@ -397,7 +398,7 @@ var ReactMoE = {
 
   /**
    * Call this method to track when self handled in app widget(other than Primary Widget) is clicked.
-   * @param {MoESelfHandledCampaignData}campInfo : campaign information object
+   * @param {MoESelfHandledCampaignData}moEClickData : campaign information object
    */
   selfHandledClicked: function (moEClickData: MoESelfHandledCampaignData) {
     if (!(moEClickData instanceof MoESelfHandledCampaignData)) {
@@ -410,7 +411,7 @@ var ReactMoE = {
 
   /**
    * Call this method to track dismiss actions on the inApp.
-   * @param {MoESelfHandledCampaignData}campInfo : campaign information object
+   * @param {MoESelfHandledCampaignData}inAppCampaign : campaign information object
    */
   selfHandledDismissed: function (inAppCampaign: MoESelfHandledCampaignData) {
     if (!(inAppCampaign instanceof MoESelfHandledCampaignData)) {
@@ -423,7 +424,7 @@ var ReactMoE = {
 
   /**
    * Call this method to the current context for inApp module.
-   * @param {Array{String}}contexts : Name of all the contexts
+   * @param{Array{String}}contexts : Name of all the contexts
    */
   setCurrentContext: function (contexts: Array<String>) {
     if (!MoEHelper.validateArrayOfString(contexts)) {
@@ -725,6 +726,15 @@ var ReactMoE = {
     }
 
     return new UserDeletionData(new MoEAccountMeta(moeAppId), false)
+  },
+
+  /**
+  * Call this method to get the multiple self handled campaigns.
+  * @since TODO
+  */
+  getSelfHandledInApps: async function () {
+    MoEngageLogger.verbose("Will try to fetch multiple self handled inapps", moeAppId);
+    return await MoECoreHandler.getSelfHandledInApps(moeAppId);
   },
 };
 

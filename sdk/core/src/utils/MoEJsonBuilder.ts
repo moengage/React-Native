@@ -3,13 +3,14 @@ import MoEInAppData from "../models/MoEInAppData";
 import MoEProperties from "../models/MoEProperties";
 import MoESelfHandledCampaignData from "../models/MoESelfHandledCampaignData";
 import { MOE_LOCATION } from "./MoEConstants";
-import { MoEPropertiesToJson} from "./MoEObjectToJson";
-import {MoEngagePermissionType} from "../models/MoEngagePermissionType";
+import { MoEPropertiesToJson } from "./MoEObjectToJson";
+import { MoEngagePermissionType } from "../models/MoEngagePermissionType";
 import MoEInitConfig from "../models/MoEInitConfig";
 import MoEngageLogger from "../logger/MoEngageLogger";
-import {MoEngageNudgePosition} from "../models/MoEngageNudgePosition";
+import { MoEngageNudgePosition } from "../models/MoEngageNudgePosition";
 import { MoESupportedAttributes } from "../models/MoESupportedAttributes";
-
+import MoESelfHandledCampaign from "../models/MoESelfHandledCampaign";
+import MoEInAppRules from "../models/MoEInAppRules";
 
 export function getInAppCampaignJson(moEInAppData: MoEInAppData, type: string, appId: String) {
   var json: { [k: string]: any } = {
@@ -37,7 +38,7 @@ export function getSelfHandledJson(moESelfHandledCampaignData: MoESelfHandledCam
       campaignName: moESelfHandledCampaignData.campaignData.campaignName,
       campaignId: moESelfHandledCampaignData.campaignData.campaignId,
       campaignContext: moESelfHandledCampaignData.campaignData.context.attributes,
-      selfHandled: moESelfHandledCampaignData.campaign,
+      selfHandled: getSelfHandledCampaignJson(moESelfHandledCampaignData.campaign),
       platform: moESelfHandledCampaignData.platform
     }
   }
@@ -81,14 +82,14 @@ export function getMoEPushCampaignJson(pushPayload: object, service: string, app
     },
     data: {
       payload: pushPayload,
-      service:service
+      service: service
     }
   }
   return JSON.stringify(json);
 }
 
 export function getMoEPushTokenJson(pushToken: string, pushService: string, platform: string, appId: String) {
-  var json: { [k: string]: any} = {
+  var json: { [k: string]: any } = {
     accountMeta: {
       appId: appId
     },
@@ -227,11 +228,11 @@ export function getOptOutTrackingJson(type: string, state: boolean, appId: strin
 }
 
 export function getPermissionResponseJson(isGranted: boolean, permissionType: MoEngagePermissionType) {
-    let  json: { [k: string]: any } = {
-        isGranted: isGranted,
-        type: permissionType.toLowerCase()
-    }
-    return JSON.stringify(json);
+  let json: { [k: string]: any } = {
+    isGranted: isGranted,
+    type: permissionType.toLowerCase()
+  }
+  return JSON.stringify(json);
 }
 
 export function getPushPermissionRequestCountJson(count: number, appId: String) {
@@ -285,4 +286,23 @@ export function getNudgeDisplayJson(nudgePosition: MoEngageNudgePosition, appId:
     }
   }
   return JSON.stringify(json);
+}
+
+export function getSelfHandledCampaignJson(moESelfHandledCampaign: MoESelfHandledCampaign) {
+  var json: { [k: string]: any } = {
+    dismissInterval: moESelfHandledCampaign.dismissInterval,
+    displayRules: moESelfHandledCampaign.displayRules,
+    payload: moESelfHandledCampaign.payload
+  }
+  MoEngageLogger.verbose("getSelfHandledCampaignJson(): payload json: ", json);
+  return json;
+}
+
+export function getDisplayRulesJson(displayRules: MoEInAppRules) {
+  var json: { [k: string]: any } = {
+    contexts: displayRules.contexts,
+    screenName: displayRules.screenName
+  }
+  MoEngageLogger.verbose("getDisplayRulesJson(): payload json: ", json);
+  return json;
 }
