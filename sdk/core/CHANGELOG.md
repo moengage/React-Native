@@ -4,6 +4,7 @@
 - Added support for Multiple SelfHandled InApps.
 - iOS
     - Added support for Provisional Push.
+    - MoEngage-iOS-SDK version updated to `9.20.0`.
 
 # 07-08-2024
 
