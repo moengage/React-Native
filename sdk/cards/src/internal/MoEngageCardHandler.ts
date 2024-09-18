@@ -1,7 +1,6 @@
 import { NativeEventEmitter } from "react-native";
 import SyncCompleteData from "../model/SyncData";
 import MoEngageCardsCache from "./MoEngageCardsCache";
-import SyncType from "../model/enums/SyncType";
 import {
     getAllCategoryStatusFromPayload,
     getCardInfoFromPayload,
@@ -19,9 +18,9 @@ import {
     keyData,
     keyPayload,
     keySyncCompleteData,
-    argumentAppOpenSync,
     argumentInboxOpenSync,
-    argumentPullToRefreshSync
+    argumentPullToRefreshSync,
+    argumentGenericSync
 } from "./Constants";
 import { MoEngageLogger } from "react-native-moengage";
 import { syncDataFromJson } from "./utils/JsonToModelMapper";
@@ -33,6 +32,7 @@ import {
     getCardsForCategoriesPayload,
     getDeleteCardsPayload
 } from "./utils/PayloadBuilder";
+import CardListenerEvent from "../model/enums/CardListenerEvent";
 
 let MoEngageEventEmitter: { addListener: (arg0: any, arg1: (data: any) => void) => void; };
 
@@ -68,7 +68,7 @@ class MoEngageCardHandler {
 
     refreshCards(onSyncComplete: (data: SyncCompleteData | null) => void): void {
         try {
-            MoEngageCardsCache.cacheEventListenerCallback(SyncType.PULL_TO_REFRESH, onSyncComplete);
+            MoEngageCardsCache.cacheEventListenerCallback(CardListenerEvent.PULL_TO_REFRESH, onSyncComplete);
             MoEngageCardsBridge.refreshCards(getAccountMetaPayload(this.appId));
             MoEngageLogger.verbose(`${this.TAG} Executed - refreshCards() `);
         } catch (error) {
@@ -78,7 +78,7 @@ class MoEngageCardHandler {
 
     onCardSectionLoaded(onSyncComplete: (data: SyncCompleteData | null) => void): void {
         try {
-            MoEngageCardsCache.cacheEventListenerCallback(SyncType.INBOX_OPEN, onSyncComplete);
+            MoEngageCardsCache.cacheEventListenerCallback(CardListenerEvent.INBOX_OPEN, onSyncComplete);
             MoEngageCardsBridge.onCardSectionLoaded(getAccountMetaPayload(this.appId));
             MoEngageLogger.verbose(`${this.TAG} Executed - onCardSectionLoaded() `);
         } catch (error) {
@@ -88,7 +88,7 @@ class MoEngageCardHandler {
 
     onCardSectionUnLoaded(): void {
         try {
-            MoEngageCardsCache.removeCacheForEvent(SyncType.INBOX_OPEN);
+            MoEngageCardsCache.removeCacheForEvent(CardListenerEvent.INBOX_OPEN);
             MoEngageCardsBridge.onCardSectionUnLoaded(getAccountMetaPayload(this.appId));
             MoEngageLogger.verbose(`${this.TAG} Executed - onCardSectionUnLoaded() `);
         } catch (error) {
@@ -232,22 +232,22 @@ class MoEngageCardHandler {
 
     private addBridgeEventListener(): void {
         MoEngageEventEmitter.addListener(
-            argumentAppOpenSync,
-            (data) => this.handleCallbackForSyncEvent(SyncType.APP_OPEN, data)
+            argumentGenericSync,
+            (data) => this.handleCallbackForSyncEvent(CardListenerEvent.GENERIC, data)
         );
 
         MoEngageEventEmitter.addListener(
             argumentPullToRefreshSync,
-            (data) => this.handleCallbackForSyncEvent(SyncType.PULL_TO_REFRESH, data)
+            (data) => this.handleCallbackForSyncEvent(CardListenerEvent.PULL_TO_REFRESH, data)
         );
 
         MoEngageEventEmitter.addListener(
             argumentInboxOpenSync,
-            (data) => this.handleCallbackForSyncEvent(SyncType.INBOX_OPEN, data)
+            (data) => this.handleCallbackForSyncEvent(CardListenerEvent.INBOX_OPEN, data)
         );
     }
 
-    private handleCallbackForSyncEvent(syncType: SyncType, data: { [k: string]: any }): void {
+    private handleCallbackForSyncEvent(syncType: CardListenerEvent, data: { [k: string]: any }): void {
         try {
             const payload = data[keyPayload];
             const dataJson = JSON.parse(payload)[keyData];

@@ -1,3 +1,13 @@
+# Next Release 
+
+## Next version (major)
+- Added support for Cards fetch on login
+- Breaking Changes 
+
+| Then         | Now               |
+|:------------:|:-----------------:|
+|ReactMoEngageCards.setAppOpenSyncListener() | ReactMoEngageCards.setSyncCompleteListener()|
+
 # 07-08-2024
 
 ## 4.0.0

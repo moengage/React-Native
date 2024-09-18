@@ -22,7 +22,7 @@
 
 - (NSArray<NSString *> *)supportedEvents
 {
-    return @[kAppOpenCardsSyncListener, kPullToRefreshCardsSyncListener, kInboxOpenCardsSyncListener];
+    return @[kCardsSyncListener, kPullToRefreshCardsSyncListener, kInboxOpenCardsSyncListener];
 }
 
 RCT_EXPORT_MODULE();
