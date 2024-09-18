@@ -736,6 +736,20 @@ var ReactMoE = {
     MoEngageLogger.verbose("Will try to fetch multiple self handled inapps", moeAppId);
     return await MoECoreHandler.getSelfHandledInApps(moeAppId);
   },
+
+  /**
+   * Call this method to register for provisional push notification in iOS
+   * Note: This API is only for iOS platform and is a no-operation method for other plaforms.
+   * @since TODO
+   */
+  registerForProvisionalPush: function () {
+    if (Platform.OS == PLATFORM_IOS) {
+      MoEngageLogger.verbose("Will call registerForProvisionalPush");
+      MoEReactBridge.registerForProvisionalPush();
+    } else {
+      MoEngageLogger.debug("This api is not supported on Android platform.");
+    }
+  },
 };
 
 export {

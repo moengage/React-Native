@@ -118,6 +118,10 @@ RCT_EXPORT_METHOD(registerForPush) {
     [[MoEReactNativeHandler sharedInstance] registerForPush];
 }
 
+RCT_EXPORT_METHOD(registerForProvisionalPush) {
+    [[MoEReactNativeHandler sharedInstance] registerForProvisionalPush];
+}
+
 #pragma mark Show InApp
 
 RCT_EXPORT_METHOD(showInApp:(NSString *)payload) {

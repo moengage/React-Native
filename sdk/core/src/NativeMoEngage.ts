@@ -199,6 +199,12 @@ export interface Spec extends TurboModule {
   /// ios specific
   registerForPush: () => void;
 
+
+  /**
+   * Registers for iOS Provisional Push.
+   */
+  registerForProvisionalPush: () => void;
+
   addListener: (eventType: string) => void;
   removeListeners: (count: number) => void;
 }

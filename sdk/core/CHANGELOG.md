@@ -1,3 +1,10 @@
+# Next Release
+
+## Next version
+- Added support for Multiple SelfHandled InApps.
+- iOS
+    - Added support for Provisional Push.
+
 # 07-08-2024
 
 ## 11.0.0
