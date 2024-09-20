@@ -34,4 +34,5 @@
 -(void)logout:(NSString *)payload;
 -(void)optOutDataTracking:(NSString *)payload;
 -(void)updateSdkState:(NSString *)payload;
+-(void)registerForProvisionalPush;
 @end

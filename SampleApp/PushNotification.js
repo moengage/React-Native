@@ -50,6 +50,13 @@ export class PushNotification extends React.Component {
                 })
               },
             },
+            {
+              id: "3",
+              title: "Register for Provisional Push (iOS)",
+              action: () => {
+                ReactMoE.registerForProvisionalPush();
+              },
+            },
           ]}
           renderItem={({ item, separators }) => (
             <TouchableOpacity

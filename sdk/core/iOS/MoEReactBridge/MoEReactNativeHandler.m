@@ -66,6 +66,10 @@
     [[MoEngagePluginBridge sharedInstance] registerForPush];
 }
 
+-(void)registerForProvisionalPush {
+    [[MoEngagePluginBridge sharedInstance] registerForProvisionalPush];
+}
+
 #pragma mark Show InApp
 -(void)showInApp:(NSString *)payload {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
