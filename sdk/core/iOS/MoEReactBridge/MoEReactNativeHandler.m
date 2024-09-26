@@ -67,7 +67,11 @@
 }
 
 -(void)registerForProvisionalPush {
-    [[MoEngagePluginBridge sharedInstance] registerForProvisionalPush];
+    if (@available(iOS 12, *)) {
+        [[MoEngagePluginBridge sharedInstance] registerForProvisionalPush];
+    } else {
+        NSLog(@"registerForProvisionalPush is not available below iOS 12.");
+    }
 }
 
 #pragma mark Show InApp

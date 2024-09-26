@@ -1,3 +1,9 @@
+# Next Release
+
+## Next version
+- iOS
+    - MoEngageGeofence SDK version updated to `5.18.0`. 
+    
 # 07-08-2024
 
 ## 6.0.0

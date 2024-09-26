@@ -8,6 +8,9 @@
 |:------------:|:-----------------:|
 |ReactMoEngageCards.setAppOpenSyncListener() | ReactMoEngageCards.setSyncCompleteListener()|
 
+- iOS
+    - `MoEngageCards` version updated to `4.18.0`
+
 # 07-08-2024
 
 ## 4.0.0
