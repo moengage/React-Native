@@ -22,7 +22,7 @@ ext {
   //dependency version
   moengageCoreVersion = "13.05.00"
   moengageInAppVersion = "8.6.0"
-  basePluginVersion = "4.1.0"
+  basePluginVersion = "4.2.0"
   //build versions
   minimumVersion = 21
   compileVersion = 34
