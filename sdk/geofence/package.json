@@ -1,6 +1,6 @@
 {
   "name": "react-native-moengage-geofence",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "MoEngage React Native package to support geofence based campaigns in iOS platform",
   "main": "src/index.ts",
   "files": [
@@ -39,11 +39,11 @@
     "react-native": "0.73.0"
   },
   "codegenConfig": {
-      "name": "NativeMoEngageGeofenceSpec",
-      "type": "modules",
-      "jsSrcsDir": "src",
-      "android": {
-          "javaPackageName": "com.moengage.react.geofence"
-      }
+    "name": "NativeMoEngageGeofenceSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.moengage.react.geofence"
+    }
   }
 }

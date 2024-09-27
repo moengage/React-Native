@@ -1,6 +1,6 @@
-# Next Release
+# 27-09-2024
 
-## Next version
+## 5.0.1
 - iOS
     - `MoEngageInbox` version updated to `2.18.0`
     

@@ -1,6 +1,6 @@
-# Next Release 
+# 27-09-2024
 
-## Next version (major)
+## 5.0.0
 - Added support for Cards fetch on login
 - Breaking Changes 
 
