@@ -27,9 +27,11 @@ jobs:
           fetch-tags: true
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Script setup
+        working-directory: source
         run: |
           chmod +x .github/scripts/release.main.kts
       - name: Publishing plugins
+        working-directory: source
         run: |
           .github/scripts/release.main.kts
         env:

@@ -1,4 +1,4 @@
-# 27-09-2024
+# 30-09-2024
 
 ## 5.0.0
 - Added support for Cards fetch on login
