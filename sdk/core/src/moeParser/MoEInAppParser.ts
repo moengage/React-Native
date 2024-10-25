@@ -79,7 +79,7 @@ function getMoESelfHandledCampaign(json: { [k: string]: any }) {
 }
 
 function getMoEInAppRules(json: { [k: string]: any }) {
-    var screenName = null;
+    var screenName: string | null = null;
     if (json[MOE_INAPP_SCREEN_NAME] != undefined) {
         screenName = json[MOE_INAPP_SCREEN_NAME];
     }
