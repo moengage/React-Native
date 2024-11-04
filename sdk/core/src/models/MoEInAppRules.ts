@@ -1,6 +1,6 @@
 /**
  * DisplayRules for Campaign
- * @since TODO
+ * @since 11.1.0
  */
 export default class MoEInAppRules {
     /**
@@ -13,7 +13,7 @@ export default class MoEInAppRules {
      */
     contexts: Array<string>
 
-    constructor(screenName: string, contexts: Array<string> = []) {
+    constructor(screenName: string | null, contexts: Array<string> = []) {
         this.screenName = screenName;
         this.contexts = contexts;
     }

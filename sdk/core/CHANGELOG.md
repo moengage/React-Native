@@ -1,3 +1,8 @@
+# Next Release
+
+## Next Version
+- Fixing the lint issue for `getMoEInAppRules` with `noImplicitAny` as false in tsconfig file
+
 # 30-09-2024
 
 ## 11.1.0
