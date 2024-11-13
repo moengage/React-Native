@@ -1,3 +1,9 @@
+pluginManagement { 
+  includeBuild("../node_modules/@react-native/gradle-plugin")
+}
+plugins { 
+  id("com.facebook.react.settings")
+}
 dependencyResolutionManagement {
   repositories {
     mavenCentral()
@@ -9,6 +15,6 @@ dependencyResolutionManagement {
   }
 }
 rootProject.name = 'SampleApp'
-apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
 includeBuild('../node_modules/@react-native/gradle-plugin')
+extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }

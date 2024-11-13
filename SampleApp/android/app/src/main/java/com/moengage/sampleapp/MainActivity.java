@@ -5,6 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.facebook.react.ReactActivity;
+import com.facebook.react.ReactActivityDelegate;
+import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
+import com.facebook.react.defaults.DefaultReactActivityDelegate;
 
 public class MainActivity extends ReactActivity {
 
@@ -17,12 +20,14 @@ public class MainActivity extends ReactActivity {
     return "SampleApp";
   }
 
-  @Override public void onConfigurationChanged(@NonNull Configuration newConfig) {
+  @Override
+  public void onConfigurationChanged(@NonNull Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
     // MoEReactHelper.getInstance().onConfigurationChanged();
   }
 
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(null);
+  @Override 
+  public ReactActivityDelegate createReactActivityDelegate() {
+    return new DefaultReactActivityDelegate(this, getMainComponentName(), DefaultNewArchitectureEntryPoint.getFabricEnabled());
   }
 }
