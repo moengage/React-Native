@@ -2,7 +2,9 @@
 
 ## Next Version
 - Fixing the lint issue for `getMoEInAppRules` with `noImplicitAny` as false in tsconfig file
-
+- iOS
+    - Fixed the compiler issue in Apple TV.
+    
 # 30-09-2024
 
 ## 11.1.0
