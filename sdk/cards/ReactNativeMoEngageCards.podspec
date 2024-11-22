@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
  s.source              = {:file => './' }
   s.source_files = "ios/**/*.{h,m,mm,swift}"
   s.dependency          'React'
-  s.dependency          'MoEngagePluginCards','2.1.0'
+  s.dependency          'MoEngagePluginCards','2.1.1'
 
   if defined?(install_modules_dependencies()) != nil
     install_modules_dependencies(s);

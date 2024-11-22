@@ -1,3 +1,9 @@
+# Next Release
+
+## Next Version
+- iOS
+    - `MoEngagePluginInbox` version updated to `3.1.1`
+    
 # 30-09-2024
 
 ## 5.0.1
