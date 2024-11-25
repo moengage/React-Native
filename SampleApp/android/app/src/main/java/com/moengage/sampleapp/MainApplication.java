@@ -3,12 +3,14 @@ package com.moengage.sampleapp;
 import android.app.Application;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.facebook.react.ReactHost;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.flipper.ReactNativeFlipper;
+import com.facebook.react.soloader.OpenSourceMergedSoMapping;
 import com.facebook.soloader.SoLoader;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
+import com.facebook.react.defaults.DefaultReactHost;
 import com.moengage.core.DataCenter;
 import com.moengage.core.LogLevel;
 import com.moengage.core.MoEngage;
@@ -17,6 +19,7 @@ import com.moengage.core.config.MoEDefaultConfig;
 import com.moengage.core.config.NotificationConfig;
 import com.moengage.pushbase.MoEPushHelper;
 import com.moengage.react.MoEInitializer;
+import java.io.IOException;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
@@ -54,6 +57,11 @@ public class MainApplication extends Application implements ReactApplication {
       };
 
   @Override
+  public ReactHost getReactHost() {
+    return DefaultReactHost.getDefaultReactHost(getApplicationContext(), mReactNativeHost);
+  }
+
+  @Override
   public ReactNativeHost getReactNativeHost() {
     return mReactNativeHost;
   }
@@ -61,12 +69,15 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    SoLoader.init(this, /* native exopackage */ false);
+   try {
+     SoLoader.init(this, OpenSourceMergedSoMapping.INSTANCE);
+   } catch(IOException e) {
+       e.printStackTrace();
+   }
     if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
       // If you opted-in for the New Architecture, we load the native entry point for this app.
-      DefaultNewArchitectureEntryPoint.load(true, false);
+      DefaultNewArchitectureEntryPoint.load();
     }
-    ReactNativeFlipper.initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     // replace DataCenter.DATA_CENTER_1 with your data center.
     MoEngage.Builder moEngage =
         new MoEngage.Builder(this, BuildConfig.MOENAGE_APP_ID, DataCenter.DATA_CENTER_1)
