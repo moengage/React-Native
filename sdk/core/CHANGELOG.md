@@ -1,7 +1,10 @@
-# Next Release
+# 25-11-2024
 
-## Next Version
+## 11.1.1
 - Fixing the lint issue for `getMoEInAppRules` with `noImplicitAny` as false in tsconfig file
+- Android
+    - `moe-android-sdk` version updated to `13.05.01`
+    - `inapp` version updated to `8.7.0`
 - iOS
     - Fixed the compiler issue in Apple TV.
     

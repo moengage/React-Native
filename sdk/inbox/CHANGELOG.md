@@ -1,8 +1,10 @@
-# Next Release
+# 25-11-2024
 
-## Next Version
+## 5.0.2
 - iOS
     - `MoEngagePluginInbox` version updated to `3.1.1`
+- Android
+    - `inbox-core` version updated to `3.2.1`
     
 # 30-09-2024
 

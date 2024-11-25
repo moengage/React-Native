@@ -1,6 +1,8 @@
-# Next Release
+# 25-11-2024
 
-## Next version
+## 5.0.1
+- Android
+    - `cards-core` version updated to `2.3.1`
 - iOS
     - `MoEngagePluginCards` version updated to `2.1.1`
     

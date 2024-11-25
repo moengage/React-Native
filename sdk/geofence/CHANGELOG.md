@@ -1,8 +1,10 @@
-# Next Release
+# 25-11-2024
 
-## Next version
+## 6.0.2
 - iOS
     - MoEngagePluginGeofence version updated to `3.1.1`. 
+- Android
+    - `geofence` version updated to `4.2.1`    
     
 # 30-09-2024
 
