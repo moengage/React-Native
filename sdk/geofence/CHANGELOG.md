@@ -1,3 +1,9 @@
+# Next Release
+
+## Next version
+- iOS
+    - MoEngagePluginGeofence version updated to `3.1.1`. 
+    
 # 30-09-2024
 
 ## 6.0.1
