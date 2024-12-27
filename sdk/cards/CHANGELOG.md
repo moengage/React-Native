@@ -1,3 +1,11 @@
+# Next release
+
+## Next version
+
+- iOS
+    - Fixed the import issue in React version 0.76
+    
+    
 # 25-11-2024
 
 ## 5.0.1

@@ -7,8 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MoEReactNativeInboxHandler.h"
-#import "ReactNativeMoEngage/MoEngageReactUtils.h"
-
+#import "MoEReactNativeInboxUtil.h"
 @import MoEngagePluginInbox;
 
 
@@ -25,7 +24,7 @@
 
 #pragma mark- Inbox methods
 -(void)getUnClickedMessageCount:(NSString *)payload resolve:(RCTPromiseResolveBlock) resolve reject:(RCTPromiseRejectBlock)reject {
-    NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
+    NSDictionary* jsonPayload = [MoEReactNativeInboxUtil getJSONRepresentation:payload];
     [[MoEngagePluginInboxBridge sharedInstance] getUnreadMessageCount:jsonPayload completionHandler:^(NSDictionary<NSString *,id> * _Nonnull countPayload) {
         NSError *err;
         NSData * jsonData = [NSJSONSerialization dataWithJSONObject:countPayload options:0 error:&err];
@@ -39,7 +38,7 @@
 }
 
 -(void)getInboxMessages:(NSString *)payload resolve:(RCTPromiseResolveBlock) resolve reject:(RCTPromiseRejectBlock)reject {
-    NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
+    NSDictionary* jsonPayload = [MoEReactNativeInboxUtil getJSONRepresentation:payload];
     [[MoEngagePluginInboxBridge sharedInstance] getInboxMessages: jsonPayload completionHandler:^(NSDictionary<NSString *,id> * _Nonnull response) {
         NSError *err;
         NSData * jsonData = [NSJSONSerialization dataWithJSONObject:response options:0 error:&err];
@@ -54,12 +53,12 @@
 
 #pragma mark- Stats methods
 -(void)trackInboxClick:(NSString *)payload {
-    NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
+    NSDictionary* jsonPayload = [MoEReactNativeInboxUtil getJSONRepresentation:payload];
     [[MoEngagePluginInboxBridge sharedInstance] trackInboxClick:jsonPayload];
 }
 
 -(void)deleteInboxEntry:(NSString *)payload {
-    NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
+    NSDictionary* jsonPayload = [MoEReactNativeInboxUtil getJSONRepresentation:payload];
     [[MoEngagePluginInboxBridge sharedInstance] deleteInboxEntry:jsonPayload];
 }
 
