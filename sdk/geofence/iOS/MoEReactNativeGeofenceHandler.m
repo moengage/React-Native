@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MoEReactNativeGeofenceHandler.h"
-#import "ReactNativeMoEngage/MoEngageReactUtils.h"
+#import "MoEReactNativeGeofenceUtil.h"
 
 @import MoEngagePluginGeofence;
 
@@ -27,12 +27,12 @@
 
 // MARK: Geofence methods
 -(void)startGeofenceMonitoring:(NSString *)payload {
-    NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
+    NSDictionary* jsonPayload = [MoEReactNativeGeofenceUtil getJSONRepresentation:payload];
     [[MoEngagePluginGeofenceBridge sharedInstance] startGeofenceMonitoring: jsonPayload];
 }
 
 -(void)stopGeofenceMonitoring:(NSString *)payload {
-    NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
+    NSDictionary* jsonPayload = [MoEReactNativeGeofenceUtil getJSONRepresentation:payload];
     [[MoEngagePluginGeofenceBridge sharedInstance] stopGeofenceMonitoring: jsonPayload];
 }
 
