@@ -30,7 +30,7 @@ jobs:
       - name: Setup script
         working-directory: source
         run: |
-          chmod +x .github/scripts/utils.main.kts
+          chmod +x .github/scripts/react-utils.main.kts
           chmod +x .github/scripts/verify-plugins.main.kts
       - name: Verify
         working-directory: source

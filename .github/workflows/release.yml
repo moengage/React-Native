@@ -29,6 +29,7 @@ jobs:
       - name: Script setup
         working-directory: source
         run: |
+          chmod +x .github/scripts/react-utils.main.kts
           chmod +x .github/scripts/release.main.kts
       - name: Publishing plugins
         working-directory: source
