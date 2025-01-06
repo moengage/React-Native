@@ -9,18 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <React/RCTBridgeModule.h>
 #import <React/RCTEventEmitter.h>
+#import "MoEReactEventDispatcher.h"
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #import <NativeMoEngageSpec/NativeMoEngageSpec.h>
-#endif
-
-#ifdef RCT_NEW_ARCH_ENABLED
-@interface MoEReactBridge : RCTEventEmitter <NativeMoEngageSpec>
--(void)sendEventWithName:(NSDictionary *)payloadDict;
+@interface MoEReactBridge : RCTEventEmitter <NativeMoEngageSpec, MoEEventDispatcherProtocol>
 @end
 #else
-@interface MoEReactBridge : RCTEventEmitter <RCTBridgeModule>
--(void)sendEventWithName:(NSDictionary *)payloadDict;
+@interface MoEReactBridge : RCTEventEmitter <RCTBridgeModule, MoEReactEventDispatcher>
 @end
 #endif
-
