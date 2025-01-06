@@ -9,14 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <React/RCTEventEmitter.h>
-#import "MoEReactBridge.h"
+#import "MoEReactEventDispatcher.h"
+
 
 @interface MoEReactNativeHandler : NSObject
 +(instancetype)sharedInstance;
 
-@property (nonatomic, weak) MoEReactBridge *reactBridge;
+@property (nonatomic, weak) id<MoEReactEventDispatcher> delegate;
 
--(void)setDelegate:(NSString *)identifier;
+-(void)setPluginBridgeDelegate:(NSString *)identifier;
 
 -(void)initialize:(NSString *)payload;
 -(void)setAppStatus:(NSString *)payload;

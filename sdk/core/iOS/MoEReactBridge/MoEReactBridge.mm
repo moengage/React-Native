@@ -44,7 +44,7 @@ RCT_EXPORT_MODULE(MoEReactBridge);
 -(void)startObserving {
     hasListeners = YES;
     [self flushDelayedEvents];
-    [MoEReactNativeHandler sharedInstance].reactBridge = self;
+    [MoEReactNativeHandler sharedInstance].delegate = self;
 }
 
 // Will be called when this module's last listener is removed, or on dealloc.
@@ -243,6 +243,11 @@ RCT_EXPORT_METHOD(updatePushPermissionRequestCountAndroid:(NSString *)payload) {
 RCT_EXPORT_METHOD(deleteUser:(NSString *)payload resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) { 
     RCTLogInfo(@"Warning: This is an Android only feature.");
 }
+
+RCT_EXPORT_METHOD(deviceIdentifierTrackingStatusUpdate:(NSString *)payload) {
+    RCTLogInfo(@"Warning: This is an Android only feature.");
+}
+
 
 #ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const facebook::react::ObjCTurboModule::InitParams &)params {
