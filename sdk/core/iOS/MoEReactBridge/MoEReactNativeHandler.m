@@ -26,7 +26,7 @@
     return instance;
 }
 
--(void)setDelegate:(NSString *)identifier {
+-(void)setPluginBridgeDelegate:(NSString *)identifier {
     [[MoEngagePluginBridge sharedInstance] setPluginBridgeDelegate:self identifier:identifier];
 }
 
@@ -154,7 +154,7 @@
     }
     
     NSDictionary* userInfo = @{kEventName:event,kPayloadDict:updatedDict};
-    [self.reactBridge sendEventWithName:userInfo];
+    [self.delegate sendEventWithName:userInfo];
 }
 
 @end

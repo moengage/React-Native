@@ -62,6 +62,6 @@
 }
 
 - (void)setPluginBridgeDelegate: (NSString*)identifier {
-    [[MoEReactNativeHandler sharedInstance] setDelegate:identifier];
+    [[MoEReactNativeHandler sharedInstance] setPluginBridgeDelegate:identifier];
 }
 @end
