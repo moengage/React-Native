@@ -1,3 +1,8 @@
+# Next Release
+
+## Next Version
+- Added support for React native 0.76.
+    
 # 25-11-2024
 
 ## 11.1.1
