@@ -1,6 +1,7 @@
 # Release Date
 
 ## Release Version
+- [minor] Added support to identify user on multiple identities
 - Android
     - [minor] Added support for AGP `8.7.3` and above
     - [minor] `moe-android-sdk` version updated to `13.06.00`
