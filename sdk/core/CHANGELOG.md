@@ -1,3 +1,8 @@
+# Release Date
+
+## Release Version
+- Added support to identify user on multiple identities
+
 # 29-01-2025
 
 ## 11.1.3

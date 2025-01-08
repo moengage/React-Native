@@ -24,8 +24,9 @@
  import com.moengage.plugin.base.internal.selfHandledInAppsToJson
  import com.moengage.plugin.base.internal.setEventEmitter
  import com.moengage.plugin.base.internal.userDeletionDataToJson
- 
- /**
+ import org.json.JSONObject
+
+/**
   * Class to handle all the request from the [MoEReactBridge] from both old and new arch
   *
   * @author Abhishek Kumar
@@ -264,11 +265,7 @@
              Logger.print(LogLevel.ERROR, t) { "$tag showNudge() :" }
          }
      }
- 
-     companion object {
-         const val NAME = "MoEReactBridge"
-     }
- 
+
      fun getSelfHandledInApps(payload: String, promise: Promise) {
          try {
              Logger.print { "$tag getSelfHandledInApps() : Payload: $payload" }
@@ -279,5 +276,41 @@
              Logger.print(LogLevel.ERROR, t) { "$tag getSelfHandledInApps() :" }
              promise.reject(t)
          }
+     }
+
+     /**
+      *  Identify the user with the given identity payload
+      */
+     fun identifyUser(payload: String) {
+         try {
+             Logger.print { "$tag identifyUser() : Payload: $payload" }
+             pluginHelper.identifyUser(context, payload)
+         } catch (t: Throwable) {
+             Logger.print(LogLevel.ERROR, t) { "$tag identifyUser() : " }
+         }
+     }
+
+     /**
+      *  Return Identities of the user that has been set.
+      */
+     fun getUserIdentities(payload: String, promise: Promise) {
+         try {
+             Logger.print { "$tag getUserIdentities() : Payload: $payload" }
+             val identities = pluginHelper.getUserIdentities(context, payload)
+             promise.resolve(
+                 if (identities == null) {
+                     null
+                 } else {
+                     JSONObject(identities).toString()
+                 }
+             )
+         } catch (t: Throwable) {
+             Logger.print(LogLevel.ERROR, t) { "$tag getUserIdentities() : " }
+             promise.reject(t)
+         }
+     }
+ 
+     companion object {
+         const val NAME = "MoEReactBridge"
      }
  }

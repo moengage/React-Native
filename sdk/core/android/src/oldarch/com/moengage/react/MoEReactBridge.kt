@@ -169,4 +169,14 @@ class MoEReactBridge(
     fun showNudge(payload: String) {
         bridgeHandler.showNudge(payload)
     }
+
+    @ReactMethod
+    fun identifyUser(payload: String) {
+        bridgeHandler.identifyUser(payload)
+    }
+
+    @ReactMethod
+    fun getUserIdentities(payload: String, promise: Promise) {
+        bridgeHandler.getUserIdentities(payload, promise)
+    }
 }

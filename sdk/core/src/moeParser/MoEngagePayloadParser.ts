@@ -44,3 +44,15 @@ export function getUserDeletionData(payload: string): UserDeletionData {
         payloadJsonObject[MOE_DATA][IS_USER_DELETION_SUCCESS]
     );
 }
+
+export function getUserIdentitiesData(payload: string | null): { [k: string]: string } | null {
+    if (payload === null) {
+        return null;
+    }
+    const payloadJsonObject: { [k: string]: string } = JSON.parse(payload);
+    const mappedIdentities: { [k: string]: string } = {};
+    for (let [key, value] of Object.entries(payloadJsonObject)) {
+        mappedIdentities[key] = value.toString();
+    }
+    return mappedIdentities;
+}
