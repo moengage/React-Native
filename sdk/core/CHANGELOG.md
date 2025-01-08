@@ -1,7 +1,7 @@
-# Next Release
+# 08-01-2025
 
-## Next Version
-- Added support for React native 0.76.
+## 11.1.2
+- Added support for React version 0.76.
     
 # 25-11-2024
 
