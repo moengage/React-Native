@@ -3,6 +3,7 @@ buildscript {
   repositories {
     google()
     mavenCentral()
+    mavenLocal()
   }
 
   dependencies {
@@ -15,6 +16,7 @@ rootProject.allprojects {
   repositories {
     google()
     mavenCentral()
+    mavenLocal()
   }
 }
 
@@ -80,16 +82,20 @@ dependencies {
 
   compileOnly('com.facebook.react:react-native')
   compileOnly("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
-  
-  api("com.moengage:moe-android-sdk:$moengageCoreVersion")
+
+  api("com.moengage:moe-android-sdk:$moengageCoreVersion") {
+    exclude group: "com.moengage", module: "core"
+  }
+  api("com.moengage:core:7.5.1-LOCAL")
   api("com.moengage:inapp:$moengageInAppVersion")
-  api("com.moengage:plugin-base:$basePluginVersion")
+  api("com.moengage:plugin-base:4.2.0-LOCAL")
 }
 
 apply from: file("./user-agent.gradle")
 
 repositories {
   mavenCentral()
+  mavenLocal()
 }
 
 def isNewArchitectureEnabled() {

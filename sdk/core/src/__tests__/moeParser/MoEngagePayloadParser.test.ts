@@ -9,11 +9,11 @@ describe('MoEngagePayloadParser', () => {
         });
 
         it('payload data as non-null, function should return the identities', () => {
-            expect(getUserIdentitiesData(userIdentityStringObjectType.toString())).toEqual(userIdentityStringObjectType);
+            expect(getUserIdentitiesData(JSON.stringify(userIdentityStringObjectType))).toEqual(userIdentityStringObjectType);
         });
 
         it('invalid payload data with number in identities, function should cast number to string and return the identities', () => {
-            expect(getUserIdentitiesData({ "idKey1": 1 }.toString())).toEqual({ "idKey1": "1" });
+            expect(getUserIdentitiesData(JSON.stringify({ "idKey1": 1 }))).toEqual({ "idKey1": "1" });
         });
     });
 });
