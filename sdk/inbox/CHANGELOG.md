@@ -1,3 +1,9 @@
+# Release Date
+
+## Release Version
+- Android
+    - [minor] Added support for AGP `8.7.3` and above
+    
 # 11-03-2025
 
 ## 5.0.4
