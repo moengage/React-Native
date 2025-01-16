@@ -290,25 +290,26 @@
          }
      }
 
-     /**
-      *  Return Identities of the user that has been set.
-      */
-     fun getUserIdentities(payload: String, promise: Promise) {
-         try {
-             Logger.print { "$tag getUserIdentities() : Payload: $payload" }
-             val identities = pluginHelper.getUserIdentities(context, payload)
-             promise.resolve(
-                 if (identities == null) {
-                     null
-                 } else {
-                     JSONObject(identities).toString()
-                 }
-             )
-         } catch (t: Throwable) {
-             Logger.print(LogLevel.ERROR, t) { "$tag getUserIdentities() : " }
-             promise.reject(t)
-         }
-     }
+    /**
+     *  Return Identities of the user that has been set.
+     */
+    fun getUserIdentities(payload: String, promise: Promise) {
+        try {
+            Logger.print { "$tag getUserIdentities() : Payload: $payload" }
+            pluginHelper.getUserIdentities(context, payload) { identities ->
+                promise.resolve(
+                    if (identities == null) {
+                        null
+                    } else {
+                        JSONObject(identities).toString()
+                    }
+                )
+            }
+        } catch (t: Throwable) {
+            Logger.print(LogLevel.ERROR, t) { "$tag getUserIdentities() : " }
+            promise.reject(t)
+        }
+    }
  
      companion object {
          const val NAME = "MoEReactBridge"
