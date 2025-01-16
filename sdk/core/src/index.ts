@@ -208,6 +208,7 @@ var ReactMoE = {
    * @deprecated This function is deprecated in favour of identifyUser(). This function will be removed in 13.0.0"
    */
   setUserUniqueID: function (uniqueId: string) {
+    MoEngageLogger.warn("Deprecated function usage `setUserUniqueID`");
     MoEngageLogger.verbose("Will set unique ID: ", uniqueId);
     const payload = getUserAttributeJson(USER_ATTRIBUTE_UNIQUE_ID, uniqueId, GENERAL, moeAppId);
     MoEReactBridge.setUserAttribute(payload);
@@ -220,6 +221,7 @@ var ReactMoE = {
    * @deprecated This function is deprecated in favour of identifyUser(). This function will be removed in 13.0.0"
    */
   setAlias: function (alias: string) {
+    MoEngageLogger.warn("Deprecated function usage `setAlias`");
     MoEngageLogger.verbose("Will set alias: ", alias);
     let payload = getAliasJson(alias, moeAppId);
     MoEReactBridge.setAlias(payload);

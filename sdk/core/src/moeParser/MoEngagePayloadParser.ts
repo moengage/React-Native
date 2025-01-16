@@ -52,7 +52,7 @@ export function getUserIdentitiesData(payload: string | null): { [k: string]: st
     const payloadJsonObject: { [k: string]: string } = JSON.parse(payload);
     const mappedIdentities: { [k: string]: string } = {};
     for (let [key, value] of Object.entries(payloadJsonObject)) {
-        mappedIdentities[key] = value.toString();
+        mappedIdentities[key] = value;
     }
     return mappedIdentities;
 }
