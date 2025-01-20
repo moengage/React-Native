@@ -3,6 +3,9 @@ buildscript {
   repositories {
     google()
     mavenCentral()
+    maven {
+      url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
   }
 
   dependencies {
@@ -15,6 +18,9 @@ rootProject.allprojects {
   repositories {
     google()
     mavenCentral()
+    maven {
+      url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
   }
 }
 
@@ -22,7 +28,7 @@ ext {
   //dependency version
   moengageCoreVersion = "13.05.01"
   moengageInAppVersion = "8.7.0"
-  basePluginVersion = "4.2.0"
+  basePluginVersion = "4.2.2-SNAPSHOT"
   //build versions
   minimumVersion = 21
   compileVersion = 34
@@ -81,7 +87,10 @@ dependencies {
   compileOnly('com.facebook.react:react-native')
   compileOnly("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
   
-  api("com.moengage:moe-android-sdk:$moengageCoreVersion")
+  api("com.moengage:moe-android-sdk:$moengageCoreVersion") {
+    exclude group: "com.moengage", module: "core"
+  }
+  api("com.moengage:core:7.5.3-SNAPSHOT")
   api("com.moengage:inapp:$moengageInAppVersion")
   api("com.moengage:plugin-base:$basePluginVersion")
 }
@@ -90,6 +99,9 @@ apply from: file("./user-agent.gradle")
 
 repositories {
   mavenCentral()
+  maven {
+    url "https://oss.sonatype.org/content/repositories/snapshots/"
+  }
 }
 
 def isNewArchitectureEnabled() {

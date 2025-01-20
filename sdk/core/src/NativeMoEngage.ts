@@ -123,6 +123,18 @@ export interface Spec extends TurboModule {
    */
   updateSdkState: (payload: string) => void;
 
+  /**
+   * Identify the user with the given identifiers.
+   * @param payload Stringified JSON payload
+   */
+  identifyUser: (payload: string) => void;
+
+  /**
+   * Return Identities of the user that has been set.
+   * @param payload Stringified JSON payload
+   */
+  getUserIdentities: (payload: string) => Promise<string | null>;
+
   /// Anroid specific
 
   /**
