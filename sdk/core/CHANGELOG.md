@@ -1,3 +1,9 @@
+# 22-01-2025
+
+## 11.1.3
+- Android
+    - `moe-android-sdk` version updated to `13.05.02`
+
 # 08-01-2025
 
 ## 11.1.2

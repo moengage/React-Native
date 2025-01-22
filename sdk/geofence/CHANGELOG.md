@@ -1,3 +1,9 @@
+# 22-01-2025
+
+## 6.0.3
+- Android
+    - Support for `moengage-android-sdk` `13.05.02` and above
+
 # 25-11-2024
 
 ## 6.0.2
