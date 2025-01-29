@@ -1,3 +1,11 @@
+# 29-01-2025
+
+## 5.0.2
+- Android
+    - `cards-core` version updated to `2.3.2`
+- iOS
+    - `MoEngagePluginCards` version updated to `2.2.0`
+
 # 25-11-2024
 
 ## 5.0.1
