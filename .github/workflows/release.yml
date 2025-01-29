@@ -2,6 +2,11 @@ name: Release Plugins
 
 on:
   workflow_dispatch: # manual trigger
+    inputs:
+      releaseNotes:
+        type: string
+        description: 'Enter the Release note'
+        required: true
   # push: # on push to master branch
     # branches:
       # - master
@@ -34,6 +39,7 @@ jobs:
       - name: Publishing plugins
         working-directory: source
         run: |
-          .github/scripts/release.main.kts
+          .github/scripts/release.main.kts ${{ github.event.inputs.releaseNotes }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
