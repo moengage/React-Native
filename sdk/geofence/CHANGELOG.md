@@ -1,8 +1,10 @@
-# 22-01-2025
+# 29-01-2025
 
 ## 6.0.3
 - Android
     - Support for `moengage-android-sdk` `13.05.02` and above
+- iOS
+    - MoEngagePluginGeofence version updated to `3.2.0`. 
 
 # 25-11-2024
 

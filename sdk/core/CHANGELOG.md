@@ -1,8 +1,10 @@
-# 22-01-2025
+# 29-01-2025
 
 ## 11.1.3
 - Android
     - `moe-android-sdk` version updated to `13.05.02`
+- iOS
+    - MoEngage-iOS-SDK version updated to `9.22.1`.
 
 # 08-01-2025
 
