@@ -6,7 +6,7 @@ on:
     types: [ opened, reopened, ready_for_review, synchronize ]
     branches: [ "development", "master" ]
 jobs:
-  verify:
+  verify-ios:
     runs-on: macos-latest
     if: ${{ !github.event.pull_request.draft }}
     strategy:
@@ -32,7 +32,41 @@ jobs:
         run: |
           chmod +x .github/scripts/react-utils.main.kts
           chmod +x .github/scripts/verify-plugins.main.kts
-      - name: Verify
+      - name: Verify iOS
         working-directory: source
         run: |
-          kotlinc -script .github/scripts/verify-plugins.main.kts
+          kotlinc -script .github/scripts/verify-plugins.main.kts iOS
+  verify-android:
+    runs-on: macos-latest
+    if: ${{ !github.event.pull_request.draft }}
+    strategy:
+      fail-fast: true
+    steps:
+      - name: Checkout sdk automation scripts
+        uses: actions/checkout@v3
+        with:
+          repository: moengage/sdk-automation-scripts
+          path: sdk-automation-scripts
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Automation script setup
+        uses: ./sdk-automation-scripts/actions/npm-repository-setup    
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with: 
+          path: source
+          fetch-depth: 0
+          fetch-tags: true
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Setup script
+        working-directory: source
+        run: |
+          chmod +x .github/scripts/react-utils.main.kts
+          chmod +x .github/scripts/verify-plugins.main.kts
+      - name: Verify React Framework
+        working-directory: source
+        run: |
+          kotlinc -script .github/scripts/verify-plugins.main.kts react-native
+      - name: Verify Android 
+        working-directory: source
+        run: |
+          kotlinc -script .github/scripts/verify-plugins.main.kts android
