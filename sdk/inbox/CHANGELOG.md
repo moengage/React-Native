@@ -1,3 +1,9 @@
+# Release Date
+
+## Release Version
+- iOS
+  - Fix build when `use_frameworks` enabled in `Podfile`
+
 # 29-01-2025
 
 ## 5.0.3
@@ -13,20 +19,20 @@
     - `MoEngagePluginInbox` version updated to `3.1.1`
 - Android
     - `inbox-core` version updated to `3.2.1`
-    
+
 # 30-09-2024
 
 ## 5.0.1
 - iOS
     - `MoEngageInbox` version updated to `2.18.0`
-    
+
 # 07-08-2024
 
 ## 5.0.0
 - iOS
     - Pinned plugin dependency version
     - `MoEngageInbox` version updated to `2.17.1`
-    
+
 # 31-07-2024
 
 ## 4.1.0
