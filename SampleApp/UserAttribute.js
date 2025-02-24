@@ -9,6 +9,7 @@ import {
 import { AlertBox, fire } from "react-native-alertbox";
 import ReactMoE, {
   MoEGeoLocation,
+  MoEngageLogger,
 } from "react-native-moengage";
 
 export class UserAttribute extends React.Component {
@@ -307,6 +308,30 @@ export class UserAttribute extends React.Component {
                   "moe_user_attr_nested_json_object_with_array",
                   { "intKey": 1, "stringKey": "str2", "boolKey": false, "nested_key": [1, 2, 3, { "array_key": 1 }] }
                 );
+              }
+            },
+            {
+              id: "16",
+              title: "set identity (string)",
+              action: () => {
+                ReactMoE.identifyUser("react-native-uid");
+              }
+            },
+            {
+              id: "17",
+              title: "set identity (object)",
+              action: () => {
+                ReactMoE.identifyUser({
+                  "id": "react-native",
+                  "email": "react-native@moengage.com"
+                });
+              }
+            },
+            {
+              id: "18",
+              title: "get identity",
+              action: async () => {
+                MoEngageLogger.debug("getIdentities: ", await ReactMoE.getUserIdentities())
               }
             },
           ]}

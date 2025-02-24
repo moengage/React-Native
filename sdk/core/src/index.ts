@@ -26,7 +26,8 @@ import {
   getDeviceIdTrackingJson,
   getInitConfigJson,
   getPermissionResponseJson,
-  getNudgeDisplayJson
+  getNudgeDisplayJson,
+  getIdentifyUserPayload
 } from "./utils/MoEJsonBuilder";
 import {
   USER_ATTRIBUTE_UNIQUE_ID,
@@ -54,7 +55,7 @@ import MoEReactBridge from "./NativeMoEngage";
 import MoEPushToken from "../src/models/MoEPushToken";
 import MoEPushPayload from "../src/models/MoEPushPayload";
 import MoEInAppData from "../src/models/MoEInAppData";
-import { getUserDeletionData } from "../src/moeParser/MoEngagePayloadParser";
+import { getUserDeletionData, getUserIdentitiesData } from "../src/moeParser/MoEngagePayloadParser";
 import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
 import MoEAnalyticsConfig from "../src/models/MoEAnalyticsConfig";
 import { MoESupportedAttributes } from "./models/MoESupportedAttributes";
@@ -203,8 +204,11 @@ var ReactMoE = {
   /**
    * Sets the unique id of the user. Should be set on user login.
    * @param uniqueId unique id to be set
+   * 
+   * @deprecated This function is deprecated in favour of identifyUser(). This function will be removed in 13.0.0"
    */
   setUserUniqueID: function (uniqueId: string) {
+    MoEngageLogger.warn("Deprecated function usage `setUserUniqueID`, use `identifyUser`");
     MoEngageLogger.verbose("Will set unique ID: ", uniqueId);
     const payload = getUserAttributeJson(USER_ATTRIBUTE_UNIQUE_ID, uniqueId, GENERAL, moeAppId);
     MoEReactBridge.setUserAttribute(payload);
@@ -213,8 +217,11 @@ var ReactMoE = {
   /**
    * Update user's unique id which was previously set by setUserUniqueID()
    * @param alias updated unique id.
+   * 
+   * @deprecated This function is deprecated in favour of identifyUser(). This function will be removed in 13.0.0"
    */
   setAlias: function (alias: string) {
+    MoEngageLogger.warn("Deprecated function usage `setAlias`, use `identifyUser`");
     MoEngageLogger.verbose("Will set alias: ", alias);
     let payload = getAliasJson(alias, moeAppId);
     MoEReactBridge.setAlias(payload);
@@ -750,6 +757,29 @@ var ReactMoE = {
       MoEngageLogger.debug("This api is not supported on Android platform.");
     }
   },
+
+  /**
+   * Identify the user with the given identity.
+   * @since Todo: Add Version
+   */
+  identifyUser(identity: string | { [k: string]: string }) {
+    MoEReactBridge.identifyUser(getIdentifyUserPayload(identity, moeAppId));
+  },
+
+  /**
+   * Return Identities of the user that has been set.
+   * @since Todo: Add Version
+   */
+  getUserIdentities: async function (): Promise<{ [k: string]: string } | null> {
+    try {
+      return getUserIdentitiesData(
+        await MoEReactBridge.getUserIdentities(getAppIdJson(moeAppId))
+      );
+    } catch (error) {
+      MoEngageLogger.error(`getUserIdentities(): ${error}`);
+      return null;
+    }
+  }
 };
 
 export {
