@@ -36,4 +36,6 @@
 -(void)optOutDataTracking:(NSString *)payload;
 -(void)updateSdkState:(NSString *)payload;
 -(void)registerForProvisionalPush;
+-(void)identifyUser:(NSString *)payload;
+-(void)getUserIdentities:(NSString *)payload resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject;
 @end
