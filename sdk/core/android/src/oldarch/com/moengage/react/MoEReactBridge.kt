@@ -169,4 +169,9 @@ class MoEReactBridge(
     fun showNudge(payload: String) {
         bridgeHandler.showNudge(payload)
     }
+
+    @ReactMethod
+    fun getSelfHandledInApps(payload: String, promise: Promise) {
+        bridgeHandler.getSelfHandledInApps(payload, promise)
+    }
 }
