@@ -15,7 +15,10 @@ Pod::Spec.new do |s|
   s.platform            = :ios, "11.0"
   s.dependency          'MoEngagePluginGeofence', '3.2.0'
   s.dependency          'React'
+  s.dependency 'ReactNativeMoEngage'
   s.source_files        = "ios/**/*.{h,m,mm,swift}"
+  s.public_header_files = 'ios/**/*.h'
+  s.module_map = false
   
 
   if defined?(install_modules_dependencies()) != nil
