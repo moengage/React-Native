@@ -1,6 +1,8 @@
 # Release Date
 
 ## Release Version
+- Android
+  - [patch] BugFix: Multiple SelfHandled InApp not working for older architecture in Android platform
 - iOS
   - Fix build when `use_frameworks` enabled in `Podfile`
 
