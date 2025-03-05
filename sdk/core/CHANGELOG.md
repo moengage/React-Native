@@ -3,7 +3,15 @@
 ## Release Version
 - Android
     - Added support for AGP `8.7.3` and above
-    
+    - Min SDK version updated to `23`
+    - Compiled SDK version updated to `35`
+    - Removed deprecated APIs
+
+    | Then                                                           | Now                                                                            |
+    |:--------------------------------------------------------------:|:------------------------------------------------------------------------------:|
+    | MoEInitializer#initialize(Context, MoEngage.Builder)           | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder)            |
+    | MoEInitializer#initialize(Context, MoEngage.Builder, SdkState) | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder, SdkState)  |
+
 # 29-01-2025
 
 ## 11.1.3

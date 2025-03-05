@@ -24,8 +24,8 @@ ext {
   moengageInAppVersion = "8.7.1"
   basePluginVersion = "4.2.1"
   //build versions
-  minimumVersion = 21
-  compileVersion = 34
+  minimumVersion = 23
+  compileVersion = 35
 }
 
 apply plugin: 'com.android.library'
