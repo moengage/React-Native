@@ -16,8 +16,8 @@ buildscript {
 
 ext {
   //dependency version
-  moengageCoreVersion = "13.06.00"
-  moengageCardsCoreVersion = "2.4.0"
+  moengageCoreVersion = "14.00.00"
+  moengageCardsCoreVersion = "3.0.0"
   pluginBaseCardVersion = "3.1.0"
 }
 
@@ -27,10 +27,10 @@ apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: 'com.facebook.react'
 
 android {
-    compileSdk 34
+    compileSdk 35
     namespace "com.moengage.react.cards"
     defaultConfig {
-        minSdk 21
+        minSdk 23
         versionCode 1
         versionName "1.0"
 
