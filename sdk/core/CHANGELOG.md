@@ -5,6 +5,13 @@
     - [minor] Added support for AGP `8.7.3` and above
     - [minor] `moe-android-sdk` version updated to `13.06.00`
     - [minor] `inapp` version updated to `8.8.0`
+    - [major] Min SDK version updated to `23`
+    - [major] Compiled SDK version updated to `35`
+    - [major] Removed deprecated APIs
+      | Then                                                           | Now                                                                            |
+      |:--------------------------------------------------------------:|:------------------------------------------------------------------------------:|
+      | MoEInitializer#initialize(Context, MoEngage.Builder)           | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder)            |
+      | MoEInitializer#initialize(Context, MoEngage.Builder, SdkState) | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder, SdkState)  |
     
 # 11-03-2025
 

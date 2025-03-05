@@ -27,10 +27,10 @@ apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: 'com.facebook.react'
 
 android {
-    compileSdk 34
+    compileSdk 35
     namespace "com.moengage.react.cards"
     defaultConfig {
-        minSdk 21
+        minSdk 23
         versionCode 1
         versionName "1.0"
 
