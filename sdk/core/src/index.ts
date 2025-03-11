@@ -59,6 +59,7 @@ import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
 import MoEAnalyticsConfig from "../src/models/MoEAnalyticsConfig";
 import { MoESupportedAttributes } from "./models/MoESupportedAttributes";
 import * as MoECoreHandler from "./utils/MoECoreHandler";
+import MoEInAppClickData from "./models/MoEInAppClickData";
 
 const PLATFORM_IOS = "ios";
 const PLATFORM_ANDROID = "android";
@@ -137,7 +138,7 @@ type NotificationEventTypeMap = {
   "pushTokenGenerated": MoEPushToken,
   "pushClicked": MoEPushPayload,
   "inAppCampaignShown": MoEInAppData,
-  "inAppCampaignClicked": MoEInAppData,
+  "inAppCampaignClicked": MoEInAppClickData,
   "inAppCampaignDismissed": MoEInAppData,
   "inAppCampaignCustomAction": MoEInAppData,
   "inAppCampaignSelfHandled": MoESelfHandledCampaignData
@@ -755,6 +756,7 @@ var ReactMoE = {
 export {
   MoEInAppCustomAction,
   MoEInAppNavigation,
+  MoEInAppClickData,
   MoESelfHandledCampaignData,
   MoEGeoLocation,
   MoEProperties,
