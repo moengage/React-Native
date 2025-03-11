@@ -1,6 +1,6 @@
-# Release Date
+# 11-03-2025
 
-## Release Version
+## 5.0.3
 - iOS
   - Fix build when `use_frameworks` enabled in `Podfile`
 

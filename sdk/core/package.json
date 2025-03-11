@@ -1,6 +1,6 @@
 {
   "name": "react-native-moengage",
-  "version": "11.1.3",
+  "version": "11.1.4",
   "description": "MoEngage is a mobile marketing automation company. This react-native SDK helps you track events, trigger smart notifications and in-apps, provides a drop-in Inbox Controller for notifications.",
   "main": "src/index.ts",
   "files": [
