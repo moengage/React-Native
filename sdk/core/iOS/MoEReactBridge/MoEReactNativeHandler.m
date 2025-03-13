@@ -138,6 +138,30 @@
     [[MoEngagePluginBridge sharedInstance] updateSDKState:jsonPayload];
 }
 
+#pragma mark- User Identities
+-(void)identifyUser:(NSString *)payload {
+    NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
+    [[MoEngagePluginBridge sharedInstance] identifyUser:jsonPayload];
+}
+
+-(void)getUserIdentities:(NSString *)payload resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+    NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
+    [[MoEngagePluginBridge sharedInstance] getUserIdentities:jsonPayload completionHandler:^(NSDictionary<NSString *,NSString *> * _Nonnull identities) {
+        NSError *err;
+        NSData * jsonData = [NSJSONSerialization dataWithJSONObject:identities options:0 error:&err];
+        if (jsonData) {
+            NSString *strPayload = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                resolve(strPayload);
+            });
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                reject(@"Error", @"Error in parsing User Identities Payload", err ? : [NSError errorWithDomain:@"" code:400 userInfo:@{@"Error reason": @"Error in parsing User Identities Payload"}]);
+            });
+        }
+    }];
+}
+
 #pragma mark- Delegate Method
 - (void)sendMessageWithEvent:(NSString *)event message:(NSDictionary<NSString *,id> *)message {
     NSMutableDictionary* updatedDict = [NSMutableDictionary dictionary];
