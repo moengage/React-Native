@@ -3,6 +3,7 @@
 ## Release Version
 - Android
     - [minor] Added support for AGP `8.7.3` and above
+    - [minor] `inbox-core` version updated to `3.3.0`
     
 # 11-03-2025
 

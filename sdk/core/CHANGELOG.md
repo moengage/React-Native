@@ -3,6 +3,8 @@
 ## Release Version
 - Android
     - [minor] Added support for AGP `8.7.3` and above
+    - [minor] `moe-android-sdk` version updated to `13.06.00`
+    - [minor] `inapp` version updated to `8.8.0`
     
 # 11-03-2025
 
