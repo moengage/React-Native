@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+- Android
+    - [minor] Added support for AGP `8.7.3` and above
+    - [minor] `cards-core` version updated to `2.4.0`
+    
 # 11-03-2025
 
 ## 5.0.3

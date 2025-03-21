@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.4.0'
+        classpath 'com.android.tools.build:gradle:8.7.3'
         // noinspection DifferentKotlinGradleVersion
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
@@ -15,9 +15,9 @@ buildscript {
 
 ext {
   //dependency version
-  moengageCoreVersion = "13.05.02"
-  moengageGeofenceVersion = "4.2.1"
-  pluginBaseGeofenceVersion = "2.1.1"
+  moengageCoreVersion = "13.06.00"
+  moengageGeofenceVersion = "4.3.0"
+  pluginBaseGeofenceVersion = "2.2.0"
 }
 
 apply plugin: 'com.android.library'
