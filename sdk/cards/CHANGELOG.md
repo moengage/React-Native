@@ -4,6 +4,8 @@
 - Android
     - [minor] Added support for AGP `8.7.3` and above
     - [minor] `cards-core` version updated to `2.4.0`
+    - [major] Min SDK Version updated to `23`
+    - [major] Compiled SDK Version updated to `35`
     
 # 11-03-2025
 
