@@ -13,6 +13,7 @@
 		3B02F8311AFF28BA184047CE /* libPods-NotificationContent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95E551A7EA77B0B0DD891D89 /* libPods-NotificationContent.a */; };
 		5AFB206890F07A168C659A18 /* libPods-SampleApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 976AD6BAF26253F83C114DB3 /* libPods-SampleApp.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A1F843E21A5877C8B6CD5C96 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 2ACB7F931543428B2B584AD0 /* PrivacyInfo.xcprivacy */; };
 		AC34577928B38DAE00A82F64 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC43AE5726CBF18F00C025AE /* UserNotifications.framework */; };
 		AC34577A28B38DAE00A82F64 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC43AE5926CBF18F00C025AE /* UserNotificationsUI.framework */; };
 		AC34577D28B38DAE00A82F64 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC34577C28B38DAE00A82F64 /* NotificationViewController.swift */; };
@@ -75,6 +76,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SampleApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SampleApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SampleApp/main.m; sourceTree = "<group>"; };
+		2ACB7F931543428B2B584AD0 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = SampleApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		3FEA5C264C7067DA725BCF6A /* Pods-NotificationService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationService.debug.xcconfig"; path = "Target Support Files/Pods-NotificationService/Pods-NotificationService.debug.xcconfig"; sourceTree = "<group>"; };
 		47479900AC23D66D11AF14C8 /* Pods-SampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleApp.debug.xcconfig"; path = "Target Support Files/Pods-SampleApp/Pods-SampleApp.debug.xcconfig"; sourceTree = "<group>"; };
 		7689800979D124EA2F821E03 /* libPods-NotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NotificationService.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,6 +188,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				2ACB7F931543428B2B584AD0 /* PrivacyInfo.xcprivacy */,
 			);
 			name = SampleApp;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				A1F843E21A5877C8B6CD5C96 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -902,13 +906,10 @@
 					"$(inherited)",
 					" ",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-Wl",
-					"-ld_classic",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
 				USE_HERMES = true;
 			};
 			name = Debug;
@@ -974,11 +975,7 @@
 					"$(inherited)",
 					" ",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-Wl",
-					"-ld_classic",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

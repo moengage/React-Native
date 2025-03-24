@@ -170,6 +170,14 @@ RCT_EXPORT_METHOD(updateSdkState:(NSString *)payload) {
     [[MoEReactNativeHandler sharedInstance] updateSdkState:payload];
 }
 
+RCT_EXPORT_METHOD(identifyUser:(NSString *)payload) {
+    [[MoEReactNativeHandler sharedInstance] identifyUser:payload];
+}
+
+RCT_EXPORT_METHOD(getUserIdentities:(NSString *)payload resolve:(RCTPromiseResolveBlock) resolve reject:(RCTPromiseRejectBlock)reject) {
+    [[MoEReactNativeHandler sharedInstance] getUserIdentities:payload resolve:resolve reject:reject];
+}
+
 // MARK: Unimplemented method
 
 RCT_EXPORT_METHOD(deleteUser:(NSString *)payload) {

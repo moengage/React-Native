@@ -11,6 +11,7 @@ import { MoEngageNudgePosition } from "../models/MoEngageNudgePosition";
 import { MoESupportedAttributes } from "../models/MoESupportedAttributes";
 import MoESelfHandledCampaign from "../models/MoESelfHandledCampaign";
 import MoEInAppRules from "../models/MoEInAppRules";
+import { ACCOUNT_META, APP_ID, MOE_DATA, USER_IDENTITY, USER_UNIQUE_IDENTITY } from "./MoEConstants";
 
 export function getInAppCampaignJson(moEInAppData: MoEInAppData, type: string, appId: String) {
   var json: { [k: string]: any } = {
@@ -305,4 +306,22 @@ export function getDisplayRulesJson(displayRules: MoEInAppRules) {
   }
   MoEngageLogger.verbose("getDisplayRulesJson(): payload json: ", json);
   return json;
+}
+
+export function getIdentifyUserPayload(identity: string | { [k: string]: string }, appId: string): string {
+  var payload: { [k: string]: any } = {
+    [ACCOUNT_META]: {
+      [APP_ID]: appId
+    },
+  };
+  if (typeof identity === 'string') {
+    payload[MOE_DATA] = {
+      [USER_IDENTITY]: { [USER_UNIQUE_IDENTITY]: identity }
+    };
+  } else {
+    payload[MOE_DATA] = {
+      [USER_IDENTITY]: identity
+    };
+  }
+  return JSON.stringify(payload);
 }

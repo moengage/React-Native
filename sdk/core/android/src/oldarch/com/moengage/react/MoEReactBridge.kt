@@ -174,4 +174,14 @@ class MoEReactBridge(
     fun getSelfHandledInApps(payload: String, promise: Promise) {
         bridgeHandler.getSelfHandledInApps(payload, promise)
     }
+
+    @ReactMethod
+    fun identifyUser(payload: String) {
+        bridgeHandler.identifyUser(payload)
+    }
+
+    @ReactMethod
+    fun getUserIdentities(payload: String, promise: Promise) {
+        bridgeHandler.getUserIdentities(payload, promise)
+    }
 }

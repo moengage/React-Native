@@ -6,7 +6,9 @@
     - [minor] `inbox-core` version updated to `3.3.0`
     - [major] Min SDK Version updated to `23`
     - [major] Compiled SDK Version updated to `35`
-    
+- iOS
+    - [minor] `MoEngagePluginInbox` version updated to `3.3.0`
+
 # 11-03-2025
 
 ## 5.0.4
