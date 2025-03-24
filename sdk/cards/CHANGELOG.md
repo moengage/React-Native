@@ -1,11 +1,11 @@
-# Release Date
+# 24-03-2025
 
-## Release Version
+## 5.1.0
 - Android
-    - [minor] Added support for AGP `8.7.3` and above
-    - [minor] `cards-core` version updated to `2.4.0`
+    - Added support for AGP `8.7.3` and above
+    - `cards-core` version updated to `2.4.0`
 - iOS
-    - [minor] `MoEngagePluginCards` version updated to `2.3.0`
+    - `MoEngagePluginCards` version updated to `2.3.0`
     
 # 11-03-2025
 

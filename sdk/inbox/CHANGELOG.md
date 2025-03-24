@@ -1,11 +1,11 @@
-# Release Date
+# 24-03-2025
 
-## Release Version
+## 5.1.0
 - Android
-    - [minor] Added support for AGP `8.7.3` and above
-    - [minor] `inbox-core` version updated to `3.3.0`
+    - Added support for AGP `8.7.3` and above
+    - `inbox-core` version updated to `3.3.0`
 - iOS
-    - [minor] `MoEngagePluginInbox` version updated to `3.3.0`
+    - `MoEngagePluginInbox` version updated to `3.3.0`
 
 # 11-03-2025
 
