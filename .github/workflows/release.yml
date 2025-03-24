@@ -7,6 +7,10 @@ on:
         type: string
         description: 'Enter the Release note'
         required: true
+      releaseTicket:
+        type: string
+        description: 'Enter the Release ticket'
+        required: true
   # push: # on push to master branch
     # branches:
       # - master
@@ -39,7 +43,7 @@ jobs:
       - name: Publishing plugins
         working-directory: source
         run: |
-          .github/scripts/release.main.kts ${{ github.event.inputs.releaseNotes }}
+          .github/scripts/release.main.kts ${{ github.event.inputs.releaseNotes }} ${{ github.event.inputs.releaseTicket }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GH_TOKEN: ${{ github.token }}
