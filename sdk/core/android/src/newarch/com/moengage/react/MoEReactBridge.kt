@@ -137,6 +137,14 @@ class MoEReactBridge(reactContext: ReactApplicationContext) : NativeMoEngageSpec
         bridgeHandler.deleteUser(payload, promise)
     }
 
+    override fun identifyUser(payload: String) {
+        bridgeHandler.identifyUser(payload)
+    }
+
+    override fun getUserIdentities(payload: String, promise: Promise) {
+        bridgeHandler.getUserIdentities(payload, promise)
+    }
+
     override fun registerForPush() {
         // iOS only
     }

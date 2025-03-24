@@ -82,3 +82,7 @@ export const DEFAULT_CONFIG_RELEASE_BUILD_LOG_ENABLED = false;
 
 // Key to get the user deletion state while deleting user from native bridge
 export const IS_USER_DELETION_SUCCESS = "isUserDeletionSuccess";
+
+// Identify User
+export const USER_IDENTITY = 'identity';
+export const USER_UNIQUE_IDENTITY = 'uid';
