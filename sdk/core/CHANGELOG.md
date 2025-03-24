@@ -1,7 +1,7 @@
-# Release Date
+# 24-03-2025
 
-## Release Version
-- [minor] Added support to identify user on multiple identities
+## 11.2.0
+- Added support to identify user on multiple identities
 - Android
     - [minor] Added support for AGP `8.7.3` and above
     - [minor] `moe-android-sdk` version updated to `13.06.00`
@@ -14,7 +14,7 @@
       | MoEInitializer#initialize(Context, MoEngage.Builder)           | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder)            |
       | MoEInitializer#initialize(Context, MoEngage.Builder, SdkState) | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder, SdkState)  |
 - iOS
-    - [minor] `MoEngage-iOS-SDK` version updated to `9.23.1`
+    - `MoEngage-iOS-SDK` version updated to `9.23.1`
     
 # 11-03-2025
 
