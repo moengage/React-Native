@@ -2,6 +2,7 @@ import MoEngageLogger from "../logger/MoEngageLogger";
 import MoECampaignContext from "../models/MoECampaignContext";
 import MoECampaignData from "../models/MoECampaignData";
 import MoEClickData from "../models/MoEClickData";
+import MoEInAppClickData from "../models/MoEInAppClickData";
 import MoEInAppCustomAction from "../models/MoEInAppCustomAction";
 import MoEInAppData from "../models/MoEInAppData";
 import MoEInAppNavigation from "../models/MoEInAppNavigation";
@@ -222,7 +223,7 @@ export function getNavigationObj(json: { [k: string]: any }, accountMetaPayload:
         var platform = json[MOE_PLATFORM];
         var accountMeta = getMoEAccountMeta(accountMetaPayload);
         var action = getMoEInAppNavigation(json);
-        return new MoEClickData(accountMeta, platform, campaignData, action);
+        return new MoEInAppClickData(accountMeta, platform, campaignData, action);
     }
     else return undefined
 }
