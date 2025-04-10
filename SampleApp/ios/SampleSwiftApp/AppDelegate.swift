@@ -23,7 +23,8 @@ class AppDelegate: RCTAppDelegate {
     let sdkConfig = MoEngageSDKConfig(appId: "YOUR APP ID", dataCenter: MoEngageDataCenter.data_center_03)
     sdkConfig.appGroupID = "group.com.alphadevs.MoEngage.NotificationServices"
     sdkConfig.consoleLogConfig = MoEngageConsoleLogConfig(isLoggingEnabled: true, loglevel: .verbose)
-    MoEngageInitializer.sharedInstance().initializeDefaultSDKConfig(sdkConfig, andLaunchOptions: launchOptions ?? [:])
+    let reactConfig = MoEngageReactSDKInitializationConfig(sdkConfig: sdkConfig)
+    MoEngageInitializer.sharedInstance().initializeInstance(reactConfig)
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
