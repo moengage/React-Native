@@ -27,10 +27,16 @@ target 'SampleApp' do
     inherit! :complete
     # Pods for testing
   end
+end
 
-  post_install do |installer|
-    react_native_post_install(installer)
-  end
+target 'SampleSwiftApp' do
+  config = use_native_modules!
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # An absolute path to your application root.
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
 end
 
 target 'NotificationService' do
@@ -38,4 +44,8 @@ target 'NotificationService' do
 end
 target 'NotificationContent' do
   pod 'MoEngageRichNotification'
+end
+
+post_install do |installer|
+  react_native_post_install(installer)
 end
