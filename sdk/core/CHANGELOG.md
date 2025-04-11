@@ -1,3 +1,9 @@
+# Release Date
+
+## Release Version
+- iOS
+    - [patch] Added back Swift AppDelegate support
+
 # 24-03-2025
 
 ## 11.2.0
