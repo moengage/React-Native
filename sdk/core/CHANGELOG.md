@@ -1,9 +1,9 @@
-# Release Date
+# 16-04-2025
 
-## Release Version
+## 11.2.1
 - iOS
-    - [patch] Added back Swift AppDelegate support
-    - [patch] `MoEngage-iOS-SDK` version updated to `9.23.4`
+    - Added back Swift AppDelegate support
+    - `MoEngage-iOS-SDK` version updated to `9.23.4`
 
 # 24-03-2025
 

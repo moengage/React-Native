@@ -1,8 +1,8 @@
-# Release Date
+# 16-04-2025
 
-## Release Version
+## 6.1.1
 - iOS
-    - [patch] `MoEngagePluginGeofence` version updated to `3.3.2`
+    - `MoEngagePluginGeofence` version updated to `3.3.2`
 
 # 24-03-2025
 

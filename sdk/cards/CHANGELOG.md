@@ -1,8 +1,8 @@
-# Release Date
+# 16-04-2025
 
-## Release Version
+## 5.1.1
 - iOS
-    - [patch] `MoEngagePluginCards` version updated to `2.3.2`
+    - `MoEngagePluginCards` version updated to `2.3.2`
 
 # 24-03-2025
 
