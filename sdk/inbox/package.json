@@ -1,6 +1,6 @@
 {
   "name": "react-native-moengage-inbox",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "Inbox Module for the MoEngage Platform",
   "main": "src/index.ts",
   "files": [
