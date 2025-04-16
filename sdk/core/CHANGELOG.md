@@ -3,6 +3,7 @@
 ## Release Version
 - iOS
     - [patch] Added back Swift AppDelegate support
+    - [patch] `MoEngage-iOS-SDK` version updated to `9.23.4`
 
 # 24-03-2025
 
