@@ -1,3 +1,9 @@
+# Release Date
+
+## Release Version
+- Android
+  - [patch] `inapp` version updated to `8.8.1`
+
 # 16-04-2025
 
 ## 11.2.1
