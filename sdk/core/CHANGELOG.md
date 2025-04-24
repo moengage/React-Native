@@ -1,8 +1,8 @@
-# Release Date
+# 24-04-2025
 
-## Release Version
+## 11.2.2
 - Android
-  - [patch] `inapp` version updated to `8.8.1`
+  - `inapp` version updated to `8.8.1`
 
 # 16-04-2025
 
