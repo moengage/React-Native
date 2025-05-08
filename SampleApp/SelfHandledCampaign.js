@@ -53,6 +53,11 @@ export default class SelfHandledCampaign extends PureComponent {
             {this.info.campaign.payload}
           </Text>
         </View>
+
+          <Text style={styles.textLabels}>ScreenNames</Text>
+          <Text style={styles.textValues} numberOfLines={2}>
+            {this.info.campaign.displayRules.screenNames.join(', ')}
+          </Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
