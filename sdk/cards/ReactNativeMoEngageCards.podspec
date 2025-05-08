@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://www.moengage.com"
   s.license      = package['license']
   s.authors      = "MoEngage Inc."
-  s.platforms    = { :ios => "11.0" }
+  s.platforms    = { :ios => "13.0" }
  s.source              = {:file => './' }
   s.source_files = "ios/**/*.{h,m,mm,swift}"
   s.public_header_files = 'ios/**/*.h'
