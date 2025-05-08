@@ -1,3 +1,8 @@
+# Next Release
+
+## Next version
+- Added support for Simplify Inapp Triggers.
+
 # 24-04-2025
 
 ## 11.2.2
