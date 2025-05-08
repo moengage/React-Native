@@ -30,7 +30,7 @@ export const MOE_CAMPAIGNS = 'campaigns'
 
 // INAPP DISPLAY RULES
 export const MOE_INAPP_DISPLAY_RULES = 'displayRules'
-export const MOE_INAPP_SCREEN_NAME = 'screenName'
+export const MOE_INAPP_SCREEN_NAMES = 'screenNames'
 export const MOE_INAPP_CONTEXTS = 'contexts'
 export const MOE_INAPP_SCREEN_NAMES = 'screenNames'
 

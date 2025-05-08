@@ -4,10 +4,9 @@
  */
 export default class MoEInAppRules {
     /**
-    * Screenname for which InApp was configured to be shown.
-    * @deprecated Use the 'screenNames' property instead.
-    */
-    screenName: string | null;
+     * Screennames for which InApp was configured to be shown.
+     */
+    screenNames: Array<string>
 
     /**
      *  contexts for which InApp was configured to be shown.
@@ -24,5 +23,4 @@ export default class MoEInAppRules {
         this.contexts = contexts;
         this.screenNames = screenNames;
     }
-
 }
