@@ -4,17 +4,18 @@
  */
 export default class MoEInAppRules {
     /**
-     * Screenname for which InApp was configured to be shown.
+     * Screennames for which InApp was configured to be shown.
      */
-    screenName: string | null
+    screenNames: Array<string>
 
     /**
      *  contexts for which InApp was configured to be shown.
      */
     contexts: Array<string>
 
-    constructor(screenName: string | null, contexts: Array<string> = []) {
-        this.screenName = screenName;
+    constructor(screenNames: Array<string> = [], contexts: Array<string> = []) {
+        this.screenNames = screenNames;
         this.contexts = contexts;
     }
+    
 }

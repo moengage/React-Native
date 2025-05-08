@@ -71,6 +71,7 @@ export default class MultipleInAppsScreen extends PureComponent {
         <Text style={styles.rowItemText}>CampaignName = {item.campaignData.campaignName} </Text>
         <Text style={styles.rowItemText}>Payload = {item.campaign.payload} </Text>
         <Text style={styles.rowItemText}>Contexts = {item.campaign.displayRules.contexts} </Text>
+        <Text style={styles.rowItemText}>ScreenNames = {item.campaign.displayRules.screenNames.join(', ')} </Text>
 
         <View style={{ flexDirection: "row" }}>
           <View style={styles.buttonView}>

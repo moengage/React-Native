@@ -29,7 +29,7 @@ import {
     MOE_SELF_HANDLED,
     MOE_NAVIGATION_VALUE,
     MOE_INAPP_DISPLAY_RULES,
-    MOE_INAPP_SCREEN_NAME,
+    MOE_INAPP_SCREEN_NAMES,
     MOE_INAPP_CONTEXTS,
     MOE_DATA,
     ACCOUNT_META
@@ -78,13 +78,10 @@ function getMoESelfHandledCampaign(json: { [k: string]: any }) {
     return new MoESelfHandledCampaign(payload, dismissInterval, displayRules);
 }
 
-function getMoEInAppRules(json: { [k: string]: any }) {
-    var screenName: string | null = null;
-    if (json[MOE_INAPP_SCREEN_NAME] != undefined) {
-        screenName = json[MOE_INAPP_SCREEN_NAME];
-    }
+export function getMoEInAppRules(json: { [k: string]: any }) {
+    var screenNames = json[MOE_INAPP_SCREEN_NAMES]
     var contexts = json[MOE_INAPP_CONTEXTS];
-    return new MoEInAppRules(screenName, contexts);
+    return new MoEInAppRules(screenNames, contexts);
 }
 
 function getMoEInAppCustomAction(json: { [k: string]: any }) {
