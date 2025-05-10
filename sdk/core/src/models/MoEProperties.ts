@@ -2,7 +2,7 @@
 import MoEngageLogger from "../logger/MoEngageLogger";
 import { MoEGeoLocationToJson } from "../utils/MoEObjectToJson";
 import MoEGeoLocation from "./MoEGeoLocation";
-import { MoESupportedAttributes } from "./MoESupportedAttributes";
+import { type MoESupportedAttributes } from "./MoESupportedAttributes";
 
 export default class MoEProperties {
   private generalAttributes: { [k: string]: any }
