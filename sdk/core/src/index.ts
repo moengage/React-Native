@@ -58,7 +58,7 @@ import MoEInAppData from "../src/models/MoEInAppData";
 import { getUserDeletionData, getUserIdentitiesData } from "../src/moeParser/MoEngagePayloadParser";
 import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
 import MoEAnalyticsConfig from "../src/models/MoEAnalyticsConfig";
-import { MoESupportedAttributes } from "./models/MoESupportedAttributes";
+import { type MoESupportedAttributes } from "./models/MoESupportedAttributes";
 import * as MoECoreHandler from "./utils/MoECoreHandler";
 
 const PLATFORM_IOS = "ios";
