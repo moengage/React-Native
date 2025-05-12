@@ -302,6 +302,7 @@ export function getSelfHandledCampaignJson(moESelfHandledCampaign: MoESelfHandle
 export function getDisplayRulesJson(displayRules: MoEInAppRules) {
   var json: { [k: string]: any } = {
     contexts: displayRules.contexts,
+    screenName: displayRules.screenName,
     screenNames: displayRules.screenNames
   }
   MoEngageLogger.verbose("getDisplayRulesJson(): payload json: ", json);
