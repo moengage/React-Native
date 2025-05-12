@@ -4,9 +4,10 @@
  */
 export default class MoEInAppRules {
     /**
-     * Screennames for which InApp was configured to be shown.
-     */
-    screenNames: Array<string>
+    * Screenname for which InApp was configured to be shown.
+    * @deprecated Use the 'screenNames' property instead.
+    */
+    screenName: string | null;
 
     /**
      *  contexts for which InApp was configured to be shown.
