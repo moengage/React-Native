@@ -17,29 +17,33 @@ describe('MoEJsonBuilder', () => {
 });
 
 describe("getDisplayRulesJson", () => {
+    // set mock for MoEngageLogger.verbose
     beforeEach(() => {
-        jest.spyOn(MoEngageLogger, "verbose").mockImplementation(() => {});
+        jest.spyOn(MoEngageLogger, "verbose").mockImplementation(() => { });
     });
 
+    // clear all mocks after each test
     afterEach(() => {
         jest.clearAllMocks();
     });
 
-    var expectedDisplayRules = new MoEInAppRules([], []);
+    var expectedDisplayRules = new MoEInAppRules("", [], []);
 
     it("should return a proper JSON object with contexts and screenNames are empty", () => {
         const result = getDisplayRulesJson(expectedDisplayRules);
         expect(result).toEqual({
+            screenName: expectedDisplayRules.screenName,
             contexts: expectedDisplayRules.contexts,
             screenNames: expectedDisplayRules.screenNames,
         });
     });
 
-    expectedDisplayRules = new MoEInAppRules(["screen1", "screen2"], ["context1", "context2"]);
+    expectedDisplayRules = new MoEInAppRules("screen1", ["screen1", "screen2"], ["context1", "context2"]);
 
     it("should return a proper JSON object with contexts and screenNames", () => {
         const result = getDisplayRulesJson(expectedDisplayRules);
         expect(result).toEqual({
+            screenName: expectedDisplayRules.screenName,
             contexts: expectedDisplayRules.contexts,
             screenNames: expectedDisplayRules.screenNames,
         });
