@@ -2,6 +2,8 @@
 
 ## Next version
 - Added support for Simplify Inapp Triggers.
+- iOS
+    - [major] Minimum iOS and tvOS deployment target updated to `13`
 
 # 24-04-2025
 
