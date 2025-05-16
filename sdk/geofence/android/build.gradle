@@ -15,8 +15,8 @@ buildscript {
 
 ext {
   //dependency version
-  moengageCoreVersion = "13.06.00"
-  moengageGeofenceVersion = "4.3.0"
+  moengageCoreVersion = "14.00.00"
+  moengageGeofenceVersion = "5.0.0"
   pluginBaseGeofenceVersion = "2.2.0"
 }
 
@@ -25,10 +25,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.facebook.react'
 
 android {
-    compileSdk 34
+    compileSdk 35
     namespace "com.moengage.react.geofence"
     defaultConfig {
-        minSdk 21
+        minSdk 23
         versionCode 1
         versionName "1.0"
 
