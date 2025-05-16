@@ -20,12 +20,12 @@ rootProject.allprojects {
 
 ext {
   //dependency version
-  moengageCoreVersion = "13.06.00"
-  moengageInAppVersion = "8.8.1"
+  moengageCoreVersion = "14.00.00"
+  moengageInAppVersion = "9.0.0"
   basePluginVersion = "4.3.0"
   //build versions
-  minimumVersion = 21
-  compileVersion = 34
+  minimumVersion = 23
+  compileVersion = 35
 }
 
 apply plugin: 'com.android.library'
