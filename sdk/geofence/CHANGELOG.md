@@ -1,10 +1,3 @@
-# Release Date
-
-## Release Version
-- Android
-    - [major] Min SDK Version updated to `23`
-    - [major] Compiled SDK Version updated to `35`
-  
 # 16-04-2025
 
 ## 6.1.1
