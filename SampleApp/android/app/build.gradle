@@ -173,18 +173,19 @@ dependencies {
     implementation(moengage.richNotification)
 
     // Other Dependencies
-    implementation(moengage.androidXCore)
-    implementation(moengage.androidXCompact)
-    implementation(moengage.androidXLifecycle)
-    implementation(moengage.firebaseMessaging)
-    implementation(moengage.gmsPlayAdIdentifier)
-    implementation(moengage.gmsPlayLocation)
-    implementation(moengage.glide)
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation("androidx.core:core:1.13.1")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.lifecycle:lifecycle-process:2.7.0")
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+    implementation('com.google.firebase:firebase-messaging:24.0.0')
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.google.android.gms:play-services-ads-identifier:18.0.1")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
 
     // From node_modules
     implementation("com.facebook.react:react-android")
+
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {
