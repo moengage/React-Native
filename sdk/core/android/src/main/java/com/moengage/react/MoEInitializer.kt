@@ -16,30 +16,6 @@ import com.moengage.plugin.base.internal.PluginInitializer
 object MoEInitializer {
     private const val tag = "${MODULE_TAG}MoEInitializer"
 
-    @Deprecated(
-        "",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith(
-            "initializeDefaultInstance(context, builder)",
-            "com.moengage.react.MoEInitializer.initializeDefaultInstance"
-        )
-    )
-    fun initialize(context: Context, builder: MoEngage.Builder) {
-        initializeDefaultInstance(context, builder)
-    }
-
-    @Deprecated(
-        "",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith(
-            "initializeDefaultInstance(context, builder, sdkState)",
-            "com.moengage.react.MoEInitializer.initializeDefaultInstance"
-        )
-    )
-    fun initialize(context: Context, builder: MoEngage.Builder, sdkState: SdkState) {
-        initializeDefaultInstance(context, builder, sdkState)
-    }
-
     @JvmOverloads
     fun initializeDefaultInstance(
         context: Context,
