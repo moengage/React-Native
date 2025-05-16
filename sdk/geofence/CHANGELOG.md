@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+- Android
+    - [major] Min SDK Version updated to `23`
+    - [major] Compiled SDK Version updated to `35`
+  
 # 16-04-2025
 
 ## 6.1.1
@@ -8,10 +15,8 @@
 
 ## 6.1.0
 - Android
-    - [minor] Added support for AGP `8.7.3` and above
-    - [minor] `geofence` version updated to `4.3.0`    
-    - [major] Min SDK Version updated to `23`
-    - [major] Compiled SDK Version updated to `35`
+    - Added support for AGP `8.7.3` and above
+    - `geofence` version updated to `4.3.0`    
 - iOS
     - `MoEngagePluginGeofence` version updated to `3.3.0`
     

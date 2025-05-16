@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+- Android
+  - [major] Min SDK Version updated to `23`
+  - [major] Compiled SDK Version updated to `35`
+
 # 16-04-2025
 
 ## 5.1.1
@@ -8,10 +15,8 @@
 
 ## 5.1.0
 - Android
-    - [minor] Added support for AGP `8.7.3` and above
-    - [minor] `inbox-core` version updated to `3.3.0`
-    - [major] Min SDK Version updated to `23`
-    - [major] Compiled SDK Version updated to `35`
+    - Added support for AGP `8.7.3` and above
+    - `inbox-core` version updated to `3.3.0`
 - iOS
     - `MoEngagePluginInbox` version updated to `3.3.0`
 

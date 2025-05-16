@@ -1,8 +1,17 @@
-# Next Release
+# Release Date
 
-## Next version
+## Release Version
+
 - Added support for Simplify Inapp Triggers.
-
+- Android
+    - [major] Min SDK version updated to `23`
+    - [major] Compiled SDK version updated to `35`
+    - [major] Removed deprecated APIs
+      | Then                                                           | Now                                                                            |
+      |:--------------------------------------------------------------:|:------------------------------------------------------------------------------:|
+      | MoEInitializer#initialize(Context, MoEngage.Builder)           | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder)            |
+      | MoEInitializer#initialize(Context, MoEngage.Builder, SdkState) | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder, SdkState)  |
+  
 # 24-04-2025
 
 ## 11.2.2
@@ -21,16 +30,9 @@
 ## 11.2.0
 - Added support to identify user on multiple identities
 - Android
-    - [minor] Added support for AGP `8.7.3` and above
-    - [minor] `moe-android-sdk` version updated to `13.06.00`
-    - [minor] `inapp` version updated to `8.8.0`
-    - [major] Min SDK version updated to `23`
-    - [major] Compiled SDK version updated to `35`
-    - [major] Removed deprecated APIs
-      | Then                                                           | Now                                                                            |
-      |:--------------------------------------------------------------:|:------------------------------------------------------------------------------:|
-      | MoEInitializer#initialize(Context, MoEngage.Builder)           | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder)            |
-      | MoEInitializer#initialize(Context, MoEngage.Builder, SdkState) | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder, SdkState)  |
+    - Added support for AGP `8.7.3` and above
+    - `moe-android-sdk` version updated to `13.06.00`
+    - `inapp` version updated to `8.8.0`
 - iOS
     - `MoEngage-iOS-SDK` version updated to `9.23.1`
     
