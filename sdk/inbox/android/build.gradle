@@ -17,7 +17,7 @@ ext {
   //dependency version
   moengageCoreVersion = "14.00.00"
   moengageInboxCoreVersion = "4.0.0"
-  pluginBaseInboxVersion = "5.1.0-SNAPSHOT"
+  pluginBaseInboxVersion = "5.2.0-SNAPSHOT"
 }
 
 apply plugin: 'com.android.library'

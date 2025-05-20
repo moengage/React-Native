@@ -99,7 +99,9 @@ export default class InboxDetailScreen extends PureComponent {
         <Text style={styles.rowItemText}>Title = {item.text.title} </Text>
         <Text style={styles.rowItemText}>subtitle = {item.text.subtitle} </Text>
         <Text style={styles.rowItemText}>Message = {item.text.message} </Text>
-
+        <Text style={styles.rowItemText}>Group Key = {item.groupKey} </Text>
+        <Text style={styles.rowItemText}>Notification ID= {item.notificationId} </Text>
+        <Text style={styles.rowItemText}>Sent Time = {item.sentTime} </Text>
         <View style={{ flexDirection: "row" }}>
 
           <View style={styles.buttonView}>
