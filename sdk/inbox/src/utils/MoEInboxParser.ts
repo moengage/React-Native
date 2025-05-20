@@ -33,7 +33,7 @@ export function inboxDataFromJson(payload: string) {
   return undefined;
 }
 
-function inboxMessageFromJson(message: { [k: string]: any }) {
+export function inboxMessageFromJson(message: { [k: string]: any }) {
   if (message != undefined) {
     var id;
     var campaignId;
