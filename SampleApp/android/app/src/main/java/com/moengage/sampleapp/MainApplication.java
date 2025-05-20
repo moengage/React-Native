@@ -93,6 +93,8 @@ public class MainApplication extends Application implements ReactApplication {
                 )
             );
     MoEInitializer.INSTANCE.initializeDefaultInstance(getApplicationContext(), moEngage, true);
+//    MoEInitializer.INSTANCE.initializeDefaultInstance(this, true);
+
     MoEPushHelper.getInstance().setUpNotificationChannels(this.getApplicationContext());
   }
 }
