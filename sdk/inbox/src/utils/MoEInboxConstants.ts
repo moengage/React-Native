@@ -26,4 +26,7 @@ export const PAYLOAD = 'payload'
 
 export const MOE_DATA = 'data'
 export const ACCOUNT_META = "accountMeta"
+export const GROUP_KEY = "groupKey"
+export const NOTIFICATION_ID = "notificationId"
+export const SENT_TIME = "sentTime"
 
