@@ -13,8 +13,11 @@ export default class MoEInboxMessage {
   receivedTime: string;
   expiry: string;
   payload: Map<String, Object>;
+  groupKey: string | null;
+  notificationId: string | null;
+  sentTime: string | null;
 
-  constructor(id: number | undefined, campaignId: string, textContent: MoETextContent, isClicked: boolean, media: MoEMedia | undefined, action: Array<MoEAction> | undefined, tag: string | undefined, receivedTime: string, expiry: string, payload: Map<String, Object>) {
+  constructor(id: number | undefined, campaignId: string, textContent: MoETextContent, isClicked: boolean, media: MoEMedia | undefined, action: Array<MoEAction> | undefined, tag: string | undefined, receivedTime: string, expiry: string, payload: Map<String, Object>, groupKey: string | null, notificationId: string | null, sentTime: string | null) {
     this.id = id;
     this.campaignId = campaignId;
     this.text = textContent;
@@ -25,6 +28,8 @@ export default class MoEInboxMessage {
     this.receivedTime = receivedTime;
     this.expiry = expiry;
     this.payload = payload
-
+    this.groupKey = groupKey;
+    this.notificationId = notificationId;
+    this.sentTime = sentTime;
   }
 }
