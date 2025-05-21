@@ -1,6 +1,8 @@
 # Release Date
 
 ## Release Version
+
+- Added support for Simplify Inapp Triggers.
 - Android
     - [major] Min SDK version updated to `23`
     - [major] Compiled SDK version updated to `35`

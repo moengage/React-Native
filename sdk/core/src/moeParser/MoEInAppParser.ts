@@ -32,7 +32,8 @@ import {
     MOE_INAPP_SCREEN_NAME,
     MOE_INAPP_CONTEXTS,
     MOE_DATA,
-    ACCOUNT_META
+    ACCOUNT_META,
+    MOE_INAPP_SCREEN_NAMES
 } from "../utils/MoEConstants";
 import { isValidObject } from "../utils/MoEHelper";
 import { getMoEAccountMeta } from "./MoEngagePayloadParser";
@@ -78,13 +79,14 @@ function getMoESelfHandledCampaign(json: { [k: string]: any }) {
     return new MoESelfHandledCampaign(payload, dismissInterval, displayRules);
 }
 
-function getMoEInAppRules(json: { [k: string]: any }) {
+export function getMoEInAppRules(json: { [k: string]: any }) {
     var screenName: string | null = null;
     if (json[MOE_INAPP_SCREEN_NAME] != undefined) {
         screenName = json[MOE_INAPP_SCREEN_NAME];
     }
     var contexts = json[MOE_INAPP_CONTEXTS];
-    return new MoEInAppRules(screenName, contexts);
+    var screenNames = json[MOE_INAPP_SCREEN_NAMES]
+    return new MoEInAppRules(screenName, contexts, screenNames);
 }
 
 function getMoEInAppCustomAction(json: { [k: string]: any }) {
