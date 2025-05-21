@@ -81,7 +81,6 @@ dependencies {
     compileOnly("com.moengage:moe-android-sdk:$moengageCoreVersion")
     api("com.moengage:cards-core:$moengageCardsCoreVersion")
     implementation("com.moengage:plugin-base-cards:$pluginBaseCardVersion")
-    compileOnly("com.moengage:plugin-base:$pluginBaseVersion")
 }
 
 def isNewArchitectureEnabled() {
