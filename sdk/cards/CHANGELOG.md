@@ -14,6 +14,7 @@
 ## 5.1.1
 - iOS
     - `MoEngagePluginCards` version updated to `2.3.2`
+    - [major] Minimum iOS deployment target updated to `13`
 
 # 24-03-2025
 
