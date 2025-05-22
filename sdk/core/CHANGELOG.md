@@ -11,6 +11,8 @@
       |:--------------------------------------------------------------:|:------------------------------------------------------------------------------:|
       | MoEInitializer#initialize(Context, MoEngage.Builder)           | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder)            |
       | MoEInitializer#initialize(Context, MoEngage.Builder, SdkState) | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder, SdkState)  |
+- iOS
+    - [major] Minimum iOS and tvOS deployment target updated to `13`
   
 # 24-04-2025
 
