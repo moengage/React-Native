@@ -1,8 +1,16 @@
+# Release Date
+
+## Release Version
+- Android
+    - [major] Min SDK Version updated to `23`
+    - [major] Compiled SDK Version updated to `35`
+  
 # 16-04-2025
 
 ## 6.1.1
 - iOS
     - `MoEngagePluginGeofence` version updated to `3.3.2`
+    - [major] Minimum iOS deployment target updated to `13`
 
 # 24-03-2025
 

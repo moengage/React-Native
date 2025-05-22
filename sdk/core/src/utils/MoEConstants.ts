@@ -32,6 +32,7 @@ export const MOE_CAMPAIGNS = 'campaigns'
 export const MOE_INAPP_DISPLAY_RULES = 'displayRules'
 export const MOE_INAPP_SCREEN_NAME = 'screenName'
 export const MOE_INAPP_CONTEXTS = 'contexts'
+export const MOE_INAPP_SCREEN_NAMES = 'screenNames'
 
 //IN APP NAVIGATION
 export const MOE_NAVIGATION_TYPE = 'navigationType'
