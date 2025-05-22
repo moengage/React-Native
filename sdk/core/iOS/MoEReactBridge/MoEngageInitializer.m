@@ -14,6 +14,7 @@
 #import "MoEReactNativeHandler.h"
 #import "MoEngageReactSDKInitializationConfig.h"
 
+@import MoEngageSDK;
 @import MoEngagePluginBase;
 
 @implementation MoEngageInitializer

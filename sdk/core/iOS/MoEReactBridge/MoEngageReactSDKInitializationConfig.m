@@ -7,8 +7,9 @@
 
 
 #import <Foundation/Foundation.h>
-#import <MoEngageSDK/MoEngageSDK.h>
 #import "MoEngageReactSDKInitializationConfig.h"
+
+@import MoEngageSDK;
 
 @implementation MoEngageReactSDKInitializationConfig
 
