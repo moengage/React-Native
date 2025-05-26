@@ -1,0 +1,29 @@
+{
+  "name": "react-native-expo-moengage",
+  "version": "1.0.0",
+  "description": "MoEngage Expo plugin for integrating MoEngage React-Native SDK",
+  "main": "src/index.ts",
+  "keywords": [
+    "moengage",
+    "push-notification",
+    "react-native",
+    "ios",
+    "android",
+    "device",
+    "events"
+  ],
+  "scripts": {
+    "test": "echo \"Test cases not available\" && exit 0"
+  },
+  "author": {
+    "name": "MoEngage",
+    "email": "mobiledevs@moengage.com"
+  },
+  "contributors": [
+    "MoEngage <mobiledevs@moengage.com>"
+  ],
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "devDependencies": {
+    "@expo/config-plugins": "^5.0.0"
+  }
+}
