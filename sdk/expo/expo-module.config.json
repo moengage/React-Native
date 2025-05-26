@@ -1,0 +1,15 @@
+{
+  "name": "react-native-expo-moengage",
+  "platforms": ["ios", "android"],
+  "modules": [
+    {
+      "name": "ReactNativeExpoMoEngage",
+      "ios": {
+        "subdirectory": "ios"
+      },
+      "android": {
+        "subdirectory": "android"
+      }
+    }
+  ]
+}
