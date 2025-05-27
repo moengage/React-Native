@@ -1,44 +1,57 @@
-![Logo](/.github/logo.png)
+# MoEngage Expo Plugin
 
-## MoEngage React-Native Plugin
+This repository contains a plugin for easy integration of MoEngage SDK with Expo applications, along with an example app that demonstrates its usage.
 
-This repository contains the React-Native plugins for the [MoEngage](https://www.moengage.com) platform.
+## Repository Structure
 
-### Repository Description
+- **plugins/moengage-expo-plugin/** - The Expo config plugin for MoEngage
+- **example/** - Example Expo app using the MoEngage plugin
+- **sdk/** - MoEngage SDK source code (reference only, not modified by the plugin)
+- **SampleApp/** - Original React Native sample app (reference only)
 
-| Folder    | Description                                                                       |
-|:---------:|:---------------------------------------------------------------------------------:|
-| core      | Contains the implementation for the SDK implementation for Core MoEngage Platform |
-| inbox     | Contains the implementation for the SDK implementation for Inbox Feature          |
-| cards     | Contains the implementation for the SDK implementation for Cards Feature          |
-| geofence  | Contains the implementation for the SDK implementation for Geofence Feature       |
-| SampleApp | Sample Integration for reference.                                                 |
+## MoEngage Expo Plugin
 
+The MoEngage Expo plugin simplifies integrating MoEngage SDK into Expo apps by automating native code modifications. The plugin:
 
-## How to use the sample application?
+- Configures MoEngage SDK for both iOS and Android platforms
+- Sets up push notification handling
+- Configures in-app messaging
+- Enables analytics tracking
+- Supports cards and other MoEngage features
 
-- Update your MoEngage app-id in the `SampleApp --> src --> key.js` file. Replace `YOUR_APP_ID` with the App Id on the MoEngage Dashboard.
+For detailed usage instructions, see [the plugin README](./plugins/moengage-expo-plugin/README.md).
 
-### Javascript/TypeScript
+## Example App
 
-```js
-export const MOENGAGE_APP_ID = "YOUR_APP_ID"
-```
+The example app demonstrates how to use the MoEngage Expo plugin in a real Expo application. It includes:
 
-### Android
+- SDK initialization
+- Event tracking
+- User attribute setting
+- In-app messaging
+- Cards integration
+- Push notification handling
 
-- Add the MoEngage app-id in the `local.properties` file of `SampleApp --> android`. Add the below key and value and replace `YOUR_APP_ID`` with the App Id on the MoEngage Dashboard.
+For more information, see [the example app README](./example/README.md).
 
-```
-moengageAppId=YOUR_APP_ID
-```
+## Getting Started
 
-- Replace the dummy `google-services.json` file with your actual file.
+1. Build the plugin:
 
-### iOS
+   ```bash
+   cd plugins/moengage-expo-plugin
+   npm install
+   npm run build
+   ```
 
-- Update your MoEngage app-id in the `SampleApp --> iOS --> SampleApp --> AppDelegate.m` file. Replace `YOUR_APP_ID` with the App Id on the MoEngage Dashboard.
+2. Run the example app (after updating your MoEngage App ID in necessary files):
 
-```objc
-MoEngageSDKConfig *config = [[MoEngageSDKConfig alloc] initWithAppID:@"YOUR_APP_ID"];
-```
+   ```bash
+   cd example
+   npm install
+   npx expo run:ios  # or run:android
+   ```
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

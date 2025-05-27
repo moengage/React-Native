@@ -1,0 +1,38 @@
+{
+  "name": "moengage-expo-plugin",
+  "version": "1.0.0",
+  "description": "MoEngage plugin for Expo applications",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "node build.js",
+    "clean": "rimraf build",
+    "prepare": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "expo",
+    "moengage",
+    "react-native",
+    "push-notification",
+    "analytics",
+    "expo-plugin",
+    "config-plugin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/moengage-expo-plugin.git"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@expo/config-plugins": "^5.0.0",
+    "@expo/plist": "^0.0.21"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "typescript": "^4.9.0"
+  },
+  "peerDependencies": {
+    "expo": ">=45.0.0"
+  }
+}

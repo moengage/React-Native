@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "MoEngage Example",
+    "slug": "moengage-example",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.example.moengageexample"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.example.moengageexample"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "../plugins/moengage-expo-plugin",
+        {
+          "appId": "YOUR_MOENGAGE_APP_ID",
+          "dataCenter": "DATA_CENTER_1",
+          "enableLogs": true,
+          "disablePeriodicFlush": false,
+          "android": {
+            "fcmSenderId": "YOUR_FCM_SENDER_ID",
+            "debug": true
+          },
+          "appGroupId": "group.com.example.moengageexample"
+        }
+      ]
+    ]
+  }
+}
