@@ -4,13 +4,15 @@
 - Android
   - [major] Min SDK Version updated to `23`
   - [major] Compiled SDK Version updated to `35`
+- iOS
+    - [major] `MoEngagePluginInbox` version updated to `4.0.0`
+    - [major] Minimum iOS deployment target updated to `13`
 
 # 16-04-2025
 
 ## 5.1.1
 - iOS
     - `MoEngagePluginInbox` version updated to `3.3.2`
-    - [major] Minimum iOS deployment target updated to `13`
 
 # 24-03-2025
 

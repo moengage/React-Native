@@ -10,9 +10,7 @@
 #import <React/RCTLog.h>
 #import <React/RCTConvert.h>
 #import <React/RCTBundleURLProvider.h>
-#import "MoEngageInitializer.h"
 #import "MoEngageReactConstants.h"
-#import <MoEngageSDK/MoEngageSDK.h>
 #import "MoEReactNativeHandler.h"
 
 @interface MoEReactBridge()

@@ -13,6 +13,7 @@
       | MoEInitializer#initialize(Context, MoEngage.Builder, SdkState) | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder, SdkState)  |
 - iOS
     - [major] Minimum iOS and tvOS deployment target updated to `13`
+    - [major] `MoEngage-iOS-SDK` version updated to `10.00.0`
   
 # 24-04-2025
 

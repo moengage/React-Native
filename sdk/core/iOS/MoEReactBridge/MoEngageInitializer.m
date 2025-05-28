@@ -9,10 +9,11 @@
 #import "MoEngageReactPluginInfo.h"
 #import "MoEngageReactConstants.h"
 #import "MoEngageReactUtils.h"
+#import <MoEngageSDK/MoEngageSDK.h>
+#import <MoEngageCore/MoEngageCore.h>
 #import "MoEReactNativeHandler.h"
 #import "MoEngageReactSDKInitializationConfig.h"
 
-@import MoEngageSDK;
 @import MoEngagePluginBase;
 
 @implementation MoEngageInitializer
