@@ -1,6 +1,7 @@
 #import "AppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
+#import <UserNotifications/UserNotifications.h>
 #import <ReactNativeMoEngage/MoEngageInitializer.h>
 #import <ReactNativeMoEngage/MoEngageReactSDKInitializationConfig.h>
 #import <MoEngageSDK/MoEngageSDK.h>
