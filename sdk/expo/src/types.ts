@@ -23,6 +23,24 @@ export interface MoEngageAndroidConfig {
    * @default false
    */
   disableMoEngageDefaultBackupFile?: boolean;
+
+  /**
+   * Whether using the expo notification package for push notifications or not.
+   * @default false
+   */
+  isExpoNotificationIntegration?: boolean;
+
+  /**
+   * Whether to include MoEngage FirebaseMessagingService in the AndroidManifest.xml
+   * @default false
+   */
+  shouldIncludeMoEngageFirebaseMessagingService?: boolean;
+
+  /**
+   * Whether to include Firebase Messaging dependencies in the project
+   * @default false
+   */
+  includeFirebaseMessagingDependencies?: boolean;
 }
 
 /**

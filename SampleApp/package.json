@@ -44,5 +44,13 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "moengage": {
+    "richNotification": true,
+    "encryption": true,
+    "pushAmp": true,
+    "hmsPushkit": true,
+    "deviceTrigger": true,
+    "includeAndroidXRequiredLibraries": true
   }
 }
