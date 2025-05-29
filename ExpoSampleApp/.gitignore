@@ -42,3 +42,7 @@ app-example
 # editor
 .vscode
 .idea
+
+# expo prebuild
+ios/
+android/
