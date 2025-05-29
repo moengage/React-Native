@@ -1,7 +1,7 @@
 /**
  * Different Log Level Supported by the {@link MoEngageLogConfig}
  */
-const enum MoEngageLogLevel {
+enum MoEngageLogLevel {
 
     /**
      * No logs from the SDK would be printed.
