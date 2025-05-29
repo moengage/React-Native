@@ -2,7 +2,7 @@
   "name": "react-native-expo-moengage",
   "version": "1.0.0",
   "description": "MoEngage Expo plugin for integrating MoEngage React-Native SDK",
-  "main": "src/index.ts",
+  "main": "build/index.js",
   "keywords": [
     "moengage",
     "push-notification",
@@ -13,6 +13,7 @@
     "events"
   ],
   "scripts": {
+    "prepare": "tsc",
     "test": "echo \"Test cases not available\" && exit 0"
   },
   "author": {
