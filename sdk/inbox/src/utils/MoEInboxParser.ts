@@ -45,9 +45,9 @@ export function inboxMessageFromJson(message: { [k: string]: any }) {
     var actionList: Array<MoEAction> = [];
     var media;
     var payload;
-    var groupKey;
-    var notificationId;
-    var sentTime;
+    var groupKey: string | null = null;
+    var notificationId: string | null = null;
+    var sentTime: string | null = null;
 
     campaignId = message[InboxConstants.CAMPAIGN_ID];
     isClicked = message[InboxConstants.IS_CLICKED];
@@ -170,7 +170,10 @@ export function inboxMessageToJson(message: MoEInboxMessage) {
     isClicked: message.isClicked,
     tag: message.tag,
     receivedTime: message.receivedTime,
-    expiry: message.expiry
+    expiry: message.expiry,
+    sentTime: message.sentTime,
+    groupKey: message.groupKey,
+    notificationId: message.notificationId
   };
   if (isValidObject(message.text)) {
     json[InboxConstants.TEXT] = textContentToJson(message.text);
