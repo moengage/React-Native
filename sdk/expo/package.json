@@ -18,6 +18,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "postinstall": "tsc",
     "test": "echo \"Test cases not available\" && exit 0"
   },
   "author": {
@@ -29,6 +30,7 @@
   ],
   "license": "SEE LICENSE IN LICENSE.txt",
   "devDependencies": {
-    "@expo/config-plugins": "^5.0.0"
+    "@expo/config-plugins": "^5.0.0",
+    "@types/node": "^22.15.26"
   }
 }
