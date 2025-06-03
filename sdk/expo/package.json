@@ -32,5 +32,8 @@
   "devDependencies": {
     "@expo/config-plugins": "^5.0.0",
     "@types/node": "^22.15.26"
+  },
+  "peerDependencies": {
+    "react-native-moengage": "^11.2.2"
   }
 }
