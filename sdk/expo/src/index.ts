@@ -1,5 +1,5 @@
 import { ConfigPlugin, createRunOncePlugin } from '@expo/config-plugins';
-import withMoEngageAndroid from './withMoEngageAndroid';
+import withMoEngageAndroid from './android/withMoEngageAndroid';
 import { withMoEngageIos } from './apple';
 import { MoEngagePluginProps } from './types';
 

@@ -14,7 +14,8 @@
     "ios",
     "android",
     "device",
-    "events"
+    "events",
+    "expo"
   ],
   "scripts": {
     "build": "tsc",

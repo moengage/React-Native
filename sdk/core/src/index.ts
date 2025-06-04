@@ -134,7 +134,14 @@ function handleEventBroadcast(type: string | String, broadcast: string) {
   });
 }
 
-export type NotificationEventName = 'pushTokenGenerated' | 'pushClicked' | 'inAppCampaignShown' | 'inAppCampaignClicked' | 'inAppCampaignDismissed' | 'inAppCampaignCustomAction' | 'inAppCampaignSelfHandled';
+export type NotificationEventName = 'pushTokenGenerated' | 
+  'pushClicked' | 
+  'inAppCampaignShown' | 
+  'inAppCampaignClicked' | 
+  'inAppCampaignDismissed' | 
+  'inAppCampaignCustomAction' | 
+  'inAppCampaignSelfHandled' | 
+  'permissionResult';
 
 
 type NotificationEventTypeMap = {

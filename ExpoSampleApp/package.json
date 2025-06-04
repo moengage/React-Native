@@ -33,12 +33,13 @@
     "react-dom": "19.0.0",
     "react-native": "0.79.2",
     "react-native-gesture-handler": "~2.24.0",
-    "react-native-moengage": "^11.2.2",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.10.0",
     "react-native-web": "~0.20.0",
-    "react-native-webview": "13.13.5"
+    "react-native-webview": "13.13.5",
+    "react-native-moengage": "^11.2.2",
+    "react-native-expo-moengage": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

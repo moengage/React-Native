@@ -18,7 +18,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.MoEngageExpoSampleApp"
+      "package": "com.moengage.sampleapp"
     },
     "web": {
       "bundler": "metro",
