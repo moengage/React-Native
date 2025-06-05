@@ -18,7 +18,16 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.moengage.sampleapp"
+      "permissions": [
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.INTERNET"
+      ],
+      "package": "com.moengage.sampleapp",
+      "googleServicesFile": "./assets/google-services.json",
+      "kotlinVersion": "1.9.23",
+      "minSdkVersion": 24,
+      "targetSdkVersion": 35,
+      "compileSdkVersion": 35
     },
     "web": {
       "bundler": "metro",
@@ -36,7 +45,15 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "react-native-expo-moengage"
+      "react-native-expo-moengage",
+      [
+        "expo-notifications",
+        {
+          "icon": "assets/moengage/small_icon.png",
+          "color": "#1574B3",
+          "defaultChannel": "default"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
