@@ -1,13 +1,36 @@
-import React, { useEffect } from "react";
-import { View, Text, Button, StyleSheet, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, Button, StyleSheet, FlatList, Platform } from "react-native";
 import ReactMoE, { MoEProperties } from "react-native-moengage";
-import { YOUR_APP_ID } from "../key";
+import { YOUR_WORKSPACE_ID } from "../key";
+import * as Notifications from 'expo-notifications';
 
 addMoEngageListeners()
 
 const App = () => {
+  const [expoPushToken, setExpoPushToken] = useState<string | undefined>();
+
   useEffect(() => {
-    ReactMoE.initialize(YOUR_APP_ID);
+    ReactMoE.initialize(YOUR_WORKSPACE_ID);
+
+    registerForPushNotificationsAsync()
+    const notificationListener = Notifications.addNotificationReceivedListener(notification => {
+       console.log('Received notification:', notification);
+    });
+
+    const responseListener = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log('Notification response:', response);
+    });
+
+    const pushTokenListener = Notifications.addPushTokenListener(token => {
+      console.log('Received push token:', token);
+      ReactMoE.passFcmPushToken(token.data);
+    });
+
+    return () => {
+      notificationListener.remove();
+      responseListener.remove();
+      pushTokenListener.remove();
+    };
   }, []);
 
   const actions = [
@@ -26,11 +49,21 @@ const App = () => {
         ReactMoE.setUserAttribute("user_email", "john.doe@example.com");
       },
     },
+    {
+      title: "Register for Push Notifications",
+      onPress: async () => {
+        const token = await Notifications.getExpoPushTokenAsync();
+        setExpoPushToken(token.data);
+      },
+    },
   ];
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>MoEngage SDK Integration</Text>
+      <Text selectable style={{ fontSize: 12, marginBottom: 8 }}>
+        Expo Push Token: {expoPushToken || 'Not registered'}
+      </Text>
       <FlatList
         data={actions}
         keyExtractor={(item) => item.title}
@@ -62,6 +95,42 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * Expo Notification Setup & Token Registration
+ */
+async function registerForPushNotificationsAsync() {
+  if (Platform.OS === 'android' && await Notifications.getNotificationChannelAsync('default') === null) {
+    console.log("Creating default channel using expo");
+    await Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX
+    });
+  }
+
+  await requestPushNotificationPermission();
+}
+
+/**
+ * Request push notification permissions using Expo Notifications
+ */
+async function requestPushNotificationPermission(): Promise<Boolean> {
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  let finalStatus = existingStatus;
+  if (existingStatus !== 'granted') {
+    const { status } = await Notifications.requestPermissionsAsync();
+    finalStatus = status;
+  }
+  if (finalStatus !== 'granted') {
+    alert('Failed to get push token for push notification!');
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Add the MoEngage event listeners
+ */
 function addMoEngageListeners() {
   ReactMoE.setEventListener("inAppCampaignShown", (inAppInfo) =>
     console.debug("inAppCampaignShown", inAppInfo)
