@@ -60,6 +60,7 @@ import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
 import MoEAnalyticsConfig from "../src/models/MoEAnalyticsConfig";
 import { MoESupportedAttributes } from "./models/MoESupportedAttributes";
 import * as MoECoreHandler from "./utils/MoECoreHandler";
+import MoEngagePersimissionResultData from "./models/MoEngagePersimissionResultData";
 
 const PLATFORM_IOS = "ios";
 const PLATFORM_ANDROID = "android";
@@ -140,7 +141,6 @@ export type NotificationEventName = 'pushTokenGenerated' |
   'inAppCampaignSelfHandled' | 
   'permissionResult';
 
-
 type NotificationEventTypeMap = {
   "pushTokenGenerated": MoEPushToken,
   "pushClicked": MoEPushPayload,
@@ -148,7 +148,8 @@ type NotificationEventTypeMap = {
   "inAppCampaignClicked": MoEInAppData,
   "inAppCampaignDismissed": MoEInAppData,
   "inAppCampaignCustomAction": MoEInAppData,
-  "inAppCampaignSelfHandled": MoESelfHandledCampaignData
+  "inAppCampaignSelfHandled": MoESelfHandledCampaignData,
+  "permissionResult": MoEngagePersimissionResultData
 }
 
 var ReactMoE = {
