@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "xxxxxxxxxxxx",
+    "firebase_url": "https://moesampleapp.firebaseio.com",
+    "project_id": "moesampleapp",
+    "storage_bucket": "moesampleapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:xxxxxxxxxxxx:android:6d75bcba72eb0cc3",
+        "android_client_info": {
+          "package_name": "com.moengage.sampleapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "xxxxxxxxxxxx-t44jadhvvl6rbquccpmcuftu4a7obfui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,7 +8,8 @@ private val pluginsPath = setOf(
     "sdk/cards",
     "sdk/core",
     "sdk/geofence",
-    "sdk/inbox"
+    "sdk/inbox",
+    "sdk/expo"
 )
 
 /**
