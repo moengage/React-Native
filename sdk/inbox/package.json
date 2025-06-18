@@ -18,7 +18,7 @@
     "!**/__mocks__"
   ],
   "scripts": {
-    "test": "echo \"Test cases not available\" && exit 0"
+    "test": "jest"
   },
   "keywords": [
     "react-native",
@@ -39,7 +39,13 @@
   },
   "license": "SEE LICENSE IN LICENSE.txt",
   "devDependencies": {
-    "react-native": "0.73.0"
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.2",
+    "@types/jest": "^29.5.0",
+    "babel-jest": "^29.7.0",
+    "metro-react-native-babel-preset": "^0.77.0",
+    "react-native": "0.73.0",
+    "ts-jest": "^29.1.0"
   },
   "codegenConfig": {
     "name": "NativeMoEngageInboxSpec",
