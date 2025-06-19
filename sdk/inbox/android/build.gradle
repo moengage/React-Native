@@ -15,9 +15,9 @@ buildscript {
 
 ext {
   //dependency version
-  moengageCoreVersion = "14.01.00"
+  moengageCoreVersion = "14.02.00"
   moengageInboxCoreVersion = "4.1.0"
-  pluginBaseInboxVersion = "5.4.0-SNAPSHOT"
+  pluginBaseInboxVersion = "5.5.0-SNAPSHOT"
 }
 
 apply plugin: 'com.android.library'

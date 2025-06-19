@@ -7,7 +7,9 @@ import MoEAction from "../model/MoEAction";
 import * as InboxConstants from "../utils/MoEInboxConstants"
 import { isValidObject, isValidString, isValidNumber } from "../utils/MoEInboxHelper";
 import { MoEPlatform } from "../model/MoEPlatform";
-import { MOE_DATA } from "../utils/MoEInboxConstants"
+import { MOE_DATA } from "../utils/MoEInboxConstants";
+import { KEY_ACCESSIBILITY, MoEAccessibilityData } from "react-native-moengage";
+
 const PLATFORM = 'platform'
 const UNCLICKED_COUNT = 'unClickedCount'
 
@@ -96,13 +98,19 @@ export function inboxMessageFromJson(message: { [k: string]: any }) {
 
 function mediaModelFromJson(mediaObject: { [k: string]: any }) {
   var mediaType;
-  var url
+  var url;
+  var accessibilityData;
+
   if (isValidString(mediaObject[InboxConstants.TYPE])) {
     mediaType = mediaObject[InboxConstants.TYPE];
   }
 
   if (isValidString(mediaObject[InboxConstants.URL])) {
     url = mediaObject[InboxConstants.URL];
+  }
+
+  if (isValidObject(mediaObject[KEY_ACCESSIBILITY])) {
+    accessibilityData = MoEAccessibilityData.fromJson(mediaObject[KEY_ACCESSIBILITY]);
   }
   if (mediaType != undefined && url != undefined)
     return new MoEMedia(mediaType, url)
