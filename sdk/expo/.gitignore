@@ -47,4 +47,7 @@ buck-out/
 
 # Typescript build
 src/**/*.js
+
+# jest
+coverage
       

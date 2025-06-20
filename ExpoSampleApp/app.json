@@ -10,7 +10,33 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.MoEngageExpoSampleApp"
+      "appleTeamId": "BPWYRAF5X7",
+      "bundleIdentifier": "com.alphadevs.MoEngage",
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleTypeRole": "Editor",
+            "CFBundleURLName": "com.alphadevs.MoEngage",
+            "CFBundleURLSchemes": [
+              "moeapp"
+            ]
+          }
+        ],
+        "LSApplicationQueriesSchemes": [
+          "moeapp"
+        ],
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Location Services are required for testing Geofence.",
+        "NSLocationAlwaysUsageDescription": "Location Services are required for testing Geofence.",
+        "NSLocationWhenInUseUsageDescription": "Location Services are required for testing Geofence.",
+        "NSUserTrackingUsageDescription": "MoETest would like to access IDFA for tracking purpose"
+      },
+      "entitlements": {
+        "aps-environment": "development",
+        "com.apple.developer.associated-domains": [
+          "applinks:moedemo-93e2e.firebaseapp.com"
+        ],
+        "com.apple.developer.usernotifications.time-sensitive": true
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -45,7 +71,23 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "react-native-expo-moengage",
+      [
+        "react-native-expo-moengage",
+        {
+          "android": {
+            "disableMoEngageDefaultBackupFile": false,
+            "configFilePath": "assets/moengage/android_initilisation_config.xml"
+          },
+          "apple": {
+            "configFilePath": "assets/moengage/MoEngage-Config.plist",
+            "pushNotificationImpressionTrackingEnabled": true,
+            "richPushNotificationEnabled": true,
+            "pushTemplatesEnabled": true,
+            "deviceTriggerEnabled": true,
+            "liveActivityTargetPath": "assets/moengage/LiveActivity"
+          }
+        }
+      ],
       [
         "expo-notifications",
         {
