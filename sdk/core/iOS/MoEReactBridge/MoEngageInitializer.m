@@ -54,6 +54,15 @@
     [self commonSetUp: plugin identifier:config.sdkConfig.appId];
 }
 
+- (void)initializeDefaultInstanceWithAdditionalConfig:(MoEngageSDKDefaultInitializationConfig*)config {
+    MoEngagePlugin* plugin = [[MoEngagePlugin alloc] init];
+    MoEngageSDKConfig* sdkConfig = [plugin initializeDefaultInstanceWithAdditionalConfig:config];
+    if (!sdkConfig) {
+        return;
+    }
+    [self commonSetUp:plugin identifier:sdkConfig.appId];
+}
+
 #pragma mark- Utils
 
 - (void)commonSetUp:(MoEngagePlugin *)plugin identifier:(NSString*)identifier {

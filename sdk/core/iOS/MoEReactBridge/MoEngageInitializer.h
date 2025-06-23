@@ -7,11 +7,12 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <UserNotifications/UserNotifications.h>
+#import <MoEngageSDK/MoEngageSDK.h>
 
 @protocol SFSafariViewControllerDelegate;
 @class MoEngageReactSDKInitializationConfig;
-#import <UserNotifications/UserNotifications.h>
-#import <MoEngageSDK/MoEngageSDK.h>
+@class MoEngageSDKDefaultInitializationConfig;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -37,6 +38,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// Initialize SDK with MoEngageReactSDKInitializationConfig instance.
 /// @param reactConfig MoEngageSDKConfig instance for SDK configuration
 - (void)initializeInstance:(MoEngageReactSDKInitializationConfig*)reactConfig;
+
+/// Initialize Default Instance of SDK with Application's `Info.plist` data with optional config.
+/// @param config Additional MoEngageSDKDefaultInitializationConfig.
+- (void)initializeDefaultInstanceWithAdditionalConfig:(MoEngageSDKDefaultInitializationConfig*)config;
 @end
 
 NS_ASSUME_NONNULL_END
