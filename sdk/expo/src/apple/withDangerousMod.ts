@@ -22,7 +22,7 @@ export const withMoEngageDangerousMod: ConfigPlugin<MoEngagePluginProps> = (conf
     (config) => {
       if (process.env['EXPO_TV']) {
         // Skip modifications for tvOS
-        console.log(`Skipping extesion targets copy for tvOS`);
+        console.log(`Skipping extension targets copy for tvOS`);
         return config;
       }
 
@@ -48,7 +48,7 @@ export const withMoEngageDangerousMod: ConfigPlugin<MoEngagePluginProps> = (conf
       // Modify the Podfile for rich push.
       if (shouldAddRichPushExtension) {
         // Copy Rich Push files to project path.
-        const absoluteSource = require.resolve('react-native-expo-moengage/ios/RichPush/NotificationService.swift');
+        const absoluteSource = require.resolve('react-native-expo-moengage/apple/RichPush/NotificationService.swift');
         const sourcePath = path.dirname(absoluteSource);
         const destinationPath = `${projectRoot}/ios/${MOENGAGE_IOS_RICH_PUSH_TARGET}`;
         if (!fs.existsSync(`${destinationPath}`)) {
@@ -87,7 +87,7 @@ export const withMoEngageDangerousMod: ConfigPlugin<MoEngagePluginProps> = (conf
       // Modify the Podfile for Push Templates.
       if (apple.pushTemplatesEnabled) {
         // Copy Push Template files to project path.
-        const absoluteSource = require.resolve('react-native-expo-moengage/ios/PushTemplates/NotificationViewController.swift');
+        const absoluteSource = require.resolve('react-native-expo-moengage/apple/PushTemplates/NotificationViewController.swift');
         const sourcePath = path.dirname(absoluteSource);
         const destinationPath = `${projectRoot}/ios/${MOENGAGE_IOS_PUSH_TEMPLATE_TARGET}`;
         if (!fs.existsSync(`${destinationPath}`)) {

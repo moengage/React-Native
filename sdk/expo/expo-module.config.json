@@ -7,11 +7,8 @@
   "modules": [
     {
       "name": "ReactNativeExpoMoEngage",
-      "ios": {
-        "subdirectory": "ios"
-      },
-      "tvos": {
-        "subdirectory": "ios"
+      "apple": {
+        "subdirectory": "apple"
       },
       "android": {
         "subdirectory": "android"
