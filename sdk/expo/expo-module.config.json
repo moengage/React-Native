@@ -1,10 +1,16 @@
 {
   "name": "react-native-expo-moengage",
-  "platforms": ["ios", "android"],
+  "platforms": ["ios", "tvos", "android"],
+  "apple": {
+    "appDelegateSubscribers": ["MoEngageAppDelegate"]
+  },
   "modules": [
     {
       "name": "ReactNativeExpoMoEngage",
       "ios": {
+        "subdirectory": "ios"
+      },
+      "tvos": {
         "subdirectory": "ios"
       },
       "android": {
