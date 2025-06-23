@@ -16,7 +16,7 @@ export const withMoEngageXcodeProject: ConfigPlugin<MoEngagePluginProps> = (conf
   return withXcodeProject(config, (config) => {
     if (process.env['EXPO_TV']) {
       // Skip modifications for tvOS
-      console.log(`Skipping extesion targets setup for tvOS`);
+      console.log(`Skipping extension targets setup for tvOS`);
       return config;
     }
 
