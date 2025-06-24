@@ -113,7 +113,7 @@ function mediaModelFromJson(mediaObject: { [k: string]: any }) {
     accessibilityData = MoEAccessibilityData.fromJson(mediaObject[KEY_ACCESSIBILITY]);
   }
   if (mediaType != undefined && url != undefined)
-    return new MoEMedia(mediaType, url)
+    return new MoEMedia(mediaType, url, accessibilityData)
   else return undefined;
 }
 

@@ -6,8 +6,9 @@ export default class MoEMedia {
   url: string;
   accessibilityData?: MoEAccessibilityData | undefined;
   
-  constructor(mediaType: MoEMediaType, url: string) {
+  constructor(mediaType: MoEMediaType, url: string, accessibilityData?: MoEAccessibilityData) {
     this.mediaType = mediaType;
     this.url = url;
+    this.accessibilityData = accessibilityData;
   }
 }
