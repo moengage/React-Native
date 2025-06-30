@@ -87,3 +87,8 @@ export const IS_USER_DELETION_SUCCESS = "isUserDeletionSuccess";
 // Identify User
 export const USER_IDENTITY = 'identity';
 export const USER_UNIQUE_IDENTITY = 'uid';
+
+// Accessibility Keys
+export const KEY_ACCESSIBILITY = 'accessibility';
+export const KEY_ACCESSIBILITY_TEXT = 'text';
+export const KEY_ACCESSIBILITY_HINT = 'hint';

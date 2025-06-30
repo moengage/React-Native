@@ -1,4 +1,5 @@
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  preset: 'react-native',
-  testEnvironment: 'node'
+  preset: 'ts-jest',
+  testEnvironment: 'node',
 };
