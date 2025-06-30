@@ -38,7 +38,6 @@
     "react-native-screens": "~4.10.0",
     "react-native-web": "~0.20.0",
     "react-native-webview": "13.13.5",
-    "react-native-moengage": "^11.2.2",
     "react-native-expo-moengage": "^1.0.0",
     "expo-notifications": "~0.31.3",
     "expo-modules-core": "~2.4.0"
