@@ -12,25 +12,7 @@ const App = () => {
   useEffect(() => {
     ReactMoE.initialize(YOUR_WORKSPACE_ID);
 
-    registerForPushNotificationsAsync()
-    const notificationListener = Notifications.addNotificationReceivedListener(notification => {
-       console.log('Received notification:', notification);
-    });
-
-    const responseListener = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log('Notification response:', response);
-    });
-
-    const pushTokenListener = Notifications.addPushTokenListener(token => {
-      console.log('Received push token:', token);
-      ReactMoE.passFcmPushToken(token.data);
-    });
-
-    return () => {
-      notificationListener.remove();
-      responseListener.remove();
-      pushTokenListener.remove();
-    };
+    setupExpoNotifications()
   }, []);
 
   const actions = [
@@ -94,6 +76,26 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
+
+/**
+ * Setup Expo Notifications and register listeners
+ * Notes: This is optional and only needed if you want to handle notifications using Expo.
+ */
+function setupExpoNotifications() {
+    registerForPushNotificationsAsync()
+    const notificationListener = Notifications.addNotificationReceivedListener(notification => {
+       console.log('Received notification:', notification);
+    });
+
+    const responseListener = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log('Notification response:', response);
+    });
+
+    const pushTokenListener = Notifications.addPushTokenListener(token => {
+      console.log('Received push token:', token);
+      ReactMoE.passFcmPushToken(token.data);
+    });
+}
 
 /**
  * Expo Notification Setup & Token Registration
