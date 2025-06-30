@@ -95,10 +95,9 @@ const withMoEngageInitialisationConfigResource: ConfigPlugin<MoEngagePluginProps
         console.log('Copying large icon:', props.android.largeIconPath);
         await copyFile(props.android.largeIconPath, drawableResourcePath);
       }
-      if (props.android.configFilePath !== undefined) {
-        console.log('Copying config file:', props.android.configFilePath);
-        await copyFile(props.android.configFilePath, xmlValuesResourcePath);
-      }
+      
+      console.log('Copying config file:', props.android.configFilePath);
+      await copyFile(props.android.configFilePath, xmlValuesResourcePath);
       return config;
     },
   ]);

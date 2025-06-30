@@ -49,3 +49,5 @@ dependencies {
     compileOnly('com.facebook.react:react-native')
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 }
+
+apply from: file("./user-agent.gradle")
