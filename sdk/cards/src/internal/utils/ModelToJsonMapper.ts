@@ -75,6 +75,7 @@ import {
     keyWidgets
 } from "../Constants";
 import { assertUnsupportedError } from "../utils/Util";
+import { KEY_ACCESSIBILITY } from "react-native-moengage";
 
 export function actionToJson(action: Action): { [k: string]: any } {
     if (action instanceof NavigationAction) {
@@ -245,6 +246,7 @@ export function widgetToJson(widget: Widget): { [k: string]: any } {
         [keyWidgetStyle]: widgetStyleToJson(widget.style),
         [keyActions]: widget.actionList.map((action) => {
             return actionToJson(action);
-        })
+        }),
+        [KEY_ACCESSIBILITY]: widget.accessibilityData?.toJson() 
     };
 }

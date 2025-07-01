@@ -2,6 +2,7 @@ import Action from "./action/Action";
 import WidgetType from "./enums/WidgetType";
 import WidgetStyle from "./styles/WidgetStyle";
 
+import { MoEAccessibilityData } from "react-native-moengage";
 /**
  * UI element in a card.
  * 
@@ -40,18 +41,27 @@ class Widget {
      */
     actionList: Array<Action>;
 
+
+    /**
+     * Accessibility data for the widget
+     * @since 6.0.0
+     */
+    accessibilityData: MoEAccessibilityData | undefined;
+
     constructor(
         id: number,
         widgetType: WidgetType,
         content: string,
         style: WidgetStyle | undefined,
-        actionList: Array<Action>
+        actionList: Array<Action>,
+        accessibilityData?: MoEAccessibilityData | undefined
     ) {
         this.id = id;
         this.widgetType = widgetType;
         this.content = content;
         this.style = style;
         this.actionList = actionList;
+        this.accessibilityData = accessibilityData;
     }
 }
 
