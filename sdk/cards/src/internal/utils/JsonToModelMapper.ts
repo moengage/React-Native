@@ -271,7 +271,10 @@ export function widgetFromJson(json: { [k: string]: any }): Widget {
     );
 }
 
-export function staticImageFromJson( json: { [k: string]: any }): { [key in StaticImageType]: MoEAccessibilityData } {
+export function staticImageFromJson(json: { [k: string]: any } | undefined): { [key in StaticImageType]: MoEAccessibilityData } | undefined {
+    if (!json) {
+        return undefined
+    }
     const result: { [key in StaticImageType]?: MoEAccessibilityData } = {};
     for (const type of Object.values(StaticImageType)) {
         if (json[type]) {
