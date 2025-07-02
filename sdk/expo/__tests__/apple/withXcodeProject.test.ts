@@ -105,10 +105,10 @@ describe('withMoEngageXcodeProject', () => {
   test('should skip modifications for tvOS', () => {
     // Precondition (Arrange)
     process.env = { ...OLD_ENV, EXPO_TV: 'true' };
-    
+
     // Act
     const result: any = withMoEngageXcodeProject(mockConfig, mockProps);
-    
+
     // Assert
     expect(result.xcodeResults.addFile).not.toHaveBeenCalled();
     expect(result.xcodeResults.addPbxGroup).not.toHaveBeenCalled();
@@ -121,10 +121,12 @@ describe('withMoEngageXcodeProject', () => {
   test('should not modify Xcode project when no extensions are enabled', () => {
     // Precondition (Arrange)
     // Default mockConfig and mockProps are already set up with no extensions enabled
-    
+    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+    jest.spyOn(fs, 'readFileSync').mockReturnValue(plistContent);
+
     // Act
     const result: any = withMoEngageXcodeProject(mockConfig, mockProps);
-    
+
     // Assert
     expect(result.xcodeResults.addFile).not.toHaveBeenCalled();
     expect(result.xcodeResults.addPbxGroup).not.toHaveBeenCalled();
@@ -315,7 +317,7 @@ describe('withMoEngageXcodeProject', () => {
     );
   });
 
-  test('should handle missing AppGroupName gracefully', () => {
+  test('should throw error for invalid plist content', () => {
     // Precondition (Arrange)
     jest.spyOn(fs, 'existsSync').mockReturnValue(true);
     jest.spyOn(fs, 'readFileSync').mockReturnValue('invalid-plist-content'); // Will give empty object
@@ -328,12 +330,10 @@ describe('withMoEngageXcodeProject', () => {
       }
     };
 
-    // Act
-    const result: any = withMoEngageXcodeProject(mockConfig, propsWithRichPush);
-
-    // Assert
-    expect(result).toBeDefined();
-    // The function should complete without errors
+    // Act & Assert
+    expect(() => {
+      withMoEngageXcodeProject(mockConfig, propsWithRichPush);
+    }).toThrow('Could not import MoEngage configuration')
   });
 
   test('should handle errors when reading config file', () => {
@@ -368,11 +368,77 @@ describe('withMoEngageXcodeProject', () => {
       throw new Error('File read error');
     });
 
-    // Act
-    const result: any = withMoEngageXcodeProject(mockConfig, mockProps);
+    // Act & Assert
+    expect(() => {
+      withMoEngageXcodeProject(mockConfig, mockProps);
+    }).toThrow('Could not import MoEngage configuration: Error: File read error');
+  });
 
-    // Assert
-    expect(result).toBeDefined();
-    // The function should handle the error gracefully and not throw
+  test('should throw error when AppGroupName is missing in config file', () => {
+    // Precondition (Arrange)
+    const plistWithoutAppGroup = '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n<dict>\n<key>WorkspaceId</key>\n<string>mocked_app_id</string>\n<key>DataCenter</key>\n<integer>1</integer>\n</dict>\n</plist>';
+
+    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+    jest.spyOn(fs, 'readFileSync').mockReturnValue(plistWithoutAppGroup);
+
+    const propsWithRichPush = {
+      ...mockProps,
+      apple: {
+        ...mockProps.apple,
+        richPushNotificationEnabled: true
+      }
+    };
+
+    // Act & Assert
+    expect(() => {
+      withMoEngageXcodeProject(mockConfig, propsWithRichPush);
+    }).toThrow('Missing AppGroupName key in MoEngage configuration');
+  });
+
+  test('should throw error when config file is missing', () => {
+    // Precondition (Arrange)
+    jest.spyOn(fs, 'existsSync').mockReturnValue(false);
+
+    const propsWithRichPush = {
+      ...mockProps,
+      apple: {
+        ...mockProps.apple,
+        richPushNotificationEnabled: true
+      }
+    };
+
+    // Act & Assert
+    expect(() => {
+      withMoEngageXcodeProject(mockConfig, propsWithRichPush);
+    }).toThrow('MoEngage configuration does not exist');
+  });
+
+  test('should throw error when LiveActivity path read fails', () => {
+    // Precondition (Arrange)
+    const propsWithLiveActivity = {
+      ...mockProps,
+      apple: {
+        ...mockProps.apple,
+        liveActivityTargetPath: 'assets/moengage/LiveActivity',
+        configFilePath: 'assets/moengage/MoEngage-Config.plist'
+      }
+    };
+
+    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+    jest.spyOn(fs, 'readFileSync').mockReturnValue(plistContent);
+
+    // Mock readdirSync to throw an error
+    jest.spyOn(fs, 'readdirSync').mockImplementation(() => {
+      throw new Error('Permission denied');
+    });
+
+    // Configure mock to simulate target doesn't exist yet
+    mockConfig.xcodeResults.pbxGroupByName = jest.fn()
+    jest.spyOn(mockConfig.xcodeResults, 'pbxGroupByName').mockReturnValueOnce(null);
+
+    // Act & Assert
+    expect(() => {
+      withMoEngageXcodeProject(mockConfig, propsWithLiveActivity);
+    }).toThrow('Error finding files in Live Activity path: Error: Permission denied');
   });
 });

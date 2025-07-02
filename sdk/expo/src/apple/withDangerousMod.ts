@@ -16,6 +16,17 @@ import {
 
 const plist = require('plist');
 
+/**
+ * MoEngage Expo plugin for iOS - Dangerous modifications
+ *
+ * This plugin handles file operations that are not directly exposed by the Expo Config Plugin API,
+ * including copying Rich Push, Push Templates, and LiveActivity files, and updating the Podfile
+ * to include the necessary MoEngage pods for each target.
+ *
+ * @param config - The Expo config object
+ * @param props - The MoEngage plugin properties
+ * @returns The updated config object
+ */
 export const withMoEngageDangerousMod: ConfigPlugin<MoEngagePluginProps> = (config, props) => {
   return withDangerousMod(config, [
     'ios',
@@ -31,7 +42,13 @@ export const withMoEngageDangerousMod: ConfigPlugin<MoEngagePluginProps> = (conf
       const { apple } = props;
       const shouldAddRichPushExtension = apple.richPushNotificationEnabled || apple.pushNotificationImpressionTrackingEnabled || apple.pushTemplatesEnabled;
 
-      // Get keychain group from plist file if specified
+      /**
+       * Extract the KeychainGroupName from the MoEngage configuration file
+       *
+       * The keychain group is needed for secure data sharing between the main app
+       * and extension targets. If present, it's added to the entitlements files
+       * for the extension targets.
+       */
       let keychainGroupValue = ''
       try {
         const configFilePath = path.join(config.modRequest.projectRoot, props.apple.configFilePath);
@@ -39,13 +56,26 @@ export const withMoEngageDangerousMod: ConfigPlugin<MoEngagePluginProps> = (conf
           const configPlist = plist.parse(fs.readFileSync(configFilePath, 'utf8')) as { [key: string]: any };
           keychainGroupValue = configPlist['KeychainGroupName'] as string;
         } else {
-          console.warn(`MoEngage configuration does not exist`);
+          const message = `MoEngage configuration does not exist`;
+          console.error(message);
+          throw new Error(message);
         }
       } catch (e) {
-        console.warn(`Could not import MoEngage configuration: ${e}`);
+        const message = `Could not import MoEngage configuration: ${e}`;
+        console.error(message);
+        throw new Error(message);
       }
 
-      // Modify the Podfile for rich push.
+      /**
+       * Set up the Rich Push Notification Service Extension
+       *
+       * This extension handles rich push notifications with media attachments and
+       * custom notification UI. We:
+       * 1. Create the extension directory if it doesn't exist
+       * 2. Copy template files from the plugin's resources
+       * 3. Update entitlements with keychain access if configured
+       * 4. Modify the Podfile to include the MoEngage rich notification dependency
+       */
       if (shouldAddRichPushExtension) {
         // Copy Rich Push files to project path.
         const absoluteSource = require.resolve('react-native-expo-moengage/apple/RichPush/NotificationService.swift');
@@ -84,7 +114,16 @@ export const withMoEngageDangerousMod: ConfigPlugin<MoEngagePluginProps> = (conf
         }
       }
 
-      // Modify the Podfile for Push Templates.
+      /**
+       * Set up the Push Templates Notification Content Extension
+       *
+       * This extension enables custom notification UI templates for push notifications.
+       * The setup process includes:
+       * 1. Creating the extension directory if it doesn't exist
+       * 2. Copying template files from the plugin's resources
+       * 3. Updating entitlements with keychain access if configured
+       * 4. Modifying the Podfile to include the MoEngage push template dependency
+       */
       if (apple.pushTemplatesEnabled) {
         // Copy Push Template files to project path.
         const absoluteSource = require.resolve('react-native-expo-moengage/apple/PushTemplates/NotificationViewController.swift');
@@ -123,7 +162,17 @@ export const withMoEngageDangerousMod: ConfigPlugin<MoEngagePluginProps> = (conf
         }
       }
 
-      // Handle Live Activity file operations and Podfile modifications
+      /**
+       * Set up Live Activity support
+       *
+       * Live Activities allow apps to display persistent, interactive notifications
+       * on the lock screen and in the Dynamic Island on supported devices.
+       *
+       * This section:
+       * 1. Adds the MoEngageLiveActivity pod to the main app target
+       * 2. Creates a LiveActivity extension target in the Podfile if needed
+       * 3. Configures the pod dependencies for the LiveActivity extension
+       */
       if (apple.liveActivityTargetPath && apple.liveActivityTargetPath.length) {
         // Add MoEngageLiveActivity pod to the Podfile
         applicationPods.push(`  pod '${MOENGAGE_IOS_LIVE_ACTIVITY_POD}'`)
@@ -147,11 +196,28 @@ export const withMoEngageDangerousMod: ConfigPlugin<MoEngagePluginProps> = (conf
         }
       }
 
-      // Add device trigger pod to main application if enabled
+      /**
+       * Set up Device Trigger support
+       *
+       * Device Triggers allow campaigns to be triggered based on device events,
+       * without requiring server communication. This is useful for real-time
+       * engagement based on user actions within the app.
+       *
+       * If enabled, we add the MoEngage RealTimeTrigger pod to the main application.
+       */
       if (apple.deviceTriggerEnabled) {
         applicationPods.push(`  pod '${MOENGAGE_IOS_DEVICE_TRIGGER_POD}'`)
       }
 
+      /**
+       * Update the main application's Podfile with MoEngage dependencies
+       *
+       * This section adds any accumulated MoEngage pods to the main application target
+       * in the Podfile. It:
+       * 1. Finds the main application target section in the Podfile
+       * 2. Locates a suitable insertion point before existing dependencies
+       * 3. Inserts the MoEngage pod declarations
+       */
       if (applicationPods && applicationPods.length) {
         const podfilePath = `${projectRoot}/ios/Podfile`;
         if (fs.existsSync(podfilePath)) {

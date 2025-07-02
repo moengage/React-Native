@@ -9,6 +9,7 @@ import * as fs from 'fs';
 jest.mock('fs', () => ({
   existsSync: jest.fn(),
   readFileSync: jest.fn(),
+  readdirSync: jest.fn(),
   writeFileSync: jest.fn(),
   mkdirSync: jest.fn(),
   copyFileSync: jest.fn(),
@@ -59,7 +60,7 @@ describe('Modifiers application', () => {
 
   test('calls all modifiers in the correct order', () => {
     // Precondition (Arrange)
-    const mockConfig: any = { 
+    const mockConfig: any = {
       name: 'TestApp',
       slug: 'test-app', // Required by ExpoConfig
       owner: 'owner',
@@ -114,13 +115,13 @@ describe('Modifiers application', () => {
 
   test('calls all modifiers in the correct order with minimal props', () => {
     // Precondition (Arrange)
-    const mockConfig = { 
+    const mockConfig = {
       name: 'TestApp',
       slug: 'test-app', // Required by ExpoConfig
       owner: 'owner',
       version: '1.0.0',
     };
-    
+
     const mockProps = {
       android: {
         configFilePath: 'assets/moengage/android_initialization_config.xml'
@@ -152,7 +153,7 @@ describe('Modifiers application', () => {
       { ...mockConfig, infoPlistModified: true, entitlementsModified: true, xcodeProjectModified: true },
       mockProps
     );
-    
+
     // Result should match the expected output after all modifiers
     expect(result).toEqual({
       name: 'TestApp',
@@ -165,13 +166,11 @@ describe('Modifiers application', () => {
       dangerousModApplied: true
     });
   });
-  
+
   test('constants and individual modifiers are exported correctly', () => {
     // Precondition (Arrange)
     // No setup needed - testing exports
-    
-    // Act - No explicit action needed for this test
-    
+
     // Assert
     expect(apple.constants).toBeDefined();
     expect(apple.withMoEngageInfoPlist).toBeDefined();
@@ -234,6 +233,41 @@ describe('Apple Integration', () => {
       }
     };
 
+    const topEntries = [
+      'LiveActivity.swift',
+      'LiveActivity.m',
+      'LiveActivity.c',
+      'LiveActivity.h',
+      'LiveActivity.cpp',
+      'Info.plist',
+      'LiveActivity.entitlements',
+      'LiveActivity.xcstrings'
+    ].map(file => {
+      return { name: file, isDirectory: () => false };
+    }) as unknown as fs.Dirent<Buffer<ArrayBufferLike>>[];
+    const assets = {
+      name: 'LiveActivity.xcassets', isDirectory: () => true
+    } as unknown as fs.Dirent<Buffer<ArrayBufferLike>>;
+    const nested = {
+      name: 'Nested', isDirectory: () => true
+    } as unknown as fs.Dirent<Buffer<ArrayBufferLike>>;
+    const nestedAssets = {
+      name: 'Nested.xcassets', isDirectory: () => true
+    } as unknown as fs.Dirent<Buffer<ArrayBufferLike>>;
+    const nestedEntries = [
+      'Nested.swift',
+      'Nested.m',
+      'Nested.c',
+      'Nested.h',
+      'Nested.cpp',
+      'Nested.xcstrings'
+    ].map(file => {
+      return { name: file, isDirectory: () => false };
+    }) as unknown as fs.Dirent<Buffer<ArrayBufferLike>>[];
+    jest.spyOn(fs, 'readdirSync')
+      .mockReturnValueOnce([assets, nested, ...topEntries])
+      .mockReturnValueOnce([nestedAssets, ...nestedEntries]);
+
     // Act
     const result = apple.withMoEngageIos(mockConfig, mockProps);
 
@@ -289,7 +323,7 @@ describe('Apple Integration', () => {
     expect(fs.copyFileSync).toHaveBeenCalled();
   });
 
-  test('handles missing configuration file gracefully', () => {
+  test('handles missing configuration file', () => {
     // Precondition (Arrange)
     const mockConfig: any = {
       name: 'TestApp',
@@ -317,11 +351,11 @@ describe('Apple Integration', () => {
     // Mock that the config file doesn't exist
     jest.spyOn(fs, 'existsSync').mockImplementation(() => false);
 
-    // Act
-    const result = apple.withMoEngageIos(mockConfig, mockProps);
+    // Act & Assert
+    expect(() => {
+      apple.withMoEngageIos(mockConfig, mockProps);
+    }).toThrow('MoEngage configuration does not exist');
 
-    // Assert
-    expect(result).toBeDefined();
     // Should check for file but not read it
     expect(fs.existsSync).toHaveBeenCalledWith(expect.stringContaining('MoEngage-Config.plist'));
     expect(fs.readFileSync).not.toHaveBeenCalled();
@@ -362,7 +396,7 @@ describe('Apple Integration', () => {
     // For tvOS we should get back the original config without modifications
     expect(result).toEqual(mockConfig);
   });
-  
+
   test('handles malformed plist file gracefully', () => {
     // Precondition (Arrange)
     const mockConfig: any = {
@@ -391,12 +425,10 @@ describe('Apple Integration', () => {
     jest.spyOn(fs, 'readFileSync').mockReturnValue('malformed plist content');
 
     // Act & Assert
-    // The function should not throw an error even with a malformed plist file
+    // The function should throw an error with malformed plist content
     expect(() => {
-      const result = apple.withMoEngageInfoPlist(mockConfig, mockProps);
-      // Additional assertions
-      expect(result).toBeDefined();
-    }).not.toThrow();
+      apple.withMoEngageInfoPlist(mockConfig, mockProps);
+    }).toThrow('Could not import MoEngage configuration');
   });
 
   test('handles relative path navigation in config file path', () => {

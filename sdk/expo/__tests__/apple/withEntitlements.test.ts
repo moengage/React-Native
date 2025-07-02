@@ -37,15 +37,15 @@ describe('Entitlements configuration', () => {
     };
   });
 
-  test('should not modify entitlements if config file does not exist', () => {
+  test('should throw error if config file does not exist', () => {
     // Precondition (Arrange)
     jest.spyOn(fs, 'existsSync').mockReturnValue(false);
 
-    // Act
-    const result: any = withMoEngageEntitlements(mockConfig, mockProps);
+    // Act & Assert
+    expect(() => {
+      withMoEngageEntitlements(mockConfig, mockProps);
+    }).toThrow('MoEngage configuration does not exist');
 
-    // Assert
-    expect(result.entitlementsPlistResults).toEqual({});
     expect(fs.existsSync).toHaveBeenCalledWith('/test/project/assets/moengage/MoEngage-Config.plist');
   });
 
@@ -159,26 +159,25 @@ describe('Entitlements configuration', () => {
     expect(result.entitlementsPlistResults['keychain-access-groups']).toEqual(['mocked_keychain', 'other.keychain']);
   });
 
-  test('should handle errors when reading plist file', () => {
+  test('should throw error when reading plist file fails', () => {
     // Precondition (Arrange)
     jest.spyOn(fs, 'existsSync').mockReturnValue(true);
     jest.spyOn(fs, 'readFileSync').mockImplementation(() => {
       throw new Error('File read error');
     });
 
-    // Act
-    const result: any = withMoEngageEntitlements(mockConfig, mockProps);
-
-    // Assert
-    expect(result.entitlementsPlistResults).toEqual({});
+    // Act & Assert
+    expect(() => {
+      withMoEngageEntitlements(mockConfig, mockProps);
+    }).toThrow('Could not import MoEngage configuration: Error: File read error');
   });
 
-  test('should warn when AppGroupName is missing for push features', () => {
+  test('should throw error when AppGroupName is missing for push features', () => {
     // Precondition (Arrange)
     const plistContent = '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n<dict>\n<key>WorkspaceId</key>\n<string>mocked_app_id</string>\n<key>DataCenter</key>\n<integer>1</integer>\n<</dict>\n</plist>';
     jest.spyOn(fs, 'existsSync').mockReturnValue(true);
     jest.spyOn(fs, 'readFileSync').mockReturnValue(`${plistContent}`);
-    
+
     const propsWithPushEnabled = {
       ...mockProps,
       apple: {
@@ -187,11 +186,10 @@ describe('Entitlements configuration', () => {
       }
     };
 
-    // Act
-    const result: any = withMoEngageEntitlements(mockConfig, propsWithPushEnabled);
-    
-    // Assert
-    expect(result.entitlementsPlistResults['com.apple.security.application-groups']).toBeUndefined();
+    // Act & Assert
+    expect(() => {
+      withMoEngageEntitlements(mockConfig, propsWithPushEnabled);
+    }).toThrow('Missing AppGroupName key in MoEngage configuration');
   });
 
   test('should add app group to entitlements when rich push notification is enabled', () => {
@@ -266,15 +264,56 @@ describe('Entitlements configuration', () => {
     expect(mockConfig.entitlementsPlistResults['keychain-access-groups']).toContain('mocked_keychain');
   });
 
-  test('should handle errors when config file does not exist', () => {
+  test('should throw error when config file does not exist', () => {
     // Arrange
     jest.spyOn(fs, 'existsSync').mockReturnValue(false);
 
+    // Act & Assert
+    // This is already covered by the earlier test 'should throw error if config file does not exist'
+    // but we'll add a duplicate test to replace the old "handle errors" test
+    expect(() => {
+      withMoEngageEntitlements(mockConfig, mockProps);
+    }).toThrow('MoEngage configuration does not exist');
+  });
+
+  test('should throw error when IsStorageEncryptionEnabled is true but KeychainGroupName is missing', () => {
+    // Precondition (Arrange)
+    const plistWithEncryptionNoKeychain = '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n<dict>\n<key>WorkspaceId</key>\n<string>mocked_app_id</string>\n<key>AppGroupName</key>\n<string>mocked_app_group</string>\n<key>DataCenter</key>\n<integer>1</integer>\n<key>IsStorageEncryptionEnabled</key>\n<true/>\n</dict>\n</plist>';
+
+    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+    jest.spyOn(fs, 'readFileSync').mockReturnValue(plistWithEncryptionNoKeychain);
+
+    // Act & Assert
+    expect(() => {
+      withMoEngageEntitlements(mockConfig, mockProps);
+    }).toThrow('KeychainGroupName in "/test/project/assets/moengage/MoEngage-Config.plist" is required when IsStorageEncryptionEnabled is true');
+  });
+
+  test('should throw error when IsStorageEncryptionEnabled is true but KeychainGroupName is empty', () => {
+    // Precondition (Arrange)
+    const plistWithEncryptionEmptyKeychain = '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n<dict>\n<key>WorkspaceId</key>\n<string>mocked_app_id</string>\n<key>AppGroupName</key>\n<string>mocked_app_group</string>\n<key>DataCenter</key>\n<integer>1</integer>\n<key>IsStorageEncryptionEnabled</key>\n<true/>\n<key>KeychainGroupName</key>\n<string></string>\n</dict>\n</plist>';
+
+    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+    jest.spyOn(fs, 'readFileSync').mockReturnValue(plistWithEncryptionEmptyKeychain);
+
+    // Act & Assert
+    expect(() => {
+      withMoEngageEntitlements(mockConfig, mockProps);
+    }).toThrow('KeychainGroupName in "/test/project/assets/moengage/MoEngage-Config.plist" is required when IsStorageEncryptionEnabled is true');
+  });
+
+  test('should configure keychain access groups when storage encryption is enabled with valid KeychainGroupName', () => {
+    // Precondition (Arrange)
+    const plistWithEncryptionAndKeychain = '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n<dict>\n<key>WorkspaceId</key>\n<string>mocked_app_id</string>\n<key>AppGroupName</key>\n<string>mocked_app_group</string>\n<key>DataCenter</key>\n<integer>1</integer>\n<key>IsStorageEncryptionEnabled</key>\n<true/>\n<key>KeychainGroupName</key>\n<string>encrypted.keychain.group</string>\n</dict>\n</plist>';
+
+    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+    jest.spyOn(fs, 'readFileSync').mockReturnValue(plistWithEncryptionAndKeychain);
+
     // Act
-    withMoEngageEntitlements(mockConfig, mockProps);
+    const result: any = withMoEngageEntitlements(mockConfig, mockProps);
 
     // Assert
-    expect(mockConfig.entitlementsPlistResults['com.apple.security.application-groups']).toBeUndefined();
-    expect(mockConfig.entitlementsPlistResults['keychain-access-groups']).toBeUndefined();
+    expect(result.entitlementsPlistResults).toHaveProperty('keychain-access-groups');
+    expect(result.entitlementsPlistResults['keychain-access-groups']).toEqual(['encrypted.keychain.group']);
   });
 });

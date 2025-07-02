@@ -65,10 +65,10 @@ describe('Dangerous modifications', () => {
         liveActivityTargetPath: 'assets/moengage/LiveActivity'
       }
     };
-    
+
     // Act
     const result = withMoEngageDangerousMod({...mockConfig}, mockProps);
-    
+
     // Assert
     expect(result).toEqual(mockConfig);
     expect(fs.mkdirSync).not.toHaveBeenCalled();
@@ -235,7 +235,7 @@ describe('Dangerous modifications', () => {
     );
   });
 
-  test('should handle device trigger setup', () => {
+  test('should setup device trigger when enabled', () => {
     // Precondition (Arrange)
     const propsWithDeviceTrigger = {
       ...mockProps,
@@ -246,7 +246,9 @@ describe('Dangerous modifications', () => {
     };
 
     jest.spyOn(fs, 'existsSync').mockReturnValue(true);
-    jest.spyOn(fs, 'readFileSync').mockReturnValue(podfileContent);
+    jest.spyOn(fs, 'readFileSync')
+      .mockReturnValueOnce(plistContent) // For config file
+      .mockReturnValueOnce(podfileContent); // For podfile
 
     // Act
     const result = withMoEngageDangerousMod(mockConfig, propsWithDeviceTrigger);
@@ -262,7 +264,7 @@ describe('Dangerous modifications', () => {
     );
   });
 
-  test('should handle missing config file', () => {
+  test('should throw error for missing config file', () => {
     // Precondition (Arrange)
     const mockProps = {
       android: {
@@ -280,18 +282,15 @@ describe('Dangerous modifications', () => {
 
     jest.spyOn(fs, 'existsSync').mockReturnValue(false);
 
-    // Act
-    const result = withMoEngageDangerousMod(mockConfig, mockProps);
+    // Act & Assert
+    expect(() => {
+      withMoEngageDangerousMod(mockConfig, mockProps);
+    }).toThrow('MoEngage configuration does not exist');
 
-    // Assert
-    expect(result).toBeDefined();
-    expect(result).toEqual(mockConfig);
     expect(fs.existsSync).toHaveBeenCalledWith(path.join('/test/project', mockProps.apple.configFilePath));
-    // Verify that no further file operations were performed since the config file doesn't exist
-    expect(fs.readFileSync).not.toHaveBeenCalled();
   });
 
-  test('should handle errors when reading config file', () => {
+  test('should throw error when reading config file fails', () => {
     // Precondition (Arrange)
     const mockProps = {
       android: {
@@ -312,17 +311,16 @@ describe('Dangerous modifications', () => {
       throw new Error('File read error');
     });
 
-    // Act
-    const result = withMoEngageDangerousMod(mockConfig, mockProps);
+    // Act & Assert
+    expect(() => {
+      withMoEngageDangerousMod(mockConfig, mockProps);
+    }).toThrow('Could not import MoEngage configuration: Error: File read error');
 
-    // Assert
-    expect(result).toBeDefined();
-    expect(result).toEqual(mockConfig);
     expect(fs.existsSync).toHaveBeenCalledWith(path.join('/test/project', mockProps.apple.configFilePath));
-    // Verify that error was handled gracefully
+    // The read operation should be performed
     expect(fs.readFileSync).toHaveBeenCalledWith(path.join('/test/project', mockProps.apple.configFilePath), 'utf8');
-    // Verify no further operations were performed after the error
-    expect(fs.writeFileSync).toHaveBeenCalledWith('/test/project/ios/Podfile', expect.stringContaining('pod \'MoEngage-iOS-SDK/LiveActivity\''));
+    // After the error is thrown, no further operations should be performed
+    expect(fs.writeFileSync).not.toHaveBeenCalled();
   });
 });
 
@@ -374,7 +372,7 @@ target 'MoEngageExpoSampleApp' do
       'ios'
     ]
   end
-  
+
   config = use_native_modules!(config_command)
 
   use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']

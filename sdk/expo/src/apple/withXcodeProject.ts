@@ -12,6 +12,17 @@ import {
 
 const plist = require('plist');
 
+/**
+ * MoEngage Expo plugin for iOS - Xcode project modifications
+ *
+ * This plugin configures the Xcode project to include MoEngage extensions for rich notifications,
+ * push templates, and LiveActivity. It reads configuration from the MoEngage plist file and sets up
+ * the necessary targets, PBX groups, and build phases.
+ *
+ * @param config - The Expo config object
+ * @param props - The MoEngage plugin properties
+ * @returns The updated config object with Xcode project modifications
+ */
 export const withMoEngageXcodeProject: ConfigPlugin<MoEngagePluginProps> = (config, props) => {
   return withXcodeProject(config, (config) => {
     if (process.env['EXPO_TV']) {
@@ -32,13 +43,19 @@ export const withMoEngageXcodeProject: ConfigPlugin<MoEngagePluginProps> = (conf
         appGroupValue = configPlist['AppGroupName'] as string;
 
         if (!appGroupValue) {
-          console.warn(`Missing AppGroupName key in MoEngage configuration`);
+          const message = `Missing AppGroupName key in MoEngage configuration`;
+          console.error(message);
+          throw new Error(message);
         }
       } else {
-        console.warn(`MoEngage configuration does not exist`);
+        const message = `MoEngage configuration does not exist`;
+        console.error(message);
+        throw new Error(message);
       }
     } catch (e) {
-      console.warn(`Could not import MoEngage configuration: ${e}`);
+      const message = `Could not import MoEngage configuration: ${e}`;
+      console.error(message);
+      throw new Error(message);
     }
 
     // Initialize with an empty object if these top-level objects are non-existent.
@@ -212,21 +229,39 @@ export const withMoEngageXcodeProject: ConfigPlugin<MoEngagePluginProps> = (conf
   });
 };
 
-// Typing for code signing settings
+/**
+ * Interface for code signing settings
+ * These settings are extracted from the main target and applied to extension targets
+ * to ensure consistent code signing across all targets in the project
+ */
 interface CodeSignSettings {
+  /** Swift version used in the project (e.g. '5.0') */
   swiftVersion?: string;
+  /** Code signing style ('Automatic' or 'Manual') */
   codeSignStyle?: string;
+  /** Code signing identity (e.g. 'Apple Developer') */
   codeSignIdentity?: string;
+  /** Additional code signing flags */
   otherCodeSigningFlags?: string;
+  /** Development team identifier */
   developmentTeam?: string;
+  /** Provisioning profile specifier */
   provisioningProfile?: string;
 }
 
 /**
  * Adds Live Activity extension target to the Xcode project
+ *
+ * This function configures a LiveActivity extension by:
+ * 1. Creating the target and PBX groups
+ * 2. Scanning the provided directory for source files, resources, and configuration files
+ * 3. Adding all files to appropriate build phases
+ * 4. Setting up build settings including code signing and entitlements
+ *
  * @param config - Expo config with Xcode project
- * @param liveActivityTargetPath - Path to the Live Activity source files
- * @param codeSignSettings - Code signing settings to apply
+ * @param liveActivityTargetPath - Path to the LiveActivity source files
+ * @param codeSignSettings - Code signing settings to apply to the target
+ * @returns The updated config object
  */
 export function withLiveActivity(config: ExportedConfigWithProps<XcodeProject>, liveActivityTargetPath: string, codeSignSettings: CodeSignSettings) {
   const liveActivityPath = path.join(config.modRequest.projectRoot, liveActivityTargetPath);
@@ -306,7 +341,9 @@ export function withLiveActivity(config: ExportedConfigWithProps<XcodeProject>, 
     // Find all files
     findFilesRecursively(liveActivityPath, moengageLiveActivityPathContentGroup);
   } catch (e) {
-    console.warn(`Error finding files in Live Activity path: ${e}`);
+    const message = `Error finding files in Live Activity path: ${e}`;
+    console.error(message);
+    throw new Error(message);
   }
 
   // Set up build settings for the Live Activity target

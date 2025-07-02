@@ -5,6 +5,19 @@ import * as path from 'path';
 
 const plist = require('plist');
 
+/**
+ * MoEngage Expo plugin for iOS - Entitlements modifications
+ *
+ * This plugin configures the app's entitlements file to enable MoEngage features by:
+ * 1. Reading the AppGroupName from the MoEngage configuration file
+ * 2. Adding app groups to entitlements for push notifications and extensions
+ * 3. Setting up keychain sharing if configured
+ * 4. Adding any other required entitlements for MoEngage features
+ *
+ * @param config - The Expo config object
+ * @param props - The MoEngage plugin properties
+ * @returns The updated config with modified entitlements
+ */
 export const withMoEngageEntitlements: ConfigPlugin<MoEngagePluginProps> = (config, props) => {
   return withEntitlementsPlist(config, (config) => {
     // Import configuration from plist file if specified
@@ -27,13 +40,22 @@ export const withMoEngageEntitlements: ConfigPlugin<MoEngagePluginProps> = (conf
               config.modResults[appGroupsKey] = [appGroupValue];
             }
           } else {
-            console.warn(`Missing AppGroupName key in MoEngage configuration`);
+            const message = `Missing AppGroupName key in MoEngage configuration`;
+            console.error(message);
+            throw new Error(message);
           }
         }
 
         // Add the keychain access groups to the main application target's entitlements if specified
         const keychainGroupsKey = 'keychain-access-groups';
         const keychainGroupValue = configPlist['KeychainGroupName'] as string;
+        const isStorageEncryptionEnabled = configPlist['IsStorageEncryptionEnabled'] as boolean;
+        if (isStorageEncryptionEnabled && (!keychainGroupValue || keychainGroupValue.length == 0)) {
+          const message = `KeychainGroupName in "${configFilePath}" is required when IsStorageEncryptionEnabled is true`;
+          console.error(message);
+          throw new Error(message);
+        }
+
         if (keychainGroupValue && keychainGroupValue.length > 0) {
           const existingKeychainGroups = config.modResults[keychainGroupsKey];
           if (Array.isArray(existingKeychainGroups)) {
@@ -45,10 +67,14 @@ export const withMoEngageEntitlements: ConfigPlugin<MoEngagePluginProps> = (conf
           }
         }
       } else {
-        console.warn(`MoEngage configuration does not exist`);
+        const message = `MoEngage configuration does not exist`;
+        console.error(message);
+        throw new Error(message);
       }
     } catch (e) {
-      console.warn(`Could not import MoEngage configuration: ${e}`);
+      const message = `Could not import MoEngage configuration: ${e}`;
+      console.error(message);
+      throw new Error(message);
     }
     return config;
   });

@@ -43,16 +43,15 @@ describe('Info.plist configuration', () => {
     process.env = OLD_ENV;
   });
 
-  test('should initialize MoEngage in Info.plist if missing', () => {
+  test('should throw error when MoEngage configuration is missing', () => {
     // Precondition (Arrange)
     jest.spyOn(fs, 'existsSync').mockReturnValue(false);
 
-    // Act
-    const result: any = withMoEngageInfoPlist(mockConfig, mockProps);
+    // Act & Assert
+    expect(() => {
+      withMoEngageInfoPlist(mockConfig, mockProps);
+    }).toThrow('MoEngage configuration does not exist');
 
-    // Assert
-    expect(result.infoPlistResults).toHaveProperty('MoEngage');
-    expect(result.infoPlistResults.MoEngage).toEqual({});
     expect(fs.existsSync).toHaveBeenCalledWith('/test/project/assets/moengage/MoEngage-Config.plist');
   });
 
@@ -121,31 +120,30 @@ describe('Info.plist configuration', () => {
     expect(result.infoPlistResults).not.toHaveProperty('NSSupportsLiveActivities');
   });
 
-  test('should handle errors when reading plist file', () => {
+  test('should throw error when reading plist file fails', () => {
     // Precondition (Arrange)
     jest.spyOn(fs, 'existsSync').mockReturnValue(true);
     jest.spyOn(fs, 'readFileSync').mockImplementation(() => {
       throw new Error('File read error');
     });
 
-    // Act
-    const result: any = withMoEngageInfoPlist(mockConfig, mockProps);
+    // Act & Assert
+    expect(() => {
+      withMoEngageInfoPlist(mockConfig, mockProps);
+    }).toThrow('Could not import MoEngage configuration: Error: File read error');
 
-    // Assert
-    expect(result.infoPlistResults).toHaveProperty('MoEngage');
-    // Verify error was handled gracefully
+    // Verify file read was attempted
     expect(fs.readFileSync).toHaveBeenCalled();
   });
 
-  test('should initialize MoEngage in Info.plist', () => {
+  test('should throw error when initializing MoEngage in Info.plist with missing config file', () => {
     // Precondition (Arrange)
     jest.spyOn(fs, 'existsSync').mockReturnValue(false);
 
-    // Act
-    const result: any = withMoEngageInfoPlist(mockConfig, mockProps);
-
-    // Assert
-    expect(result.infoPlistResults).toHaveProperty('MoEngage');
+    // Act & Assert
+    expect(() => {
+      withMoEngageInfoPlist(mockConfig, mockProps);
+    }).toThrow('MoEngage configuration does not exist');
     expect(fs.existsSync).toHaveBeenCalledWith(path.join('/test/project', 'assets/moengage/MoEngage-Config.plist'));
   });
 
