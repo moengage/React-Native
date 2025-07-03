@@ -7,13 +7,15 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import <UserNotifications/UserNotifications.h>
-#import <MoEngageSDK/MoEngageSDK.h>
 
 @protocol SFSafariViewControllerDelegate;
 @class MoEngageReactSDKInitializationConfig;
 @class MoEngageSDKDefaultInitializationConfig;
 @class MoEngageReactSDKDefaultInitializationConfig;
+
+// Moving imports above causes build error
+#import <UserNotifications/UserNotifications.h>
+#import <MoEngageSDK/MoEngageSDK.h>
 
 // Moving imports above causes build error
 #import <UserNotifications/UserNotifications.h>
