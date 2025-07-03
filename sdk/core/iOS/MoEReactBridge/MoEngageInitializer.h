@@ -42,6 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Initialize Default Instance of SDK with Application's `Info.plist` data with optional config.
 /// @param config Additional MoEngageSDKDefaultInitializationConfig.
 - (void)initializeDefaultInstanceWithAdditionalConfig:(MoEngageSDKDefaultInitializationConfig*)config;
+
+/// Intenal method, not for public use.
+- (void)setPluginBridgeDelegate: (NSString*)identifier;
 @end
 
 NS_ASSUME_NONNULL_END

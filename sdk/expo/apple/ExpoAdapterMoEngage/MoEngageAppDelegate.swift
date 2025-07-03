@@ -14,7 +14,12 @@ public class MoEngageAppDelegate: ExpoAppDelegateSubscriber {
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         let config = MoEngageSDKDefaultInitializationConfig()
         config.launchOptions = launchOptions
-        MoEngageInitializer.sharedInstance().initializeDefaultInstance(withAdditionalConfig: config)
+        let plugin = MoEngagePlugin()
+        guard 
+            let sdkConfig = plugin.initializeDefaultInstance(withAdditionalConfig: config)
+        else { return false }
+        plugin.trackPluginInfo(MoEngageExpoPluginInfo.name, version: MoEngageExpoPluginInfo.moduleVersion)
+        MoEngageInitializer.sharedInstance().setPluginBridgeDelegate(sdkConfig.appId)
         return true
     }
 

@@ -24,6 +24,13 @@ Pod::Spec.new do |s|
     'DEFINES_MODULE' => 'YES'
   }
 
+  version_file = "#{s.name}/MoEngageExpoPluginInfo+Version.swift"
+  s.prepare_command = <<-CMD
+    echo // Generated file, do not edit > #{version_file}
+    echo "import Foundation\n" >> #{version_file}
+    echo "extension MoEngageExpoPluginInfo {\n    static let moduleVersion = \\"#{s.version}\\"\n}" >> #{version_file}
+  CMD
+
   if !$ExpoUseSources&.include?(package['name']) && ENV['EXPO_USE_SOURCE'].to_i == 0 && File.exist?("#{s.name}.xcframework") && Gem::Version.new(Pod::VERSION) >= Gem::Version.new('1.10.0')
     s.source_files = "#{s.name}/**/*.h"
     s.vendored_frameworks = "#{s.name}.xcframework"
