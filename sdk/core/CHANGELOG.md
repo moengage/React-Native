@@ -8,6 +8,7 @@
 
 ## 12.0.0
 
+- [minor] Added support to include optional module using configuration in package json file
 - Added support for Simplify Inapp Triggers.
 - Added support for file based initialisation configuration
 - Android

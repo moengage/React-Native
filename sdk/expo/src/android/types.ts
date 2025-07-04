@@ -1,0 +1,1 @@
+export type ManifestApplicationKey = { [key: string]: string };
