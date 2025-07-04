@@ -113,7 +113,7 @@ function mediaModelFromJson(mediaObject: { [k: string]: any }) {
     accessibilityData = MoEAccessibilityData.fromJson(mediaObject[KEY_ACCESSIBILITY]);
   }
   if (mediaType != undefined && url != undefined)
-    return new MoEMedia(mediaType, url, accessibilityData)
+    return new MoEMedia(mediaType, url, accessibilityData ?? null)
   else return undefined;
 }
 
@@ -220,7 +220,8 @@ function textContentToJson(textContent: MoETextContent) {
 function mediaToJson(media: MoEMedia) {
   var json = {
     type: media.mediaType,
-    url: media.url
+    url: media.url,
+    accessibility: media.accessibilityData ? media.accessibilityData.toJson() : null
   }
   return json
 }

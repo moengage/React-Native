@@ -46,7 +46,7 @@ class Widget {
      * Accessibility data for the widget
      * @since 6.0.0
      */
-    accessibilityData?: MoEAccessibilityData | null;
+    accessibilityData: MoEAccessibilityData | null;
 
     constructor(
         id: number,
