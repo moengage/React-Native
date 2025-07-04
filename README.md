@@ -6,15 +6,15 @@ This repository contains the React-Native plugins for the [MoEngage](https://www
 
 ### Repository Description
 
-| Folder    | Description                                                                                   |
-|:---------:|:---------------------------------------------------------------------------------------------:|
-| core      | Contains the implementation for the SDK implementation for Core MoEngage Platform             |
-| inbox     | Contains the implementation for the SDK implementation for Inbox Feature                      |
-| cards     | Contains the implementation for the SDK implementation for Cards Feature                      |
-| geofence  | Contains the implementation for the SDK implementation for Geofence Feature                   |
-| expo      | Contains the implementation for the prebuild plugin to configure SDK native implementation    |
-| SampleApp | Sample Integration for reference.                                                             |
-| SampleApp | Expo Sample Integration for reference.                                                        |
+|    Folder     | Description                                                                                   |
+|:-------------:|:---------------------------------------------------------------------------------------------:|
+|     core      | Contains the implementation for the SDK implementation for Core MoEngage Platform             |
+|     inbox     | Contains the implementation for the SDK implementation for Inbox Feature                      |
+|     cards     | Contains the implementation for the SDK implementation for Cards Feature                      |
+|   geofence    | Contains the implementation for the SDK implementation for Geofence Feature                   |
+|     expo      | Contains the implementation for the prebuild plugin to configure SDK native implementation    |
+|   SampleApp   | Sample Integration for reference.                                                             |
+| ExpoSampleApp | Expo Sample Integration for reference.                                                        |
 
 
 ## How to use the sample application?

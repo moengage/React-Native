@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Button, StyleSheet, FlatList, Platform } from "react-native";
 import ReactMoE, { MoEProperties } from "react-native-moengage";
-import { YOUR_WORKSPACE_ID } from "../key";
+import { WORKSPACE_ID } from "../key";
 import * as Notifications from 'expo-notifications';
 
 addMoEngageListeners()
@@ -10,7 +10,7 @@ const App = () => {
   const [expoPushToken, setExpoPushToken] = useState<string | undefined>();
 
   useEffect(() => {
-    ReactMoE.initialize(YOUR_WORKSPACE_ID);
+    ReactMoE.initialize(WORKSPACE_ID);
 
     setupExpoNotifications()
   }, []);
@@ -29,6 +29,7 @@ const App = () => {
       onPress: () => {
         ReactMoE.setUserAttribute("user_name", "John Doe");
         ReactMoE.setUserAttribute("user_email", "john.doe@example.com");
+        ReactMoE.identifyUser("expo-react-user");
       },
     },
     {

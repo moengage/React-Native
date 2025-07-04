@@ -1,0 +1,78 @@
+import groovy.json.JsonSlurper
+
+repositories {
+    google()
+    mavenCentral()
+    maven {
+        url = 'https://central.sonatype.com/repository/maven-snapshots/'
+    }
+}
+
+ext {
+    // MoEngage Versions
+    moengageCoreVersion = "14.00.00"
+    moengageInAppVersion = "9.0.0"
+    moengageRichNotification = "6.0.0"
+    moengageSecurity = "4.0.0"
+    moengageEncryptedStorage = "3.0.0"
+    moengagePushAmp = "6.0.0"
+    moengageHmsPushkit = "6.0.0"
+    moengageDeviceTrigger = "4.0.0"
+    moengageBasePluginVersion = "4.4.1-SNAPSHOT"
+
+    // AndroidX Support Libraries Versions
+    androidXCore = "1.15.0"
+    androidXCompact = "1.7.0"
+    androidXLifecycle = "2.8.7"
+}
+
+dependencies {
+    api("com.moengage:moe-android-sdk:$moengageCoreVersion") {
+       exclude group: "com.moengage", module: "core"
+    }
+    api("com.moengage:core:8.2.1-SNAPSHOT")
+    api("com.moengage:inapp:$moengageInAppVersion")
+    api("com.moengage:plugin-base:$moengageBasePluginVersion")
+
+    if (shouldIncludeModule("richNotification")) {
+        api("com.moengage:rich-notification:$moengageRichNotification")
+    }
+
+    if (shouldIncludeModule("encryption")) {
+        api("com.moengage:security:$moengageSecurity")
+        api("com.moengage:encrypted-storage:$moengageEncryptedStorage")
+    }
+
+    if (shouldIncludeModule("pushAmp")) {
+        api("com.moengage:push-amp:$moengagePushAmp")
+    }
+
+    if (shouldIncludeModule("hmsPushkit")) {
+        api("com.moengage:hms-pushkit:$moengageHmsPushkit")
+    } 
+
+    if (shouldIncludeModule("deviceTrigger")) {
+        api("com.moengage:realtime-trigger:$moengageDeviceTrigger")
+    }
+
+    if (shouldIncludeModule("includeAndroidXRequiredLibraries")) {
+        api("androidx.core:core:$androidXCore")
+        api("androidx.appcompat:appcompat:$androidXCompact")
+        api("androidx.lifecycle:lifecycle-process:$androidXLifecycle")
+    }
+}
+
+def shouldIncludeModule(String moduleName) {
+    try {
+        File packageJsonFile = new File("$rootDir/../package.json")
+        def packageJson = new JsonSlurper().parseText(packageJsonFile.text)
+        def moengageJson = packageJson["moengage"]
+        if (moengageJson != null) {
+        return moengageJson[moduleName] == true
+        }
+        println("MoEngage modules not configured in package json")
+    } catch(FileNotFoundException exception) {
+        println("Default package json file not found")
+    }
+    return false
+}

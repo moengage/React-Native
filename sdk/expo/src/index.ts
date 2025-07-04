@@ -6,6 +6,9 @@ import { MoEngagePluginProps } from './types';
 const defaultProps: MoEngagePluginProps = {
   android: {
     disableMoEngageDefaultBackupFile: false,
+    isExpoNotificationIntegration: false,
+    shouldIncludeMoEngageFirebaseMessagingService: false,
+    includeFirebaseMessagingDependencies: false,
     configFilePath: 'assets/moengage/android_initilisation_config.xml',
   },
   apple: {

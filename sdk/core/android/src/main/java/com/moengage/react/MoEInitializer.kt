@@ -79,7 +79,6 @@ object MoEInitializer {
                 ),
                 sdkState = sdkState
             )
-            Logger.print { "$tag initialize(): " }
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag initialize(): " }
         }
