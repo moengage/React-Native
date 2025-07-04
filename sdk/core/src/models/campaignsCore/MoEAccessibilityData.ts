@@ -1,18 +1,18 @@
 import { KEY_ACCESSIBILITY_HINT, KEY_ACCESSIBILITY_TEXT } from "../../utils/MoEConstants";
 
 export default class MoEAccessibilityData {
-  text?: string | undefined;
-  hint?: string | undefined;
+  text: string | null;
+  hint: string | null;
 
-  constructor(text?: string, hint?: string) {
+  constructor(text: string | null, hint: string | null) {
     this.text = text;
     this.hint = hint;
   }
 
   static fromJson(json: { [key: string]: any }): MoEAccessibilityData {
     return new MoEAccessibilityData(
-      typeof json[KEY_ACCESSIBILITY_TEXT] === 'string' ? json[KEY_ACCESSIBILITY_TEXT] : undefined,
-      typeof json[KEY_ACCESSIBILITY_HINT] === 'string' ? json[KEY_ACCESSIBILITY_HINT] : undefined
+      typeof json[KEY_ACCESSIBILITY_TEXT] === 'string' ? json[KEY_ACCESSIBILITY_TEXT] : null,
+      typeof json[KEY_ACCESSIBILITY_HINT] === 'string' ? json[KEY_ACCESSIBILITY_HINT] : null
     );
   }
 

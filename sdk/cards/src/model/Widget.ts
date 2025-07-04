@@ -46,7 +46,7 @@ class Widget {
      * Accessibility data for the widget
      * @since 6.0.0
      */
-    accessibilityData: MoEAccessibilityData | undefined;
+    accessibilityData: MoEAccessibilityData | null;
 
     constructor(
         id: number,
@@ -54,7 +54,7 @@ class Widget {
         content: string,
         style: WidgetStyle | undefined,
         actionList: Array<Action>,
-        accessibilityData?: MoEAccessibilityData | undefined
+        accessibilityData: MoEAccessibilityData | null
     ) {
         this.id = id;
         this.widgetType = widgetType;

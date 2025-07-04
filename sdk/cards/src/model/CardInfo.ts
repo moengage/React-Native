@@ -33,9 +33,9 @@ class CardInfo {
      * 
      * @since 6.0.0
      */ 
-    staticImageAccessibilityData:  { [key in StaticImageType]: MoEAccessibilityData } | undefined;
+    staticImageAccessibilityData:  { [key in StaticImageType]: MoEAccessibilityData } | null;
 
-    constructor(shouldShowAllTab: boolean, categories: Array<string>, cards: Array<Card>, staticImageAccessibilityData?:  { [key in StaticImageType]: MoEAccessibilityData }) {
+    constructor(shouldShowAllTab: boolean, categories: Array<string>, cards: Array<Card>, staticImageAccessibilityData:  { [key in StaticImageType]: MoEAccessibilityData } | null) {
         this.shouldShowAllTab = shouldShowAllTab;
         this.categories = categories;
         this.cards = cards;

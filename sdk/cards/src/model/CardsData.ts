@@ -27,10 +27,10 @@ class CardsData {
      * 
      * @since 6.0.0
      */
-    staticImageAccessibilityData:  { [key in StaticImageType]: MoEAccessibilityData } | undefined;
+    staticImageAccessibilityData:  { [key in StaticImageType]: MoEAccessibilityData } | null;
 
 
-    constructor(category: string, cards: Array<Card>, staticImageAccessibilityData?: { [key in StaticImageType]: MoEAccessibilityData }) {
+    constructor(category: string, cards: Array<Card>, staticImageAccessibilityData: { [key in StaticImageType]: MoEAccessibilityData } | null) {
         this.category = category;
         this.cards = cards;
         this.staticImageAccessibilityData = staticImageAccessibilityData;
