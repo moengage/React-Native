@@ -174,7 +174,7 @@ export function cardInfoFromJson(json: { [k: string]: any }): CardInfo {
             .map((cardJson) => {
                 return cardFromJson(cardJson);
             }),
-        staticImageFromJson(json[KEY_ACCESSIBILITY] ?? undefined),
+        staticImageFromJson(json[KEY_ACCESSIBILITY] ?? null),
     );
 }
 
@@ -185,7 +185,7 @@ export function cardsDataFromJson(json: { [k: string]: any }): CardsData {
             .map((cardObject) => {
                 return cardFromJson(cardObject);
             }),
-        staticImageFromJson(json[KEY_ACCESSIBILITY] ?? undefined),
+        staticImageFromJson(json[KEY_ACCESSIBILITY] ?? null),
     );
 }
 
@@ -267,13 +267,13 @@ export function widgetFromJson(json: { [k: string]: any }): Widget {
             .map((action) => {
                 return actionFromJson(action);
             }),
-        json[KEY_ACCESSIBILITY] != null ? MoEAccessibilityData.fromJson(json[KEY_ACCESSIBILITY]) : undefined,
+        json[KEY_ACCESSIBILITY] != null ? MoEAccessibilityData.fromJson(json[KEY_ACCESSIBILITY]) : null,
     );
 }
 
-export function staticImageFromJson(json: { [k: string]: any } | undefined): { [key in StaticImageType]: MoEAccessibilityData } | undefined {
-    if (!json) {
-        return undefined
+export function staticImageFromJson(json: { [k: string]: any } | null): { [key in StaticImageType]: MoEAccessibilityData } | null {
+    if (!json || Object.keys(json).length === 0) {
+        return null
     }
     const result: { [key in StaticImageType]?: MoEAccessibilityData } = {};
     for (const type of Object.values(StaticImageType)) {
