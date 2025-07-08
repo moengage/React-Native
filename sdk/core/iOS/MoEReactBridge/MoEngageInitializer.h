@@ -17,10 +17,6 @@
 #import <UserNotifications/UserNotifications.h>
 #import <MoEngageSDK/MoEngageSDK.h>
 
-// Moving imports above causes build error
-#import <UserNotifications/UserNotifications.h>
-#import <MoEngageSDK/MoEngageSDK.h>
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MoEngageInitializer : NSObject
