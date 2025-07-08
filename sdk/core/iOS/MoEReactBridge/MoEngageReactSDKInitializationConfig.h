@@ -27,3 +27,16 @@
 - (nonnull instancetype)initWithSdkConfig:(MoEngageSDKConfig * _Nonnull)sdkConfig;
 @end
 
+@interface MoEngageReactSDKDefaultInitializationConfig : NSObject
+
+/// The app launch options.
+/// By default, no launch options set..
+@property (nonatomic, copy) NSDictionary<UIApplicationLaunchOptionsKey, id> * _Nullable launchOptions;
+/// The initialized SDK workspace environment.
+///
+/// By default, environment set in `Info.plist` file is used.
+@property (nonatomic) enum MoEngageWorkspaceEnvironment environment;
+/// Creates a new initialization configuration.
+- (nonnull instancetype)init;
+@end
+

@@ -11,6 +11,7 @@
 @protocol SFSafariViewControllerDelegate;
 @class MoEngageReactSDKInitializationConfig;
 @class MoEngageSDKDefaultInitializationConfig;
+@class MoEngageReactSDKDefaultInitializationConfig;
 
 // Moving imports above causes build error
 #import <UserNotifications/UserNotifications.h>
@@ -44,6 +45,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// Initialize Default Instance of SDK with Application's `Info.plist` data with optional config.
 /// @param config Additional MoEngageSDKDefaultInitializationConfig.
 - (void)initializeDefaultInstanceWithAdditionalConfig:(MoEngageSDKDefaultInitializationConfig*)config;
+
+/// Initialize Default Instance of SDK with Application's `Info.plist` data with optional react config.
+/// @param ractConfig Additional MoEngageReactSDKDefaultInitializationConfig.
+- (void)initializeDefaultInstanceWithAdditionalReactConfig:(MoEngageReactSDKDefaultInitializationConfig*)ractConfig;
 @end
 
 NS_ASSUME_NONNULL_END

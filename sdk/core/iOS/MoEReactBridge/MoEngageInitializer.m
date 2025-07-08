@@ -63,6 +63,13 @@
     [self commonSetUp:plugin identifier:sdkConfig.appId];
 }
 
+- (void)initializeDefaultInstanceWithAdditionalReactConfig:(MoEngageReactSDKDefaultInitializationConfig*)ractConfig {
+    MoEngageSDKDefaultInitializationConfig *config = [[MoEngageSDKDefaultInitializationConfig alloc] init];
+    config.launchOptions = ractConfig.launchOptions;
+    config.environment = ractConfig.environment;
+    [self initializeDefaultInstanceWithAdditionalConfig:config];
+}
+
 #pragma mark- Utils
 
 - (void)commonSetUp:(MoEngagePlugin *)plugin identifier:(NSString*)identifier {

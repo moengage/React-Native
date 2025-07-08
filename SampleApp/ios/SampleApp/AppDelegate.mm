@@ -17,9 +17,11 @@
   sdkConfig.appGroupID = @"group.com.alphadevs.MoEngage.NotificationServices";
   sdkConfig.consoleLogConfig = [[MoEngageConsoleLogConfig alloc] initWithIsLoggingEnabled:true loglevel:MoEngageLoggerTypeVerbose];
 
-  MoEngageReactSDKInitializationConfig *initConfig = [[MoEngageReactSDKInitializationConfig alloc] initWithSdkConfig:sdkConfig];
-  [[MoEngageInitializer sharedInstance] initializeInstance:initConfig];
- 
+  // Initialization with code
+  // MoEngageReactSDKInitializationConfig *initConfig = [[MoEngageReactSDKInitializationConfig alloc] initWithSdkConfig:sdkConfig];
+  // [[MoEngageInitializer sharedInstance] initializeInstance:initConfig];
+  [[MoEngageInitializer sharedInstance] initializeDefaultInstanceWithAdditionalReactConfig:[[MoEngageReactSDKDefaultInitializationConfig alloc] init]];
+
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 

@@ -29,3 +29,16 @@
 }
 
 @end
+
+@implementation MoEngageReactSDKDefaultInitializationConfig
+
+- (nonnull instancetype)init {
+    self = [super init];
+    if (self) {
+        _launchOptions = nil;
+        _environment = MoEngageWorkspaceEnvironmentDefault;
+    }
+    return self;
+}
+
+@end
