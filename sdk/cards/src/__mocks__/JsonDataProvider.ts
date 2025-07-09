@@ -132,7 +132,8 @@ export const buttonWidgetWithoutStyleJson = {
     "type": "BUTTON",
     "actions": [
         screenNameActionJson
-    ]
+    ],
+    "accessibility":undefined
 }
 
 export const buttonWidgetWithStyleJson = {
@@ -142,7 +143,8 @@ export const buttonWidgetWithStyleJson = {
     "style": styleWithSizeAndColorJson,
     "actions": [
         screenNameActionJson
-    ]
+    ],
+    "accessibility":undefined
 }
 
 export const textWidgetWithoutStylJson = {
@@ -151,7 +153,8 @@ export const textWidgetWithoutStylJson = {
     "type": "TEXT",
     "actions": [
         deeplinkActionJson
-    ]
+    ],
+    "accessibility":undefined
 }
 
 export const textWidgetWithStyleJson = {
@@ -161,7 +164,8 @@ export const textWidgetWithStyleJson = {
     "style": styleWithSizeAndColorJson,
     "actions": [
         deeplinkActionJson
-    ]
+    ],
+    "accessibility":undefined
 }
 
 export const imageWidgetWithoutStylJson = {
@@ -170,7 +174,11 @@ export const imageWidgetWithoutStylJson = {
     "type": "IMAGE",
     "actions": [
         richLandingActionJson
-    ]
+    ],
+    "accessibility": {
+        "text": "text",
+        "hint": "hint"
+    }
 }
 
 export const imageWidgetWithStyleJson = {
@@ -180,7 +188,11 @@ export const imageWidgetWithStyleJson = {
     "style": styleWithColorJson,
     "actions": [
         richLandingActionJson
-    ]
+    ],
+    "accessibility": {
+        "text": "text",
+        "hint": "hint"
+    }
 }
 
 /****************************** Container Json Payload ******************************/
@@ -321,14 +333,42 @@ export const basicCardJson = {
 export const cardInfoJson = {
     "shouldShowAllTab": true,
     "categories": categoriesArray,
-    "cards": [illustrationCardJson, basicCardJson]
+    "cards": [illustrationCardJson, basicCardJson],
+    "accessibility": {
+        "pinned_card": {
+            "text": "pinned_card",
+            "hint": "pinned_card"
+        },
+        "no_cards": {
+            "text": "no_cards", 
+            "hint": "no_cards"
+        },
+        "place_holder": {
+            "text": "place_holder",
+            "hint": "place_holder"
+        }
+    }       
 }
 
 
 /****************************** CardsData Json Payload ******************************/
 export const cardDataJson = {
     "category": "Announcements",
-    "cards": [illustrationCardJson, basicCardJson]
+    "cards": [illustrationCardJson, basicCardJson],
+    "accessibility": {
+        "pinned_card": {
+            "text": "pinned_card",
+            "hint": "pinned_card"
+        },
+        "no_cards": {
+            "text": "no_cards", 
+            "hint": "no_cards"
+        },
+        "place_holder": {
+            "text": "place_holder",
+            "hint": "place_holder"
+        }
+    }
 }
 
 
@@ -416,7 +456,21 @@ export const cardsDataJson = {
         "cards": [
             illustrationCardJson,
             basicCardJson
-        ]
+        ],
+        "accessibility": {
+            "pinned_card": {
+                "text": "pinned_card",
+                "hint": "pinned_card"
+            },
+            "no_cards": {
+                "text": "no_cards", 
+                "hint": "no_cards"
+            },
+            "place_holder": {
+                "text": "place_holder",
+                "hint": "place_holder"
+            }
+        }
     }
 }
 
@@ -428,7 +482,21 @@ export const cardsInfoJson = {
         "cards": [
             illustrationCardJson,
             basicCardJson
-        ]
+        ],
+        "accessibility": {
+            "pinned_card": {
+                "text": "pinned_card",
+                "hint": "pinned_card"
+            },
+            "no_cards": {
+                "text": "no_cards", 
+                "hint": "no_cards"
+            },
+            "place_holder": {
+                "text": "place_holder",
+                "hint": "place_holder"
+            }
+        }
     }
 }
 
