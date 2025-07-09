@@ -23,7 +23,7 @@ import TextStyle from "../model/styles/TextStyle";
 export const defaultColor = "#C0C0C0";
 export const defaultSize = 32;
 export const categoriesArray = ['Announcements', 'Promotions_new'];
-
+import { MoEAccessibilityData } from "react-native-moengage";
 /****************************** Action Object ******************************/
 export const screenNavigationActionObject = new NavigationAction(
     ActionType.NAVIGATE,
@@ -90,7 +90,7 @@ export const imageWidgetWithoutStyleObject = new Widget(
     "https://picsum.photos/400/200",
     undefined,
     [richNavigationActionObject],
-    null
+    new MoEAccessibilityData('text', 'hint')
 );
 
 export const imageWidgeWithStyleObject = new Widget(
@@ -99,7 +99,7 @@ export const imageWidgeWithStyleObject = new Widget(
     "https://picsum.photos/400/200",
     imageStyleObject,
     [richNavigationActionObject],
-    null
+    new MoEAccessibilityData('text', 'hint')
 );
 
 export const textWidgetWithoutStyleObject = new Widget(
@@ -337,7 +337,11 @@ export const cardsInfoObject = new CardInfo(
     true,
     categoriesArray,
     [illustrationCardObject, basicCardObject],
-    null
+    {
+        pinned_card: new MoEAccessibilityData('pinned_card', 'pinned_card'),
+        no_cards: new MoEAccessibilityData('no_cards', 'no_cards'),
+        place_holder: new MoEAccessibilityData('place_holder', 'place_holder')  
+    }
 )
 
 
@@ -345,5 +349,9 @@ export const cardsInfoObject = new CardInfo(
 export const cardsDataObject = new CardsData(
     "Announcements",
     [illustrationCardObject, basicCardObject],
-    null
+    {
+        pinned_card: new MoEAccessibilityData('pinned_card', 'pinned_card'),
+        no_cards: new MoEAccessibilityData('no_cards', 'no_cards'),
+        place_holder: new MoEAccessibilityData('place_holder', 'place_holder')  
+    }
 )

@@ -75,7 +75,8 @@ import {
     keyWidgets
 } from "../Constants";
 import { assertUnsupportedError } from "../utils/Util";
-import { KEY_ACCESSIBILITY } from "react-native-moengage";
+import { KEY_ACCESSIBILITY, MoEAccessibilityData } from "react-native-moengage";
+import StaticImageType from "../../model/enums/StaticImageType";
 
 export function actionToJson(action: Action): { [k: string]: any } {
     if (action instanceof NavigationAction) {
@@ -162,7 +163,8 @@ export function cardInfoToJson(cardInfo: CardInfo): { [k: string]: any } {
         [keyCategories]: cardInfo.categories,
         [keyCards]: cardInfo.cards.map((card) => {
             return cardToJson(card);
-        })
+        }),
+        [KEY_ACCESSIBILITY]: staticImageAccessibilityDataToJson(cardInfo.staticImageAccessibilityData)
     };
 }
 
@@ -171,7 +173,8 @@ export function cardsDataToJson(cardsData: CardsData): { [k: string]: any } {
         [keyCategory]: cardsData.category,
         [keyCards]: cardsData.cards.map((card) => {
             return cardToJson(card);
-        })
+        }),
+        [KEY_ACCESSIBILITY]: staticImageAccessibilityDataToJson(cardsData.staticImageAccessibilityData)
     };
 }
 
@@ -249,4 +252,11 @@ export function widgetToJson(widget: Widget): { [k: string]: any } {
         }),
         [KEY_ACCESSIBILITY]: widget.accessibilityData?.toJson() 
     };
+}
+
+export function staticImageAccessibilityDataToJson(staticImageAccessibilityData: { [key in StaticImageType]: MoEAccessibilityData } | null): { [key: string]: any } | null {
+    return staticImageAccessibilityData ? 
+        Object.fromEntries(
+            Object.entries(staticImageAccessibilityData).map(([key, value]) => [key, value.toJson()])
+        ) : null;
 }
