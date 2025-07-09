@@ -89,7 +89,8 @@ export const imageWidgetWithoutStyleObject = new Widget(
     WidgetType.IMAGE,
     "https://picsum.photos/400/200",
     undefined,
-    [richNavigationActionObject]
+    [richNavigationActionObject],
+    null
 );
 
 export const imageWidgeWithStyleObject = new Widget(
@@ -97,7 +98,8 @@ export const imageWidgeWithStyleObject = new Widget(
     WidgetType.IMAGE,
     "https://picsum.photos/400/200",
     imageStyleObject,
-    [richNavigationActionObject]
+    [richNavigationActionObject],
+    null
 );
 
 export const textWidgetWithoutStyleObject = new Widget(
@@ -105,7 +107,8 @@ export const textWidgetWithoutStyleObject = new Widget(
     WidgetType.TEXT,
     "<div>Message</div>",
     undefined,
-    [deeplinkNavigationActionObject]
+    [deeplinkNavigationActionObject],
+    null
 );
 
 export const textWidgetWithStyleObject = new Widget(
@@ -113,7 +116,8 @@ export const textWidgetWithStyleObject = new Widget(
     WidgetType.TEXT,
     "<div>Message</div>",
     textStyleObject,
-    [deeplinkNavigationActionObject]
+    [deeplinkNavigationActionObject],
+    null
 );
 
 export const buttonWidgetWithoutStyleObject = new Widget(
@@ -121,7 +125,8 @@ export const buttonWidgetWithoutStyleObject = new Widget(
     WidgetType.BUTTON,
     "<div><strong><em>CTA Text</em></strong></div>",
     undefined,
-    [screenNavigationActionObject]
+    [screenNavigationActionObject],
+    null
 );
 
 export const buttonWidgetWithStyleObject = new Widget(
@@ -129,7 +134,8 @@ export const buttonWidgetWithStyleObject = new Widget(
     WidgetType.BUTTON,
     "<div><strong><em>CTA Text</em></strong></div>",
     buttonStyleObject,
-    [screenNavigationActionObject]
+    [screenNavigationActionObject],
+    null
 );
 
 
@@ -330,12 +336,14 @@ export const basicCardObject = new Card(
 export const cardsInfoObject = new CardInfo(
     true,
     categoriesArray,
-    [illustrationCardObject, basicCardObject]
+    [illustrationCardObject, basicCardObject],
+    null
 )
 
 
 /****************************** CardsData Object ******************************/
 export const cardsDataObject = new CardsData(
     "Announcements",
-    [illustrationCardObject, basicCardObject]
+    [illustrationCardObject, basicCardObject],
+    null
 )
