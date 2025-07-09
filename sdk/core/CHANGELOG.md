@@ -1,3 +1,20 @@
+# Release Date
+
+## Release Version
+
+- Added support for Simplify Inapp Triggers.
+- Android
+    - [major] Min SDK version updated to `23`
+    - [major] Compiled SDK version updated to `35`
+    - [major] Removed deprecated APIs
+      | Then                                                           | Now                                                                            |
+      |:--------------------------------------------------------------:|:------------------------------------------------------------------------------:|
+      | MoEInitializer#initialize(Context, MoEngage.Builder)           | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder)            |
+      | MoEInitializer#initialize(Context, MoEngage.Builder, SdkState) | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder, SdkState)  |
+- iOS
+    - [major] Minimum iOS and tvOS deployment target updated to `13`
+    - [major] `MoEngage-iOS-SDK` version updated to `10.02.1`
+  
 # 24-04-2025
 
 ## 11.2.2

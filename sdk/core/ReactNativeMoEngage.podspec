@@ -12,11 +12,12 @@ Pod::Spec.new do |s|
   s.license             = package['license']
   s.authors             = "MoEngage Inc."
   s.source              = {:file => './' }
-  s.platforms = { :ios => "11.0", :tvos => "11.0" }
+  s.platforms = { :ios => "13.0", :tvos => "13.0" }
   s.source_files        = 'iOS/MoEReactBridge/**/*.{h,m,mm}'
   s.public_header_files = 'iOS/MoEReactBridge/{MoEngageInitializer,MoEngageReactSDKInitializationConfig,MoEngageReactUtils}.h'
+  s.weak_framework      = 'UserNotifications'
   s.dependency          'React'
-  s.dependency          'MoEngagePluginBase','5.3.2'
+  s.dependency          'MoEngagePluginBase','6.1.0'
   s.ios.dependency  	'MoEngage-iOS-SDK/RichNotification'
 
   s.prepare_command = <<-CMD

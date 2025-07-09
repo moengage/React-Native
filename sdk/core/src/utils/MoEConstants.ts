@@ -32,6 +32,7 @@ export const MOE_CAMPAIGNS = 'campaigns'
 export const MOE_INAPP_DISPLAY_RULES = 'displayRules'
 export const MOE_INAPP_SCREEN_NAME = 'screenName'
 export const MOE_INAPP_CONTEXTS = 'contexts'
+export const MOE_INAPP_SCREEN_NAMES = 'screenNames'
 
 //IN APP NAVIGATION
 export const MOE_NAVIGATION_TYPE = 'navigationType'
@@ -86,3 +87,8 @@ export const IS_USER_DELETION_SUCCESS = "isUserDeletionSuccess";
 // Identify User
 export const USER_IDENTITY = 'identity';
 export const USER_UNIQUE_IDENTITY = 'uid';
+
+// Accessibility Keys
+export const KEY_ACCESSIBILITY = 'accessibility';
+export const KEY_ACCESSIBILITY_TEXT = 'text';
+export const KEY_ACCESSIBILITY_HINT = 'hint';

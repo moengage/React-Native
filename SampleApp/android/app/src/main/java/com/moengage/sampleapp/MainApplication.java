@@ -87,7 +87,7 @@ public class MainApplication extends Application implements ReactApplication {
                     R.drawable.small_icon,
                     R.drawable.large_icon,
                     MoEDefaultConfig.NOTIFICATION_CONFIG_DEFAULT_COLOR_RESOURCE_ID,
-                    MoEDefaultConfig.NOTIFICATION_CONFIG_DEFAULT_MULTIPLE_NOTIFICATION_STATE,
+                    true,
                     true,
                     MoEDefaultConfig.NOTIFICATION_CONFIG_DEFAULT_LARGE_ICON_STATE
                 )

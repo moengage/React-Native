@@ -7,7 +7,9 @@ import MoEAction from "../model/MoEAction";
 import * as InboxConstants from "../utils/MoEInboxConstants"
 import { isValidObject, isValidString, isValidNumber } from "../utils/MoEInboxHelper";
 import { MoEPlatform } from "../model/MoEPlatform";
-import { MOE_DATA } from "../utils/MoEInboxConstants"
+import { MOE_DATA } from "../utils/MoEInboxConstants";
+import { KEY_ACCESSIBILITY, MoEAccessibilityData } from "react-native-moengage";
+
 const PLATFORM = 'platform'
 const UNCLICKED_COUNT = 'unClickedCount'
 
@@ -15,8 +17,8 @@ export function inboxDataFromJson(payload: string) {
   const inboxJSON = JSON.parse(payload);
   const inboxData = inboxJSON[InboxConstants.MOE_DATA]
   var platform;
-  var messageList:MoEInboxMessage[] = [];
-  
+  var messageList: MoEInboxMessage[] = [];
+
   if (isValidObject(inboxData)) {
 
     platform = inboxData[PLATFORM];
@@ -25,7 +27,7 @@ export function inboxDataFromJson(payload: string) {
     for (var message of messages) {
       var inboxMessage = inboxMessageFromJson(message);
       if (inboxMessage != null)
-      messageList.push(inboxMessage);
+        messageList.push(inboxMessage);
     }
   }
   if (platform != undefined)
@@ -33,7 +35,7 @@ export function inboxDataFromJson(payload: string) {
   return undefined;
 }
 
-function inboxMessageFromJson(message: { [k: string]: any }) {
+export function inboxMessageFromJson(message: { [k: string]: any }) {
   if (message != undefined) {
     var id;
     var campaignId;
@@ -42,9 +44,12 @@ function inboxMessageFromJson(message: { [k: string]: any }) {
     var expiry;
     var tag;
     var textContent;
-    var actionList:Array<MoEAction>=[];
+    var actionList: Array<MoEAction> = [];
     var media;
     var payload;
+    var groupKey: string | null = null;
+    var notificationId: string | null = null;
+    var sentTime: string | null = null;
 
     campaignId = message[InboxConstants.CAMPAIGN_ID];
     isClicked = message[InboxConstants.IS_CLICKED];
@@ -61,9 +66,9 @@ function inboxMessageFromJson(message: { [k: string]: any }) {
 
     textContent = textContentFromJson(message[InboxConstants.TEXT]);
     for (var action of actions) {
-      var moEAction=actionModelFromJson(action)
-      moEAction?
-     actionList.push(moEAction):null;
+      var moEAction = actionModelFromJson(action)
+      moEAction ?
+        actionList.push(moEAction) : null;
     }
     if (isValidObject(message[InboxConstants.MEDIA])) {
       media = mediaModelFromJson(message[InboxConstants.MEDIA]);
@@ -72,19 +77,30 @@ function inboxMessageFromJson(message: { [k: string]: any }) {
     if (isValidObject(message[InboxConstants.PAYLOAD])) {
       payload = message[InboxConstants.PAYLOAD];
     }
+    if (isValidString(message[InboxConstants.GROUP_KEY])) {
+      groupKey = message[InboxConstants.GROUP_KEY];
+    }
+    if (isValidString(message[InboxConstants.NOTIFICATION_ID])) {
+      notificationId = message[InboxConstants.NOTIFICATION_ID];
+    }
+    if (isValidString(message[InboxConstants.SENT_TIME])) {
+      sentTime = message[InboxConstants.SENT_TIME];
+    }
     if (campaignId != undefined && textContent != undefined && isClicked != undefined && receivedTime != undefined && expiry != undefined && payload != undefined)
-      return new MoEInboxMessage(id, campaignId, textContent, isClicked, media, actionList, tag, receivedTime, expiry, payload)
+      return new MoEInboxMessage(id, campaignId, textContent, isClicked, media, actionList, tag, receivedTime, expiry, payload, groupKey, notificationId, sentTime);
     else
       return undefined;
 
   }
   else return undefined;
-  
+
 }
 
 function mediaModelFromJson(mediaObject: { [k: string]: any }) {
   var mediaType;
-  var url
+  var url;
+  var accessibilityData;
+
   if (isValidString(mediaObject[InboxConstants.TYPE])) {
     mediaType = mediaObject[InboxConstants.TYPE];
   }
@@ -92,12 +108,16 @@ function mediaModelFromJson(mediaObject: { [k: string]: any }) {
   if (isValidString(mediaObject[InboxConstants.URL])) {
     url = mediaObject[InboxConstants.URL];
   }
+
+  if (isValidObject(mediaObject[KEY_ACCESSIBILITY])) {
+    accessibilityData = MoEAccessibilityData.fromJson(mediaObject[KEY_ACCESSIBILITY]);
+  }
   if (mediaType != undefined && url != undefined)
-    return new MoEMedia(mediaType, url)
+    return new MoEMedia(mediaType, url, accessibilityData ?? null)
   else return undefined;
 }
 
-function actionModelFromJson(actionObject: { [k: string]: any}) {
+function actionModelFromJson(actionObject: { [k: string]: any }) {
   var actionType = actionObject[InboxConstants.ACTION_TYPE];
   var navigationType;
   var value;
@@ -112,7 +132,7 @@ function actionModelFromJson(actionObject: { [k: string]: any}) {
     kvPair = actionObject[InboxConstants.KV_PAIR];
   }
   if (actionType != undefined)
-    return new MoEAction(actionType, navigationType,value,kvPair)
+    return new MoEAction(actionType, navigationType, value, kvPair)
   else return undefined;
 }
 
@@ -158,7 +178,10 @@ export function inboxMessageToJson(message: MoEInboxMessage) {
     isClicked: message.isClicked,
     tag: message.tag,
     receivedTime: message.receivedTime,
-    expiry: message.expiry
+    expiry: message.expiry,
+    sentTime: message.sentTime,
+    groupKey: message.groupKey,
+    notificationId: message.notificationId
   };
   if (isValidObject(message.text)) {
     json[InboxConstants.TEXT] = textContentToJson(message.text);
@@ -197,7 +220,8 @@ function textContentToJson(textContent: MoETextContent) {
 function mediaToJson(media: MoEMedia) {
   var json = {
     type: media.mediaType,
-    url: media.url
+    url: media.url,
+    accessibility: media.accessibilityData ? media.accessibilityData.toJson() : null
   }
   return json
 }
@@ -206,8 +230,8 @@ function actionToJson(action: MoEAction) {
   var json = {
     actionType: action.actionType,
     navigationType: action.navigationType,
-    value:action.value,
-    kvPair:action.kvPair
+    value: action.value,
+    kvPair: action.kvPair
   }
   return json;
 }
@@ -215,10 +239,10 @@ function actionToJson(action: MoEAction) {
 export function fetchEmptyInboxModel() {
   var platform;
 
-  if(Platform.OS=="ios")
-  platform=MoEPlatform.IOS
+  if (Platform.OS == "ios")
+    platform = MoEPlatform.IOS
   else
-  platform=MoEPlatform.Android
+    platform = MoEPlatform.Android
 
   return new MoEInboxData(platform, [])
 }

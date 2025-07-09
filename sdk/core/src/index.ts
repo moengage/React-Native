@@ -60,6 +60,9 @@ import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
 import MoEAnalyticsConfig from "../src/models/MoEAnalyticsConfig";
 import { MoESupportedAttributes } from "./models/MoESupportedAttributes";
 import * as MoECoreHandler from "./utils/MoECoreHandler";
+import MoEAccessibilityData from "./models/campaignsCore/MoEAccessibilityData";
+import { KEY_ACCESSIBILITY } from "./utils/MoEConstants";
+
 
 const PLATFORM_IOS = "ios";
 const PLATFORM_ANDROID = "android";
@@ -795,7 +798,9 @@ export {
   MoEngageLogLevel,
   MoEngageLogger,
   MoEngageNudgePosition,
-  MoEAnalyticsConfig
+  MoEAnalyticsConfig,
+  MoEAccessibilityData,
+  KEY_ACCESSIBILITY
 };
 export default ReactMoE;
 

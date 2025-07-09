@@ -120,7 +120,7 @@ class MoEngageCardHandler {
             return cardInfo;
         } catch (error) {
             MoEngageLogger.error(`${this.TAG} getCardsInfo() `, error);
-            return new CardInfo(false, [], []);
+            return new CardInfo(false, [], [], null);
         }
     }
 
@@ -161,7 +161,7 @@ class MoEngageCardHandler {
             return cardsData;
         } catch (error) {
             MoEngageLogger.error(`${this.TAG} getCardsForCategory() `, error);
-            return new CardsData(category, []);
+            return new CardsData(category, [], null);
         }
     }
 
@@ -175,7 +175,7 @@ class MoEngageCardHandler {
             return cardsData;
         } catch (error) {
             MoEngageLogger.error(`${this.TAG} fetchCards() `, error);
-            return new CardsData("", []);
+            return new CardsData("", [], null);
         }
     }
 

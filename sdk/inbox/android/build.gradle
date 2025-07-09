@@ -15,9 +15,9 @@ buildscript {
 
 ext {
   //dependency version
-  moengageCoreVersion = "13.06.00"
-  moengageInboxCoreVersion = "3.3.0"
-  pluginBaseInboxVersion = "4.2.0"
+  moengageCoreVersion = "14.02.02"
+  moengageInboxCoreVersion = "4.1.0"
+  pluginBaseInboxVersion = "5.0.0"
 }
 
 apply plugin: 'com.android.library'
@@ -25,10 +25,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.facebook.react'
 
 android {
-  compileSdk 34
+  compileSdk 35
   namespace "com.moengage.react.inbox"
   defaultConfig {
-    minSdk 21
+    minSdk 23
     versionCode 1
     versionName "1.0"
 

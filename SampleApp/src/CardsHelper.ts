@@ -3,6 +3,7 @@ import ReactMoEngageCards from "react-native-moengage-cards";
 import { MoEngageLogger } from "react-native-moengage";
 import { CardsData, CardInfo, Card } from "react-native-moengage-cards";
 import { MOENGAGE_APP_ID } from "./key";
+import StaticImageType from "react-native-moengage-cards/src/model/enums/StaticImageType";
 
 class CardsHelper {
 
@@ -47,19 +48,27 @@ class CardsHelper {
 
     async getCardForCategory(cardCategory): Promise<CardsData> {
         const cardsData = await ReactMoEngageCards.getCardsForCategory(cardCategory);
-        MoEngageLogger.debug(`Cards For ${cardCategory} Category is fetched`);
+        MoEngageLogger.debug(`Cards For ${cardCategory} Category is fetched with cards data: `, JSON.stringify(cardsData));
         return cardsData;
     }
 
     async fetchCards(): Promise<CardsData> {
         const cardsData = await ReactMoEngageCards.fetchCards();
-        MoEngageLogger.debug(`cards is fetched`);
+        MoEngageLogger.debug(`cards is fetched`, JSON.stringify(cardsData));
+        MoEngageLogger.debug(`Cards Category: ${cardsData.category}`);
+        MoEngageLogger.debug(`Static Image Accessibility Data for pinned Card: ${(cardsData.staticImageAccessibilityData?.[StaticImageType.PIN_CARD])}`);
+        MoEngageLogger.debug(`Static Image Accessibility Data for no Card: ${(cardsData.staticImageAccessibilityData?.[StaticImageType.EMPTY_STATE])}`);
+        MoEngageLogger.debug(`Static Image Accessibility Data for loading image: ${(cardsData.staticImageAccessibilityData?.[StaticImageType.LOADING_PLACE_HOLDER])}`);
         return cardsData;
     }
 
     async getCardsInfo(): Promise<CardInfo> {
         const cardInfo = await ReactMoEngageCards.getCardsInfo();
-        MoEngageLogger.debug(`Cards Info is fetched`);
+        MoEngageLogger.debug(`Cards Info is fetched`,  JSON.stringify(cardInfo));
+        MoEngageLogger.debug(`Static Image Accessibility Data for pinned Card: ${(cardInfo.staticImageAccessibilityData?.[StaticImageType.PIN_CARD])}`);
+        MoEngageLogger.debug(`Static Image Accessibility Data for no Card: ${(cardInfo.staticImageAccessibilityData?.[StaticImageType.EMPTY_STATE])}`);
+        MoEngageLogger.debug(`Static Image Accessibility Data for loading image: ${(cardInfo.staticImageAccessibilityData?.[StaticImageType.LOADING_PLACE_HOLDER])}`);
+
         return cardInfo;
     }
 

@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
   s.license             = package['license']
   s.authors             = "MoEngage Inc."
   s.source              = {:file => './' }
-  s.platform            = :ios, "11.0"
-  s.dependency          'MoEngagePluginGeofence', '3.3.2'
+  s.platform            = :ios, "13.0"
+  s.dependency          'MoEngagePluginGeofence', '4.1.0'
   s.dependency          'React'
   s.dependency 'ReactNativeMoEngage'
   s.source_files        = "ios/**/*.{h,m,mm,swift}"

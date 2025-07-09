@@ -10,6 +10,7 @@
 
 @protocol SFSafariViewControllerDelegate;
 @class MoEngageReactSDKInitializationConfig;
+#import <UserNotifications/UserNotifications.h>
 #import <MoEngageSDK/MoEngageSDK.h>
 
 NS_ASSUME_NONNULL_BEGIN
