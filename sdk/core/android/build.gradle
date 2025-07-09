@@ -20,9 +20,9 @@ rootProject.allprojects {
 
 ext {
   //dependency version
-  moengageCoreVersion = "14.02.00"
-  moengageInAppVersion = "9.1.0"
-  basePluginVersion = "5.5.0-SNAPSHOT"
+  moengageCoreVersion = "14.02.02"
+  moengageInAppVersion = "9.1.1"
+  basePluginVersion = "5.0.0"
   //build versions
   minimumVersion = 23
   compileVersion = 35

@@ -16,9 +16,10 @@ buildscript {
 
 ext {
   //dependency version
-  moengageCoreVersion = "14.02.00"
-  moengageCardsCoreVersion = "3.0.0"
-  pluginBaseCardVersion = "3.1.0"
+  moengageCoreVersion = "14.02.02"
+  moengageCardsCoreVersion = "3.1.0"
+  pluginBaseCardVersion = "4.0.0"
+  pluginBaseVersion = "5.0.0"
 }
 
 apply plugin: 'com.android.library'
@@ -80,6 +81,7 @@ dependencies {
     compileOnly("com.moengage:moe-android-sdk:$moengageCoreVersion")
     api("com.moengage:cards-core:$moengageCardsCoreVersion")
     implementation("com.moengage:plugin-base-cards:$pluginBaseCardVersion")
+    compileOnly("com.moengage:plugin-base:$pluginBaseVersion")
 }
 
 def isNewArchitectureEnabled() {

@@ -1,4 +1,6 @@
 import Card from "./Card";
+import StaticImageType from "./enums/StaticImageType";
+import { MoEAccessibilityData } from "react-native-moengage";
 
 /**
  * All data for cards.
@@ -26,10 +28,18 @@ class CardInfo {
      */
     cards: Array<Card>;
 
-    constructor(shouldShowAllTab: boolean, categories: Array<string>, cards: Array<Card>) {
+    /**
+     * Accessibility data for static images used in cards.
+     * 
+     * @since 6.0.0
+     */ 
+    staticImageAccessibilityData:  { [key in StaticImageType]: MoEAccessibilityData } | null;
+
+    constructor(shouldShowAllTab: boolean, categories: Array<string>, cards: Array<Card>, staticImageAccessibilityData:  { [key in StaticImageType]: MoEAccessibilityData } | null) {
         this.shouldShowAllTab = shouldShowAllTab;
         this.categories = categories;
         this.cards = cards;
+        this.staticImageAccessibilityData = staticImageAccessibilityData;
     }
 }
 

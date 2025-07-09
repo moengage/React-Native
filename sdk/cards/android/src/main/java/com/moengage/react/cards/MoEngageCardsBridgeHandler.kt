@@ -19,7 +19,8 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.moengage.core.LogLevel
 import com.moengage.core.internal.logger.Logger
 import com.moengage.plugin.base.cards.CardsPluginHelper
-import com.moengage.plugin.base.cards.internal.cardListToJson
+import com.moengage.plugin.base.cards.internal.cardDataToJson
+import com.moengage.plugin.base.internal.instanceMetaFromJson
 import com.moengage.plugin.base.cards.internal.setCardsEventEmitter
 import org.json.JSONObject
 
@@ -181,14 +182,8 @@ internal class MoEngageCardsBridgeHandler(private val reactContext: ReactApplica
         try {
             Logger.print { "$tag fetchCards() : $payload" }
             val accountMetaPayload = JSONObject(payload)
-            cardsPluginHelper.fetchCards(context, payload) { cardsData ->
-                val response = JSONObject()
-                response.put(ARGUMENT_ACCOUNT_META, accountMetaPayload)
-                val cardData = JSONObject()
-                cardData.put(ARGUMENT_CARDS, cardListToJson(cardsData?.cards ?: emptyList()))
-                response.put(ARGUMENT_DATA, cardData)
-
-                promise.resolve(response.toString())
+            cardsPluginHelper.fetchCards(context, payload) { cardData ->
+                promise.resolve(cardDataToJson(cardData, instanceMetaFromJson(JSONObject(payload))).toString())
             }
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag fetchCards() : " }
