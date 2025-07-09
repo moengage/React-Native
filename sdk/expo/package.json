@@ -8,7 +8,7 @@
   "main": "build/index.js",
   "files": [
     "android",
-    "ios",
+    "apple",
     "src",
     "build",
     "CHANGELOG.md",
@@ -28,6 +28,7 @@
     "push-notification",
     "react-native",
     "ios",
+    "tvos",
     "android",
     "device",
     "events",

@@ -49,6 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Initialize Default Instance of SDK with Application's `Info.plist` data with optional react config.
 /// @param ractConfig Additional MoEngageReactSDKDefaultInitializationConfig.
 - (void)initializeDefaultInstanceWithAdditionalReactConfig:(MoEngageReactSDKDefaultInitializationConfig*)ractConfig;
+
+/// Intenal method, not for public use.
+- (void)setPluginBridgeDelegate: (NSString*)identifier;
 @end
 
 NS_ASSUME_NONNULL_END
