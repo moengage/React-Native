@@ -1,0 +1,15 @@
+import groovy.json.JsonSlurper
+
+String libraryVersionName = "UNKNOWN"
+File packageJson = new File(project.projectDir.parentFile, "package.json")
+
+if (packageJson.exists()) {
+  def parsedJson = new JsonSlurper().parseText(packageJson.text)
+  libraryVersionName = parsedJson.version
+}
+
+android {
+  defaultConfig {
+    buildConfigField 'String', 'MOENGAGE_REACT_EXPO_LIB_VERSION', "\"${libraryVersionName}\""
+  }
+}

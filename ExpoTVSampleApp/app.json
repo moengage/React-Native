@@ -1,0 +1,78 @@
+{
+  "expo": {
+    "plugins": [
+      [
+        "@react-native-tvos/config-tv",
+        {
+          "androidTVBanner": "./assets/images/icon-400x240.png",
+          "appleTVImages": {
+            "icon": "./assets/images/icon-1280x768.png",
+            "iconSmall": "./assets/images/icon-400x240.png",
+            "iconSmall2x": "./assets/images/icon-800x480.png",
+            "topShelf": "./assets/images/icon-1920x720.png",
+            "topShelf2x": "./assets/images/icon-3840x1440.png",
+            "topShelfWide": "./assets/images/icon-2320x720.png",
+            "topShelfWide2x": "./assets/images/icon-4640x1440.png"
+          }
+        }
+      ],
+      [
+        "react-native-expo-moengage",
+        {
+          "android": {
+            "disableMoEngageDefaultBackupFile": false,
+            "configFilePath": "assets/moengage/android_initilisation_config.xml"
+          },
+          "apple": {
+            "configFilePath": "assets/moengage/MoEngage-Config.plist",
+            "pushNotificationImpressionTrackingEnabled": true,
+            "richPushNotificationEnabled": true,
+            "pushTemplatesEnabled": true,
+            "deviceTriggerEnabled": true
+          }
+        }
+      ]
+    ],
+    "android": {
+      "edgeToEdgeEnabled": true,
+      "splash": {
+        "image": "./assets/images/icon-1920x720.png"
+      },
+      "package": "com.moengage.MoETVTest"
+    },
+    "ios": {
+      "splash": {
+        "image": "./assets/images/icon-1920x720.png"
+      },
+      "supportsTablet": true,
+      "appleTeamId": "BPWYRAF5X7",
+      "bundleIdentifier": "com.moengage.MoETVTest",
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleTypeRole": "Editor",
+            "CFBundleURLName": "com.moengage.MoETVTest",
+            "CFBundleURLSchemes": [
+              "moeapp"
+            ]
+          }
+        ],
+        "LSApplicationQueriesSchemes": [
+          "moeapp"
+        ],
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Location Services are required for testing Geofence.",
+        "NSLocationAlwaysUsageDescription": "Location Services are required for testing Geofence.",
+        "NSLocationWhenInUseUsageDescription": "Location Services are required for testing Geofence.",
+        "NSUserTrackingUsageDescription": "MoETest would like to access IDFA for tracking purpose"
+      },
+      "entitlements": {
+        "com.apple.developer.associated-domains": [
+          "applinks:moedemo-93e2e.firebaseapp.com"
+        ]
+      }
+    },
+    "newArchEnabled": true,
+    "name": "ExpoTVSampleApp",
+    "slug": "ExpoTVSampleApp"
+  }
+}
