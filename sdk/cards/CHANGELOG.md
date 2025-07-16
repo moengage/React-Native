@@ -6,7 +6,7 @@
     - [major] Min SDK Version updated to `23`
     - [major] Compiled SDK Version updated to `35`
 - iOS
-    - [major] `MoEngagePluginCards` version updated to `3.3.0`
+    - [major] `MoEngagePluginCards` version updated to `3.3.1`
     - [major] Minimum iOS deployment target updated to `13`
   
 # 16-04-2025
