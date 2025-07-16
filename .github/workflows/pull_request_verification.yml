@@ -21,7 +21,7 @@ jobs:
       - name: Automation script setup
         uses: ./sdk-automation-scripts/actions/npm-repository-setup
       - name: Setup dev environment
-        uses: ./scripts/actions/ios-action-setup
+        uses: ./sdk-automation-scripts/actions/ios-action-setup
         env:
           SDK_BOT_ACCESS_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Checkout code
