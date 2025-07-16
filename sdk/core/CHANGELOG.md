@@ -2,7 +2,8 @@
 
 ## Release Version
 
-- Added support for Simplify Inapp Triggers.
+- [minor] Added support for Simplify Inapp Triggers.
+- [minor] Added support for file based initialisation configuration
 - Android
     - [major] Min SDK version updated to `23`
     - [major] Compiled SDK version updated to `35`

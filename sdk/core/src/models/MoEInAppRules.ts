@@ -24,5 +24,4 @@ export default class MoEInAppRules {
         this.contexts = contexts;
         this.screenNames = screenNames;
     }
-
 }

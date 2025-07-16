@@ -15,7 +15,7 @@ buildscript {
 
 ext {
   //dependency version
-  moengageCoreVersion = "14.02.02"
+  moengageCoreVersion = "14.03.00"
   moengageInboxCoreVersion = "4.1.0"
   pluginBaseInboxVersion = "5.0.0"
 }

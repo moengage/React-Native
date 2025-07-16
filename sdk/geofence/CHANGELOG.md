@@ -13,7 +13,6 @@
 ## 6.1.1
 - iOS
     - `MoEngagePluginGeofence` version updated to `3.3.2`
-    - [major] Minimum iOS deployment target updated to `13`
 
 # 24-03-2025
 
