@@ -23,7 +23,7 @@ target 'SampleApp' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  # test_pluginbase_source = { :git => 'https://github.com/moengage/iOS-PluginBase.git', :branch => 'MOEN-38539_Version-Upgrade' }
+  # test_pluginbase_source = { :git => 'https://github.com/moengage/iOS-PluginBase.git', :branch => 'MOEN-38662_file-initialization' }
   # pod 'MoEngagePluginBase', **test_pluginbase_source
   # pod 'MoEngagePluginCards', **test_pluginbase_source
   # pod 'MoEngagePluginInbox', **test_pluginbase_source

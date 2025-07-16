@@ -7,7 +7,7 @@ on:
     branches: [ "development", "master" ]
 jobs:
   verify-ios:
-    runs-on: macos-latest
+    runs-on: macos-15
     if: ${{ !github.event.pull_request.draft }}
     strategy:
       fail-fast: true
@@ -19,7 +19,11 @@ jobs:
           path: sdk-automation-scripts
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Automation script setup
-        uses: ./sdk-automation-scripts/actions/npm-repository-setup    
+        uses: ./sdk-automation-scripts/actions/npm-repository-setup
+      - name: Setup dev environment
+        uses: ./sdk-automation-scripts/actions/ios-action-setup
+        env:
+          SDK_BOT_ACCESS_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Checkout code
         uses: actions/checkout@v3
         with: 

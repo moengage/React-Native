@@ -54,6 +54,22 @@
     [self commonSetUp: plugin identifier:config.sdkConfig.appId];
 }
 
+- (void)initializeDefaultInstanceWithAdditionalConfig:(MoEngageSDKDefaultInitializationConfig*)config {
+    MoEngagePlugin* plugin = [[MoEngagePlugin alloc] init];
+    MoEngageSDKConfig* sdkConfig = [plugin initializeDefaultInstanceWithAdditionalConfig:config];
+    if (!sdkConfig) {
+        return;
+    }
+    [self commonSetUp:plugin identifier:sdkConfig.appId];
+}
+
+- (void)initializeDefaultInstanceWithAdditionalReactConfig:(MoEngageReactSDKDefaultInitializationConfig*)ractConfig {
+    MoEngageSDKDefaultInitializationConfig *config = [[MoEngageSDKDefaultInitializationConfig alloc] init];
+    config.launchOptions = ractConfig.launchOptions;
+    config.environment = ractConfig.environment;
+    [self initializeDefaultInstanceWithAdditionalConfig:config];
+}
+
 #pragma mark- Utils
 
 - (void)commonSetUp:(MoEngagePlugin *)plugin identifier:(NSString*)identifier {

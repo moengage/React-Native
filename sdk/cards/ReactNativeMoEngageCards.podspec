@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.source_files = "ios/**/*.{h,m,mm,swift}"
   s.public_header_files = 'ios/**/*.h'
   s.dependency          'React'
-  s.dependency          'MoEngagePluginCards','3.2.0'
+  s.dependency          'MoEngagePluginCards','3.3.1'
   s.dependency 'ReactNativeMoEngage'
   s.module_map = false
 
