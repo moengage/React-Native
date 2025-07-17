@@ -1,13 +1,13 @@
-# Release Date
+# 17-07-2025
 
-## Release Version
-- [minor] Added Accessibility support in cards
+## 6.0.0
+- Added Accessibility support in cards
 - Android
-    - [major] Min SDK Version updated to `23`
-    - [major] Compiled SDK Version updated to `35`
+    - Min SDK Version updated to `23`
+    - Compiled SDK Version updated to `35`
 - iOS
-    - [major] `MoEngagePluginCards` version updated to `3.3.1`
-    - [major] Minimum iOS deployment target updated to `13`
+    - `MoEngagePluginCards` version updated to `3.3.1`
+    - Minimum iOS deployment target updated to `13`
   
 # 16-04-2025
 

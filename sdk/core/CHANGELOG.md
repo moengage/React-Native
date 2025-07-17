@@ -1,20 +1,20 @@
-# Release Date
+# 17-07-2025
 
-## Release Version
+## 12.0.0
 
-- [minor] Added support for Simplify Inapp Triggers.
-- [minor] Added support for file based initialisation configuration
+- Added support for Simplify Inapp Triggers.
+- Added support for file based initialisation configuration
 - Android
-    - [major] Min SDK version updated to `23`
-    - [major] Compiled SDK version updated to `35`
-    - [major] Removed deprecated APIs
+    - Min SDK version updated to `23`
+    - Compiled SDK version updated to `35`
+    - Removed deprecated APIs
       | Then                                                           | Now                                                                            |
       |:--------------------------------------------------------------:|:------------------------------------------------------------------------------:|
       | MoEInitializer#initialize(Context, MoEngage.Builder)           | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder)            |
       | MoEInitializer#initialize(Context, MoEngage.Builder, SdkState) | MoEInitializer#initializeDefaultInstance(Context, MoEngage.Builder, SdkState)  |
 - iOS
-    - [major] Minimum iOS and tvOS deployment target updated to `13`
-    - [major] `MoEngage-iOS-SDK` version updated to `10.03.1`
+    - Minimum iOS and tvOS deployment target updated to `13`
+    - `MoEngage-iOS-SDK` version updated to `10.03.1`
   
 # 24-04-2025
 

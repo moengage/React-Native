@@ -1,12 +1,12 @@
-# Release Date
+# 17-07-2025
 
-## Release Version
+## 6.0.0
 - Android
-  - [major] Min SDK Version updated to `23`
-  - [major] Compiled SDK Version updated to `35`
+  - Min SDK Version updated to `23`
+  - Compiled SDK Version updated to `35`
 - iOS
-  - [major] `MoEngagePluginInbox` version updated to `4.2.1`
-  - [major] Minimum iOS deployment target updated to `13`
+  - `MoEngagePluginInbox` version updated to `4.2.1`
+  - Minimum iOS deployment target updated to `13`
 
 # 16-04-2025
 
