@@ -1,3 +1,8 @@
+# Release Date
+
+## Release Version
+- [patch] Updated peer dependency `react-native-moengage` to `12.0.0`
+
 # 17-07-2025
 
 ## 7.0.0

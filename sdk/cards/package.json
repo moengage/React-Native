@@ -30,7 +30,7 @@
   },
   "license": "SEE LICENSE IN LICENSE.txt",
   "peerDependencies": {
-    "react-native-moengage": "^11.0.0"
+    "react-native-moengage": "^12.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",
