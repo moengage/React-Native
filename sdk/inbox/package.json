@@ -35,7 +35,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "peerDependencies": {
-    "react-native-moengage": "^11.0.0"
+    "react-native-moengage": "^12.0.0"
   },
   "license": "SEE LICENSE IN LICENSE.txt",
   "devDependencies": {
