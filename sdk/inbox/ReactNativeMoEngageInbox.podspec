@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.public_header_files = 'ios/**/*.h'
 
   s.dependency "React-Core"
-  s.dependency "MoEngagePluginInbox",'4.2.1'
+  s.dependency "MoEngagePluginInbox",'4.2.2'
   s.dependency 'ReactNativeMoEngage'
   s.module_map = false
 
