@@ -1,6 +1,6 @@
-# 16-04-2025
+# Release Date
 
-## 6.0.2
+## Release Version
 - iOS
     - [patch] `MoEngagePluginInbox` version updated to `4.2.2`
 

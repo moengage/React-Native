@@ -1,6 +1,6 @@
-# 25-07-2025
+# Release Date
 
-## 12.0.1
+## Release Version
 - iOS
   - [patch] `MoEngage-iOS-SDK` version updated to `10.03.2`
 

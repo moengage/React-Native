@@ -1,6 +1,6 @@
-# 25-07-2025
+# Release Date
 
-## 7.0.2
+## Release Version
 - iOS
   - [patch] `MoEngagePluginGeofence` version updated to `4.2.2`
 
