@@ -18,7 +18,8 @@
     "!**/__mocks__"
   ],
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "echo \"Not required\" && exit 0"
   },
   "keywords": [
     "react-native",

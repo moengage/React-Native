@@ -25,7 +25,8 @@
     "geofence"
   ],
   "scripts": {
-    "test": "echo \"Test cases not available\" && exit 0"
+    "test": "echo \"Test cases not available\" && exit 0",
+    "build": "echo \"Not required\" && exit 0"
   },
   "author": {
     "name": "MoEngage",
