@@ -1,5 +1,5 @@
-# Release Date
+# 29-07-2025
 
-## Release Version
+## 1.0.0
 
-- [major] Support for Expo Plugin
+- Support for Expo Plugin
