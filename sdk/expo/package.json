@@ -1,6 +1,6 @@
 {
   "name": "react-native-expo-moengage",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "dependencyVersions": {
     "firebaseMessaging": "24.1.0"
   },

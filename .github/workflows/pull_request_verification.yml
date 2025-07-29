@@ -70,7 +70,7 @@ jobs:
         working-directory: source
         run: |
           kotlinc -script .github/scripts/verify-plugins.main.kts react-native
-      - name: Verify Android 
+      - name: Verify Android
         working-directory: source
         run: |
           kotlinc -script .github/scripts/verify-plugins.main.kts android
