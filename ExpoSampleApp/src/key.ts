@@ -1,0 +1,1 @@
+export const WORKSPACE_ID = "YOUR_WORKSPACE_ID";

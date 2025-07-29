@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+ext {
+  minimumVersion = 23
+  compileVersion = 35
+}
+
+android {
+    compileSdk compileVersion
+    namespace "expo.modules.moengage"
+
+    defaultConfig {
+        minSdk minimumVersion
+        versionCode 1
+        versionName "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        freeCompilerArgs = ['-Xjvm-default=all']
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+dependencies {
+    implementation(project(':expo-modules-core'))
+    implementation(project(':react-native-moengage'))
+    compileOnly("host.exp.exponent:expo.modules.notifications:+")
+    compileOnly('com.google.firebase:firebase-messaging:24.1.0')
+    compileOnly('com.facebook.react:react-native')
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+}
+
+apply from: file("./user-agent.gradle")

@@ -1,5 +1,6 @@
 buildscript {
   ext.kotlinVersion = '1.9.23'
+
   repositories {
     google()
     mavenCentral()
@@ -19,11 +20,6 @@ rootProject.allprojects {
 }
 
 ext {
-  //dependency version
-  moengageCoreVersion = "14.03.00"
-  moengageInAppVersion = "9.2.0"
-  basePluginVersion = "5.1.0"
-  //build versions
   minimumVersion = 23
   compileVersion = 35
 }
@@ -80,17 +76,10 @@ dependencies {
 
   compileOnly('com.facebook.react:react-native')
   compileOnly("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
-  
-  api("com.moengage:moe-android-sdk:$moengageCoreVersion")
-  api("com.moengage:inapp:$moengageInAppVersion")
-  api("com.moengage:plugin-base:$basePluginVersion")
 }
 
 apply from: file("./user-agent.gradle")
-
-repositories {
-  mavenCentral()
-}
+apply from: file("./moengage-dependency-helper.gradle")
 
 def isNewArchitectureEnabled() {
   return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"

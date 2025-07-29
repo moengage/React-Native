@@ -63,6 +63,7 @@ import * as MoECoreHandler from "./utils/MoECoreHandler";
 import MoEAccessibilityData from "./models/campaignsCore/MoEAccessibilityData";
 import { KEY_ACCESSIBILITY } from "./utils/MoEConstants";
 
+import MoEngagePersimissionResultData from "./models/MoEngagePersimissionResultData";
 
 const PLATFORM_IOS = "ios";
 const PLATFORM_ANDROID = "android";
@@ -134,8 +135,14 @@ function handleEventBroadcast(type: string | String, broadcast: string) {
   });
 }
 
-export type NotificationEventName = 'pushTokenGenerated' | 'pushClicked' | 'inAppCampaignShown' | 'inAppCampaignClicked' | 'inAppCampaignDismissed' | 'inAppCampaignCustomAction' | 'inAppCampaignSelfHandled';
-
+export type NotificationEventName = 'pushTokenGenerated' | 
+  'pushClicked' | 
+  'inAppCampaignShown' | 
+  'inAppCampaignClicked' | 
+  'inAppCampaignDismissed' | 
+  'inAppCampaignCustomAction' | 
+  'inAppCampaignSelfHandled' | 
+  'permissionResult';
 
 type NotificationEventTypeMap = {
   "pushTokenGenerated": MoEPushToken,
@@ -144,7 +151,8 @@ type NotificationEventTypeMap = {
   "inAppCampaignClicked": MoEInAppData,
   "inAppCampaignDismissed": MoEInAppData,
   "inAppCampaignCustomAction": MoEInAppData,
-  "inAppCampaignSelfHandled": MoESelfHandledCampaignData
+  "inAppCampaignSelfHandled": MoESelfHandledCampaignData,
+  "permissionResult": MoEngagePersimissionResultData
 }
 
 var ReactMoE = {

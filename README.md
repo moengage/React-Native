@@ -6,13 +6,15 @@ This repository contains the React-Native plugins for the [MoEngage](https://www
 
 ### Repository Description
 
-| Folder    | Description                                                                       |
-|:---------:|:---------------------------------------------------------------------------------:|
-| core      | Contains the implementation for the SDK implementation for Core MoEngage Platform |
-| inbox     | Contains the implementation for the SDK implementation for Inbox Feature          |
-| cards     | Contains the implementation for the SDK implementation for Cards Feature          |
-| geofence  | Contains the implementation for the SDK implementation for Geofence Feature       |
-| SampleApp | Sample Integration for reference.                                                 |
+|    Folder     | Description                                                                                   |
+|:-------------:|:---------------------------------------------------------------------------------------------:|
+|     core      | Contains the implementation for the SDK implementation for Core MoEngage Platform             |
+|     inbox     | Contains the implementation for the SDK implementation for Inbox Feature                      |
+|     cards     | Contains the implementation for the SDK implementation for Cards Feature                      |
+|   geofence    | Contains the implementation for the SDK implementation for Geofence Feature                   |
+|     expo      | Contains the implementation for the prebuild plugin to configure SDK native implementation    |
+|   SampleApp   | Sample Integration for reference.                                                             |
+| ExpoSampleApp | Expo Sample Integration for reference.                                                        |
 
 
 ## How to use the sample application?
@@ -42,3 +44,11 @@ moengageAppId=YOUR_APP_ID
 ```objc
 MoEngageSDKConfig *config = [[MoEngageSDKConfig alloc] initWithAppID:@"YOUR_APP_ID"];
 ```
+
+## How to use the Expo Sample App
+
+- Update your workspace id in the below files
+    - ExpoSampleApp > src > key.ts
+    - ExpoSampleApp > assets > moengage > android_initilisation_config.xml
+
+- Update google services json file in ExpoSampleApp > assets > google-services.json

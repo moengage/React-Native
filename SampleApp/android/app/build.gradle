@@ -169,13 +169,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
-    // MoEngage Dependencies
-    implementation(moengage.richNotification)
-
-    // Other Dependencies
-    implementation(moengage.androidXCore)
-    implementation(moengage.androidXCompact)
-    implementation(moengage.androidXLifecycle)
+    
     implementation(moengage.firebaseMessaging)
     implementation(moengage.gmsPlayAdIdentifier)
     implementation(moengage.gmsPlayLocation)

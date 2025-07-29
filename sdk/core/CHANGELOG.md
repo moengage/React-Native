@@ -1,6 +1,8 @@
 # Release Date
 
 ## Release Version
+- Android
+  - [minor] Added support to include optional module using configuration in package json file
 - iOS
   - [patch] `MoEngage-iOS-SDK` version updated to `10.03.2`
 
