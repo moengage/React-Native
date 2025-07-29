@@ -64,6 +64,6 @@
     "expo-notifications": "^0.31.3"
   },
   "peerDependencies": {
-    "react-native-moengage": "^11.2.2"
+    "react-native-moengage": "^12.1.0"
   }
 }

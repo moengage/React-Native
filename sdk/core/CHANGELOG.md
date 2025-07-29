@@ -3,12 +3,12 @@
 ## Release Version
 - iOS
   - [patch] `MoEngage-iOS-SDK` version updated to `10.03.2`
+  - [minor] Added support to include optional module using configuration in package json file
 
 # 17-07-2025
 
 ## 12.0.0
 
-- [minor] Added support to include optional module using configuration in package json file
 - Added support for Simplify Inapp Triggers.
 - Added support for file based initialisation configuration
 - Android
