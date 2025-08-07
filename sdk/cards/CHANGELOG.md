@@ -3,7 +3,7 @@
 ## Release Version
 
 - Android
-  - `cards-core` version updated to `3.1.1`
+  - [patch] `cards-core` version updated to `3.1.1`
 
 
 # 29-07-2025
