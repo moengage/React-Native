@@ -1,3 +1,11 @@
+# Release Date
+
+## Release Version
+
+- Android
+  - `cards-core` version updated to `3.1.1`
+
+
 # 29-07-2025
 
 ## 6.0.2
