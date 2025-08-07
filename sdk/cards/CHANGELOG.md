@@ -1,9 +1,9 @@
-# Release Date
+# 07-08-2025
 
-## Release Version
+## 6.0.3
 
 - Android
-  - [patch] `cards-core` version updated to `3.1.1`
+  - `cards-core` version updated to `3.1.1`
 
 
 # 29-07-2025
