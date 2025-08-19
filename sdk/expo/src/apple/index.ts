@@ -4,7 +4,8 @@ import { withMoEngageInfoPlist } from "./withInfoPlist";
 import { withMoEngageEntitlements } from "./withEntitlements";
 import { withMoEngageXcodeProject } from "./withXcodeProject";
 import { withMoEngageDangerousMod } from "./withDangerousMod";
-import * as constants from './constants';
+import * as constants from "./constants";
+import { withEASManagedProject } from "./withEasManagedProject";
 
 /**
  * The main iOS plugin that applies all modifiers to set up MoEngage iOS integration
@@ -17,22 +18,32 @@ import * as constants from './constants';
  * 2. withMoEngageEntitlements - Sets up app groups and other entitlements
  * 3. withMoEngageXcodeProject - Configures the Xcode project with extension targets
  * 4. withMoEngageDangerousMod - Performs file operations and updates Podfile
+ * 5. withEASManagedProject - Adds any targets to config.extra.eas.build.experimental.ios.appExtensions, to assist with automatic provisioning profile generation via EAS build.
  *
  * @param config - The Expo config object
  * @param props - The MoEngage plugin properties
  * @returns The fully configured Expo config
  */
-export const withMoEngageIos: ConfigPlugin<MoEngagePluginProps> = (config, props) => {
+export const withMoEngageIos: ConfigPlugin<MoEngagePluginProps> = (
+  config,
+  props
+) => {
   config = withMoEngageInfoPlist(config, props);
   config = withMoEngageEntitlements(config, props);
   config = withMoEngageXcodeProject(config, props);
   config = withMoEngageDangerousMod(config, props);
+  config = withEASManagedProject(config, props);
   return config;
 };
 
 // Export all constants and individual modifiers for advanced usage
 export { constants };
-export { withMoEngageInfoPlist, withMoEngageEntitlements, withMoEngageXcodeProject, withMoEngageDangerousMod };
+export {
+  withMoEngageInfoPlist,
+  withMoEngageEntitlements,
+  withMoEngageXcodeProject,
+  withMoEngageDangerousMod,
+};
 
 // Default export
 export default withMoEngageIos;
