@@ -28,7 +28,8 @@
         "NSLocationAlwaysAndWhenInUseUsageDescription": "Location Services are required for testing Geofence.",
         "NSLocationAlwaysUsageDescription": "Location Services are required for testing Geofence.",
         "NSLocationWhenInUseUsageDescription": "Location Services are required for testing Geofence.",
-        "NSUserTrackingUsageDescription": "MoETest would like to access IDFA for tracking purpose"
+        "NSUserTrackingUsageDescription": "MoETest would like to access IDFA for tracking purpose",
+        "ITSAppUsesNonExemptEncryption": false
       },
       "entitlements": {
         "aps-environment": "development",
@@ -108,6 +109,37 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "targetName": "MoEngageExpoRichPush",
+                  "bundleIdentifier": "com.alphadevs.MoEngage.MoEngageExpoRichPush",
+                  "entitlements": {
+                    "com.apple.security.application-groups": ["group.com.alphadevs.MoEngage.NotificationServices"]
+                  }
+                },
+                {
+                  "targetName": "MoEngageExpoPushTemplates",
+                  "bundleIdentifier": "com.alphadevs.MoEngage.MoEngageExpoPushTemplates",
+                  "entitlements": {
+                    "com.apple.security.application-groups": ["group.com.alphadevs.MoEngage.NotificationServices"]
+                  }
+                },
+                {
+                  "targetName": "MoEngageExpoLiveActivity",
+                  "bundleIdentifier": "com.alphadevs.MoEngage.MoEngageExpoLiveActivity"
+                }
+              ]
+            }
+          }
+        }
+      }
     }
   }
 }
