@@ -1,8 +1,8 @@
-# Release Date
+# 25-08-2025
 
-## Release Version
+## 1.0.1
 
-- [patch] Remove `postinstall` hook to support project without typescript and [workaround yarn bug](https://github.com/yarnpkg/yarn/issues/7694).
+- Remove `postinstall` hook to support project without typescript and [workaround yarn bug](https://github.com/yarnpkg/yarn/issues/7694).
 
 # 29-07-2025
 
