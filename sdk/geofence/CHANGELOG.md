@@ -2,7 +2,7 @@
 
 ## Release Version
 - iOS
-  - `MoEngage-iOS-SDK` version updated to `10.05.0`
+  - MoEngageGeofence version updated to `6.00.2`
 
 # 29-07-2025
 

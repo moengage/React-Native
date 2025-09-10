@@ -2,7 +2,7 @@
 
 ## Release Version
 - iOS
-    - `MoEngage-iOS-SDK` version updated to `10.05.0`
+    - MoEngageCards version updated to `5.01.4`
 
 # 07-08-2025
 

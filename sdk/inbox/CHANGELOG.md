@@ -2,7 +2,7 @@
 
 ## Release Version
 - iOS
-  - `MoEngage-iOS-SDK` version updated to `10.05.0`
+  - MoEngageInbox version updated to `3.01.1`
 
 # 29-07-2025
 
