@@ -7,7 +7,7 @@ repositories {
 
 ext {
     // MoEngage Versions
-    moengageCoreVersion = "14.03.00"
+    moengageCoreVersion = "14.03.03"
     moengageInAppVersion = "9.2.0"
     moengageRichNotification = "6.2.0"
     moengageSecurity = "4.0.0"
@@ -15,7 +15,7 @@ ext {
     moengagePushAmp = "6.1.0"
     moengageHmsPushkit = "6.1.0"
     moengageDeviceTrigger = "4.1.0"
-    moengageBasePluginVersion = "5.1.0"
+    moengageBasePluginVersion = "5.1.1"
 
     // AndroidX Support Libraries Versions
     androidXCore = "1.15.0"
