@@ -1,11 +1,11 @@
-# Release Date
+# 11-09-2025
 
-## Release Version
+## 6.0.4
 
 - iOS
-  - [patch] MoEngageCards version updated to `5.01.4`
+  - MoEngageCards version updated to `5.01.4`
 - Android
-  - [patch] `cards-core` version updated to `3.1.2`
+  - `cards-core` version updated to `3.1.2`
 
 # 07-08-2025
 

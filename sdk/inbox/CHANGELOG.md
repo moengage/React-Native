@@ -1,11 +1,11 @@
-# Release Date
+# 11-09-2025
 
-## Release Version
+## 6.0.3
 
 - iOS
-  - [patch]MoEngageInbox version updated to `3.01.1`
+  -MoEngageInbox version updated to `3.01.1`
 - Android
-  - [patch]`inbox-core` version updated to `5.0.1`
+  -`inbox-core` version updated to `5.0.1`
 
 # 29-07-2025
 
