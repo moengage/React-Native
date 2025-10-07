@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+
+- Android
+  - [patch] `cards-core` version updated to `3.1.3`
+
 # 11-09-2025
 
 ## 6.0.4

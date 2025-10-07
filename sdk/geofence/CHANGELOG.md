@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+
+- Android
+  - [patch] `geofence` version updated to `5.0.3`
+
 # 11-09-2025
 
 ## 7.0.3
@@ -5,7 +12,7 @@
 - iOS
   -MoEngageGeofence version updated to `6.00.2`
 - Android
-  -`geofence` version updated to `5.0.1`
+  - `geofence` version updated to `5.0.1`
 
 # 29-07-2025
 
