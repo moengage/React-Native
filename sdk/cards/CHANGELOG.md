@@ -4,6 +4,8 @@
 
 - Android
   - [patch] `cards-core` version updated to `3.1.3`
+- iOS
+  - [patch] `MoEngageCards` version updated to `5.01.5`
 
 # 11-09-2025
 

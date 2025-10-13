@@ -4,6 +4,8 @@
 
 - Android
   - [patch] internal improvements in inbox plugin base
+- iOS
+  -[patch] `MoEngageInbox` version updated to `3.01.2`
 
 # 11-09-2025
 
