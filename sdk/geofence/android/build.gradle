@@ -15,9 +15,9 @@ buildscript {
 
 ext {
   //dependency version
-  moengageCoreVersion = "14.03.03"
-  moengageGeofenceVersion = "5.0.1"
-  pluginBaseGeofenceVersion = "3.0.1"
+  moengageCoreVersion = "14.03.05"
+  moengageGeofenceVersion = "5.0.3"
+  pluginBaseGeofenceVersion = "3.0.2"
 }
 
 apply plugin: 'com.android.library'

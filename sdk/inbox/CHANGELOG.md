@@ -1,3 +1,12 @@
+# Release Date
+
+## Release Version
+
+- Android
+  - [patch] internal improvements in inbox plugin base
+- iOS
+  - [patch] `MoEngageInbox` version updated to `3.01.2`
+
 # 11-09-2025
 
 ## 6.0.3
@@ -5,7 +14,7 @@
 - iOS
   -MoEngageInbox version updated to `3.01.1`
 - Android
-  -`inbox-core` version updated to `5.0.1`
+  - `inbox-core` version updated to `4.1.0`
 
 # 29-07-2025
 
