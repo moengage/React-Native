@@ -1,11 +1,11 @@
-# Release Date
+# 17-10-2025
 
-## Release Version
+## 12.3.0
 
 - Android
-  - [patch] `moe-android-sdk` version updated to `14.03.05`
+  - `moe-android-sdk` version updated to `14.03.05`
 - iOS
-  - [minor] `MoEngage-iOS-SDK` version updated to `10.07.2`
+  - `MoEngage-iOS-SDK` version updated to `10.07.2`
 
 # 11-09-2025
 
