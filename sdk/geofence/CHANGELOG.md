@@ -5,7 +5,7 @@
 - Android
   - [patch] `geofence` version updated to `5.0.3`
 - iOS
-  - [patch] Internal dependency version update.
+  - [patch] `MoEngageGeofence` version updated to `6.00.3`
 
 # 11-09-2025
 

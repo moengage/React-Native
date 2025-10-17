@@ -5,7 +5,7 @@
 - Android
   - [patch] `moe-android-sdk` version updated to `14.03.05`
 - iOS
- - [minor] `MoEngage-iOS-SDK` version updated to `10.07.1`
+ - [minor] `MoEngage-iOS-SDK` version updated to `10.07.2`
 
 # 11-09-2025
 
