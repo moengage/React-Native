@@ -15,11 +15,8 @@ buildscript {
 }
 
 ext {
-  //dependency version
-  moengageCoreVersion = "14.03.05"
-  moengageCardsCoreVersion = "3.1.3"
-  pluginBaseCardVersion = "4.0.2"
-  pluginBaseVersion = "5.1.3"
+    moengageNativeBOMVersion = "1.1.1"
+    moengagePluginBaseBOMVersion = "1.1.0"
 }
 
 apply plugin: 'com.android.library'
@@ -78,10 +75,14 @@ dependencies {
     // noinspection GradleDynamicVersion
     compileOnly('com.facebook.react:react-native')
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    compileOnly("com.moengage:moe-android-sdk:$moengageCoreVersion")
-    api("com.moengage:cards-core:$moengageCardsCoreVersion")
-    implementation("com.moengage:plugin-base-cards:$pluginBaseCardVersion")
-    compileOnly("com.moengage:plugin-base:$pluginBaseVersion")
+
+    implementation(platform("com.moengage:android-bom:$moengageNativeBOMVersion"))
+    compileOnly("com.moengage:moe-android-sdk")
+    api("com.moengage:cards-core")
+
+    implementation(platform("com.moengage:plugin-base-bom:$moengagePluginBaseBOMVersion"))
+    implementation("com.moengage:plugin-base-cards")
+    compileOnly("com.moengage:plugin-base")
 }
 
 def isNewArchitectureEnabled() {

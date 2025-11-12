@@ -14,10 +14,8 @@ buildscript {
 }
 
 ext {
-  //dependency version
-  moengageCoreVersion = "14.03.05"
-  moengageInboxCoreVersion = "4.1.0"
-  pluginBaseInboxVersion = "5.0.2"
+  moengageNativeBOMVersion = "1.1.1"
+  moengagePluginBaseBOMVersion = "1.1.0"
 }
 
 apply plugin: 'com.android.library'
@@ -76,9 +74,13 @@ dependencies {
   // noinspection GradleDynamicVersion
   compileOnly('com.facebook.react:react-native')
   compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-  compileOnly("com.moengage:moe-android-sdk:$moengageCoreVersion")
-  api("com.moengage:inbox-core:$moengageInboxCoreVersion")
-  implementation("com.moengage:plugin-base-inbox:$pluginBaseInboxVersion")
+
+  implementation(platform("com.moengage:android-bom:$moengageNativeBOMVersion"))
+  compileOnly("com.moengage:moe-android-sdk")
+  api("com.moengage:inbox-core")
+
+  implementation(platform("com.moengage:plugin-base-bom:$moengagePluginBaseBOMVersion"))
+  implementation("com.moengage:plugin-base-inbox")
 }
 
 def isNewArchitectureEnabled() {
