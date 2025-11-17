@@ -244,16 +244,16 @@ describe('Apple Integration', () => {
       'LiveActivity.xcstrings'
     ].map(file => {
       return { name: file, isDirectory: () => false };
-    }) as unknown as fs.Dirent<Buffer<ArrayBufferLike>>[];
+    }) as any;
     const assets = {
       name: 'LiveActivity.xcassets', isDirectory: () => true
-    } as unknown as fs.Dirent<Buffer<ArrayBufferLike>>;
+    } as any;
     const nested = {
       name: 'Nested', isDirectory: () => true
-    } as unknown as fs.Dirent<Buffer<ArrayBufferLike>>;
+    } as any;
     const nestedAssets = {
       name: 'Nested.xcassets', isDirectory: () => true
-    } as unknown as fs.Dirent<Buffer<ArrayBufferLike>>;
+    } as any;
     const nestedEntries = [
       'Nested.swift',
       'Nested.m',
@@ -263,7 +263,7 @@ describe('Apple Integration', () => {
       'Nested.xcstrings'
     ].map(file => {
       return { name: file, isDirectory: () => false };
-    }) as unknown as fs.Dirent<Buffer<ArrayBufferLike>>[];
+    }) as any;
     jest.spyOn(fs, 'readdirSync')
       .mockReturnValueOnce([assets, nested, ...topEntries])
       .mockReturnValueOnce([nestedAssets, ...nestedEntries]);
