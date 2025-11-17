@@ -4,6 +4,8 @@
 
 - Android
   - [minor] Moving the internal native dependencies to bill-of-materials (BOM) for better version management.
+- iOS
+  - [minor] `MoEngage-iOS-SDK` version updated to `10.08.0`
   
 # 17-10-2025
 
