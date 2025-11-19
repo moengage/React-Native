@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+
+- Android
+  - [minor] Moving the internal native dependencies to bill-of-materials (BOM) for better version management.
+  
 # 17-10-2025
 
 ## 7.0.4

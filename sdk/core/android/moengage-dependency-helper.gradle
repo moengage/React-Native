@@ -7,15 +7,8 @@ repositories {
 
 ext {
     // MoEngage Versions
-    moengageCoreVersion = "14.03.05"
-    moengageInAppVersion = "9.4.0"
-    moengageRichNotification = "6.2.1"
-    moengageSecurity = "4.0.0"
-    moengageEncryptedStorage = "3.0.0"
-    moengagePushAmp = "6.1.1"
-    moengageHmsPushkit = "6.1.1"
-    moengageDeviceTrigger = "4.1.1"
-    moengageBasePluginVersion = "5.1.3"
+    moengageNativeBOMVersion = "1.1.1"
+    moengagePluginBaseBOMVersion = "1.1.0"
 
     // AndroidX Support Libraries Versions
     androidXCore = "1.15.0"
@@ -24,29 +17,32 @@ ext {
 }
 
 dependencies {
-    api("com.moengage:moe-android-sdk:$moengageCoreVersion")
-    api("com.moengage:inapp:$moengageInAppVersion")
-    api("com.moengage:plugin-base:$moengageBasePluginVersion")
+    implementation(platform("com.moengage:plugin-base-bom:$moengagePluginBaseBOMVersion"))
+    api("com.moengage:plugin-base")
+
+    implementation(platform("com.moengage:android-bom:$moengageNativeBOMVersion"))
+    api("com.moengage:moe-android-sdk")
+    api("com.moengage:inapp")
 
     if (shouldIncludeModule("richNotification")) {
-        api("com.moengage:rich-notification:$moengageRichNotification")
+        api("com.moengage:rich-notification")
     }
 
     if (shouldIncludeModule("encryption")) {
-        api("com.moengage:security:$moengageSecurity")
-        api("com.moengage:encrypted-storage:$moengageEncryptedStorage")
+        api("com.moengage:security")
+        api("com.moengage:encrypted-storage")
     }
 
     if (shouldIncludeModule("pushAmp")) {
-        api("com.moengage:push-amp:$moengagePushAmp")
+        api("com.moengage:push-amp")
     }
 
     if (shouldIncludeModule("hmsPushkit")) {
-        api("com.moengage:hms-pushkit:$moengageHmsPushkit")
+        api("com.moengage:hms-pushkit")
     } 
 
     if (shouldIncludeModule("deviceTrigger")) {
-        api("com.moengage:realtime-trigger:$moengageDeviceTrigger")
+        api("com.moengage:realtime-trigger")
     }
 
     if (shouldIncludeModule("includeAndroidXRequiredLibraries")) {
