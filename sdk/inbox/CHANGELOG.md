@@ -1,11 +1,11 @@
-# Release Date
+# 19-11-2025
 
-## Release Version
+## 6.1.0
 
 - Android
-  - [minor] Moving the internal native dependencies to bill-of-materials (BOM) for better version management.
+  - Moving the internal native dependencies to bill-of-materials (BOM) for better version management.
 - iOS
-  - [minor] `MoEngage-iOS-SDK` version updated to `10.08.0`
+  - `MoEngage-iOS-SDK` version updated to `10.08.0`
   
 # 17-10-2025
 
