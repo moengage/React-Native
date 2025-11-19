@@ -1,3 +1,9 @@
+# Release Date
+
+## Release Version
+
+- [NA] Fixing the failing cases due to types/node version update
+
 # 25-08-2025
 
 ## 1.0.1
