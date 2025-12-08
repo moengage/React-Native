@@ -13,6 +13,8 @@
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
+  [MoEngageSDKCore.sharedInstance enableAllLogs];
+
   MoEngageSDKConfig* sdkConfig = [[MoEngageSDKConfig alloc] initWithAppId:@"YOUR APP ID" dataCenter: MoEngageDataCenterData_center_01];
   sdkConfig.appGroupID = @"group.com.alphadevs.MoEngage.NotificationServices";
   sdkConfig.consoleLogConfig = [[MoEngageConsoleLogConfig alloc] initWithIsLoggingEnabled:true loglevel:MoEngageLoggerTypeVerbose];
@@ -20,7 +22,9 @@
   // Initialization with code
   // MoEngageReactSDKInitializationConfig *initConfig = [[MoEngageReactSDKInitializationConfig alloc] initWithSdkConfig:sdkConfig];
   // [[MoEngageInitializer sharedInstance] initializeInstance:initConfig];
-  [[MoEngageInitializer sharedInstance] initializeDefaultInstanceWithAdditionalReactConfig:[[MoEngageReactSDKDefaultInitializationConfig alloc] init]];
+
+  // File based initialization without swizzling
+  // [[MoEngageInitializer sharedInstance] initializeDefaultInstanceWithAdditionalReactConfig:[[MoEngageReactSDKDefaultInitializationConfig alloc] init]];
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }

@@ -6,9 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MoEReactEventDispatcher.h"
 #import "MoEReactNativeHandler.h"
 #import "MoEngageReactUtils.h"
 #import "MoEngageReactConstants.h"
+#import "MoEngageReactPluginInfo.h"
 
 @import MoEngagePluginBase;
 
@@ -35,6 +37,11 @@
 -(void)initialize:(NSString *)payload {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginBridge sharedInstance] pluginInitialized:jsonPayload];
+    if (NSClassFromString(@"MoEngageAppDelegate")) {
+        // ignore react native integration info tracking for expo
+        return;
+    }
+    [[[MoEngagePlugin alloc] init] trackPluginInfo:MOE_REACT_PLUGIN_NAME version:MOE_REACT_PLUGIN_VERSION];
 }
 
 #pragma mark- Set AppStatus

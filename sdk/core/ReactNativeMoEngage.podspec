@@ -13,8 +13,16 @@ Pod::Spec.new do |s|
   s.authors             = "MoEngage Inc."
   s.source              = {:file => './' }
   s.platforms = { :ios => "13.0", :tvos => "13.0" }
-  s.source_files        = 'iOS/MoEReactBridge/**/*.{h,m,mm}'
-  s.public_header_files = 'iOS/MoEReactBridge/{MoEngageInitializer,MoEngageReactSDKInitializationConfig,MoEngageReactUtils}.h'
+  s.source_files        = 'iOS/MoEReactBridge/**/*.{h,m,mm,swift}'
+
+  headers = [
+    'MoEngageInitializer',
+    'MoEngageReactSDKInitializationConfig',
+    'MoEngageReactUtils',
+    'MoEReactNativeHandler',
+    'MoEngageReactPluginInfo'
+  ]
+  s.public_header_files = "iOS/MoEReactBridge/{#{headers.join(',')}}.h"
   s.weak_framework      = 'UserNotifications'
   s.dependency          'React'
   s.dependency          'MoEngagePluginBase','6.7.0'
@@ -23,6 +31,7 @@ Pod::Spec.new do |s|
   s.prepare_command = <<-CMD
     echo // Generated file, do not edit > iOS/MoEReactBridge/MoEngageReactPluginInfo.h
     echo "#define MOE_REACT_PLUGIN_VERSION @\\"#{package["version"]}\\"" >> iOS/MoEReactBridge/MoEngageReactPluginInfo.h
+    echo "#define MOE_REACT_PLUGIN_NAME @\\"react_native\\"" >> iOS/MoEReactBridge/MoEngageReactPluginInfo.h
   CMD
 
 

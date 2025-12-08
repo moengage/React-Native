@@ -8,8 +8,6 @@
 
 #import "MoEngageReactConstants.h"
 
-NSString* const kReactNative                              = @"react_native";
-
 // Info.plist Keys
 NSString* const kMoEngage                                 = @"MoEngage";
 NSString* const kAppId                                    = @"MoEngage_APP_ID";
