@@ -28,9 +28,8 @@ export const moEngageFCMServiceName = 'com.moengage.firebase.MoEFireBaseMessagin
 export const moEngageFCMServiceEntry = {
     $: {
         'android:name': moEngageFCMServiceName,
-        'android:exported': 'false' as StringBoolean,
+        'tools:node': "remove",
     },
-    'intent-filter': moEngageMessagingIntentFilter,
 };
 
 /**

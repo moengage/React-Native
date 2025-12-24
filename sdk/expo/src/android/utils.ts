@@ -57,6 +57,19 @@ export async function copyFile(src: string, dest: string) {
 }
 
 /**
+ * Add tools namespace to the manifest tag if not already present.
+ */
+export function addToolsNamespaceToManifest(manifest: any): void {
+  if (!manifest.$) {
+    manifest.$ = {};
+  }
+  if (!manifest.$['xmlns:tools']) {
+    console.log('Adding tools namespace to manifest');
+    manifest.$['xmlns:tools'] = 'http://schemas.android.com/tools';
+  }
+}
+
+/**
  * Add a dependency to the dependencies block in app/build.gradle if not already present.
  */
 export function addDependencyToGradle(contents: string, group: string, module: string, version: string): string {

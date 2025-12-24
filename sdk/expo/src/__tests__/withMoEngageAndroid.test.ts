@@ -68,12 +68,27 @@ describe('withMoEngageAndroidManifest', () => {
     expect(services.some((s: any) => s.$ && s.$['android:name'] === MoEExpoFireBaseMessagingService)).toBe(true);
   });
 
-  it('should add MoEngage FCM Service to manifest if isExpoNotificationIntegration is false', () => {
+  it('should not add MoEngage FCM Service to manifest if isExpoNotificationIntegration is false', () => {
     const props = { ...mockProps, android: { ...mockProps.android, shouldIncludeMoEngageFirebaseMessagingService: true, isExpoNotificationIntegration: false } };
     const inputConfig = { ...mockConfig, modResults: getMockManifest() };
     const updatedConfig = withMoEngageAndroid(inputConfig, props) as any;
     const services = updatedConfig.modResults.manifest.application[0].service;
-    expect(services.some((s: any) => s.$ && s.$['android:name'] === MoEFireBaseMessagingService)).toBe(true);
+    expect(services.some((s: any) => s.$ && s.$['android:name'] === MoEFireBaseMessagingService)).toBe(false);
+  });
+
+  it('should add MoEngage FCM Service to manifest with tools:node remove if shouldIncludeMoEngageFirebaseMessagingService is false', () => {
+    const props = { ...mockProps, android: { ...mockProps.android, shouldIncludeMoEngageFirebaseMessagingService: false, isExpoNotificationIntegration: false } };
+    const inputConfig = { ...mockConfig, modResults: getMockManifest() };
+    const updatedConfig = withMoEngageAndroid(inputConfig, props) as any;
+
+    const manifest = updatedConfig.modResults.manifest;
+    expect(manifest.$).toBeDefined();
+    expect(manifest.$['xmlns:tools']).toBe('http://schemas.android.com/tools');
+    
+    const services = updatedConfig.modResults.manifest.application[0].service;
+    const fcmService = services.find((s: any) => s.$ && s.$['android:name'] === MoEFireBaseMessagingService);
+    expect(fcmService).toBeDefined();
+    expect(fcmService.$['tools:node']).toBe('remove');
   });
 });
 
