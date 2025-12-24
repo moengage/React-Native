@@ -1,82 +1,39 @@
 {
   "project_info": {
-    "project_number": "615448685370",
-    "firebase_url": "https://moesampleapp.firebaseio.com",
-    "project_id": "moesampleapp",
-    "storage_bucket": "moesampleapp.appspot.com"
+    "project_number": "YOUR_FIREBASE_PROJECT_NUMBER",
+    "firebase_url": "YOUR_FIREBASE_DATABASE_URL",
+    "project_id": "YOUR_FIREBASE_PROJECT_ID",
+    "storage_bucket": "YOUR_FIREBASE_STORAGE_BUCKET"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:615448685370:android:6d75bcba72eb0cc3",
+        "mobilesdk_app_id": "YOUR_MOBILE_SDK_APP_ID",
         "android_client_info": {
-          "package_name": "com.moengage.sampleapp"
+          "package_name": "YOUR_ANDROID_PACKAGE_NAME"
         }
       },
       "oauth_client": [
         {
-          "client_id": "615448685370-t44jadhvvl6rbquccpmcuftu4a7obfui.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.moengage.sampleapp",
-            "certificate_hash": "bb66a47ede36191adbca2fd8061aa3ef019a7a00"
-          }
-        },
-        {
-          "client_id": "615448685370-bs2ol993hu6u6kq14gsn24uage57mi4u.apps.googleusercontent.com",
+          "client_id": "YOUR_OAUTH_CLIENT_ID",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCyKHUkkxH537ojYCaRXQ3_pp9EY9Sk88E"
+          "current_key": "YOUR_FIREBASE_API_KEY"
         }
       ],
       "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "615448685370-bs2ol993hu6u6kq14gsn24uage57mi4u.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:615448685370:android:6d75bcba72eb0cc3",
-        "android_client_info": {
-          "package_name": "com.moengage.sampleapp.segment"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "615448685370-t44jadhvvl6rbquccpmcuftu4a7obfui.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.moengage.sampleapp",
-            "certificate_hash": "bb66a47ede36191adbca2fd8061aa3ef019a7a00"
-          }
+        "analytics_service": {
+          "status": 1
         },
-        {
-          "client_id": "615448685370-bs2ol993hu6u6kq14gsn24uage57mi4u.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCyKHUkkxH537ojYCaRXQ3_pp9EY9Sk88E"
-        }
-      ],
-      "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "615448685370-bs2ol993hu6u6kq14gsn24uage57mi4u.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
         }
       }
     }
