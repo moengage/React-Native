@@ -2,4 +2,5 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="expo.modules.moengage">
 
+  <application />
 </manifest>
