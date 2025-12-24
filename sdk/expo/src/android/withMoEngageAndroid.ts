@@ -52,29 +52,6 @@ const withMoEngageAndroidManifest: ConfigPlugin<MoEngagePluginProps> = (config, 
     });
   }
 
-  if (props.android.shouldIncludeMoEngageFirebaseMessagingService) {
-    withAndroidManifest(config, config => {
-      const mainApplication = AndroidConfig.Manifest.getMainApplicationOrThrow(config.modResults);
-      if (props.android.isExpoNotificationIntegration) {
-        console.log('Adding Expo Notification Service to manifest');
-        addServiceToManifestIfNotExist(
-          mainApplication, 
-          moEngageExpoNotificationServiceEntry, 
-          moEngageExpoNotificationServiceName
-        );
-      } else {
-        console.log('Adding MoEngage FCM Service to manifest');
-        addServiceToManifestIfNotExist(
-          mainApplication,
-          moEngageFCMServiceEntry,
-          moEngageFCMServiceName
-        );
-      }
-
-      return config;
-    });
-  }
-
   return config;
 };
 

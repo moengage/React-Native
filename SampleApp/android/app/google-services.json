@@ -1,6 +1,6 @@
 {
   "project_info": {
-    "project_number": "xxxxxxxxxxxx",
+    "project_number": "615448685370",
     "firebase_url": "https://moesampleapp.firebaseio.com",
     "project_id": "moesampleapp",
     "storage_bucket": "moesampleapp.appspot.com"
@@ -8,32 +8,75 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:xxxxxxxxxxxx:android:6d75bcba72eb0cc3",
+        "mobilesdk_app_id": "1:615448685370:android:6d75bcba72eb0cc3",
         "android_client_info": {
           "package_name": "com.moengage.sampleapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "xxxxxxxxxxxx-t44jadhvvl6rbquccpmcuftu4a7obfui.apps.googleusercontent.com",
+          "client_id": "615448685370-t44jadhvvl6rbquccpmcuftu4a7obfui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moengage.sampleapp",
+            "certificate_hash": "bb66a47ede36191adbca2fd8061aa3ef019a7a00"
+          }
+        },
+        {
+          "client_id": "615448685370-bs2ol993hu6u6kq14gsn24uage57mi4u.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          "current_key": "AIzaSyCyKHUkkxH537ojYCaRXQ3_pp9EY9Sk88E"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "615448685370-bs2ol993hu6u6kq14gsn24uage57mi4u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:615448685370:android:6d75bcba72eb0cc3",
+        "android_client_info": {
+          "package_name": "com.moengage.sampleapp.segment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "615448685370-t44jadhvvl6rbquccpmcuftu4a7obfui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moengage.sampleapp",
+            "certificate_hash": "bb66a47ede36191adbca2fd8061aa3ef019a7a00"
+          }
         },
-        "ads_service": {
-          "status": 2
+        {
+          "client_id": "615448685370-bs2ol993hu6u6kq14gsn24uage57mi4u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyKHUkkxH537ojYCaRXQ3_pp9EY9Sk88E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "615448685370-bs2ol993hu6u6kq14gsn24uage57mi4u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

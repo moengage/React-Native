@@ -31,8 +31,9 @@ export interface MoEngageAndroidConfig {
   isExpoNotificationIntegration?: boolean;
 
   /**
-   * Whether to include MoEngage FirebaseMessagingService in the AndroidManifest.xml
-   * @default false
+   * @deprecated This flag is no longer required, will be removed in the future major release.
+   * The `MoEngageFirebaseMessagingService` will be included by default with lower priority. The priority is set to -1
+   * to ensure it does not interfere with other messaging services.
    */
   shouldIncludeMoEngageFirebaseMessagingService?: boolean;
 

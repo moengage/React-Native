@@ -85,8 +85,7 @@
             "largeIconPath": "assets/moengage/large_icon.png",
             "disableMoEngageDefaultBackupFile": false,
             "includeFirebaseMessagingDependencies": true,
-            "isExpoNotificationIntegration": true,
-            "shouldIncludeMoEngageFirebaseMessagingService": true
+            "isExpoNotificationIntegration": true
           },
           "apple": {
             "configFilePath": "assets/moengage/MoEngage-Config.plist",
