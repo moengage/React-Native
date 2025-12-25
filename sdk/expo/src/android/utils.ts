@@ -5,6 +5,20 @@ import path from 'node:path';
 /**
  * Add serviceEntry to the main application manifest if does not already exist.
  */
+export function addServiceWithToolsRemove(
+  manifest: any,
+  mainApplication: ManifestApplication,
+  serviceEntry: any,
+  serviceName: string
+): ManifestApplication {
+  addToolsNamespaceToManifest(manifest);
+  addServiceToManifestIfNotExist(mainApplication, serviceEntry, serviceName)
+  return mainApplication;
+}
+
+/**
+ * Add serviceEntry to the main application manifest if does not already exist.
+ */
 export function addServiceToManifestIfNotExist(
     mainApplication: ManifestApplication,
     serviceEntry: any,

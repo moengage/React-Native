@@ -11,7 +11,7 @@ import {
   googleFirebaseMessagingModule
 } from './constants';
 import { MoEngagePluginProps } from '../types';
-import { addServiceToManifestIfNotExist, copyFile, addDependencyToGradle, addToolsNamespaceToManifest } from './utils';
+import { addServiceToManifestIfNotExist, copyFile, addDependencyToGradle, addServiceWithToolsRemove } from './utils';
 
 const packageJsonFile = require('../../package.json');
 
@@ -64,9 +64,9 @@ const withMoEngageAndroidManifest: ConfigPlugin<MoEngagePluginProps> = (config, 
         );
       }
     } else {
-      console.log('Removing MoEngage FCM Service from manifest');
-      addToolsNamespaceToManifest(config.modResults.manifest);
-      addServiceToManifestIfNotExist(
+      console.log('Adding MoEngage FCM Service to manifest with tool node remove');
+      addServiceWithToolsRemove(
+        config.modResults.manifest,
         mainApplication,
         moEngageFCMServiceEntry,
         moEngageFCMServiceName

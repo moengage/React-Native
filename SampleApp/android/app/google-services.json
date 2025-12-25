@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "YOUR_MOBILE_SDK_APP_ID",
         "android_client_info": {
-          "package_name": "YOUR_ANDROID_PACKAGE_NAME"
+          "package_name": "com.moengage.sampleapp"
         }
       },
       "oauth_client": [
