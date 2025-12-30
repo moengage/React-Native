@@ -3,6 +3,7 @@
 ## Release Version
 
 - [NA] Fixing the failing cases due to types/node version update
+- [minor] License Update
 
 # 25-08-2025
 
