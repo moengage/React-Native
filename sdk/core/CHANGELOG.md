@@ -1,3 +1,9 @@
+# Release Date
+
+## Release Version
+
+- [minor] License Update
+
 # 19-11-2025
 
 ## 12.4.0

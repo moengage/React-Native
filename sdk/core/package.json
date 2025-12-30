@@ -34,7 +34,7 @@
   "contributors": [
     "MoEngage <mobiledevs@moengage.com>"
   ],
-  "license": "SEE LICENSE IN LICENSE.txt",
+  "license": "SEE LICENSE IN LICENSE.md",
   "devDependencies": {
     "react-native": "0.73.0",
     "@types/jest": "^29.5.0",
