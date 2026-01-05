@@ -47,7 +47,7 @@
   "contributors": [
     "MoEngage <mobiledevs@moengage.com>"
   ],
-  "license": "SEE LICENSE IN LICENSE.txt",
+  "license": "SEE LICENSE IN LICENSE.md",
   "devDependencies": {
     "@expo/config-plugins": "^5.0.0",
     "@expo/config-types": "^53.0.4",
