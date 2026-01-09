@@ -2,8 +2,10 @@
 
 ## Release Version
 
-- [NA] Fixing the failing cases due to types/node version update
 - [minor] License Update
+- [NA] Fixing the failing cases due to types/node version update
+- Android
+  - [minor] Compatibility changes for "Bundling `MoEFireBaseMessagingService` in Plugin's manifest to reduce integration steps for developers using FCM Push." in core plugin
 
 # 25-08-2025
 

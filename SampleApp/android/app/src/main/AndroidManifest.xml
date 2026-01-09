@@ -37,13 +37,5 @@
         android:name="com.moengage.pushbase.activities.PushTracker"
         android:launchMode="singleInstance"
         tools:replace="android:launchMode" />
-
-    <service
-        android:name="com.moengage.firebase.MoEFireBaseMessagingService"
-        android:exported="false">
-      <intent-filter>
-        <action android:name="com.google.firebase.MESSAGING_EVENT" />
-      </intent-filter>
-    </service>
   </application>
 </manifest>

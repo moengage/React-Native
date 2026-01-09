@@ -11,7 +11,7 @@ import {
   googleFirebaseMessagingModule
 } from './constants';
 import { MoEngagePluginProps } from '../types';
-import { addServiceToManifestIfNotExist, copyFile, addDependencyToGradle } from './utils';
+import { addServiceToManifestIfNotExist, copyFile, addDependencyToGradle, addServiceWithToolsRemove } from './utils';
 
 const packageJsonFile = require('../../package.json');
 
@@ -41,7 +41,7 @@ const withMoEngageAndroidManifest: ConfigPlugin<MoEngagePluginProps> = (config, 
             const androidName = (mainApplication as any)["android:name"] || "";
             mainApplication.$ = { "android:name": androidName };
           }
-          
+
           if (!(key in mainApplication.$)) {
             mainApplication.$[key] = value;
           }
@@ -52,28 +52,29 @@ const withMoEngageAndroidManifest: ConfigPlugin<MoEngagePluginProps> = (config, 
     });
   }
 
-  if (props.android.shouldIncludeMoEngageFirebaseMessagingService) {
-    withAndroidManifest(config, config => {
-      const mainApplication = AndroidConfig.Manifest.getMainApplicationOrThrow(config.modResults);
+  withAndroidManifest(config, config => {
+    const mainApplication = AndroidConfig.Manifest.getMainApplicationOrThrow(config.modResults);
+    if (props.android.shouldIncludeMoEngageFirebaseMessagingService) {
       if (props.android.isExpoNotificationIntegration) {
         console.log('Adding Expo Notification Service to manifest');
         addServiceToManifestIfNotExist(
-          mainApplication, 
-          moEngageExpoNotificationServiceEntry, 
+          mainApplication,
+          moEngageExpoNotificationServiceEntry,
           moEngageExpoNotificationServiceName
         );
-      } else {
-        console.log('Adding MoEngage FCM Service to manifest');
-        addServiceToManifestIfNotExist(
-          mainApplication,
-          moEngageFCMServiceEntry,
-          moEngageFCMServiceName
-        );
       }
+    } else {
+      console.log('Adding MoEngage FCM Service to manifest with tool node remove');
+      addServiceWithToolsRemove(
+        config.modResults.manifest,
+        mainApplication,
+        moEngageFCMServiceEntry,
+        moEngageFCMServiceName
+      );
+    }
 
-      return config;
-    });
-  }
+    return config;
+  });
 
   return config;
 };
@@ -95,7 +96,7 @@ const withMoEngageInitialisationConfigResource: ConfigPlugin<MoEngagePluginProps
         console.log('Copying large icon:', props.android.largeIconPath);
         await copyFile(props.android.largeIconPath, drawableResourcePath);
       }
-      
+
       console.log('Copying config file:', props.android.configFilePath);
       await copyFile(props.android.configFilePath, xmlValuesResourcePath);
       return config;

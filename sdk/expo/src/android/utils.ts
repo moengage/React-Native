@@ -5,6 +5,20 @@ import path from 'node:path';
 /**
  * Add serviceEntry to the main application manifest if does not already exist.
  */
+export function addServiceWithToolsRemove(
+  manifest: any,
+  mainApplication: ManifestApplication,
+  serviceEntry: any,
+  serviceName: string
+): ManifestApplication {
+  addToolsNamespaceToManifest(manifest);
+  addServiceToManifestIfNotExist(mainApplication, serviceEntry, serviceName)
+  return mainApplication;
+}
+
+/**
+ * Add serviceEntry to the main application manifest if does not already exist.
+ */
 export function addServiceToManifestIfNotExist(
     mainApplication: ManifestApplication,
     serviceEntry: any,
@@ -54,6 +68,19 @@ export async function copyFile(src: string, dest: string) {
   }
   console.log('Copying file from', src, 'to', destPath);
   fs.copyFileSync(src, destPath);
+}
+
+/**
+ * Add tools namespace to the manifest tag if not already present.
+ */
+export function addToolsNamespaceToManifest(manifest: any): void {
+  if (!manifest.$) {
+    manifest.$ = {};
+  }
+  if (!manifest.$['xmlns:tools']) {
+    console.log('Adding tools namespace to manifest');
+    manifest.$['xmlns:tools'] = 'http://schemas.android.com/tools';
+  }
 }
 
 /**
