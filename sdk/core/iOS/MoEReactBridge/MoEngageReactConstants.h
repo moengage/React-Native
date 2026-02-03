@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString* const kReactNative;
-
 //Info.plist keys
 extern NSString* const kMoEngage;
 extern NSString* const kAppId;

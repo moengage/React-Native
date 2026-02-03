@@ -50,8 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param ractConfig Additional MoEngageReactSDKDefaultInitializationConfig.
 - (void)initializeDefaultInstanceWithAdditionalReactConfig:(MoEngageReactSDKDefaultInitializationConfig*)ractConfig;
 
-/// Intenal method, not for public use.
-- (void)setPluginBridgeDelegate: (NSString*)identifier;
 @end
 
 NS_ASSUME_NONNULL_END

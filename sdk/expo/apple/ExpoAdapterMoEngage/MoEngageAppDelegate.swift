@@ -19,7 +19,6 @@ public class MoEngageAppDelegate: ExpoAppDelegateSubscriber {
             let sdkConfig = plugin.initializeDefaultInstance(withAdditionalConfig: config)
         else { return false }
         plugin.trackPluginInfo(MoEngageExpoPluginInfo.name, version: MoEngageExpoPluginInfo.moduleVersion)
-        MoEngageInitializer.sharedInstance().setPluginBridgeDelegate(sdkConfig.appId)
         return true
     }
 

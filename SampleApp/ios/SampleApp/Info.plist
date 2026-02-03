@@ -35,17 +35,6 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>MoEngage</key>
-	<dict>
-		<key>APP_GROUP_ID</key>
-		<string>group.com.alphadevs.MoEngage.NotificationServices</string>
-		<key>DATA_CENTER</key>
-		<string>DATA_CENTER_01</string>
-		<key>ENABLE_LOGS</key>
-		<true/>
-		<key>MoEngage_APP_ID</key>
-		<string>DAO6UGZ73D9RTK8B5W96TPYN</string>
-	</dict>
 	<key>MoEngageAppDelegateProxyEnabled</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -160,11 +149,11 @@
 		<!-- true/false, default: false -->
 
 		<key>EncryptionEncodedTestKey</key>
-		<string>eyJrZXkiOiJ4Q3dhdHRPNEllWnpTdFJuZTRQQXJaVEFRb25NUUFEditsQ2pHdjlrekJFPSIsInZlcnNpb24iOiJWMSJ9</string>
+		<string>test</string>
 		<!-- dashboard auto populated string if IsNetworkEncryptionEnabled is true -->
 
 		<key>EncryptionEncodedLiveKey</key>
-		<string>eyJrZXkiOiJsaWlsWnVsb3JEOWNNTUtDSnJGQ1l6aVI2d2pEZ0R2LzY3aHhQOE5hK2RVPSIsInZlcnNpb24iOiJWMSJ9</string>
+		<string>live</string>
 		<!-- dashboard auto populated string if IsNetworkEncryptionEnabled is true -->
 
 		<key>IsJwtEnabled</key>

@@ -33,14 +33,12 @@
 - (void)initializeDefaultSDKConfig:(MoEngageSDKConfig*)sdkConfig andLaunchOptions:(NSDictionary*)launchOptions{
     MoEngagePlugin *plugin = [[MoEngagePlugin alloc] init];
     [plugin initializeDefaultInstanceWithSdkConfig:sdkConfig launchOptions:launchOptions];
-    [self commonSetUp:plugin identifier:sdkConfig.appId];
 }
 
 - (void)initializeDefaultSDKConfigWithState:(MoEngageSDKConfig *)sdkConfig withSDKState:(MoEngageSDKState)sdkState andLaunchOptions:(NSDictionary*)launchOptions{
     
     MoEngagePlugin *plugin = [[MoEngagePlugin alloc] init];
     [plugin initializeDefaultInstanceWithSdkConfig:sdkConfig sdkState:sdkState launchOptions:launchOptions];
-    [self commonSetUp: plugin identifier:sdkConfig.appId];
 }
 
 - (void)initializeInstance:(MoEngageReactSDKInitializationConfig*)reactConfig {
@@ -51,16 +49,11 @@
     config.isDefaultInstance = reactConfig.isDefaultInstance;
     MoEngagePlugin *plugin = [[MoEngagePlugin alloc] init];
     [plugin initializeInstanceWithConfig:config];
-    [self commonSetUp: plugin identifier:config.sdkConfig.appId];
 }
 
 - (void)initializeDefaultInstanceWithAdditionalConfig:(MoEngageSDKDefaultInitializationConfig*)config {
     MoEngagePlugin* plugin = [[MoEngagePlugin alloc] init];
     MoEngageSDKConfig* sdkConfig = [plugin initializeDefaultInstanceWithAdditionalConfig:config];
-    if (!sdkConfig) {
-        return;
-    }
-    [self commonSetUp:plugin identifier:sdkConfig.appId];
 }
 
 - (void)initializeDefaultInstanceWithAdditionalReactConfig:(MoEngageReactSDKDefaultInitializationConfig*)ractConfig {
@@ -70,14 +63,4 @@
     [self initializeDefaultInstanceWithAdditionalConfig:config];
 }
 
-#pragma mark- Utils
-
-- (void)commonSetUp:(MoEngagePlugin *)plugin identifier:(NSString*)identifier {
-    [plugin trackPluginInfo: kReactNative version:MOE_REACT_PLUGIN_VERSION];
-    [self setPluginBridgeDelegate:identifier];
-}
-
-- (void)setPluginBridgeDelegate: (NSString*)identifier {
-    [[MoEReactNativeHandler sharedInstance] setPluginBridgeDelegate:identifier];
-}
 @end

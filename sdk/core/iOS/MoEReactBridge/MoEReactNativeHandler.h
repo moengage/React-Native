@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <React/RCTEventEmitter.h>
-#import "MoEReactEventDispatcher.h"
 
+@protocol MoEReactEventDispatcher;
 
 @interface MoEReactNativeHandler : NSObject
 +(instancetype)sharedInstance;

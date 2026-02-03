@@ -19,12 +19,17 @@ class AppDelegate: RCTAppDelegate {
     // You can add your custom initial props in the dictionary below.
     // They will be passed down to the ViewController used by React Native.
     self.initialProps = [:]
+    MoEngageSDKCore.sharedInstance.enableAllLogs()
 
-    let sdkConfig = MoEngageSDKConfig(appId: "YOUR APP ID", dataCenter: MoEngageDataCenter.data_center_03)
-    sdkConfig.appGroupID = "group.com.alphadevs.MoEngage.NotificationServices"
-    sdkConfig.consoleLogConfig = MoEngageConsoleLogConfig(isLoggingEnabled: true, loglevel: .verbose)
-    let reactConfig = MoEngageReactSDKInitializationConfig(sdkConfig: sdkConfig)
-    MoEngageInitializer.sharedInstance().initializeInstance(reactConfig)
+    // Initialization with code
+    // let sdkConfig = MoEngageSDKConfig(appId: "YOUR APP ID", dataCenter: MoEngageDataCenter.data_center_03)
+    // sdkConfig.appGroupID = "group.com.alphadevs.MoEngage.NotificationServices"
+    // sdkConfig.consoleLogConfig = MoEngageConsoleLogConfig(isLoggingEnabled: true, loglevel: .verbose)
+    // let reactConfig = MoEngageReactSDKInitializationConfig(sdkConfig: sdkConfig)
+    // MoEngageInitializer.sharedInstance().initializeInstance(reactConfig)
+
+    // File based initialization without swizzling
+    // MoEngage.sharedInstance.initializeDefaultInstance()
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
