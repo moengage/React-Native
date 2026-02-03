@@ -3,6 +3,8 @@
 ## Release Version
 
 - [minor] License Update
+- iOS
+  - `MoEngage-iOS-SDK` version updated to `10.10.0`
 
 # 19-11-2025
 
