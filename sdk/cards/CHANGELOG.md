@@ -3,6 +3,8 @@
 ## Release Version
 
 - [minor] License Update
+- Android
+  - [minor] updating `android-bom` to `1.5.0`
 - iOS
   - `MoEngage-iOS-SDK` version updated to `10.10.0`
 
