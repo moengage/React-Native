@@ -1,0 +1,63 @@
+name: Update BOM Versions
+
+on:
+  workflow_dispatch:
+    inputs:
+      ticket_number:
+        description: 'Ticket number (e.g., MOEN-12345)'
+        required: true
+      target_native_bom_version:
+        description: 'Target native android-bom version'
+        required: false
+        default: ''
+      current_plugin_base_metadata:
+        description: 'Current plugin-base module versions JSON'
+        required: false
+        default: ''
+      target_plugin_base_metadata:
+        description: 'Target plugin-base module versions JSON'
+        required: false
+        default: ''
+
+jobs:
+  update_bom:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate inputs
+        run: |
+          if [ -z "${{ github.event.inputs.target_native_bom_version }}" ] && [ -z "${{ github.event.inputs.target_plugin_base_metadata }}" ]; then
+            echo "Error: At least one target BOM version must be provided"
+            exit 1
+          fi
+
+      - name: Checkout React-Native
+        uses: actions/checkout@v3
+        with:
+          ref: development
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+
+      - name: Checkout sdk-automation-scripts
+        uses: actions/checkout@v3
+        with:
+          repository: moengage/sdk-automation-scripts
+          path: ../sdk-automation-scripts
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+
+      - name: Checkout android-dependency-catalog
+        if: ${{ github.event.inputs.target_native_bom_version != '' }}
+        uses: actions/checkout@v3
+        with:
+          repository: moengage/android-dependency-catalog
+          path: ../android-dependency-catalog
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+          fetch-depth: 0
+
+      - name: Run version update script
+        env:
+          GH_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+        run: |
+          kotlin ./scripts/update-bom.main.kts \
+            "${{ github.event.inputs.ticket_number }}" \
+            "${{ github.event.inputs.target_native_bom_version }}" \
+            '${{ github.event.inputs.current_plugin_base_metadata }}' \
+            '${{ github.event.inputs.target_plugin_base_metadata }}'
