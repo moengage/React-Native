@@ -5,7 +5,7 @@
 - [minor] License Update
 - Android
   - [minor] Bundling `MoEFireBaseMessagingService` in Plugin's manifest to reduce integration steps for developers using FCM Push.
-  - [minor] updating `android-bom` to `1.5.0`
+  - [minor] updating `android-bom` to `1.5.1`
 - iOS
   - [minor] Added no-code SDK file based initialization
   - [minor] `MoEngage-iOS-SDK` version updated to `10.10.0`
