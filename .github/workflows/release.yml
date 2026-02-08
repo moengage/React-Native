@@ -47,3 +47,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GH_TOKEN: ${{ github.token }}
+      - name: Notify release
+        working-directory: source
+        run: |
+          kotlin .github/scripts/notify-release.main.kts ${{ github.event.inputs.releaseNotes }}
