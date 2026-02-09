@@ -1,13 +1,13 @@
-# Release Date
+# 09-02-2026
 
-## Release Version
+## 1.1.0
 
-- [minor] License Update
-- [NA] Fixing the failing cases due to types/node version update
+- License Update
+- Fixing the failing cases due to types/node version update
 - Android
-  - [minor] Compatibility changes for "Bundling `MoEFireBaseMessagingService` in Plugin's manifest to reduce integration steps for developers using FCM Push." in core plugin
+  - Compatibility changes for "Bundling `MoEFireBaseMessagingService` in Plugin's manifest to reduce integration steps for developers using FCM Push." in core plugin
 - iOS
-  - [minor] Added no-code SDK file based initialization
+  - Added no-code SDK file based initialization
 
 # 25-08-2025
 

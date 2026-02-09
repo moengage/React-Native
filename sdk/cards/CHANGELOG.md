@@ -1,10 +1,10 @@
-# Release Date
+# 09-02-2026
 
-## Release Version
+## 6.2.0
 
-- [minor] License Update
+- License Update
 - Android
-  - [minor] updating `android-bom` to `1.5.1`
+  - updating `android-bom` to `1.5.1`
 - iOS
   - `MoEngage-iOS-SDK` version updated to `10.10.0`
 

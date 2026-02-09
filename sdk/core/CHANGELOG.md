@@ -1,14 +1,14 @@
-# Release Date
+# 09-02-2026
 
-## Release Version
+## 12.5.0
 
-- [minor] License Update
+- License Update
 - Android
-  - [minor] Bundling `MoEFireBaseMessagingService` in Plugin's manifest to reduce integration steps for developers using FCM Push.
-  - [minor] updating `android-bom` to `1.5.1`
+  - Bundling `MoEFireBaseMessagingService` in Plugin's manifest to reduce integration steps for developers using FCM Push.
+  - updating `android-bom` to `1.5.1`
 - iOS
-  - [minor] Added no-code SDK file based initialization
-  - [minor] `MoEngage-iOS-SDK` version updated to `10.10.0`
+  - Added no-code SDK file based initialization
+  - `MoEngage-iOS-SDK` version updated to `10.10.0`
 
 # 19-11-2025
 
