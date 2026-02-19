@@ -5,15 +5,19 @@ on:
     inputs:
       releaseNotes:
         type: string
-        description: 'Enter the Release note'
+        description: "Enter the Release note"
         required: true
       releaseTicket:
         type: string
-        description: 'Enter the Release ticket'
+        description: "Enter the Release ticket"
         required: true
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
   # push: # on push to master branch
-    # branches:
-      # - master
+  # branches:
+  # - master
 
 jobs:
   release:
@@ -27,10 +31,10 @@ jobs:
           path: sdk-automation-scripts
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Automation script setup
-        uses: ./sdk-automation-scripts/actions/npm-repository-setup    
+        uses: ./sdk-automation-scripts/actions/npm-repository-setup
       - name: Checkout code
         uses: actions/checkout@v3
-        with: 
+        with:
           path: source
           fetch-depth: 0
           fetch-tags: true
@@ -45,7 +49,6 @@ jobs:
         run: |
           .github/scripts/release.main.kts ${{ github.event.inputs.releaseNotes }} ${{ github.event.inputs.releaseTicket }}
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GH_TOKEN: ${{ github.token }}
       - name: Notify release
         working-directory: source
