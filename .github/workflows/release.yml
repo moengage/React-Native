@@ -5,7 +5,7 @@ on:
     inputs:
       releaseNotes:
         type: string
-        description: "Enter the Release note"
+        description: 'Enter the Release note'
         required: true
       releaseTicket:
         type: string
