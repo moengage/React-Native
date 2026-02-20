@@ -9,7 +9,7 @@ on:
         required: true
       releaseTicket:
         type: string
-        description: "Enter the Release ticket"
+        description: 'Enter the Release ticket'
         required: true
 
 permissions:
@@ -22,7 +22,7 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: contains(fromJSON('["umangmoe", "arshiya-moengage", "badri-engg-data"]'), github.actor)
+    if: contains(fromJSON('["umangmoe", "arshiya-moengage"]'), github.actor)
     steps:
       - name: Checkout sdk automation scripts
         uses: actions/checkout@v3
