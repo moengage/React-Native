@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+
+- Android
+  - [minor] AGP version updated from `8.7.3` to `8.13.2`
+
 # 09-02-2026
 
 ## 7.2.0
