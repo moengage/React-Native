@@ -42,14 +42,16 @@ jobs:
           git config user.name "sdk-bot-user"
           git config user.email "sdk.bot@moengage.com"
           DATE=$(date +%Y-%m-%d)
-          BRANCH="${{ github.event.inputs.ticketNumber }}/dependency_update"
+          TICKET="${{ github.event.inputs.ticketNumber || 'MOEN-123456' }}"
+          BRANCH="${TICKET}/dependency_update"
+          echo $BRANCH
           git checkout -b "$BRANCH"
           git add -A
-          git commit -m "${{ github.event.inputs.ticketNumber }}: Dependency Update ${DATE}"
+          git commit -m "${TICKET}: Dependency Update ${DATE}"
           git push -u origin "$BRANCH"
           gh pr create \
             --base development \
-            --title "${{ github.event.inputs.ticketNumber }}: Dependency Update ${DATE}" \
+            --title "${TICKET}: Dependency Update ${DATE}" \
             --body "$(cat <<'EOF'
           ## Summary
           Updated android-bom and plugin-base-bom to the latest versions from Maven Central.
