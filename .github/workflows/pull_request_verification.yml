@@ -6,44 +6,12 @@ on:
     types: [ opened, reopened, ready_for_review, synchronize ]
     branches: [ "development", "master" ]
 jobs:
-  verify-ios:
-    runs-on: macos-15
-    if: ${{ !github.event.pull_request.draft }}
-    steps:
-      - name: Checkout sdk automation scripts
-        uses: actions/checkout@v3
-        with:
-          repository: moengage/sdk-automation-scripts
-          path: sdk-automation-scripts
-          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      - name: Automation script setup
-        uses: ./sdk-automation-scripts/actions/npm-repository-setup
-      - name: Setup dev environment
-        uses: ./sdk-automation-scripts/actions/ios-action-setup
-        env:
-          SDK_BOT_ACCESS_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with: 
-          path: source
-          fetch-depth: 0
-          fetch-tags: true
-          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      - name: Setup script
-        working-directory: source
-        run: |
-          chmod +x .github/scripts/react-utils.main.kts
-          chmod +x .github/scripts/verify-plugins.main.kts
-      - name: Verify iOS
-        working-directory: source
-        run: |
-          kotlinc -script .github/scripts/verify-plugins.main.kts iOS
   verify-react:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checkout sdk automation scripts
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: moengage/sdk-automation-scripts
           path: sdk-automation-scripts
@@ -51,7 +19,7 @@ jobs:
       - name: Automation script setup
         uses: ./sdk-automation-scripts/actions/npm-repository-setup
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: source
           fetch-depth: 0
@@ -65,22 +33,33 @@ jobs:
       - name: Verify React Framework
         working-directory: source
         run: |
-          kotlinc -script .github/scripts/verify-plugins.main.kts react-native
-  verify-android:
-    runs-on: macos-latest
+          kotlin .github/scripts/verify-plugins.main.kts react-native
+
+  verify-platform:
+    needs: verify-react
+    runs-on: ${{ matrix.platform == 'iOS' && 'macos-15' || 'ubuntu-latest' }}
     if: ${{ !github.event.pull_request.draft }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [iOS, android]
     steps:
       - name: Checkout sdk automation scripts
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: moengage/sdk-automation-scripts
           path: sdk-automation-scripts
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Automation script setup
-        uses: ./sdk-automation-scripts/actions/npm-repository-setup    
+        uses: ./sdk-automation-scripts/actions/npm-repository-setup
+      - name: Setup dev environment
+        if: matrix.platform == 'iOS'
+        uses: ./sdk-automation-scripts/actions/ios-action-setup
+        env:
+          SDK_BOT_ACCESS_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Checkout code
-        uses: actions/checkout@v3
-        with: 
+        uses: actions/checkout@v4
+        with:
           path: source
           fetch-depth: 0
           fetch-tags: true
@@ -90,7 +69,7 @@ jobs:
         run: |
           chmod +x .github/scripts/react-utils.main.kts
           chmod +x .github/scripts/verify-plugins.main.kts
-      - name: Verify Android
+      - name: Verify ${{ matrix.platform }}
         working-directory: source
         run: |
-          kotlinc -script .github/scripts/verify-plugins.main.kts android
+          kotlin .github/scripts/verify-plugins.main.kts ${{ matrix.platform }}
