@@ -25,6 +25,7 @@ val PLUGIN_BASE_BOM_VERSION_KEY = "moengagePluginBaseBOMVersion"
 
 data class ModuleConfig(
     val gradleFilePath: String,
+    val changelogPath: String,
     val androidBomArtifacts: Set<String>,
     val pluginBaseBomArtifacts: Set<String>
 )
@@ -32,6 +33,7 @@ data class ModuleConfig(
 val moduleConfigs = listOf(
     ModuleConfig(
         gradleFilePath = "sdk/core/android/moengage-dependency-helper.gradle",
+        changelogPath = "sdk/core/CHANGELOG.md",
         androidBomArtifacts = setOf(
             "moe-android-sdk", "inapp", "rich-notification", "security",
             "encrypted-storage", "push-amp", "hms-pushkit", "realtime-trigger"
@@ -40,16 +42,19 @@ val moduleConfigs = listOf(
     ),
     ModuleConfig(
         gradleFilePath = "sdk/inbox/android/build.gradle",
+        changelogPath = "sdk/inbox/CHANGELOG.md",
         androidBomArtifacts = setOf("moe-android-sdk", "inbox-core"),
         pluginBaseBomArtifacts = setOf("plugin-base-inbox")
     ),
     ModuleConfig(
         gradleFilePath = "sdk/cards/android/build.gradle",
+        changelogPath = "sdk/cards/CHANGELOG.md",
         androidBomArtifacts = setOf("moe-android-sdk", "cards-core"),
         pluginBaseBomArtifacts = setOf("plugin-base-cards")
     ),
     ModuleConfig(
         gradleFilePath = "sdk/geofence/android/build.gradle",
+        changelogPath = "sdk/geofence/CHANGELOG.md",
         androidBomArtifacts = setOf("moe-android-sdk", "geofence"),
         pluginBaseBomArtifacts = setOf("plugin-base-geofence")
     )
@@ -151,6 +156,37 @@ fun updateVersionInFile(file: File, versionKey: String, oldVersion: String, newV
     file.writeText(updated)
 }
 
+// ── Changelog Update ────────────────────────────────────────────────────────────
+
+fun updateChangelog(file: File, newAndroidBomVersion: String) {
+    val lines = file.readLines().toMutableList()
+    val bomLineRegex = Regex("""^\s+-\s+\[minor]\s+updating\s+`android-bom`\s+to\s+`[^`]+`""")
+    val androidSectionRegex = Regex("""^- Android$""")
+    val newBomLine = "  - [minor] updating `android-bom` to `$newAndroidBomVersion`"
+
+    // Look for existing android-bom line in the unreleased section (before the first dated entry)
+    val firstDatedEntry = lines.indexOfFirst { it.matches(Regex("""^# \d{2}-\d{2}-\d{4}$""")) }
+    val searchEnd = if (firstDatedEntry > 0) firstDatedEntry else lines.size
+
+    val existingBomLineIndex = lines.subList(0, searchEnd).indexOfFirst { bomLineRegex.matches(it) }
+    if (existingBomLineIndex >= 0) {
+        lines[existingBomLineIndex] = newBomLine
+    } else {
+        // Find the "- Android" section in the unreleased block and add the line after it
+        val androidIndex = lines.subList(0, searchEnd).indexOfFirst { androidSectionRegex.matches(it) }
+        if (androidIndex >= 0) {
+            lines.add(androidIndex + 1, newBomLine)
+        } else {
+            // No Android section exists, add one before the first dated entry or at end of unreleased block
+            val insertAt = if (firstDatedEntry > 0) firstDatedEntry else lines.size
+            lines.add(insertAt, "- Android")
+            lines.add(insertAt + 1, newBomLine)
+        }
+    }
+
+    file.writeText(lines.joinToString("\n") + "\n")
+}
+
 // ── Main ───────────────────────────────────────────────────────────────────────
 
 fun updateBom() {
@@ -222,6 +258,17 @@ fun updateBom() {
         if (shouldUpdatePluginBaseBom) {
             updateVersionInFile(file, PLUGIN_BASE_BOM_VERSION_KEY, currentPluginBaseBomVersion, newPluginBaseBomVersion)
             println("  UPDATED: ${config.gradleFilePath} -- $PLUGIN_BASE_BOM_VERSION_KEY: $currentPluginBaseBomVersion -> $newPluginBaseBomVersion")
+        }
+
+        // Update changelog if android-bom was updated
+        if (shouldUpdateAndroidBom) {
+            val changelogFile = File(projectRoot, config.changelogPath)
+            if (changelogFile.exists()) {
+                updateChangelog(changelogFile, newAndroidBomVersion)
+                println("  UPDATED: ${config.changelogPath} -- android-bom version updated to $newAndroidBomVersion")
+            } else {
+                println("  WARN: ${config.changelogPath} not found, skipping changelog update.")
+            }
         }
     }
 
