@@ -14,7 +14,7 @@ buildscript {
 }
 
 ext {
-  moengageNativeBOMVersion = "1.5.1"
+  moengageNativeBOMVersion = "2.1.0"
   moengagePluginBaseBOMVersion = "1.2.1"
 }
 
