@@ -1,6 +1,9 @@
 name: Update Dependency
 
 on:
+  push:
+    branches:
+      - dependency-update-automation
   workflow_dispatch:
     inputs:
       ticketNumber:
@@ -11,7 +14,6 @@ on:
 jobs:
   update-dependency:
     runs-on: ubuntu-latest
-    if: contains(fromJSON('["umangmoe", "arshiya-moengage", "badri-engg-data"]'), github.actor)
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
