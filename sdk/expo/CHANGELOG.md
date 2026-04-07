@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+
+- Android
+    - [patch] Migrating the common gradle configuration to the gradle config
+
 # 09-02-2026
 
 ## 1.1.0

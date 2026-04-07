@@ -1,65 +1,48 @@
-buildscript {
-  ext.kotlinVersion = '1.9.23'
-
-  repositories {
-    google()
-    mavenCentral()
-  }
-
-  dependencies {
-    classpath 'com.android.tools.build:gradle:8.13.2'
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-  }
-}
-
-rootProject.allprojects {
-  repositories {
-    google()
-    mavenCentral()
-  }
-}
+import com.moengage.gradle.android.library.plugin.configs.BuildConfigType
+import groovy.json.JsonSlurper
 
 ext {
-  minimumVersion = 23
-  compileVersion = 35
+    kotlinVersion = "1.9.23"
 }
 
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.13.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "com.moengage.android.hybrid.module.config.plugin:com.moengage.android.hybrid.module.config.plugin.gradle.plugin:0.0.4"
+    }
+}
+
+apply plugin: 'com.moengage.android.hybrid.module.config.plugin'
 apply plugin: 'com.facebook.react'
 
-android {
-  compileSdk compileVersion
-  namespace "com.moengage.react"
-  defaultConfig {
-    minSdk minimumVersion
-    versionCode 1
-    versionName "1.0"
-
-    testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-
-    buildConfigField("boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString())
-  }
-  buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+hybridModuleConfig.configurePlugin {
+    kotlinOptions {
+        enableJvmTarget = false
+        compilerArgs = ['-Xjvm-default=all']
     }
-  }
+    buildFeature {
+        buildConfigField(
+            BuildConfigType.BOOLEAN,
+           "IS_NEW_ARCHITECTURE_ENABLED",
+            isNewArchitectureEnabled().toString()
+        )
+        buildConfigField(
+            BuildConfigType.STRING,
+            "MOENGAGE_REACT_LIBRARY_VERSION",
+            "\"${getCorePluginVersion().toString()}\""
+        )
+    }
+}
 
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
-
-  kotlinOptions {
-    freeCompilerArgs = ['-Xjvm-default=all']
-  }
-  buildFeatures {
-    buildConfig true
-  }
-
-
+android {
+  namespace "com.moengage.react"
   sourceSets {
     main {
       if (isNewArchitectureEnabled()) {
@@ -78,9 +61,20 @@ dependencies {
   compileOnly("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
 }
 
-apply from: file("./user-agent.gradle")
 apply from: file("./moengage-dependency-helper.gradle")
 
 def isNewArchitectureEnabled() {
   return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+def getCorePluginVersion() {
+    String libraryVersionName = "UNKNOWN"
+    File packageJson = new File(project.projectDir.parentFile, "package.json")
+
+    if (packageJson.exists()) {
+        def parsedJson = new JsonSlurper().parseText(packageJson.text)
+        libraryVersionName = parsedJson.version
+    }
+
+    return libraryVersionName
 }

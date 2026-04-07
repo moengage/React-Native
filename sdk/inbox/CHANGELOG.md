@@ -4,6 +4,7 @@
 
 - Android
   - [minor] AGP version updated from `8.7.3` to `8.13.2`
+  - [patch] Migrating the common gradle configuration to the gradle config
 
 # 09-02-2026
 
@@ -23,7 +24,7 @@
   - Moving the internal native dependencies to bill-of-materials (BOM) for better version management.
 - iOS
   - `MoEngage-iOS-SDK` version updated to `10.08.0`
-  
+
 # 17-10-2025
 
 ## 6.0.4

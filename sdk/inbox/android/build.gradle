@@ -1,59 +1,44 @@
-buildscript {
-  ext.kotlinVersion = '1.9.23'
-
-  repositories {
-    google()
-    mavenCentral()
-  }
-
-  dependencies {
-    classpath 'com.android.tools.build:gradle:8.13.2'
-    // noinspection DifferentKotlinGradleVersion
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-  }
-}
+import com.moengage.gradle.android.library.plugin.configs.BuildConfigType
 
 ext {
   moengageNativeBOMVersion = "1.5.1"
   moengagePluginBaseBOMVersion = "1.2.1"
+  kotlinVersion = "1.9.23"
 }
 
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+    gradlePluginPortal()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:8.13.2'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    classpath "com.moengage.android.hybrid.module.config.plugin:com.moengage.android.hybrid.module.config.plugin.gradle.plugin:0.0.4"
+  }
+}
+
+apply plugin: 'com.moengage.android.hybrid.module.config.plugin'
 apply plugin: 'com.facebook.react'
 
-android {
-  compileSdk 35
-  namespace "com.moengage.react.inbox"
-  defaultConfig {
-    minSdk 23
-    versionCode 1
-    versionName "1.0"
-
-    buildConfigField("boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString())
-  }
-
-  buildTypes {
-    release {
-      minifyEnabled false
-    }
-  }
-  lintOptions {
-    disable 'GradleCompatible'
-  }
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
-
+hybridModuleConfig.configurePlugin {
   kotlinOptions {
-    freeCompilerArgs = ['-Xjvm-default=all']
+    enableJvmTarget = false
+    compilerArgs = ['-Xjvm-default=all']
   }
-
-  buildFeatures {
-    buildConfig true
+  buildFeature {
+    buildConfigField(
+      BuildConfigType.BOOLEAN,
+      "IS_NEW_ARCHITECTURE_ENABLED",
+      isNewArchitectureEnabled().toString()
+    )
   }
+}
 
+android {
+  namespace "com.moengage.react.inbox"
   sourceSets {
     main {
       if (isNewArchitectureEnabled()) {
@@ -63,11 +48,6 @@ android {
       }
     }
   }
-}
-
-repositories {
-  mavenCentral()
-  google()
 }
 
 dependencies {
