@@ -1,9 +1,6 @@
 name: Update Dependency
 
 on:
-  push:
-    branches:
-      - dependency-update-automation
   workflow_dispatch:
     inputs:
       ticketNumber:
@@ -42,7 +39,7 @@ jobs:
           git config user.name "sdk-bot-user"
           git config user.email "sdk.bot@moengage.com"
           DATE=$(date +%Y-%m-%d)
-          TICKET="MOEN-44027"
+          TICKET="${{ github.event.inputs.ticketNumber }}"
           BRANCH="${TICKET}/dependency_update"
           echo $BRANCH
           git checkout -b "$BRANCH"
