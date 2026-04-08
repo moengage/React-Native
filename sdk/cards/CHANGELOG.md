@@ -3,7 +3,8 @@
 ## Release Version
 
 - Android
-  - [minor] AGP version updated from `8.7.3` to `8.13.2`
+    - [minor] AGP version updated from `8.7.3` to `8.13.2`
+    - [patch] Migrating the common gradle configuration to the gradle config
 
 # 09-02-2026
 
