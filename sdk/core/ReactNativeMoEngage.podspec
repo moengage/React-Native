@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.public_header_files = "iOS/MoEReactBridge/{#{headers.join(',')}}.h"
   s.weak_framework      = 'UserNotifications'
   s.dependency          'React'
-  s.dependency          'MoEngagePluginBase','6.8.0'
+  s.dependency          'MoEngagePluginBase','6.8.2'
   s.ios.dependency  	'MoEngage-iOS-SDK/RichNotification'
 
   s.prepare_command = <<-CMD
