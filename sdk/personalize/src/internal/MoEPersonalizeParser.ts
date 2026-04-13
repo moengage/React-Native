@@ -9,6 +9,8 @@ import * as Constants from "./MoEPersonalizeConstants";
 
 function parseDataSource(value: string): DataSource {
     if (value === DataSource.CACHE) return DataSource.CACHE;
+    if (value === DataSource.NETWORK) return DataSource.NETWORK;
+    console.warn(`[MoEPersonalize] Unknown DataSource "${value}", defaulting to NETWORK`);
     return DataSource.NETWORK;
 }
 
@@ -17,7 +19,9 @@ function parseExperienceStatus(value: string): ExperienceStatus {
         case ExperienceStatus.ACTIVE: return ExperienceStatus.ACTIVE;
         case ExperienceStatus.PAUSED: return ExperienceStatus.PAUSED;
         case ExperienceStatus.SCHEDULED: return ExperienceStatus.SCHEDULED;
-        default: return ExperienceStatus.ACTIVE;
+        default:
+            console.warn(`[MoEPersonalize] Unknown ExperienceStatus "${value}", defaulting to ACTIVE`);
+            return ExperienceStatus.ACTIVE;
     }
 }
 
@@ -73,12 +77,4 @@ export function parseExperiencesResult(payload: string): ExperienceCampaignsResu
     }
 
     return new ExperienceCampaignsResult(experiences, failures);
-}
-
-export function emptyMetadata(): ExperienceCampaignsMetadata {
-    return new ExperienceCampaignsMetadata(DataSource.NETWORK, []);
-}
-
-export function emptyResult(): ExperienceCampaignsResult {
-    return new ExperienceCampaignsResult([], []);
 }

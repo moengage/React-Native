@@ -6,7 +6,6 @@ import ExperienceCampaignsResult from "./model/ExperienceCampaignsResult";
 import { DataSource } from "./model/DataSource";
 import { ExperienceStatus } from "./model/ExperienceStatus";
 import * as MoEPersonalizeHandler from "./internal/MoEPersonalizeHandler";
-import { emptyMetadata, emptyResult } from "./internal/MoEPersonalizeParser";
 
 class ReactMoEngagePersonalize {
   private appId: string;
@@ -20,13 +19,25 @@ class ReactMoEngagePersonalize {
    *
    * @param statuses Array of {@link ExperienceStatus} to filter by.
    * @returns Promise resolving to {@link ExperienceCampaignsMetadata}.
+   * @throws Rejects on SDK-level failures (SDK not initialized, network error, etc.).
    */
-  async fetchExperiencesMeta(statuses: ExperienceStatus[]): Promise<ExperienceCampaignsMetadata> {
-    try {
-      return await MoEPersonalizeHandler.fetchExperiencesMeta(this.appId, statuses);
-    } catch (e) {
-      return emptyMetadata();
-    }
+  fetchExperiencesMeta(statuses: ExperienceStatus[]): Promise<ExperienceCampaignsMetadata> {
+    return MoEPersonalizeHandler.fetchExperiencesMeta(this.appId, statuses);
+  }
+
+  /**
+   * Fetches a single experience campaign for the given key.
+   *
+   * @param experienceKey The experience key to fetch.
+   * @param attributes Optional key-value attributes for personalization.
+   * @returns Promise resolving to {@link ExperienceCampaignsResult}.
+   * @throws Rejects on SDK-level failures (SDK not initialized, network error, etc.).
+   */
+  fetchExperience(
+    experienceKey: string,
+    attributes: Record<string, string> = {}
+  ): Promise<ExperienceCampaignsResult> {
+    return this.fetchExperiences([experienceKey], attributes);
   }
 
   /**
@@ -35,16 +46,13 @@ class ReactMoEngagePersonalize {
    * @param experienceKeys Array of experience keys to fetch.
    * @param attributes Optional key-value attributes for personalization.
    * @returns Promise resolving to {@link ExperienceCampaignsResult}.
+   * @throws Rejects on SDK-level failures (SDK not initialized, network error, etc.).
    */
-  async fetchExperiences(
+  fetchExperiences(
     experienceKeys: string[],
     attributes: Record<string, string> = {}
   ): Promise<ExperienceCampaignsResult> {
-    try {
-      return await MoEPersonalizeHandler.fetchExperiences(this.appId, experienceKeys, attributes);
-    } catch (e) {
-      return emptyResult();
-    }
+    return MoEPersonalizeHandler.fetchExperiences(this.appId, experienceKeys, attributes);
   }
 
   /**
