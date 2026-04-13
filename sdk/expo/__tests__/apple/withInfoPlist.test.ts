@@ -21,7 +21,8 @@ describe('Info.plist configuration', () => {
       pushNotificationImpressionTrackingEnabled: true,
       richPushNotificationEnabled: false,
       pushTemplatesEnabled: false,
-      deviceTriggerEnabled: false
+      deviceTriggerEnabled: false,
+      addCustomPodspecSource: true
     }
   };
 

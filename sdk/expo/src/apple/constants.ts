@@ -42,6 +42,8 @@ export const MOENGAGE_IOS_PUSH_TEMPLATE_FILES = [
  * These pod specifications are added to the Podfile for each target
  * that requires the functionality
  */
+export const MOENGAGE_IOS_PODSPEC_SOURCE = 'https://github.com/moengage/PodSpecs.git';  // Custom MoEngage CocoaPods specs source
+export const MOENGAGE_IOS_COCOAPODS_SOURCE = 'https://github.com/CocoaPods/Specs.git';  // Default CocoaPods specs source
 export const MOENGAGE_IOS_NOTIFICATION_SERVICE_POD = 'MoEngage-iOS-SDK/RichNotification';  // For Rich Push Notification Service Extension
 export const MOENGAGE_IOS_PUSH_TEMPLATE_POD = 'MoEngage-iOS-SDK/RichNotification';  // For Push Templates Notification Content Extension
 export const MOENGAGE_IOS_DEVICE_TRIGGER_POD = 'MoEngage-iOS-SDK/RealTimeTrigger';  // For Device-based campaign triggers
