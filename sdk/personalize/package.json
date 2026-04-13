@@ -1,0 +1,56 @@
+{
+  "name": "react-native-moengage-personalize",
+  "version": "1.0.0",
+  "description": "Personalize Module for the MoEngage Platform",
+  "main": "src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "ReactNativeMoEngagePersonalize.podspec",
+    "!lib/typescript/example",
+    "!android/build",
+    "!ios/build",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "test": "jest",
+    "build": "echo \"Not required\" && exit 0"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "moengage"
+  ],
+  "repository": "https://github.com/moengage/React-Native",
+  "author": {
+    "name": "MoEngage",
+    "email": "mobiledevs@moengage.com"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "react-native-moengage": "^12.0.0"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "babel-jest": "^29.7.0",
+    "react-native": "0.73.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^4.3.0"
+  },
+  "codegenConfig": {
+    "name": "NativeMoEngagePersonalizeSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.moengage.react.personalize"
+    }
+  }
+}
