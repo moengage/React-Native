@@ -79,6 +79,12 @@ export interface MoEngageIosConfig {
   deviceTriggerEnabled: boolean;
 
   /**
+   * Whether to add custom MoEngage CocoaPods specs source to the Podfile
+   * @default true
+   */
+  addCustomPodspecSource: boolean;
+
+  /**
    * Path to the Live Activity target
    */
   liveActivityTargetPath?: string;
