@@ -20,7 +20,7 @@ const extractOfferingAttributes = (campaign) => {
     if (typeof offeringsRaw === "string") {
       const offerings = JSON.parse(offeringsRaw);
       if (Array.isArray(offerings) && offerings.length > 0) {
-        const context = offerings[0]?.offering_context;
+        const context = offerings[0];
         if (context && typeof context === "object" && Object.keys(context).length > 0) {
           return context;
         }
@@ -46,6 +46,7 @@ export default function PersonalizeScreen() {
     try {
       const statuses = parseList(statusInput);
       const result = await personalize.fetchExperiencesMeta(statuses);
+      console.log(result)
       const lines = result.experiences
         .map((e) => `- ${e.experienceKey} (${e.status})`)
         .join("\n");
@@ -66,6 +67,7 @@ export default function PersonalizeScreen() {
         return;
       }
       const result = await personalize.fetchExperiences(keys);
+      console.log(result)
       if (result.experiences.length > 0) {
         const campaign = result.experiences[0];
         setLastCampaign(campaign);
