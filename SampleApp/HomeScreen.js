@@ -235,6 +235,13 @@ export const HomeScreen = (props) => {
             action: async () => {
               ReactMoE.updatePushPermissionRequestCountAndroid(1);
             }
+          },
+          {
+            id: "25",
+            title: "Personalize",
+            action: () => {
+              props.navigation.navigate("PersonalizeScreen");
+            },
           }
         ]}
         renderItem={({ item, separators }) => (
