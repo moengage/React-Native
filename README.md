@@ -12,6 +12,7 @@ This repository contains the React-Native plugins for the [MoEngage](https://www
 |     inbox     | Contains the implementation for the SDK implementation for Inbox Feature                      |
 |     cards     | Contains the implementation for the SDK implementation for Cards Feature                      |
 |   geofence    | Contains the implementation for the SDK implementation for Geofence Feature                   |
+|  personalize  | Contains the implementation for the SDK implementation for Personalize Feature                |
 |     expo      | Contains the implementation for the prebuild plugin to configure SDK native implementation    |
 |   SampleApp   | Sample Integration for reference.                                                             |
 | ExpoSampleApp | Expo Sample Integration for reference.                                                        |
