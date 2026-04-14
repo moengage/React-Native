@@ -44,6 +44,7 @@ class EventEmitterImpl(private val reactContext: ReactContext) : EventEmitter {
                 )
                 EventType.INAPP_SELF_HANDLED_AVAILABLE -> emitInAppSelfHandled(event as InAppSelfHandledEvent)
                 EventType.PERMISSION -> emitPermissionResult(event as PermissionEvent)
+                else -> {}
             }
         } catch (t: Throwable) {
             Logger.print(LogLevel.ERROR, t) { "$tag emit() : " }
