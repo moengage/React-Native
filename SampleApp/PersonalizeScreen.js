@@ -13,9 +13,23 @@ import { MOENGAGE_APP_ID } from "./src/key";
 
 const personalize = new ReactMoEngagePersonalize(MOENGAGE_APP_ID);
 
-const OFFERING_ATTRS = {
-  moe_offering_id: "offer_001",
-  moe_offering_name: "Demo Offering",
+// Extract offering_context from campaign payload. Returns null if not available.
+const extractOfferingAttributes = (campaign) => {
+  try {
+    const offeringsRaw = campaign?.payload?.offerings;
+    if (typeof offeringsRaw === "string") {
+      const offerings = JSON.parse(offeringsRaw);
+      if (Array.isArray(offerings) && offerings.length > 0) {
+        const context = offerings[0]?.offering_context;
+        if (context && typeof context === "object" && Object.keys(context).length > 0) {
+          return context;
+        }
+      }
+    }
+  } catch (_) {
+    // parsing failed
+  }
+  return null;
 };
 
 const parseList = (s) => s.split(",").map((x) => x.trim()).filter(Boolean);
@@ -24,6 +38,7 @@ export default function PersonalizeScreen() {
   const [statusInput, setStatusInput] = useState("active");
   const [keysInput, setKeysInput] = useState("");
   const [lastCampaign, setLastCampaign] = useState(null);
+  const [offeringAttrs, setOfferingAttrs] = useState(null);
 
   const showError = (e) => Alert.alert("Error", e?.message || String(e));
 
@@ -52,7 +67,9 @@ export default function PersonalizeScreen() {
       }
       const result = await personalize.fetchExperiences(keys);
       if (result.experiences.length > 0) {
-        setLastCampaign(result.experiences[0]);
+        const campaign = result.experiences[0];
+        setLastCampaign(campaign);
+        setOfferingAttrs(extractOfferingAttributes(campaign));
       }
       const expLines = result.experiences
         .map((e) => `- ${e.experienceKey} [${e.source}]`)
@@ -100,9 +117,21 @@ export default function PersonalizeScreen() {
     }
   };
 
+  const requireOfferingAttrs = () => {
+    if (!offeringAttrs) {
+      Alert.alert(
+        "No offering attributes",
+        "The fetched campaign does not contain offerings. Fetch an experience with offerings configured to use this."
+      );
+      return false;
+    }
+    return true;
+  };
+
   const onTrackOfferingShown = () => {
+    if (!requireOfferingAttrs()) return;
     try {
-      personalize.trackOfferingShown([OFFERING_ATTRS]);
+      personalize.trackOfferingShown([offeringAttrs]);
       Alert.alert("Tracked", "Offering Shown");
     } catch (e) {
       showError(e);
@@ -111,8 +140,9 @@ export default function PersonalizeScreen() {
 
   const onTrackOfferingClicked = () => {
     if (!requireCampaign()) return;
+    if (!requireOfferingAttrs()) return;
     try {
-      personalize.trackOfferingClicked(lastCampaign, OFFERING_ATTRS);
+      personalize.trackOfferingClicked(lastCampaign, offeringAttrs);
       Alert.alert("Tracked", `Offering Clicked: ${lastCampaign.experienceKey}`);
     } catch (e) {
       showError(e);
