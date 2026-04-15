@@ -1,13 +1,13 @@
-# Release Date
+# 15-04-2026
 
-## Release Version
+## 6.4.0
 
 - Android
-  - [minor] updating `android-bom` to `2.1.0`
-    - [minor] AGP version updated from `8.7.3` to `8.13.2`
-    - [patch] Migrating the common gradle configuration to the gradle config
+  - updating `android-bom` to `2.1.0`
+    - AGP version updated from `8.7.3` to `8.13.2`
+    - Migrating the common gradle configuration to the gradle config
 - iOS
-    - [patch] Updated MoEngageCards to `5.01.11`
+    - Updated MoEngageCards to `5.01.11`
 
 # 09-02-2026
 
