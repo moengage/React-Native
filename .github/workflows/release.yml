@@ -49,8 +49,10 @@ jobs:
         run: |
           .github/scripts/release.main.kts ${{ github.event.inputs.releaseNotes }} ${{ github.event.inputs.releaseTicket }}
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Notify release
         working-directory: source
         run: |
           kotlin .github/scripts/notify-release.main.kts ${{ github.event.inputs.releaseNotes }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
