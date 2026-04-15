@@ -4,6 +4,8 @@
 
 - Android
     - [patch] Migrating the common gradle configuration to the gradle config
+- iOS
+  - [minor] Automated expo new cocoapods source integration
 
 # 09-02-2026
 

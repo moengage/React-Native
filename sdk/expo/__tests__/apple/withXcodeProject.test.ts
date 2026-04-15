@@ -75,7 +75,8 @@ describe('withMoEngageXcodeProject', () => {
       pushNotificationImpressionTrackingEnabled: false,
       richPushNotificationEnabled: false,
       pushTemplatesEnabled: false,
-      deviceTriggerEnabled: false
+      deviceTriggerEnabled: false,
+      addCustomPodspecSource: true
     }
   };
 
@@ -359,7 +360,8 @@ describe('withMoEngageXcodeProject', () => {
         pushNotificationImpressionTrackingEnabled: false,
         richPushNotificationEnabled: true,
         pushTemplatesEnabled: false,
-        deviceTriggerEnabled: false
+        deviceTriggerEnabled: false,
+        addCustomPodspecSource: true
       }
     };
 

@@ -26,7 +26,8 @@ describe('Dangerous modifications', () => {
       pushNotificationImpressionTrackingEnabled: false,
       richPushNotificationEnabled: false,
       pushTemplatesEnabled: false,
-      deviceTriggerEnabled: false
+      deviceTriggerEnabled: false,
+      addCustomPodspecSource: true
     }
   };
 
@@ -62,6 +63,7 @@ describe('Dangerous modifications', () => {
         richPushNotificationEnabled: true,
         pushTemplatesEnabled: true,
         deviceTriggerEnabled: true,
+        addCustomPodspecSource: true,
         liveActivityTargetPath: 'assets/moengage/LiveActivity'
       }
     };
@@ -76,16 +78,118 @@ describe('Dangerous modifications', () => {
     expect(fs.writeFileSync).not.toHaveBeenCalled();
   });
 
+  test('should add custom podspec source when not present', () => {
+    // Precondition (Arrange)
+    jest.spyOn(fs, 'existsSync')
+      .mockReturnValueOnce(true)  // For config file
+      .mockReturnValueOnce(true); // For Podfile (specs source check)
+    jest.spyOn(fs, 'readFileSync')
+      .mockReturnValueOnce(plistContent) // For config file
+      .mockReturnValueOnce(podfileContent); // For Podfile (specs source check)
+
+    // Act
+    const result = withMoEngageDangerousMod(mockConfig, mockProps);
+
+    // Assert
+    expect(result).toBeDefined();
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      '/test/project/ios/Podfile',
+      expect.stringContaining(`source '${constants.MOENGAGE_IOS_PODSPEC_SOURCE}'`)
+    );
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      '/test/project/ios/Podfile',
+      expect.stringContaining(`source '${constants.MOENGAGE_IOS_COCOAPODS_SOURCE}'`)
+    );
+  });
+
+  test('should not add cocoapods source when already present', () => {
+    // Precondition (Arrange)
+    const podfileWithCocoapodsSource = `source '${constants.MOENGAGE_IOS_COCOAPODS_SOURCE}'\n` + podfileContent;
+    jest.spyOn(fs, 'existsSync')
+      .mockReturnValueOnce(true)  // For config file
+      .mockReturnValueOnce(true); // For Podfile (specs source check)
+    jest.spyOn(fs, 'readFileSync')
+      .mockReturnValueOnce(plistContent) // For config file
+      .mockReturnValueOnce(podfileWithCocoapodsSource); // For Podfile (specs source check)
+
+    // Act
+    const result = withMoEngageDangerousMod(mockConfig, mockProps);
+
+    // Assert
+    expect(result).toBeDefined();
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      '/test/project/ios/Podfile',
+      expect.stringContaining(`source '${constants.MOENGAGE_IOS_PODSPEC_SOURCE}'`)
+    );
+    // Should not duplicate cocoapods source
+    const writeCall = (fs.writeFileSync as jest.Mock).mock.calls.find(
+      call => call[0] === '/test/project/ios/Podfile'
+    );
+    expect(writeCall).toBeDefined();
+    const writtenContent = writeCall![1] as string;
+    expect(writtenContent).not.toMatch(new RegExp(`source '${constants.MOENGAGE_IOS_COCOAPODS_SOURCE}'.*source '${constants.MOENGAGE_IOS_COCOAPODS_SOURCE}'`, 's'));
+  });
+
+  test('should skip podspec source when already present', () => {
+    // Precondition (Arrange)
+    const podfileWithMoEngageSource = `source '${constants.MOENGAGE_IOS_PODSPEC_SOURCE}'\n` + podfileContent;
+    jest.spyOn(fs, 'existsSync')
+      .mockReturnValueOnce(true)  // For config file
+      .mockReturnValueOnce(true); // For Podfile (specs source check)
+    jest.spyOn(fs, 'readFileSync')
+      .mockReturnValueOnce(plistContent) // For config file
+      .mockReturnValueOnce(podfileWithMoEngageSource); // For Podfile (specs source check)
+
+    // Act
+    const result = withMoEngageDangerousMod(mockConfig, mockProps);
+
+    // Assert
+    expect(result).toBeDefined();
+    // writeFileSync should not be called for podspec source since it's already present
+    expect(fs.writeFileSync).not.toHaveBeenCalledWith(
+      '/test/project/ios/Podfile',
+      expect.stringContaining(`source '${constants.MOENGAGE_IOS_PODSPEC_SOURCE}'`)
+    );
+  });
+
+  test('should skip custom podspec source when addCustomPodspecSource is false', () => {
+    // Precondition (Arrange)
+    jest.spyOn(fs, 'existsSync')
+      .mockReturnValueOnce(true); // For config file
+    jest.spyOn(fs, 'readFileSync')
+      .mockReturnValueOnce(plistContent); // For config file
+
+    const propsWithNoCustomSource = {
+      ...mockProps,
+      apple: {
+        ...mockProps.apple,
+        addCustomPodspecSource: false
+      }
+    };
+
+    // Act
+    const result = withMoEngageDangerousMod(mockConfig, propsWithNoCustomSource);
+
+    // Assert
+    expect(result).toBeDefined();
+    expect(fs.writeFileSync).not.toHaveBeenCalledWith(
+      '/test/project/ios/Podfile',
+      expect.stringContaining(`source '${constants.MOENGAGE_IOS_PODSPEC_SOURCE}'`)
+    );
+  });
+
   test('should create notification service extension when push impression tracking enabled', () => {
     // Precondition (Arrange)
     jest.spyOn(fs, 'existsSync')
       .mockReturnValueOnce(true)  // For config file
+      .mockReturnValueOnce(true)  // For Podfile (specs source check)
       .mockReturnValueOnce(false) // For rich push directory
       .mockReturnValueOnce(true); // For Podfile
     jest.spyOn(fs, 'readFileSync')
       .mockReturnValueOnce(plistContent) // For config file
+      .mockReturnValueOnce(podfileWithSourcesContent) // For Podfile (specs source check)
       .mockReturnValueOnce(entitlementsContent) // For entitlements file
-      .mockReturnValueOnce(podfileContent); // For Podfile
+      .mockReturnValueOnce(podfileWithSourcesContent); // For Podfile
 
     const propsWithRichPush = {
       ...mockProps,
@@ -117,12 +221,14 @@ describe('Dangerous modifications', () => {
     // Precondition (Arrange)
     jest.spyOn(fs, 'existsSync')
       .mockReturnValueOnce(true) // For config file
+      .mockReturnValueOnce(true) // For Podfile (specs source check)
       .mockReturnValueOnce(false) // For rich push directory
       .mockReturnValueOnce(true); // For Podfile
     jest.spyOn(fs, 'readFileSync')
       .mockReturnValueOnce(plistContent) // For config file
+      .mockReturnValueOnce(podfileWithSourcesContent) // For Podfile (specs source check)
       .mockReturnValueOnce(entitlementsContent) // For entitlements file
-      .mockReturnValueOnce(podfileContent); // For Podfile
+      .mockReturnValueOnce(podfileWithSourcesContent); // For Podfile
 
     const propsWithRichPush = {
       ...mockProps,
@@ -154,6 +260,7 @@ describe('Dangerous modifications', () => {
     // Precondition (Arrange)
     jest.spyOn(fs, 'existsSync')
       .mockReturnValueOnce(true) // For config file
+      .mockReturnValueOnce(true) // For Podfile (specs source check)
       .mockReturnValueOnce(false) // For rich push directory
       .mockReturnValueOnce(true) // For Podfile
       .mockReturnValueOnce(false) // For push templates directory
@@ -161,10 +268,11 @@ describe('Dangerous modifications', () => {
 
     jest.spyOn(fs, 'readFileSync')
       .mockReturnValueOnce(plistContent) // For config file
+      .mockReturnValueOnce(podfileWithSourcesContent) // For Podfile (specs source check)
       .mockReturnValueOnce(entitlementsContent) // For entitlements file
-      .mockReturnValueOnce(podfileContent) // For Podfile
+      .mockReturnValueOnce(podfileWithSourcesContent) // For Podfile
       .mockReturnValueOnce(entitlementsContent) // For entitlements file
-      .mockReturnValueOnce(podfileContent); // For Podfile
+      .mockReturnValueOnce(podfileWithSourcesContent); // For Podfile
 
     const propsWithPushTemplates = {
       ...mockProps,
@@ -214,8 +322,9 @@ describe('Dangerous modifications', () => {
     jest.spyOn(fs, 'existsSync').mockReturnValue(true);
     jest.spyOn(fs, 'readFileSync')
       .mockReturnValueOnce(plistContent) // For config file
-      .mockReturnValueOnce(podfileContent) // For Podfile
-      .mockReturnValueOnce(podfileContent); // For Podfile
+      .mockReturnValueOnce(podfileWithSourcesContent) // For Podfile (specs source check)
+      .mockReturnValueOnce(podfileWithSourcesContent) // For Podfile
+      .mockReturnValueOnce(podfileWithSourcesContent); // For Podfile
 
     // Act
     const result = withMoEngageDangerousMod(mockConfig, propsWithLiveActivity);
@@ -248,7 +357,8 @@ describe('Dangerous modifications', () => {
     jest.spyOn(fs, 'existsSync').mockReturnValue(true);
     jest.spyOn(fs, 'readFileSync')
       .mockReturnValueOnce(plistContent) // For config file
-      .mockReturnValueOnce(podfileContent); // For podfile
+      .mockReturnValueOnce(podfileWithSourcesContent) // For Podfile (specs source check)
+      .mockReturnValueOnce(podfileWithSourcesContent); // For podfile
 
     // Act
     const result = withMoEngageDangerousMod(mockConfig, propsWithDeviceTrigger);
@@ -276,6 +386,7 @@ describe('Dangerous modifications', () => {
         richPushNotificationEnabled: true,
         pushTemplatesEnabled: true,
         deviceTriggerEnabled: true,
+        addCustomPodspecSource: true,
         liveActivityTargetPath: 'LiveActivityExtension'
       }
     };
@@ -302,6 +413,7 @@ describe('Dangerous modifications', () => {
         richPushNotificationEnabled: true,
         pushTemplatesEnabled: true,
         deviceTriggerEnabled: true,
+        addCustomPodspecSource: true,
         liveActivityTargetPath: 'LiveActivityExtension'
       }
     };
@@ -341,7 +453,7 @@ const entitlementsContent = `
 </plist>
 `;
 
-const podfileContent = `
+const podfileContentRaw = `
 require File.join(File.dirname(\`node --print "require.resolve('expo/package.json')"\`), "scripts/autolinking")
 require File.join(File.dirname(\`node --print "require.resolve('react-native/package.json')"\`), "scripts/react_native_pods")
 
@@ -407,3 +519,9 @@ target 'MoEngageExpoSampleApp' do
   end
 end
 `
+
+const podfileContent = podfileContentRaw;
+
+const podfileWithSourcesContent = `source '${constants.MOENGAGE_IOS_PODSPEC_SOURCE}'
+source '${constants.MOENGAGE_IOS_COCOAPODS_SOURCE}'
+` + podfileContentRaw;

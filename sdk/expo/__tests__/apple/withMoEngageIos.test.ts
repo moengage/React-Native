@@ -77,6 +77,7 @@ describe('Modifiers application', () => {
         richPushNotificationEnabled: true,
         pushTemplatesEnabled: false,
         deviceTriggerEnabled: true,
+        addCustomPodspecSource: true,
         liveActivityTargetPath: 'path/to/liveactivity'
       }
     };
@@ -131,7 +132,8 @@ describe('Modifiers application', () => {
         pushNotificationImpressionTrackingEnabled: false,
         richPushNotificationEnabled: false,
         pushTemplatesEnabled: false,
-        deviceTriggerEnabled: false
+        deviceTriggerEnabled: false,
+        addCustomPodspecSource: true
       }
     };
 
@@ -229,6 +231,7 @@ describe('Apple Integration', () => {
         richPushNotificationEnabled: true,
         pushTemplatesEnabled: true,
         deviceTriggerEnabled: true,
+        addCustomPodspecSource: true,
         liveActivityTargetPath: 'LiveActivity'
       }
     };
@@ -308,7 +311,8 @@ describe('Apple Integration', () => {
         pushNotificationImpressionTrackingEnabled: true,
         richPushNotificationEnabled: false,
         pushTemplatesEnabled: false,
-        deviceTriggerEnabled: false
+        deviceTriggerEnabled: false,
+        addCustomPodspecSource: true
       }
     };
 
@@ -344,7 +348,8 @@ describe('Apple Integration', () => {
         pushNotificationImpressionTrackingEnabled: true,
         richPushNotificationEnabled: true,
         pushTemplatesEnabled: false,
-        deviceTriggerEnabled: false
+        deviceTriggerEnabled: false,
+        addCustomPodspecSource: true
       }
     };
 
@@ -384,7 +389,8 @@ describe('Apple Integration', () => {
         pushNotificationImpressionTrackingEnabled: true,
         richPushNotificationEnabled: true,
         pushTemplatesEnabled: true,
-        deviceTriggerEnabled: true
+        deviceTriggerEnabled: true,
+        addCustomPodspecSource: true
       }
     };
 
@@ -416,7 +422,8 @@ describe('Apple Integration', () => {
         pushNotificationImpressionTrackingEnabled: true,
         richPushNotificationEnabled: false,
         pushTemplatesEnabled: false,
-        deviceTriggerEnabled: false
+        deviceTriggerEnabled: false,
+        addCustomPodspecSource: true
       }
     };
 
@@ -451,7 +458,8 @@ describe('Apple Integration', () => {
         pushNotificationImpressionTrackingEnabled: true,
         richPushNotificationEnabled: false,
         pushTemplatesEnabled: false,
-        deviceTriggerEnabled: false
+        deviceTriggerEnabled: false,
+        addCustomPodspecSource: true
       }
     };
 
@@ -486,6 +494,7 @@ describe('Apple Integration', () => {
         configFilePath: 'assets/moengage/MoEngage-Config.plist',
         pushNotificationImpressionTrackingEnabled: true,
         richPushNotificationEnabled: false,
+        addCustomPodspecSource: true,
         // Missing optional properties should be handled gracefully
         // pushTemplatesEnabled: undefined,
         // deviceTriggerEnabled: undefined,
@@ -524,7 +533,8 @@ describe('Apple Integration', () => {
         pushNotificationImpressionTrackingEnabled: true,
         richPushNotificationEnabled: true,
         pushTemplatesEnabled: false,
-        deviceTriggerEnabled: false
+        deviceTriggerEnabled: false,
+        addCustomPodspecSource: true
       }
     };
 
