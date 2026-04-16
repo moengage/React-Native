@@ -1,11 +1,21 @@
-import ExperienceCampaign from "../model/ExperienceCampaign";
-import { ExperienceStatus } from "../model/ExperienceStatus";
+import ExperienceCampaign from "../../model/ExperienceCampaign";
+import { ExperienceStatus } from "../../model/ExperienceStatus";
+import { MoEngageLogger } from "react-native-moengage";
+import { MODULE_TAG } from "../Constants";
+
+const TAG = `${MODULE_TAG}PayloadBuilder`;
 
 function getAccountMetaPayload(appId: string) {
     return { appId: appId };
 }
 
 function serializeCampaign(campaign: ExperienceCampaign) {
+    if (campaign.payload == null) {
+        MoEngageLogger.warn(`${TAG} serializeCampaign() : campaign.payload is null/undefined for "${campaign.experienceKey}"`);
+    }
+    if (campaign.experienceContext == null) {
+        MoEngageLogger.warn(`${TAG} serializeCampaign() : campaign.experienceContext is null/undefined for "${campaign.experienceKey}"`);
+    }
     return {
         experienceKey: campaign.experienceKey,
         payload: campaign.payload,

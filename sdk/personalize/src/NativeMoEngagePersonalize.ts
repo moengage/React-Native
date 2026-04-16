@@ -47,5 +47,5 @@ export interface Spec extends TurboModule {
     trackOfferingClicked(payload: string): void;
 }
 
-const MoEngageReactPersonalize = TurboModuleRegistry.getEnforcing<Spec>('MoEReactPersonalize');
-export default MoEngageReactPersonalize;
+const MoEngagePersonalizeBridge = TurboModuleRegistry.getEnforcing<Spec>('MoEngagePersonalizeBridge');
+export default MoEngagePersonalizeBridge;

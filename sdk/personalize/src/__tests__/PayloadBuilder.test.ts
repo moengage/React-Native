@@ -1,6 +1,17 @@
 import "ts-jest";
 import "jest";
-import * as PayloadBuilder from "../internal/MoEPersonalizePayloadBuilder";
+
+jest.mock("react-native-moengage", () => ({
+    MoEngageLogger: {
+        verbose: jest.fn(),
+        debug: jest.fn(),
+        warn: jest.fn(),
+        error: jest.fn(),
+        info: jest.fn(),
+    },
+}));
+
+import * as PayloadBuilder from "../internal/utils/PayloadBuilder";
 import ExperienceCampaign from "../model/ExperienceCampaign";
 import { DataSource } from "../model/DataSource";
 import { ExperienceStatus } from "../model/ExperienceStatus";
@@ -130,6 +141,40 @@ describe("PayloadBuilder", () => {
                 }
             });
             expect(Array.isArray(json.data.offeringAttributes)).toBe(false);
+        });
+
+        it("supports empty offeringAttributes object", () => {
+            const json = JSON.parse(PayloadBuilder.buildTrackOfferingClickedPayload(
+                APP_ID, makeCampaign("exp_o"), {}
+            ));
+            expect(json.data.offeringAttributes).toEqual({});
+            expect(json.data.experience.experienceKey).toBe("exp_o");
+        });
+    });
+
+    describe("empty-input edge cases", () => {
+        it("buildFetchExperiencesPayload supports empty experienceKeys", () => {
+            const json = JSON.parse(PayloadBuilder.buildFetchExperiencesPayload(APP_ID, [], {}));
+            expect(json).toEqual({
+                accountMeta: { appId: APP_ID },
+                data: { experienceKeys: [], attributes: {} }
+            });
+        });
+
+        it("buildTrackExperienceShownPayload supports empty campaigns array", () => {
+            const json = JSON.parse(PayloadBuilder.buildTrackExperienceShownPayload(APP_ID, []));
+            expect(json).toEqual({
+                accountMeta: { appId: APP_ID },
+                data: { experiences: [] }
+            });
+        });
+
+        it("buildTrackOfferingShownPayload supports empty offeringAttributes array", () => {
+            const json = JSON.parse(PayloadBuilder.buildTrackOfferingShownPayload(APP_ID, []));
+            expect(json).toEqual({
+                accountMeta: { appId: APP_ID },
+                data: { offeringAttributes: [] }
+            });
         });
     });
 });

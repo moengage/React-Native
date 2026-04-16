@@ -5,13 +5,34 @@ import ExperienceCampaignsMetadata from "./model/ExperienceCampaignsMetadata";
 import ExperienceCampaignsResult from "./model/ExperienceCampaignsResult";
 import { DataSource } from "./model/DataSource";
 import { ExperienceStatus } from "./model/ExperienceStatus";
-import * as MoEPersonalizeHandler from "./internal/MoEPersonalizeHandler";
+import { ExperienceFailureReason } from "./model/ExperienceFailureReason";
+import MoEngagePersonalizeHandler from "./internal/MoEngagePersonalizeHandler";
+import { MoEngageLogger } from "react-native-moengage";
+import { MODULE_TAG } from "./internal/Constants";
 
+/**
+ * Public API for the MoEngage Personalize Experience module. Each instance is
+ * scoped to a single MoEngage workspace (app id) — multiple workspaces should
+ * each instantiate their own.
+ *
+ * @author MoEngage
+ * @since 1.0.0
+ */
 class ReactMoEngagePersonalize {
-  private appId: string;
 
+  private readonly TAG = `${MODULE_TAG}ReactMoEngagePersonalize`;
+
+  private handler: MoEngagePersonalizeHandler;
+
+  /**
+   * Construct a personalize instance for the given workspace.
+   *
+   * @param appId The MoEngage workspace identifier.
+   * @since 1.0.0
+   */
   constructor(appId: string) {
-    this.appId = appId;
+    MoEngageLogger.debug(`${this.TAG} constructor() : appId=${appId}`);
+    this.handler = new MoEngagePersonalizeHandler(appId);
   }
 
   /**
@@ -20,9 +41,11 @@ class ReactMoEngagePersonalize {
    * @param statuses Array of {@link ExperienceStatus} to filter by.
    * @returns Promise resolving to {@link ExperienceCampaignsMetadata}.
    * @throws Rejects on SDK-level failures (SDK not initialized, network error, etc.).
+   * @since 1.0.0
    */
   fetchExperiencesMeta(statuses: ExperienceStatus[]): Promise<ExperienceCampaignsMetadata> {
-    return MoEPersonalizeHandler.fetchExperiencesMeta(this.appId, statuses);
+    MoEngageLogger.verbose(`${this.TAG} fetchExperiencesMeta() : `);
+    return this.handler.fetchExperiencesMeta(statuses);
   }
 
   /**
@@ -31,12 +54,14 @@ class ReactMoEngagePersonalize {
    * @param experienceKey The experience key to fetch.
    * @param attributes Optional key-value attributes for personalization.
    * @returns Promise resolving to {@link ExperienceCampaignsResult}.
-   * @throws Rejects on SDK-level failures (SDK not initialized, network error, etc.).
+   * @throws Rejects on SDK-level failures.
+   * @since 1.0.0
    */
   fetchExperience(
     experienceKey: string,
     attributes: Record<string, string> = {}
   ): Promise<ExperienceCampaignsResult> {
+    MoEngageLogger.verbose(`${this.TAG} fetchExperience() : `);
     return this.fetchExperiences([experienceKey], attributes);
   }
 
@@ -46,40 +71,48 @@ class ReactMoEngagePersonalize {
    * @param experienceKeys Array of experience keys to fetch.
    * @param attributes Optional key-value attributes for personalization.
    * @returns Promise resolving to {@link ExperienceCampaignsResult}.
-   * @throws Rejects on SDK-level failures (SDK not initialized, network error, etc.).
+   * @throws Rejects on SDK-level failures.
+   * @since 1.0.0
    */
   fetchExperiences(
     experienceKeys: string[],
     attributes: Record<string, string> = {}
   ): Promise<ExperienceCampaignsResult> {
-    return MoEPersonalizeHandler.fetchExperiences(this.appId, experienceKeys, attributes);
+    MoEngageLogger.verbose(`${this.TAG} fetchExperiences() : `);
+    return this.handler.fetchExperiences(experienceKeys, attributes);
   }
 
   /**
    * Tracks impression events for one or more experience campaigns.
    *
    * @param campaigns Array of {@link ExperienceCampaign} that were shown.
+   * @since 1.0.0
    */
   trackExperienceShown(campaigns: ExperienceCampaign[]): void {
-    MoEPersonalizeHandler.trackExperienceShown(this.appId, campaigns);
+    MoEngageLogger.verbose(`${this.TAG} trackExperienceShown() : `);
+    this.handler.trackExperienceShown(campaigns);
   }
 
   /**
    * Tracks a click event for a single experience campaign.
    *
    * @param campaign The {@link ExperienceCampaign} that was clicked.
+   * @since 1.0.0
    */
   trackExperienceClicked(campaign: ExperienceCampaign): void {
-    MoEPersonalizeHandler.trackExperienceClicked(this.appId, campaign);
+    MoEngageLogger.verbose(`${this.TAG} trackExperienceClicked() : `);
+    this.handler.trackExperienceClicked(campaign);
   }
 
   /**
    * Tracks impression events for one or more offerings.
    *
    * @param offeringAttributes Array of offering attribute dictionaries.
+   * @since 1.0.0
    */
   trackOfferingShown(offeringAttributes: Record<string, any>[]): void {
-    MoEPersonalizeHandler.trackOfferingShown(this.appId, offeringAttributes);
+    MoEngageLogger.verbose(`${this.TAG} trackOfferingShown() : `);
+    this.handler.trackOfferingShown(offeringAttributes);
   }
 
   /**
@@ -87,9 +120,11 @@ class ReactMoEngagePersonalize {
    *
    * @param campaign The {@link ExperienceCampaign} containing the offering.
    * @param offeringAttributes The offering attribute dictionary that was clicked.
+   * @since 1.0.0
    */
   trackOfferingClicked(campaign: ExperienceCampaign, offeringAttributes: Record<string, any>): void {
-    MoEPersonalizeHandler.trackOfferingClicked(this.appId, campaign, offeringAttributes);
+    MoEngageLogger.verbose(`${this.TAG} trackOfferingClicked() : `);
+    this.handler.trackOfferingClicked(campaign, offeringAttributes);
   }
 }
 
@@ -101,6 +136,7 @@ export {
   ExperienceCampaignsResult,
   DataSource,
   ExperienceStatus,
+  ExperienceFailureReason,
 };
 
 export default ReactMoEngagePersonalize;

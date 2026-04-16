@@ -1,12 +1,9 @@
-//
-//  MoEReactPersonalize.mm
-//  ReactNativeMoEngagePersonalize
-//
+// MoEngagePersonalizeBridge.mm
 
-#import "MoEReactPersonalize.h"
+#import "MoEngagePersonalizeBridge.h"
 #import "MoEReactNativePersonalizeHandler.h"
 
-@implementation MoEReactPersonalize
+@implementation MoEngagePersonalizeBridge
 
 RCT_EXPORT_MODULE()
 
