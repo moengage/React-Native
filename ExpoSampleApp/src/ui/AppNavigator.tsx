@@ -5,6 +5,7 @@ import CoreAPIs from './core/CoreAPIs';
 import GeofenceAPIs from './geofence/GeofenceAPIs';
 import InAppAPIs from './core/InAppAPIs';
 import InboxAPIs from './inbox/InboxAPIs';
+import PersonalizeAPIs from './personalize/PersonalizeAPIs';
 import PushAPIs from './core/PushAPIs';
 import HomeScreen from './HomeScreen';
 import { SelfHandledCardUI } from './cards/SelfHandledCardUI';
@@ -28,6 +29,7 @@ function AppNavigator() {
         <Stack.Screen name="GeofenceAPIs" component={GeofenceAPIs} />
         <Stack.Screen name="InAppAPIs" component={InAppAPIs} />
         <Stack.Screen name="InboxAPIs" component={InboxAPIs} />
+        <Stack.Screen name="PersonalizeAPIs" component={PersonalizeAPIs} />
         <Stack.Screen name="PushAPIs" component={PushAPIs} />
         <Stack.Screen name="SelfHandledCardUI" component={SelfHandledCardUI} />
       </Stack.Navigator>
