@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+
+- iOS
+  - Added support for logout completion callback via `MoELogoutComplete` event emitted by PluginBase.
+
 # 07-05-2026
 
 ## 12.7.0

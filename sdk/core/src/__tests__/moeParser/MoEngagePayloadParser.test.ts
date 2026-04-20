@@ -1,5 +1,6 @@
-import { userIdentityStringObjectType } from "../../__mocks__/JsonDataProvider";
-import { getUserIdentitiesData } from "../../moeParser/MoEngagePayloadParser";
+import { userIdentityStringObjectType, logoutCompleteIosPayload, logoutCompleteAndroidPayload, appId } from "../../__mocks__/JsonDataProvider";
+import { getUserIdentitiesData, getLogoutCompleteData } from "../../moeParser/MoEngagePayloadParser";
+import MoELogoutCompleteData from "../../models/MoELogoutCompleteData";
 
 describe('MoEngagePayloadParser', () => {
 
@@ -10,6 +11,22 @@ describe('MoEngagePayloadParser', () => {
 
         it('payload data as non-null, function should return the identities', () => {
             expect(getUserIdentitiesData(JSON.stringify(userIdentityStringObjectType))).toEqual(userIdentityStringObjectType);
+        });
+    });
+
+    describe('getLogoutCompleteData', () => {
+        it('iOS payload should return MoELogoutCompleteData with iOS platform and correct appId', () => {
+            const result = getLogoutCompleteData(JSON.parse(logoutCompleteIosPayload));
+            expect(result).toBeInstanceOf(MoELogoutCompleteData);
+            expect(result.platform).toEqual("iOS");
+            expect(result.accountMeta.appId).toEqual(appId);
+        });
+
+        it('Android payload should return MoELogoutCompleteData with android platform and correct appId', () => {
+            const result = getLogoutCompleteData(JSON.parse(logoutCompleteAndroidPayload));
+            expect(result).toBeInstanceOf(MoELogoutCompleteData);
+            expect(result.platform).toEqual("android");
+            expect(result.accountMeta.appId).toEqual(appId);
         });
     });
 });
