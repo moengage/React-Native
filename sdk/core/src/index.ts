@@ -64,6 +64,7 @@ import MoEAccessibilityData from "./models/campaignsCore/MoEAccessibilityData";
 import { KEY_ACCESSIBILITY } from "./utils/MoEConstants";
 
 import MoEngagePersimissionResultData from "./models/MoEngagePersimissionResultData";
+import MoELogoutCompleteData from "./models/MoELogoutCompleteData";
 
 const PLATFORM_IOS = "ios";
 const PLATFORM_ANDROID = "android";
@@ -78,6 +79,7 @@ const MOE_INAPP_DISMISSED = "MoEInAppCampaignDismissed";
 const MOE_INAPP_CUSTOM_ACTION = "MoEInAppCampaignCustomAction";
 const MOE_INAPP_SELF_HANDLE = "MoEInAppCampaignSelfHandled";
 const MOE_PERMISSION_RESULT = "MoEPermissionResult";
+const MOE_LOGOUT_COMPLETE = "MoELogoutComplete";
 
 const eventBroadcastNames = [
   MOE_PUSH_CLICKED,
@@ -87,7 +89,8 @@ const eventBroadcastNames = [
   MOE_INAPP_DISMISSED,
   MOE_INAPP_CUSTOM_ACTION,
   MOE_INAPP_SELF_HANDLE,
-  MOE_PERMISSION_RESULT
+  MOE_PERMISSION_RESULT,
+  MOE_LOGOUT_COMPLETE
 ];
 
 // JS Event Names
@@ -99,6 +102,7 @@ const INAPP_DISMISSED = "inAppCampaignDismissed";
 const INAPP_CUTOM_ACTION = "inAppCampaignCustomAction";
 const INAPP_SELF_HANDLE = "inAppCampaignSelfHandled";
 export const PERMISSION_RESULT = "permissionResult";
+export const LOGOUT_COMPLETE = "logoutComplete";
 
 const PUSH_SERVICE_FCM = "FCM"
 const PUSH_SERVICE_PUSH_KIT = "PUSH_KIT"
@@ -111,7 +115,8 @@ const _eventNames = [
   INAPP_DISMISSED,
   INAPP_CUTOM_ACTION,
   INAPP_SELF_HANDLE,
-  PERMISSION_RESULT
+  PERMISSION_RESULT,
+  LOGOUT_COMPLETE
 ];
 
 var _eventTypeHandler = new Map();
@@ -135,14 +140,15 @@ function handleEventBroadcast(type: string | String, broadcast: string) {
   });
 }
 
-export type NotificationEventName = 'pushTokenGenerated' | 
-  'pushClicked' | 
-  'inAppCampaignShown' | 
-  'inAppCampaignClicked' | 
-  'inAppCampaignDismissed' | 
-  'inAppCampaignCustomAction' | 
-  'inAppCampaignSelfHandled' | 
-  'permissionResult';
+export type NotificationEventName = 'pushTokenGenerated' |
+  'pushClicked' |
+  'inAppCampaignShown' |
+  'inAppCampaignClicked' |
+  'inAppCampaignDismissed' |
+  'inAppCampaignCustomAction' |
+  'inAppCampaignSelfHandled' |
+  'permissionResult' |
+  'logoutComplete';
 
 type NotificationEventTypeMap = {
   "pushTokenGenerated": MoEPushToken,
@@ -152,7 +158,8 @@ type NotificationEventTypeMap = {
   "inAppCampaignDismissed": MoEInAppData,
   "inAppCampaignCustomAction": MoEInAppData,
   "inAppCampaignSelfHandled": MoESelfHandledCampaignData,
-  "permissionResult": MoEngagePersimissionResultData
+  "permissionResult": MoEngagePersimissionResultData,
+  "logoutComplete": MoELogoutCompleteData
 }
 
 var ReactMoE = {

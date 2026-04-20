@@ -1,4 +1,5 @@
 import MoEAccountMeta from "../models/MoEAccountMeta";
+import MoELogoutCompleteData from "../models/MoELogoutCompleteData";
 import MoEngagePersimissionResultData from "../models/MoEngagePersimissionResultData";
 import UserDeletionData from "../models/UserDeletionData";
 import {
@@ -42,6 +43,13 @@ export function getUserDeletionData(payload: string): UserDeletionData {
     return new UserDeletionData(
         getMoEAccountMeta(payloadJsonObject[ACCOUNT_META]),
         payloadJsonObject[MOE_DATA][IS_USER_DELETION_SUCCESS]
+    );
+}
+
+export function getLogoutCompleteData(payload: { [k: string]: any }): MoELogoutCompleteData {
+    return new MoELogoutCompleteData(
+        getMoEAccountMeta(payload[ACCOUNT_META]),
+        payload[MOE_PLATFORM]
     );
 }
 
