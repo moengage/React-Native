@@ -58,6 +58,10 @@ ReactMoE.setEventListener("permissionResult", (permissionResultData) =>
   MoEngageLogger.debug("permissionResult", permissionResultData)
 );
 
+ReactMoE.setEventListener("logoutComplete", (data) =>
+  MoEngageLogger.debug("logoutComplete", data)
+);
+
 ReactMoE.setEventListener("inAppCampaignSelfHandled", (payload) => {
   MoEngageLogger.debug("inAppCampaignSelfHandled", payload);
 });
