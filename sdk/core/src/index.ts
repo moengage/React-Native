@@ -801,6 +801,7 @@ var ReactMoE = {
 };
 
 export {
+  MoELogoutCompleteData,
   MoEInAppCustomAction,
   MoEInAppNavigation,
   MoESelfHandledCampaignData,
