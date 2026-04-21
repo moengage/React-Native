@@ -4,10 +4,10 @@ import "jest";
 const mockHandlerInstance = {
     fetchExperiencesMeta: jest.fn(),
     fetchExperiences: jest.fn(),
-    trackExperienceShown: jest.fn(),
-    trackExperienceClicked: jest.fn(),
-    trackOfferingShown: jest.fn(),
-    trackOfferingClicked: jest.fn(),
+    experiencesShown: jest.fn(),
+    experienceClicked: jest.fn(),
+    offeringsShown: jest.fn(),
+    offeringClicked: jest.fn(),
 };
 
 jest.mock("../internal/MoEngagePersonalizeHandler", () => ({
@@ -118,28 +118,28 @@ describe("ReactMoEngagePersonalize", () => {
     });
 
     describe("tracking method delegation", () => {
-        it("trackExperienceShown delegates with campaigns array", () => {
+        it("experiencesShown delegates with campaigns array", () => {
             const c = [campaign("a"), campaign("b")];
-            instance.trackExperienceShown(c);
-            expect(mockHandlerInstance.trackExperienceShown).toHaveBeenCalledWith(c);
+            instance.experiencesShown(c);
+            expect(mockHandlerInstance.experiencesShown).toHaveBeenCalledWith(c);
         });
 
-        it("trackExperienceClicked delegates with single campaign", () => {
+        it("experienceClicked delegates with single campaign", () => {
             const c = campaign("x");
-            instance.trackExperienceClicked(c);
-            expect(mockHandlerInstance.trackExperienceClicked).toHaveBeenCalledWith(c);
+            instance.experienceClicked(c);
+            expect(mockHandlerInstance.experienceClicked).toHaveBeenCalledWith(c);
         });
 
-        it("trackOfferingShown delegates with attributes array", () => {
-            const attrs = [{ a: 1 }];
-            instance.trackOfferingShown(attrs);
-            expect(mockHandlerInstance.trackOfferingShown).toHaveBeenCalledWith(attrs);
+        it("offeringsShown delegates with offeringPayloads array", () => {
+            const payloads = [{ a: 1 }];
+            instance.offeringsShown(payloads);
+            expect(mockHandlerInstance.offeringsShown).toHaveBeenCalledWith(payloads);
         });
 
-        it("trackOfferingClicked delegates with campaign and single attributes", () => {
+        it("offeringClicked delegates with campaign and single offeringPayload", () => {
             const c = campaign("o");
-            instance.trackOfferingClicked(c, { sku: "s1" });
-            expect(mockHandlerInstance.trackOfferingClicked).toHaveBeenCalledWith(c, { sku: "s1" });
+            instance.offeringClicked(c, { sku: "s1" });
+            expect(mockHandlerInstance.offeringClicked).toHaveBeenCalledWith(c, { sku: "s1" });
         });
     });
 });

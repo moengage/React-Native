@@ -16,11 +16,11 @@
 -(void)fetchExperiences:(NSString *)payload resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject;
 
 // Experience Tracking
--(void)trackExperienceShown:(NSString *)payload;
--(void)trackExperienceClicked:(NSString *)payload;
+-(void)experiencesShown:(NSString *)payload;
+-(void)experienceClicked:(NSString *)payload;
 
 // Offering Tracking
--(void)trackOfferingShown:(NSString *)payload;
--(void)trackOfferingClicked:(NSString *)payload;
+-(void)offeringsShown:(NSString *)payload;
+-(void)offeringClicked:(NSString *)payload;
 
 @end

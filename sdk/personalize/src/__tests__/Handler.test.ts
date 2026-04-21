@@ -7,10 +7,10 @@ jest.mock("../NativeMoEngagePersonalize", () => ({
     default: {
         fetchExperiencesMeta: jest.fn(),
         fetchExperiences: jest.fn(),
-        trackExperienceShown: jest.fn(),
-        trackExperienceClicked: jest.fn(),
-        trackOfferingShown: jest.fn(),
-        trackOfferingClicked: jest.fn(),
+        experiencesShown: jest.fn(),
+        experienceClicked: jest.fn(),
+        offeringsShown: jest.fn(),
+        offeringClicked: jest.fn(),
     },
 }));
 
@@ -34,10 +34,10 @@ import { ExperienceStatus } from "../model/ExperienceStatus";
 const mockNative = NativeMoEngagePersonalize as unknown as {
     fetchExperiencesMeta: jest.Mock;
     fetchExperiences: jest.Mock;
-    trackExperienceShown: jest.Mock;
-    trackExperienceClicked: jest.Mock;
-    trackOfferingShown: jest.Mock;
-    trackOfferingClicked: jest.Mock;
+    experiencesShown: jest.Mock;
+    experienceClicked: jest.Mock;
+    offeringsShown: jest.Mock;
+    offeringClicked: jest.Mock;
 };
 
 const APP_ID = "test_app";
@@ -128,31 +128,31 @@ describe("Handler", () => {
     });
 
     describe("tracking methods", () => {
-        it("trackExperienceShown sends array under 'experiences'", () => {
-            handler.trackExperienceShown([makeCampaign("a"), makeCampaign("b")]);
-            const sent = JSON.parse(mockNative.trackExperienceShown.mock.calls[0]![0] as string);
+        it("experiencesShown sends array under 'experiences'", () => {
+            handler.experiencesShown([makeCampaign("a"), makeCampaign("b")]);
+            const sent = JSON.parse(mockNative.experiencesShown.mock.calls[0]![0] as string);
             expect(sent.data.experiences).toHaveLength(2);
             expect(sent.data.experiences[0].experienceKey).toBe("a");
         });
 
-        it("trackExperienceClicked sends single 'experience' object", () => {
-            handler.trackExperienceClicked(makeCampaign("x"));
-            const sent = JSON.parse(mockNative.trackExperienceClicked.mock.calls[0]![0] as string);
+        it("experienceClicked sends single 'experience' object", () => {
+            handler.experienceClicked(makeCampaign("x"));
+            const sent = JSON.parse(mockNative.experienceClicked.mock.calls[0]![0] as string);
             expect(sent.data.experience.experienceKey).toBe("x");
             expect(sent.data).not.toHaveProperty("experiences");
         });
 
-        it("trackOfferingShown sends array of offeringAttributes", () => {
-            handler.trackOfferingShown([{ a: 1 }]);
-            const sent = JSON.parse(mockNative.trackOfferingShown.mock.calls[0]![0] as string);
-            expect(sent.data.offeringAttributes).toEqual([{ a: 1 }]);
+        it("offeringsShown sends array of offeringPayloads", () => {
+            handler.offeringsShown([{ a: 1 }]);
+            const sent = JSON.parse(mockNative.offeringsShown.mock.calls[0]![0] as string);
+            expect(sent.data.offeringPayloads).toEqual([{ a: 1 }]);
         });
 
-        it("trackOfferingClicked sends single experience + single offeringAttributes object", () => {
-            handler.trackOfferingClicked(makeCampaign("o"), { sku: "s1" });
-            const sent = JSON.parse(mockNative.trackOfferingClicked.mock.calls[0]![0] as string);
+        it("offeringClicked sends single experience + single offeringPayload object", () => {
+            handler.offeringClicked(makeCampaign("o"), { sku: "s1" });
+            const sent = JSON.parse(mockNative.offeringClicked.mock.calls[0]![0] as string);
             expect(sent.data.experience.experienceKey).toBe("o");
-            expect(sent.data.offeringAttributes).toEqual({ sku: "s1" });
+            expect(sent.data.offeringPayload).toEqual({ sku: "s1" });
         });
     });
 });

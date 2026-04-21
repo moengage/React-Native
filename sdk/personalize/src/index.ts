@@ -88,9 +88,9 @@ class ReactMoEngagePersonalize {
    * @param campaigns Array of {@link ExperienceCampaign} that were shown.
    * @since 1.0.0
    */
-  trackExperienceShown(campaigns: ExperienceCampaign[]): void {
-    MoEngageLogger.verbose(`${this.TAG} trackExperienceShown() : `);
-    this.handler.trackExperienceShown(campaigns);
+  experiencesShown(campaigns: ExperienceCampaign[]): void {
+    MoEngageLogger.verbose(`${this.TAG} experiencesShown() : `);
+    this.handler.experiencesShown(campaigns);
   }
 
   /**
@@ -99,32 +99,32 @@ class ReactMoEngagePersonalize {
    * @param campaign The {@link ExperienceCampaign} that was clicked.
    * @since 1.0.0
    */
-  trackExperienceClicked(campaign: ExperienceCampaign): void {
-    MoEngageLogger.verbose(`${this.TAG} trackExperienceClicked() : `);
-    this.handler.trackExperienceClicked(campaign);
+  experienceClicked(campaign: ExperienceCampaign): void {
+    MoEngageLogger.verbose(`${this.TAG} experienceClicked() : `);
+    this.handler.experienceClicked(campaign);
   }
 
   /**
    * Tracks impression events for one or more offerings.
    *
-   * @param offeringAttributes Array of offering attribute dictionaries.
+   * @param offeringPayloads Array of full offering payload dictionaries.
    * @since 1.0.0
    */
-  trackOfferingShown(offeringAttributes: Record<string, any>[]): void {
-    MoEngageLogger.verbose(`${this.TAG} trackOfferingShown() : `);
-    this.handler.trackOfferingShown(offeringAttributes);
+  offeringsShown(offeringPayloads: Record<string, any>[]): void {
+    MoEngageLogger.verbose(`${this.TAG} offeringsShown() : `);
+    this.handler.offeringsShown(offeringPayloads);
   }
 
   /**
    * Tracks a click event for a single offering within an experience campaign.
    *
    * @param campaign The {@link ExperienceCampaign} containing the offering.
-   * @param offeringAttributes The offering attribute dictionary that was clicked.
+   * @param offeringPayload The full offering payload dictionary that was clicked.
    * @since 1.0.0
    */
-  trackOfferingClicked(campaign: ExperienceCampaign, offeringAttributes: Record<string, any>): void {
-    MoEngageLogger.verbose(`${this.TAG} trackOfferingClicked() : `);
-    this.handler.trackOfferingClicked(campaign, offeringAttributes);
+  offeringClicked(campaign: ExperienceCampaign, offeringPayload: Record<string, any>): void {
+    MoEngageLogger.verbose(`${this.TAG} offeringClicked() : `);
+    this.handler.offeringClicked(campaign, offeringPayload);
   }
 }
 

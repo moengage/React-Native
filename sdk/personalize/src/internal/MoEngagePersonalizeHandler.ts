@@ -52,46 +52,46 @@ export default class MoEngagePersonalizeHandler {
         }
     }
 
-    trackExperienceShown(campaigns: ExperienceCampaign[]): void {
+    experiencesShown(campaigns: ExperienceCampaign[]): void {
         try {
-            MoEngageLogger.verbose(`${this.TAG} trackExperienceShown() : `);
-            const payload = PayloadBuilder.buildTrackExperienceShownPayload(this.appId, campaigns);
-            MoEngagePersonalizeBridge.trackExperienceShown(payload);
+            MoEngageLogger.verbose(`${this.TAG} experiencesShown() : `);
+            const payload = PayloadBuilder.buildExperiencesShownPayload(this.appId, campaigns);
+            MoEngagePersonalizeBridge.experiencesShown(payload);
         } catch (error) {
-            MoEngageLogger.error(`${this.TAG} trackExperienceShown() : `, error);
+            MoEngageLogger.error(`${this.TAG} experiencesShown() : `, error);
         }
     }
 
-    trackExperienceClicked(campaign: ExperienceCampaign): void {
+    experienceClicked(campaign: ExperienceCampaign): void {
         try {
-            MoEngageLogger.verbose(`${this.TAG} trackExperienceClicked() : `);
-            const payload = PayloadBuilder.buildTrackExperienceClickedPayload(this.appId, campaign);
-            MoEngagePersonalizeBridge.trackExperienceClicked(payload);
+            MoEngageLogger.verbose(`${this.TAG} experienceClicked() : `);
+            const payload = PayloadBuilder.buildExperienceClickedPayload(this.appId, campaign);
+            MoEngagePersonalizeBridge.experienceClicked(payload);
         } catch (error) {
-            MoEngageLogger.error(`${this.TAG} trackExperienceClicked() : `, error);
+            MoEngageLogger.error(`${this.TAG} experienceClicked() : `, error);
         }
     }
 
-    trackOfferingShown(offeringAttributes: Record<string, any>[]): void {
+    offeringsShown(offeringPayloads: Record<string, any>[]): void {
         try {
-            MoEngageLogger.verbose(`${this.TAG} trackOfferingShown() : `);
-            const payload = PayloadBuilder.buildTrackOfferingShownPayload(this.appId, offeringAttributes);
-            MoEngagePersonalizeBridge.trackOfferingShown(payload);
+            MoEngageLogger.verbose(`${this.TAG} offeringsShown() : `);
+            const payload = PayloadBuilder.buildOfferingsShownPayload(this.appId, offeringPayloads);
+            MoEngagePersonalizeBridge.offeringsShown(payload);
         } catch (error) {
-            MoEngageLogger.error(`${this.TAG} trackOfferingShown() : `, error);
+            MoEngageLogger.error(`${this.TAG} offeringsShown() : `, error);
         }
     }
 
-    trackOfferingClicked(
+    offeringClicked(
         campaign: ExperienceCampaign,
-        offeringAttributes: Record<string, any>
+        offeringPayload: Record<string, any>
     ): void {
         try {
-            MoEngageLogger.verbose(`${this.TAG} trackOfferingClicked() : `);
-            const payload = PayloadBuilder.buildTrackOfferingClickedPayload(this.appId, campaign, offeringAttributes);
-            MoEngagePersonalizeBridge.trackOfferingClicked(payload);
+            MoEngageLogger.verbose(`${this.TAG} offeringClicked() : `);
+            const payload = PayloadBuilder.buildOfferingClickedPayload(this.appId, campaign, offeringPayload);
+            MoEngagePersonalizeBridge.offeringClicked(payload);
         } catch (error) {
-            MoEngageLogger.error(`${this.TAG} trackOfferingClicked() : `, error);
+            MoEngageLogger.error(`${this.TAG} offeringClicked() : `, error);
         }
     }
 }

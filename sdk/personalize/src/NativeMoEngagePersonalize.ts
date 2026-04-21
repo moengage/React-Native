@@ -23,28 +23,28 @@ export interface Spec extends TurboModule {
      *
      * @param payload Stringified JSON payload.
      */
-    trackExperienceShown(payload: string): void;
+    experiencesShown(payload: string): void;
 
     /**
      * Tracks a click event for a single experience campaign.
      *
      * @param payload Stringified JSON payload.
      */
-    trackExperienceClicked(payload: string): void;
+    experienceClicked(payload: string): void;
 
     /**
      * Tracks impression events for one or more offerings.
      *
      * @param payload Stringified JSON payload.
      */
-    trackOfferingShown(payload: string): void;
+    offeringsShown(payload: string): void;
 
     /**
      * Tracks a click event for a single offering within an experience campaign.
      *
      * @param payload Stringified JSON payload.
      */
-    trackOfferingClicked(payload: string): void;
+    offeringClicked(payload: string): void;
 }
 
 const MoEngagePersonalizeBridge = TurboModuleRegistry.getEnforcing<Spec>('MoEngagePersonalizeBridge');

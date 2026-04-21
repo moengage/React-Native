@@ -19,22 +19,22 @@ RCT_EXPORT_METHOD(fetchExperiences:(NSString *)payload resolve:(RCTPromiseResolv
 
 #pragma mark - Experience Tracking
 
-RCT_EXPORT_METHOD(trackExperienceShown:(NSString *)payload) {
-    [[MoEReactNativePersonalizeHandler sharedInstance] trackExperienceShown:payload];
+RCT_EXPORT_METHOD(experiencesShown:(NSString *)payload) {
+    [[MoEReactNativePersonalizeHandler sharedInstance] experiencesShown:payload];
 }
 
-RCT_EXPORT_METHOD(trackExperienceClicked:(NSString *)payload) {
-    [[MoEReactNativePersonalizeHandler sharedInstance] trackExperienceClicked:payload];
+RCT_EXPORT_METHOD(experienceClicked:(NSString *)payload) {
+    [[MoEReactNativePersonalizeHandler sharedInstance] experienceClicked:payload];
 }
 
 #pragma mark - Offering Tracking
 
-RCT_EXPORT_METHOD(trackOfferingShown:(NSString *)payload) {
-    [[MoEReactNativePersonalizeHandler sharedInstance] trackOfferingShown:payload];
+RCT_EXPORT_METHOD(offeringsShown:(NSString *)payload) {
+    [[MoEReactNativePersonalizeHandler sharedInstance] offeringsShown:payload];
 }
 
-RCT_EXPORT_METHOD(trackOfferingClicked:(NSString *)payload) {
-    [[MoEReactNativePersonalizeHandler sharedInstance] trackOfferingClicked:payload];
+RCT_EXPORT_METHOD(offeringClicked:(NSString *)payload) {
+    [[MoEReactNativePersonalizeHandler sharedInstance] offeringClicked:payload];
 }
 
 #ifdef RCT_NEW_ARCH_ENABLED

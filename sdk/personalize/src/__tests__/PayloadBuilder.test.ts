@@ -73,9 +73,9 @@ describe("PayloadBuilder", () => {
         });
     });
 
-    describe("buildTrackExperienceShownPayload", () => {
+    describe("buildExperiencesShownPayload", () => {
         it("uses plural 'experiences' key with array of serialized campaigns", () => {
-            const json = JSON.parse(PayloadBuilder.buildTrackExperienceShownPayload(
+            const json = JSON.parse(PayloadBuilder.buildExperiencesShownPayload(
                 APP_ID, [makeCampaign("exp_a"), makeCampaign("exp_b")]
             ));
             expect(json).toEqual({
@@ -90,14 +90,14 @@ describe("PayloadBuilder", () => {
         });
 
         it("does NOT include 'source' in serialized campaign (wire contract)", () => {
-            const json = JSON.parse(PayloadBuilder.buildTrackExperienceShownPayload(APP_ID, [makeCampaign()]));
+            const json = JSON.parse(PayloadBuilder.buildExperiencesShownPayload(APP_ID, [makeCampaign()]));
             expect(json.data.experiences[0]).not.toHaveProperty("source");
         });
     });
 
-    describe("buildTrackExperienceClickedPayload", () => {
+    describe("buildExperienceClickedPayload", () => {
         it("uses SINGULAR 'experience' key with a single object (regression-prone)", () => {
-            const json = JSON.parse(PayloadBuilder.buildTrackExperienceClickedPayload(APP_ID, makeCampaign("exp_x")));
+            const json = JSON.parse(PayloadBuilder.buildExperienceClickedPayload(APP_ID, makeCampaign("exp_x")));
             expect(json).toEqual({
                 accountMeta: { appId: APP_ID },
                 data: {
@@ -112,21 +112,21 @@ describe("PayloadBuilder", () => {
         });
     });
 
-    describe("buildTrackOfferingShownPayload", () => {
-        it("uses array of offeringAttributes dicts", () => {
-            const json = JSON.parse(PayloadBuilder.buildTrackOfferingShownPayload(
+    describe("buildOfferingsShownPayload", () => {
+        it("uses array of offeringPayloads dicts", () => {
+            const json = JSON.parse(PayloadBuilder.buildOfferingsShownPayload(
                 APP_ID, [{ a: 1 }, { b: 2 }]
             ));
             expect(json).toEqual({
                 accountMeta: { appId: APP_ID },
-                data: { offeringAttributes: [{ a: 1 }, { b: 2 }] }
+                data: { offeringPayloads: [{ a: 1 }, { b: 2 }] }
             });
         });
     });
 
-    describe("buildTrackOfferingClickedPayload", () => {
-        it("uses singular 'experience' and singular 'offeringAttributes' object", () => {
-            const json = JSON.parse(PayloadBuilder.buildTrackOfferingClickedPayload(
+    describe("buildOfferingClickedPayload", () => {
+        it("uses singular 'experience' and singular 'offeringPayload' object", () => {
+            const json = JSON.parse(PayloadBuilder.buildOfferingClickedPayload(
                 APP_ID, makeCampaign("exp_o"), { sku: "123" }
             ));
             expect(json).toEqual({
@@ -137,17 +137,17 @@ describe("PayloadBuilder", () => {
                         payload: { payloadKey: "payloadValue" },
                         experienceContext: { contextKey: "contextValue" }
                     },
-                    offeringAttributes: { sku: "123" }
+                    offeringPayload: { sku: "123" }
                 }
             });
-            expect(Array.isArray(json.data.offeringAttributes)).toBe(false);
+            expect(Array.isArray(json.data.offeringPayload)).toBe(false);
         });
 
-        it("supports empty offeringAttributes object", () => {
-            const json = JSON.parse(PayloadBuilder.buildTrackOfferingClickedPayload(
+        it("supports empty offeringPayload object", () => {
+            const json = JSON.parse(PayloadBuilder.buildOfferingClickedPayload(
                 APP_ID, makeCampaign("exp_o"), {}
             ));
-            expect(json.data.offeringAttributes).toEqual({});
+            expect(json.data.offeringPayload).toEqual({});
             expect(json.data.experience.experienceKey).toBe("exp_o");
         });
     });
@@ -161,19 +161,19 @@ describe("PayloadBuilder", () => {
             });
         });
 
-        it("buildTrackExperienceShownPayload supports empty campaigns array", () => {
-            const json = JSON.parse(PayloadBuilder.buildTrackExperienceShownPayload(APP_ID, []));
+        it("buildExperiencesShownPayload supports empty campaigns array", () => {
+            const json = JSON.parse(PayloadBuilder.buildExperiencesShownPayload(APP_ID, []));
             expect(json).toEqual({
                 accountMeta: { appId: APP_ID },
                 data: { experiences: [] }
             });
         });
 
-        it("buildTrackOfferingShownPayload supports empty offeringAttributes array", () => {
-            const json = JSON.parse(PayloadBuilder.buildTrackOfferingShownPayload(APP_ID, []));
+        it("buildOfferingsShownPayload supports empty offeringPayloads array", () => {
+            const json = JSON.parse(PayloadBuilder.buildOfferingsShownPayload(APP_ID, []));
             expect(json).toEqual({
                 accountMeta: { appId: APP_ID },
-                data: { offeringAttributes: [] }
+                data: { offeringPayloads: [] }
             });
         });
     });

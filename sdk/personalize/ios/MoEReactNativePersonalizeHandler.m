@@ -85,34 +85,34 @@ static NSString * const kLogTag = @"[MoEngageReactPersonalize]";
 
 #pragma mark - Experience Tracking
 
--(void)trackExperienceShown:(NSString *)payload {
-    NSLog(@"%@ trackExperienceShown", kLogTag);
-    NSDictionary *jsonPayload = [self parsePayload:payload method:@"trackExperienceShown"];
+-(void)experiencesShown:(NSString *)payload {
+    NSLog(@"%@ experiencesShown", kLogTag);
+    NSDictionary *jsonPayload = [self parsePayload:payload method:@"experiencesShown"];
     if (jsonPayload == nil) return;
-    [[MoEngagePluginPersonalizeBridge sharedInstance] trackExperienceShown:jsonPayload];
+    [[MoEngagePluginPersonalizeBridge sharedInstance] experiencesShown:jsonPayload];
 }
 
--(void)trackExperienceClicked:(NSString *)payload {
-    NSLog(@"%@ trackExperienceClicked", kLogTag);
-    NSDictionary *jsonPayload = [self parsePayload:payload method:@"trackExperienceClicked"];
+-(void)experienceClicked:(NSString *)payload {
+    NSLog(@"%@ experienceClicked", kLogTag);
+    NSDictionary *jsonPayload = [self parsePayload:payload method:@"experienceClicked"];
     if (jsonPayload == nil) return;
-    [[MoEngagePluginPersonalizeBridge sharedInstance] trackExperienceClicked:jsonPayload];
+    [[MoEngagePluginPersonalizeBridge sharedInstance] experienceClicked:jsonPayload];
 }
 
 #pragma mark - Offering Tracking
 
--(void)trackOfferingShown:(NSString *)payload {
-    NSLog(@"%@ trackOfferingShown", kLogTag);
-    NSDictionary *jsonPayload = [self parsePayload:payload method:@"trackOfferingShown"];
+-(void)offeringsShown:(NSString *)payload {
+    NSLog(@"%@ offeringsShown", kLogTag);
+    NSDictionary *jsonPayload = [self parsePayload:payload method:@"offeringsShown"];
     if (jsonPayload == nil) return;
-    [[MoEngagePluginPersonalizeBridge sharedInstance] trackOfferingShown:jsonPayload];
+    [[MoEngagePluginPersonalizeBridge sharedInstance] offeringsShown:jsonPayload];
 }
 
--(void)trackOfferingClicked:(NSString *)payload {
-    NSLog(@"%@ trackOfferingClicked", kLogTag);
-    NSDictionary *jsonPayload = [self parsePayload:payload method:@"trackOfferingClicked"];
+-(void)offeringClicked:(NSString *)payload {
+    NSLog(@"%@ offeringClicked", kLogTag);
+    NSDictionary *jsonPayload = [self parsePayload:payload method:@"offeringClicked"];
     if (jsonPayload == nil) return;
-    [[MoEngagePluginPersonalizeBridge sharedInstance] trackOfferingClicked:jsonPayload];
+    [[MoEngagePluginPersonalizeBridge sharedInstance] offeringClicked:jsonPayload];
 }
 
 @end

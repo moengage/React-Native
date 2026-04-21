@@ -44,7 +44,7 @@ export function buildFetchExperiencesPayload(appId: string, experienceKeys: stri
     return JSON.stringify(payload);
 }
 
-export function buildTrackExperienceShownPayload(appId: string, campaigns: ExperienceCampaign[]): string {
+export function buildExperiencesShownPayload(appId: string, campaigns: ExperienceCampaign[]): string {
     let payload = {
         accountMeta: getAccountMetaPayload(appId),
         data: {
@@ -54,7 +54,7 @@ export function buildTrackExperienceShownPayload(appId: string, campaigns: Exper
     return JSON.stringify(payload);
 }
 
-export function buildTrackExperienceClickedPayload(appId: string, campaign: ExperienceCampaign): string {
+export function buildExperienceClickedPayload(appId: string, campaign: ExperienceCampaign): string {
     let payload = {
         accountMeta: getAccountMetaPayload(appId),
         data: {
@@ -64,26 +64,26 @@ export function buildTrackExperienceClickedPayload(appId: string, campaign: Expe
     return JSON.stringify(payload);
 }
 
-export function buildTrackOfferingShownPayload(appId: string, offeringAttributes: Record<string, any>[]): string {
+export function buildOfferingsShownPayload(appId: string, offeringPayloads: Record<string, any>[]): string {
     let payload = {
         accountMeta: getAccountMetaPayload(appId),
         data: {
-            offeringAttributes: offeringAttributes
+            offeringPayloads: offeringPayloads
         }
     };
     return JSON.stringify(payload);
 }
 
-export function buildTrackOfferingClickedPayload(
+export function buildOfferingClickedPayload(
     appId: string,
     campaign: ExperienceCampaign,
-    offeringAttributes: Record<string, any>
+    offeringPayload: Record<string, any>
 ): string {
     let payload = {
         accountMeta: getAccountMetaPayload(appId),
         data: {
             experience: serializeCampaign(campaign),
-            offeringAttributes: offeringAttributes
+            offeringPayload: offeringPayload
         }
     };
     return JSON.stringify(payload);
