@@ -2,7 +2,7 @@ import com.moengage.gradle.android.library.plugin.configs.BuildConfigType
 
 ext {
     moengageNativeBOMVersion = "2.2.1"
-    moengagePluginBaseBOMVersion = "2.1.0-SNAPSHOT"
+    moengagePluginBaseBOMVersion = "2.1.1-SNAPSHOT"
     kotlinVersion = "1.9.23"
 }
 
@@ -57,8 +57,10 @@ dependencies {
     compileOnly('com.facebook.react:react-native')
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    implementation(platform("com.moengage:android-bom:$moengageNativeBOMVersion"))
-    compileOnly("com.moengage:moe-android-sdk")
+    implementation(platform("com.moengage:android-bom:$moengageNativeBOMVersion")) {
+        exclude group: "com.moengage", module: "core"
+    }
+    compileOnly("com.moengage:core:9.0.1-SNAPSHOT")
     api("com.moengage:cards-core")
 
     implementation(platform("com.moengage:plugin-base-bom:$moengagePluginBaseBOMVersion"))

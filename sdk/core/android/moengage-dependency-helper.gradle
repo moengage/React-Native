@@ -8,7 +8,7 @@ repositories {
 ext {
     // MoEngage Versions
     moengageNativeBOMVersion = "2.2.1"
-    moengagePluginBaseBOMVersion = "2.1.0-SNAPSHOT"
+    moengagePluginBaseBOMVersion = "2.1.1-SNAPSHOT"
 
     // AndroidX Support Libraries Versions
     androidXCore = "1.15.0"
@@ -20,8 +20,10 @@ dependencies {
     implementation(platform("com.moengage:plugin-base-bom:$moengagePluginBaseBOMVersion"))
     api("com.moengage:plugin-base")
 
-    implementation(platform("com.moengage:android-bom:$moengageNativeBOMVersion"))
-    api("com.moengage:moe-android-sdk")
+    api(platform("com.moengage:android-bom:$moengageNativeBOMVersion")) {
+        exclude group: "com.moengage", module: "core"
+    }
+    api("com.moengage:core:9.0.1-SNAPSHOT")
     api("com.moengage:inapp")
 
     if (shouldIncludeModule("richNotification")) {

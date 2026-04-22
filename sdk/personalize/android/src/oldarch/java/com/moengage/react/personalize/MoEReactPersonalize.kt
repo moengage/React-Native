@@ -42,22 +42,22 @@ class MoEReactPersonalize(
     }
 
     @ReactMethod
-    fun trackExperienceShown(payload: String) {
+    fun experiencesShown(payload: String) {
         bridgeHandler.trackExperienceShown(payload)
     }
 
     @ReactMethod
-    fun trackExperienceClicked(payload: String) {
+    fun experienceClicked(payload: String) {
         bridgeHandler.trackExperienceClicked(payload)
     }
 
     @ReactMethod
-    fun trackOfferingShown(payload: String) {
+    fun offeringsShown(payload: String) {
         bridgeHandler.trackOfferingShown(payload)
     }
 
     @ReactMethod
-    fun trackOfferingClicked(payload: String) {
+    fun offeringClicked(payload: String) {
         bridgeHandler.trackOfferingClicked(payload)
     }
 }

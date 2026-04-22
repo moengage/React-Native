@@ -36,19 +36,19 @@ class MoEReactPersonalize(reactContext: ReactApplicationContext) :
         bridgeHandler.fetchExperiences(payload, promise)
     }
 
-    override fun trackExperienceShown(payload: String) {
+    override fun experiencesShown(payload: String) {
         bridgeHandler.trackExperienceShown(payload)
     }
 
-    override fun trackExperienceClicked(payload: String) {
+    override fun experienceClicked(payload: String) {
         bridgeHandler.trackExperienceClicked(payload)
     }
 
-    override fun trackOfferingShown(payload: String) {
+    override fun offeringsShown(payload: String) {
         bridgeHandler.trackOfferingShown(payload)
     }
 
-    override fun trackOfferingClicked(payload: String) {
+    override fun offeringClicked(payload: String) {
         bridgeHandler.trackOfferingClicked(payload)
     }
 }
