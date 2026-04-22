@@ -19,7 +19,8 @@ function serializeCampaign(campaign: ExperienceCampaign) {
     return {
         experienceKey: campaign.experienceKey,
         payload: campaign.payload,
-        experienceContext: campaign.experienceContext
+        experienceContext: campaign.experienceContext,
+        source: campaign.source
     };
 }
 

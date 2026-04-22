@@ -32,7 +32,7 @@ function parseDataSource(value: string): DataSource {
 }
 
 function parseExperienceStatus(value: string): ExperienceStatus {
-    switch (value) {
+    switch (value.toLowerCase()) {
         case ExperienceStatus.ACTIVE: return ExperienceStatus.ACTIVE;
         case ExperienceStatus.PAUSED: return ExperienceStatus.PAUSED;
         case ExperienceStatus.SCHEDULED: return ExperienceStatus.SCHEDULED;
@@ -51,7 +51,7 @@ function parseFailureReason(value: string): ExperienceFailureReason {
 }
 
 export function parseExperiencesMetadata(payload: string): ExperienceCampaignsMetadata {
-    MoEngageLogger.verbose(`${TAG} parseExperiencesMetadata() : `);
+    MoEngageLogger.verbose(`${TAG} parseExperiencesMetadata() : ${payload}`);
     const json = JSON.parse(payload);
     const data = json[keyData];
     if (data == null || typeof data !== "object") {
@@ -78,7 +78,7 @@ export function parseExperiencesMetadata(payload: string): ExperienceCampaignsMe
 }
 
 export function parseExperiencesResult(payload: string): ExperienceCampaignsResult {
-    MoEngageLogger.verbose(`${TAG} parseExperiencesResult() : `);
+    MoEngageLogger.verbose(`${TAG} parseExperiencesResult() : ${payload}`);
     const json = JSON.parse(payload);
     const data = json[keyData];
     if (data == null || typeof data !== "object") {

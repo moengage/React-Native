@@ -16,13 +16,11 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:8.13.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.4.0"
         classpath "com.moengage.android.hybrid.module.config.plugin:com.moengage.android.hybrid.module.config.plugin.gradle.plugin:0.0.4"
     }
 }
 
 apply plugin: 'com.moengage.android.hybrid.module.config.plugin'
-apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: 'com.facebook.react'
 
 hybridModuleConfig.configurePlugin {
@@ -32,15 +30,15 @@ hybridModuleConfig.configurePlugin {
     }
     buildFeature {
         buildConfigField(
-            BuildConfigType.BOOLEAN,
-            "IS_NEW_ARCHITECTURE_ENABLED",
-            isNewArchitectureEnabled().toString()
+                BuildConfigType.BOOLEAN,
+                "IS_NEW_ARCHITECTURE_ENABLED",
+                isNewArchitectureEnabled().toString()
         )
     }
 }
 
 android {
-    namespace "com.moengage.react.cards"
+    namespace "com.moengage.react.personalize"
     sourceSets {
         main {
             if (isNewArchitectureEnabled()) {
@@ -53,20 +51,17 @@ android {
 }
 
 dependencies {
-    // noinspection GradleDynamicVersion
     compileOnly('com.facebook.react:react-native')
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
     implementation(platform("com.moengage:android-bom:$moengageNativeBOMVersion"))
-    compileOnly("com.moengage:moe-android-sdk")
-    api("com.moengage:cards-core")
+    api("com.moengage:personalization-core")
 
     implementation(platform("com.moengage:plugin-base-bom:$moengagePluginBaseBOMVersion"))
-    implementation("com.moengage:plugin-base-cards")
+    implementation("com.moengage:plugin-base-personalization")
     compileOnly("com.moengage:plugin-base")
 }
 
 def isNewArchitectureEnabled() {
-  return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
 }
-
