@@ -112,7 +112,7 @@ const PersonalizeAPIs = () => {
   const onTrackExperienceShown = () => {
     if (!requireCampaign()) return;
     try {
-      personalize.trackExperienceShown([lastCampaign!]);
+      personalize.experiencesShown([lastCampaign!]);
       Alert.alert('Tracked', `Experience Shown: ${lastCampaign!.experienceKey}`);
     } catch (e) {
       showError(e);
@@ -122,7 +122,7 @@ const PersonalizeAPIs = () => {
   const onTrackExperienceClicked = () => {
     if (!requireCampaign()) return;
     try {
-      personalize.trackExperienceClicked(lastCampaign!);
+      personalize.experienceClicked(lastCampaign!);
       Alert.alert('Tracked', `Experience Clicked: ${lastCampaign!.experienceKey}`);
     } catch (e) {
       showError(e);
@@ -132,7 +132,7 @@ const PersonalizeAPIs = () => {
   const onTrackOfferingShown = () => {
     if (!requireOfferingAttrs()) return;
     try {
-      personalize.trackOfferingShown([offeringAttrs!]);
+      personalize.offeringsShown([offeringAttrs!]);
       Alert.alert('Tracked', 'Offering Shown');
     } catch (e) {
       showError(e);
@@ -143,7 +143,7 @@ const PersonalizeAPIs = () => {
     if (!requireCampaign()) return;
     if (!requireOfferingAttrs()) return;
     try {
-      personalize.trackOfferingClicked(lastCampaign!, offeringAttrs!);
+      personalize.offeringClicked(lastCampaign!, offeringAttrs!);
       Alert.alert('Tracked', `Offering Clicked: ${lastCampaign!.experienceKey}`);
     } catch (e) {
       showError(e);
