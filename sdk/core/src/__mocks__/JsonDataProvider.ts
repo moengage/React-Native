@@ -38,3 +38,7 @@ export const logoutCompleteAndroidPayload = JSON.stringify({
     platform: "android",
     accountMeta: { appId: appId }
 });
+
+export const logoutCompleteInvalidPayload = JSON.stringify({
+    platform: "iOS"
+});
