@@ -27,7 +27,7 @@ export function executeHandler(
                 handler(payload)
             } else if (type == LOGOUT_COMPLETE) {
                 let logoutData = getLogoutCompleteData(notificationPayload);
-                handler(logoutData);
+                logoutData != undefined ? handler(logoutData) : null;
             } else {
                 const accountMeta = notificationPayload[ACCOUNT_META];
                 if (accountMeta != undefined && isValidObject(accountMeta)) {

@@ -50,14 +50,18 @@ export function getUserDeletionData(payload: string): UserDeletionData {
  * Create an instance of {@link MoELogoutCompleteData} from json object
  *
  * @param payload - JSON Object with required keys
- * @returns instance of {@link MoELogoutCompleteData}
+ * @returns instance of {@link MoELogoutCompleteData} or null if parsing fails
  * @since 12.7.0
  */
-export function getLogoutCompleteData(payload: { [k: string]: any }): MoELogoutCompleteData {
-    return new MoELogoutCompleteData(
-        getMoEAccountMeta(payload[ACCOUNT_META]),
-        payload[MOE_PLATFORM]
-    );
+export function getLogoutCompleteData(payload: { [k: string]: any }): MoELogoutCompleteData | null {
+    try {
+        return new MoELogoutCompleteData(
+            getMoEAccountMeta(payload[ACCOUNT_META]),
+            payload[MOE_PLATFORM]
+        );
+    } catch (e) {
+        return null;
+    }
 }
 
 export function getUserIdentitiesData(payload: string | null): { [k: string]: string } | null {
