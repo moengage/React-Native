@@ -8,7 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import <React/RCTEventEmitter.h>
+
+// Defined locally to avoid importing non-modular React headers in this public
+// framework header, which breaks builds using USE_FRAMEWORKS=static.
+// These match the typedefs in <React/RCTBridgeMethod.h>.
+#ifndef RCTPromiseResolveBlock_defined
+#define RCTPromiseResolveBlock_defined
+typedef void (^RCTPromiseResolveBlock)(id result);
+#endif
+#ifndef RCTPromiseRejectBlock_defined
+#define RCTPromiseRejectBlock_defined
+typedef void (^RCTPromiseRejectBlock)(NSString *code, NSString *message, NSError *error);
+#endif
 
 @protocol MoEReactEventDispatcher;
 
