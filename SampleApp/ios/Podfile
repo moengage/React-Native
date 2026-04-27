@@ -14,6 +14,15 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+# Pre-built React Native artifacts are static XCFrameworks. With Old Architecture
+# (RCT_NEW_ARCH_ENABLED=0) and dynamic frameworks, dynamic pods can't resolve Old Arch
+# symbols from static pre-built React-Core at their own link time. Set pre-built flags
+# for other combination only; New Arch + dynamic works fine with pre-built artifacts.
+unless linkage == 'dynamic' && ENV['RCT_NEW_ARCH_ENABLED'] == '0'
+  ENV['RCT_USE_PREBUILT_RNCORE'] = '1'
+  ENV['RCT_USE_RN_DEP'] = '1'
+end
+
 def plugin_dev_pods
   test_pluginbase_source = nil
   test_plugincards_source = nil
