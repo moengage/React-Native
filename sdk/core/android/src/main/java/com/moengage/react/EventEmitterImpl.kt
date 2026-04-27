@@ -23,6 +23,7 @@ import com.moengage.pushbase.NAVIGATION_TYPE_RICH_LANDING
 import com.moengage.pushbase.NAVIGATION_TYPE_SCREEN_NAME
 import com.moengage.pushbase.NAV_ACTION
 import com.moengage.pushbase.model.action.NavigationAction
+import com.moengage.plugin.base.internal.model.events.LogoutCompleteEvent
 
 
 /**
@@ -44,6 +45,7 @@ class EventEmitterImpl(private val reactContext: ReactContext) : EventEmitter {
                 )
                 EventType.INAPP_SELF_HANDLED_AVAILABLE -> emitInAppSelfHandled(event as InAppSelfHandledEvent)
                 EventType.PERMISSION -> emitPermissionResult(event as PermissionEvent)
+                EventType.LOGOUT_COMPLETE -> emitLogoutComplete(event as LogoutCompleteEvent)
                 else -> {}
             }
         } catch (t: Throwable) {
@@ -102,6 +104,13 @@ class EventEmitterImpl(private val reactContext: ReactContext) : EventEmitter {
         val payload = PayloadGenerator().permissionResultToWriteableMap(event.result)
         emit(eventName, payload)
     }
+
+    private fun emitLogoutComplete(event: LogoutCompleteEvent) {
+        Logger.print { "$tag emitLogoutComplete() : Event $event" }
+        val eventName = eventMapping[event.eventType] ?: return
+        val payload = PayloadGenerator().logoutResultToWritableMap(event)
+        emit(eventName, payload)
+    }
 }
 
 val eventMapping = mapOf<EventType, String>(
@@ -112,5 +121,6 @@ val eventMapping = mapOf<EventType, String>(
     EventType.INAPP_CUSTOM_ACTION to "MoEInAppCampaignCustomAction",
     EventType.INAPP_SELF_HANDLED_AVAILABLE to "MoEInAppCampaignSelfHandled",
     EventType.PUSH_TOKEN_GENERATED to "MoEPushTokenGenerated",
-    EventType.PERMISSION to "MoEPermissionResult"
+    EventType.PERMISSION to "MoEPermissionResult",
+    EventType.LOGOUT_COMPLETE to "MoELogoutComplete"
 )
