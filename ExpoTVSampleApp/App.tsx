@@ -71,6 +71,10 @@ function addMoEngageListeners() {
   ReactMoE.setEventListener("inAppCampaignSelfHandled", (payload) => {
     console.debug("inAppCampaignSelfHandled", payload);
   });
+
+  ReactMoE.setEventListener("logoutComplete", (data) =>
+    console.debug("logoutComplete", data)
+  );
 }
 
 export default App;

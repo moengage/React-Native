@@ -81,7 +81,7 @@ RCT_EXPORT_MODULE(MoEReactBridge);
 #pragma mark- Event Emitters
 - (NSArray<NSString *> *)supportedEvents
 {
-    return @[kPushClicked, kPushTokenGenerated, kInAppShown, kInAppClicked, kInAppDismissed, kInAppCustomAction, kInAppSelfHandled, kPermissionResult];
+    return @[kPushClicked, kPushTokenGenerated, kInAppShown, kInAppClicked, kInAppDismissed, kInAppCustomAction, kInAppSelfHandled, kPermissionResult, kLogoutComplete];
 }
 
 #pragma mark- Initialization Method

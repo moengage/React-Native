@@ -1,3 +1,9 @@
+# Release Date
+
+## Release Version
+
+- [minor] Added support for logout completion callback
+
 # 15-04-2026
 
 ## 12.6.0
