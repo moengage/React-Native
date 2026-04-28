@@ -9,11 +9,12 @@ import {
   StyleSheet,
 } from "react-native";
 import ReactMoEngagePersonalize from "react-native-moengage-personalize";
+import { MoEngageLogger } from "react-native-moengage";
 import { MOENGAGE_APP_ID } from "./src/key";
 
 const personalize = new ReactMoEngagePersonalize(MOENGAGE_APP_ID);
 
-// Extract offering_context from campaign payload. Returns null if not available.
+// Extract the first offering payload from a campaign. Returns null if not available.
 const extractOfferingAttributes = (campaign) => {
   try {
     const offeringsRaw = campaign?.payload?.offerings;
@@ -102,6 +103,7 @@ export default function PersonalizeScreen() {
   const onTrackExperienceShown = () => {
     if (!requireCampaign()) return;
     try {
+      MoEngageLogger.debug("experiencesShown", lastCampaign);
       personalize.experiencesShown([lastCampaign]);
       Alert.alert("Tracked", `Experience Shown: ${lastCampaign.experienceKey}`);
     } catch (e) {
@@ -112,6 +114,7 @@ export default function PersonalizeScreen() {
   const onTrackExperienceClicked = () => {
     if (!requireCampaign()) return;
     try {
+      MoEngageLogger.debug("experienceClicked", lastCampaign);
       personalize.experienceClicked(lastCampaign);
       Alert.alert("Tracked", `Experience Clicked: ${lastCampaign.experienceKey}`);
     } catch (e) {
@@ -133,6 +136,7 @@ export default function PersonalizeScreen() {
   const onTrackOfferingShown = () => {
     if (!requireOfferingAttrs()) return;
     try {
+      MoEngageLogger.debug("offeringsShown", offeringAttrs);
       personalize.offeringsShown([offeringAttrs]);
       Alert.alert("Tracked", "Offering Shown");
     } catch (e) {
@@ -144,6 +148,7 @@ export default function PersonalizeScreen() {
     if (!requireCampaign()) return;
     if (!requireOfferingAttrs()) return;
     try {
+      MoEngageLogger.debug("offeringClicked", { experience: lastCampaign, offeringPayload: offeringAttrs });
       personalize.offeringClicked(lastCampaign, offeringAttrs);
       Alert.alert("Tracked", `Offering Clicked: ${lastCampaign.experienceKey}`);
     } catch (e) {

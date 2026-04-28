@@ -16,14 +16,14 @@ import { WORKSPACE_ID } from '../../key';
 
 const personalize = new ReactMoEngagePersonalize(WORKSPACE_ID);
 
-// Extract offering_context from campaign payload. Returns null if not available.
+// Extract the first offering payload from a campaign. Returns null if not available.
 const extractOfferingAttributes = (campaign: ExperienceCampaign): Record<string, any> | null => {
   try {
     const offeringsRaw = campaign?.payload?.offerings;
     if (typeof offeringsRaw === 'string') {
       const offerings = JSON.parse(offeringsRaw);
       if (Array.isArray(offerings) && offerings.length > 0) {
-        const context = offerings[0]?.offering_context;
+        const context = offerings[0];
         if (context && typeof context === 'object' && Object.keys(context).length > 0) {
           return context;
         }
@@ -69,6 +69,7 @@ const PersonalizeAPIs = () => {
     try {
       const statuses = parseList(statusInput) as ExperienceStatus[];
       const result = await personalize.fetchExperiencesMeta(statuses);
+      console.log("fetchExperiencesMeta", result);
       const lines = result.experiences
         .map((e) => `- ${e.experienceKey} (${e.status})`)
         .join('\n');
@@ -89,6 +90,7 @@ const PersonalizeAPIs = () => {
         return;
       }
       const result = await personalize.fetchExperiences(keys);
+      console.log("fetchExperiences", result);
       if (result.experiences.length > 0) {
         const campaign = result.experiences[0];
         setLastCampaign(campaign);
@@ -112,6 +114,7 @@ const PersonalizeAPIs = () => {
   const onTrackExperienceShown = () => {
     if (!requireCampaign()) return;
     try {
+      console.log("experiencesShown", lastCampaign);
       personalize.experiencesShown([lastCampaign!]);
       Alert.alert('Tracked', `Experience Shown: ${lastCampaign!.experienceKey}`);
     } catch (e) {
@@ -122,6 +125,7 @@ const PersonalizeAPIs = () => {
   const onTrackExperienceClicked = () => {
     if (!requireCampaign()) return;
     try {
+      console.log("experienceClicked", lastCampaign);
       personalize.experienceClicked(lastCampaign!);
       Alert.alert('Tracked', `Experience Clicked: ${lastCampaign!.experienceKey}`);
     } catch (e) {
@@ -132,6 +136,7 @@ const PersonalizeAPIs = () => {
   const onTrackOfferingShown = () => {
     if (!requireOfferingAttrs()) return;
     try {
+      console.log("offeringsShown", offeringAttrs);
       personalize.offeringsShown([offeringAttrs!]);
       Alert.alert('Tracked', 'Offering Shown');
     } catch (e) {
@@ -143,6 +148,7 @@ const PersonalizeAPIs = () => {
     if (!requireCampaign()) return;
     if (!requireOfferingAttrs()) return;
     try {
+      console.log("offeringClicked", { experience: lastCampaign, offeringPayload: offeringAttrs });
       personalize.offeringClicked(lastCampaign!, offeringAttrs!);
       Alert.alert('Tracked', `Offering Clicked: ${lastCampaign!.experienceKey}`);
     } catch (e) {
