@@ -16,23 +16,38 @@ import { WORKSPACE_ID } from '../../key';
 
 const personalize = new ReactMoEngagePersonalize(WORKSPACE_ID);
 
-// Extract the first offering payload from a campaign. Returns null if not available.
-const extractOfferingAttributes = (campaign: ExperienceCampaign): Record<string, any> | null => {
-  try {
-    const offeringsRaw = campaign?.payload?.offerings;
-    if (typeof offeringsRaw === 'string') {
-      const offerings = JSON.parse(offeringsRaw);
-      if (Array.isArray(offerings) && offerings.length > 0) {
-        const context = offerings[0];
-        if (context && typeof context === 'object' && Object.keys(context).length > 0) {
-          return context;
-        }
+// Extract ALL valid offerings from the campaign's payload. The offering key is
+// dashboard-configurable, so we scan all entries. An entry may be either a stringified
+// JSON array (server data_type "string") or an already-parsed array (data_type "json"),
+// after the iOS plugin unwraps the {value, data_type} envelope. Android delivers the
+// same shape via its native mapToAny(). Returns the full list — callers pass the array
+// to offeringsShown(plural) and the first element to offeringShown / offeringClicked.
+const extractOfferings = (campaign: ExperienceCampaign): Record<string, any>[] => {
+  const payload = campaign?.payload;
+  if (!payload || typeof payload !== 'object') return [];
+  const result: Record<string, any>[] = [];
+  for (const entry of Object.values(payload)) {
+    let offerings: unknown = null;
+    if (Array.isArray(entry)) {
+      offerings = entry;
+    } else if (typeof entry === 'string') {
+      try {
+        offerings = JSON.parse(entry);
+      } catch (_) {
+        continue;
+      }
+    } else {
+      continue;
+    }
+    if (!Array.isArray(offerings)) continue;
+    for (const offering of offerings) {
+      const ctx = offering && offering.offering_context;
+      if (ctx && typeof ctx === 'object' && Object.keys(ctx).length > 0) {
+        result.push(offering);
       }
     }
-  } catch (_) {
-    // parsing failed
   }
-  return null;
+  return result;
 };
 
 const parseList = (s: string): string[] =>
@@ -42,7 +57,7 @@ const PersonalizeAPIs = () => {
   const [statusInput, setStatusInput] = useState('active');
   const [keysInput, setKeysInput] = useState('');
   const [lastCampaign, setLastCampaign] = useState<ExperienceCampaign | null>(null);
-  const [offeringAttrs, setOfferingAttrs] = useState<Record<string, any> | null>(null);
+  const [offerings, setOfferings] = useState<Record<string, any>[]>([]);
 
   const showError = (e: any) => Alert.alert('Error', e?.message || String(e));
 
@@ -54,10 +69,10 @@ const PersonalizeAPIs = () => {
     return true;
   };
 
-  const requireOfferingAttrs = (): boolean => {
-    if (!offeringAttrs) {
+  const requireOfferings = (): boolean => {
+    if (offerings.length === 0) {
       Alert.alert(
-        'No offering attributes',
+        'No offerings',
         'The fetched campaign does not contain offerings. Fetch an experience with offerings configured to use this.'
       );
       return false;
@@ -94,7 +109,7 @@ const PersonalizeAPIs = () => {
       if (result.experiences.length > 0) {
         const campaign = result.experiences[0];
         setLastCampaign(campaign);
-        setOfferingAttrs(extractOfferingAttributes(campaign));
+        setOfferings(extractOfferings(campaign));
       }
       const expLines = result.experiences
         .map((e) => `- ${e.experienceKey} [${e.source}]`)
@@ -111,11 +126,22 @@ const PersonalizeAPIs = () => {
     }
   };
 
-  const onTrackExperienceShown = () => {
+  const onTrackExperiencesShown = () => {
     if (!requireCampaign()) return;
     try {
       console.log("experiencesShown", lastCampaign);
       personalize.experiencesShown([lastCampaign!]);
+      Alert.alert('Tracked', `Experiences Shown: ${lastCampaign!.experienceKey}`);
+    } catch (e) {
+      showError(e);
+    }
+  };
+
+  const onTrackExperienceShown = () => {
+    if (!requireCampaign()) return;
+    try {
+      console.log("experienceShown", lastCampaign);
+      personalize.experienceShown(lastCampaign!);
       Alert.alert('Tracked', `Experience Shown: ${lastCampaign!.experienceKey}`);
     } catch (e) {
       showError(e);
@@ -133,11 +159,23 @@ const PersonalizeAPIs = () => {
     }
   };
 
-  const onTrackOfferingShown = () => {
-    if (!requireOfferingAttrs()) return;
+  const onTrackOfferingsShown = () => {
+    if (!requireOfferings()) return;
     try {
-      console.log("offeringsShown", offeringAttrs);
-      personalize.offeringsShown([offeringAttrs!]);
+      console.log("offeringsShown", offerings);
+      personalize.offeringsShown(offerings);
+      Alert.alert('Tracked', `Offerings Shown: ${offerings.length}`);
+    } catch (e) {
+      showError(e);
+    }
+  };
+
+  const onTrackOfferingShown = () => {
+    if (!requireOfferings()) return;
+    try {
+      const first = offerings[0];
+      console.log("offeringShown", first);
+      personalize.offeringShown(first);
       Alert.alert('Tracked', 'Offering Shown');
     } catch (e) {
       showError(e);
@@ -146,10 +184,11 @@ const PersonalizeAPIs = () => {
 
   const onTrackOfferingClicked = () => {
     if (!requireCampaign()) return;
-    if (!requireOfferingAttrs()) return;
+    if (!requireOfferings()) return;
     try {
-      console.log("offeringClicked", { experience: lastCampaign, offeringPayload: offeringAttrs });
-      personalize.offeringClicked(lastCampaign!, offeringAttrs!);
+      const first = offerings[0];
+      console.log("offeringClicked", { experience: lastCampaign, offeringPayload: first });
+      personalize.offeringClicked(lastCampaign!, first);
       Alert.alert('Tracked', `Offering Clicked: ${lastCampaign!.experienceKey}`);
     } catch (e) {
       showError(e);
@@ -184,14 +223,20 @@ const PersonalizeAPIs = () => {
       <TouchableOpacity style={styles.button} onPress={onFetchExperiences}>
         <Text style={styles.buttonText}>Fetch Experiences</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={onTrackExperiencesShown}>
+        <Text style={styles.buttonText}>Track Experiences Shown (plural)</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={onTrackExperienceShown}>
-        <Text style={styles.buttonText}>Track Experience Shown</Text>
+        <Text style={styles.buttonText}>Track Experience Shown (singular)</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={onTrackExperienceClicked}>
         <Text style={styles.buttonText}>Track Experience Clicked</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={onTrackOfferingsShown}>
+        <Text style={styles.buttonText}>Track Offerings Shown (plural)</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={onTrackOfferingShown}>
-        <Text style={styles.buttonText}>Track Offering Shown</Text>
+        <Text style={styles.buttonText}>Track Offering Shown (singular)</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={onTrackOfferingClicked}>
         <Text style={styles.buttonText}>Track Offering Clicked</Text>

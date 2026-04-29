@@ -94,6 +94,17 @@ class ReactMoEngagePersonalize {
   }
 
   /**
+   * Tracks an impression event for a single experience campaign.
+   *
+   * @param campaign The {@link ExperienceCampaign} that was shown.
+   * @since 1.0.0
+   */
+  experienceShown(campaign: ExperienceCampaign): void {
+    MoEngageLogger.verbose(`${this.TAG} experienceShown() : `);
+    this.experiencesShown([campaign]);
+  }
+
+  /**
    * Tracks a click event for a single experience campaign.
    *
    * @param campaign The {@link ExperienceCampaign} that was clicked.
@@ -113,6 +124,17 @@ class ReactMoEngagePersonalize {
   offeringsShown(offeringPayloads: Record<string, any>[]): void {
     MoEngageLogger.verbose(`${this.TAG} offeringsShown() : `);
     this.handler.offeringsShown(offeringPayloads);
+  }
+
+  /**
+   * Tracks an impression event for a single offering.
+   *
+   * @param offeringPayload The full offering payload dictionary that was shown.
+   * @since 1.0.0
+   */
+  offeringShown(offeringPayload: Record<string, any>): void {
+    MoEngageLogger.verbose(`${this.TAG} offeringShown() : `);
+    this.offeringsShown([offeringPayload]);
   }
 
   /**

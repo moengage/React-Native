@@ -124,6 +124,12 @@ describe("ReactMoEngagePersonalize", () => {
             expect(mockHandlerInstance.experiencesShown).toHaveBeenCalledWith(c);
         });
 
+        it("experienceShown wraps single campaign and delegates to handler.experiencesShown", () => {
+            const c = campaign("z");
+            instance.experienceShown(c);
+            expect(mockHandlerInstance.experiencesShown).toHaveBeenCalledWith([c]);
+        });
+
         it("experienceClicked delegates with single campaign", () => {
             const c = campaign("x");
             instance.experienceClicked(c);
@@ -134,6 +140,12 @@ describe("ReactMoEngagePersonalize", () => {
             const payloads = [{ a: 1 }];
             instance.offeringsShown(payloads);
             expect(mockHandlerInstance.offeringsShown).toHaveBeenCalledWith(payloads);
+        });
+
+        it("offeringShown wraps single payload and delegates to handler.offeringsShown", () => {
+            const p = { sku: "s1" };
+            instance.offeringShown(p);
+            expect(mockHandlerInstance.offeringsShown).toHaveBeenCalledWith([p]);
         });
 
         it("offeringClicked delegates with campaign and single offeringPayload", () => {

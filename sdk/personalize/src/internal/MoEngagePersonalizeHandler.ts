@@ -27,8 +27,8 @@ export default class MoEngagePersonalizeHandler {
 
     async fetchExperiencesMeta(statuses: ExperienceStatus[]): Promise<ExperienceCampaignsMetadata> {
         try {
-            MoEngageLogger.verbose(`${this.TAG} fetchExperiencesMeta() : `);
             const payload = PayloadBuilder.buildFetchExperiencesMetaPayload(this.appId, statuses);
+            MoEngageLogger.verbose(`${this.TAG} fetchExperiencesMeta() : ${payload}`);
             const response = await MoEngagePersonalizeBridge.fetchExperiencesMeta(payload);
             return Parser.parseExperiencesMetadata(response);
         } catch (error) {
@@ -42,8 +42,8 @@ export default class MoEngagePersonalizeHandler {
         attributes: Record<string, string>
     ): Promise<ExperienceCampaignsResult> {
         try {
-            MoEngageLogger.verbose(`${this.TAG} fetchExperiences() : `);
             const payload = PayloadBuilder.buildFetchExperiencesPayload(this.appId, experienceKeys, attributes);
+            MoEngageLogger.verbose(`${this.TAG} fetchExperiences() : ${payload}`);
             const response = await MoEngagePersonalizeBridge.fetchExperiences(payload);
             return Parser.parseExperiencesResult(response);
         } catch (error) {
@@ -54,8 +54,8 @@ export default class MoEngagePersonalizeHandler {
 
     experiencesShown(campaigns: ExperienceCampaign[]): void {
         try {
-            MoEngageLogger.verbose(`${this.TAG} experiencesShown() : `);
             const payload = PayloadBuilder.buildExperiencesShownPayload(this.appId, campaigns);
+            MoEngageLogger.verbose(`${this.TAG} experiencesShown() : ${payload}`);
             MoEngagePersonalizeBridge.experiencesShown(payload);
         } catch (error) {
             MoEngageLogger.error(`${this.TAG} experiencesShown() : `, error);
@@ -64,8 +64,8 @@ export default class MoEngagePersonalizeHandler {
 
     experienceClicked(campaign: ExperienceCampaign): void {
         try {
-            MoEngageLogger.verbose(`${this.TAG} experienceClicked() : `);
             const payload = PayloadBuilder.buildExperienceClickedPayload(this.appId, campaign);
+            MoEngageLogger.verbose(`${this.TAG} experienceClicked() : ${payload}`);
             MoEngagePersonalizeBridge.experienceClicked(payload);
         } catch (error) {
             MoEngageLogger.error(`${this.TAG} experienceClicked() : `, error);
@@ -74,8 +74,8 @@ export default class MoEngagePersonalizeHandler {
 
     offeringsShown(offeringPayloads: Record<string, any>[]): void {
         try {
-            MoEngageLogger.verbose(`${this.TAG} offeringsShown() : `);
             const payload = PayloadBuilder.buildOfferingsShownPayload(this.appId, offeringPayloads);
+            MoEngageLogger.verbose(`${this.TAG} offeringsShown() : ${payload}`);
             MoEngagePersonalizeBridge.offeringsShown(payload);
         } catch (error) {
             MoEngageLogger.error(`${this.TAG} offeringsShown() : `, error);
@@ -87,8 +87,8 @@ export default class MoEngagePersonalizeHandler {
         offeringPayload: Record<string, any>
     ): void {
         try {
-            MoEngageLogger.verbose(`${this.TAG} offeringClicked() : `);
             const payload = PayloadBuilder.buildOfferingClickedPayload(this.appId, campaign, offeringPayload);
+            MoEngageLogger.verbose(`${this.TAG} offeringClicked() : ${payload}`);
             MoEngagePersonalizeBridge.offeringClicked(payload);
         } catch (error) {
             MoEngageLogger.error(`${this.TAG} offeringClicked() : `, error);

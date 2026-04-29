@@ -14,23 +14,38 @@ import { MOENGAGE_APP_ID } from "./src/key";
 
 const personalize = new ReactMoEngagePersonalize(MOENGAGE_APP_ID);
 
-// Extract the first offering payload from a campaign. Returns null if not available.
-const extractOfferingAttributes = (campaign) => {
-  try {
-    const offeringsRaw = campaign?.payload?.offerings;
-    if (typeof offeringsRaw === "string") {
-      const offerings = JSON.parse(offeringsRaw);
-      if (Array.isArray(offerings) && offerings.length > 0) {
-        const context = offerings[0];
-        if (context && typeof context === "object" && Object.keys(context).length > 0) {
-          return context;
-        }
+// Extract ALL valid offerings from the campaign's payload. The offering key is
+// dashboard-configurable, so we scan all entries. An entry may be either a stringified
+// JSON array (server data_type "string") or an already-parsed array (data_type "json"),
+// after the iOS plugin unwraps the {value, data_type} envelope. Android delivers the
+// same shape via its native mapToAny(). Returns the full list — callers pass the array
+// to offeringsShown(plural) and the first element to offeringShown / offeringClicked.
+const extractOfferings = (campaign) => {
+  const payload = campaign?.payload;
+  if (!payload || typeof payload !== "object") return [];
+  const result = [];
+  for (const entry of Object.values(payload)) {
+    let offerings = null;
+    if (Array.isArray(entry)) {
+      offerings = entry;
+    } else if (typeof entry === "string") {
+      try {
+        offerings = JSON.parse(entry);
+      } catch (_) {
+        continue;
+      }
+    } else {
+      continue;
+    }
+    if (!Array.isArray(offerings)) continue;
+    for (const offering of offerings) {
+      const ctx = offering && offering.offering_context;
+      if (ctx && typeof ctx === "object" && Object.keys(ctx).length > 0) {
+        result.push(offering);
       }
     }
-  } catch (_) {
-    // parsing failed
   }
-  return null;
+  return result;
 };
 
 const parseList = (s) => s.split(",").map((x) => x.trim()).filter(Boolean);
@@ -39,7 +54,7 @@ export default function PersonalizeScreen() {
   const [statusInput, setStatusInput] = useState("active");
   const [keysInput, setKeysInput] = useState("");
   const [lastCampaign, setLastCampaign] = useState(null);
-  const [offeringAttrs, setOfferingAttrs] = useState(null);
+  const [offerings, setOfferings] = useState([]);
 
   const showError = (e) => Alert.alert("Error", e?.message || String(e));
 
@@ -72,7 +87,7 @@ export default function PersonalizeScreen() {
       if (result.experiences.length > 0) {
         const campaign = result.experiences[0];
         setLastCampaign(campaign);
-        setOfferingAttrs(extractOfferingAttributes(campaign));
+        setOfferings(extractOfferings(campaign));
       }
       const expLines = result.experiences
         .map((e) => `- ${e.experienceKey} [${e.source}]`)
@@ -100,11 +115,22 @@ export default function PersonalizeScreen() {
     return true;
   };
 
-  const onTrackExperienceShown = () => {
+  const onTrackExperiencesShown = () => {
     if (!requireCampaign()) return;
     try {
       MoEngageLogger.debug("experiencesShown", lastCampaign);
       personalize.experiencesShown([lastCampaign]);
+      Alert.alert("Tracked", `Experiences Shown: ${lastCampaign.experienceKey}`);
+    } catch (e) {
+      showError(e);
+    }
+  };
+
+  const onTrackExperienceShown = () => {
+    if (!requireCampaign()) return;
+    try {
+      MoEngageLogger.debug("experienceShown", lastCampaign);
+      personalize.experienceShown(lastCampaign);
       Alert.alert("Tracked", `Experience Shown: ${lastCampaign.experienceKey}`);
     } catch (e) {
       showError(e);
@@ -122,10 +148,10 @@ export default function PersonalizeScreen() {
     }
   };
 
-  const requireOfferingAttrs = () => {
-    if (!offeringAttrs) {
+  const requireOfferings = () => {
+    if (offerings.length === 0) {
       Alert.alert(
-        "No offering attributes",
+        "No offerings",
         "The fetched campaign does not contain offerings. Fetch an experience with offerings configured to use this."
       );
       return false;
@@ -133,11 +159,23 @@ export default function PersonalizeScreen() {
     return true;
   };
 
-  const onTrackOfferingShown = () => {
-    if (!requireOfferingAttrs()) return;
+  const onTrackOfferingsShown = () => {
+    if (!requireOfferings()) return;
     try {
-      MoEngageLogger.debug("offeringsShown", offeringAttrs);
-      personalize.offeringsShown([offeringAttrs]);
+      MoEngageLogger.debug("offeringsShown", offerings);
+      personalize.offeringsShown(offerings);
+      Alert.alert("Tracked", `Offerings Shown: ${offerings.length}`);
+    } catch (e) {
+      showError(e);
+    }
+  };
+
+  const onTrackOfferingShown = () => {
+    if (!requireOfferings()) return;
+    try {
+      const first = offerings[0];
+      MoEngageLogger.debug("offeringShown", first);
+      personalize.offeringShown(first);
       Alert.alert("Tracked", "Offering Shown");
     } catch (e) {
       showError(e);
@@ -146,10 +184,11 @@ export default function PersonalizeScreen() {
 
   const onTrackOfferingClicked = () => {
     if (!requireCampaign()) return;
-    if (!requireOfferingAttrs()) return;
+    if (!requireOfferings()) return;
     try {
-      MoEngageLogger.debug("offeringClicked", { experience: lastCampaign, offeringPayload: offeringAttrs });
-      personalize.offeringClicked(lastCampaign, offeringAttrs);
+      const first = offerings[0];
+      MoEngageLogger.debug("offeringClicked", { experience: lastCampaign, offeringPayload: first });
+      personalize.offeringClicked(lastCampaign, first);
       Alert.alert("Tracked", `Offering Clicked: ${lastCampaign.experienceKey}`);
     } catch (e) {
       showError(e);
@@ -186,9 +225,11 @@ export default function PersonalizeScreen() {
 
       <Button title="Fetch Experience Meta" onPress={onFetchMeta} />
       <Button title="Fetch Experiences" onPress={onFetchExperiences} />
-      <Button title="Track Experience Shown" onPress={onTrackExperienceShown} />
+      <Button title="Track Experiences Shown (plural)" onPress={onTrackExperiencesShown} />
+      <Button title="Track Experience Shown (singular)" onPress={onTrackExperienceShown} />
       <Button title="Track Experience Clicked" onPress={onTrackExperienceClicked} />
-      <Button title="Track Offering Shown" onPress={onTrackOfferingShown} />
+      <Button title="Track Offerings Shown (plural)" onPress={onTrackOfferingsShown} />
+      <Button title="Track Offering Shown (singular)" onPress={onTrackOfferingShown} />
       <Button title="Track Offering Clicked" onPress={onTrackOfferingClicked} />
 
       {lastCampaign && (
