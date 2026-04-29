@@ -7,7 +7,7 @@ on:
     branches: [ "development", "master" ]
 jobs:
   verify-ios:
-    runs-on: macos-15
+    runs-on: macos-15-xlarge
     if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checkout sdk automation scripts

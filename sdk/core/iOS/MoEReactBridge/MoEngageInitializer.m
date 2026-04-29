@@ -13,6 +13,7 @@
 #import <MoEngageCore/MoEngageCore.h>
 #import "MoEReactNativeHandler.h"
 #import "MoEngageReactSDKInitializationConfig.h"
+#import <React/RCTEventEmitter.h>
 
 @import MoEngagePluginBase;
 

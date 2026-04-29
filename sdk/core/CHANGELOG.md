@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+
+- iOS
+  - [patch] Added compatibility for React Native pre-built libraries.
+
 # 15-04-2026
 
 ## 12.6.0
