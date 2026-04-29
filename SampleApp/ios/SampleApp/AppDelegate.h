@@ -1,6 +1,7 @@
-#import <React-RCTAppDelegate/RCTReactNativeFactory.h>
 #import <UIKit/UIKit.h>
 #import <UserNotifications/UserNotifications.h>
+
+@class RCTReactNativeFactory;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UNUserNotificationCenterDelegate>
 
