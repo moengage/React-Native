@@ -2,7 +2,7 @@ import com.moengage.gradle.android.library.plugin.configs.BuildConfigType
 
 ext {
     moengageNativeBOMVersion = "2.2.1"
-    moengagePluginBaseBOMVersion = "2.1.1-SNAPSHOT"
+    moengagePluginBaseBOMVersion = "2.1.2-SNAPSHOT"
     kotlinVersion = "1.9.23"
 }
 
@@ -61,7 +61,7 @@ dependencies {
     api("com.moengage:personalization-core")
 
     implementation(platform("com.moengage:plugin-base-bom:$moengagePluginBaseBOMVersion"))
-    implementation("com.moengage:plugin-base-personalization")
+    implementation("com.moengage:plugin-base-personalization:0.0.3-SNAPSHOT")
     compileOnly("com.moengage:plugin-base")
 }
 
