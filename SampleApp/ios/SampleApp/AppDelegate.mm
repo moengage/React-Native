@@ -1,7 +1,7 @@
 #import "AppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
-#import <React-RCTAppDelegate/RCTDefaultReactNativeFactoryDelegate.h>
+#import <RCTAppDelegate.h>
 #import <ReactAppDependencyProvider/RCTAppDependencyProvider.h>
 #import <ReactNativeMoEngage/MoEngageInitializer.h>
 #import <ReactNativeMoEngage/MoEngageReactSDKInitializationConfig.h>
