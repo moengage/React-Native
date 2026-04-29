@@ -8,7 +8,7 @@ repositories {
 ext {
     // MoEngage Versions
     moengageNativeBOMVersion = "2.2.1"
-    moengagePluginBaseBOMVersion = "2.1.2-SNAPSHOT"
+    moengagePluginBaseBOMVersion = "2.1.3-SNAPSHOT"
 
     // AndroidX Support Libraries Versions
     androidXCore = "1.15.0"
