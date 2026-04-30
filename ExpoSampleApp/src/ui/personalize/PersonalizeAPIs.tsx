@@ -56,13 +56,13 @@ const parseList = (s: string): string[] =>
 const PersonalizeAPIs = () => {
   const [statusInput, setStatusInput] = useState('active');
   const [keysInput, setKeysInput] = useState('');
-  const [lastCampaign, setLastCampaign] = useState<ExperienceCampaign | null>(null);
+  const [campaigns, setCampaigns] = useState<ExperienceCampaign[]>([]);
   const [offerings, setOfferings] = useState<Record<string, any>[]>([]);
 
   const showError = (e: any) => Alert.alert('Error', e?.message || String(e));
 
   const requireCampaign = (): boolean => {
-    if (!lastCampaign) {
+    if (campaigns.length === 0) {
       Alert.alert('No campaign', "Run 'Fetch Experiences' first to obtain a campaign to track.");
       return false;
     }
@@ -106,11 +106,8 @@ const PersonalizeAPIs = () => {
       }
       const result = await personalize.fetchExperiences(keys);
       console.log("fetchExperiences", result);
-      if (result.experiences.length > 0) {
-        const campaign = result.experiences[0];
-        setLastCampaign(campaign);
-        setOfferings(extractOfferings(campaign));
-      }
+      setCampaigns(result.experiences);
+      setOfferings(result.experiences.flatMap(extractOfferings));
       const expLines = result.experiences
         .map((e) => `- ${e.experienceKey} [${e.source}]`)
         .join('\n');
@@ -129,9 +126,9 @@ const PersonalizeAPIs = () => {
   const onTrackExperiencesShown = () => {
     if (!requireCampaign()) return;
     try {
-      console.log("experiencesShown", lastCampaign);
-      personalize.experiencesShown([lastCampaign!]);
-      Alert.alert('Tracked', `Experiences Shown: ${lastCampaign!.experienceKey}`);
+      console.log("experiencesShown", campaigns);
+      personalize.experiencesShown(campaigns);
+      Alert.alert('Tracked', `Experiences Shown: ${campaigns.length}`);
     } catch (e) {
       showError(e);
     }
@@ -140,9 +137,10 @@ const PersonalizeAPIs = () => {
   const onTrackExperienceShown = () => {
     if (!requireCampaign()) return;
     try {
-      console.log("experienceShown", lastCampaign);
-      personalize.experienceShown(lastCampaign!);
-      Alert.alert('Tracked', `Experience Shown: ${lastCampaign!.experienceKey}`);
+      const first = campaigns[0]!;
+      console.log("experienceShown", first);
+      personalize.experienceShown(first);
+      Alert.alert('Tracked', `Experience Shown: ${first.experienceKey}`);
     } catch (e) {
       showError(e);
     }
@@ -151,9 +149,10 @@ const PersonalizeAPIs = () => {
   const onTrackExperienceClicked = () => {
     if (!requireCampaign()) return;
     try {
-      console.log("experienceClicked", lastCampaign);
-      personalize.experienceClicked(lastCampaign!);
-      Alert.alert('Tracked', `Experience Clicked: ${lastCampaign!.experienceKey}`);
+      const first = campaigns[0]!;
+      console.log("experienceClicked", first);
+      personalize.experienceClicked(first);
+      Alert.alert('Tracked', `Experience Clicked: ${first.experienceKey}`);
     } catch (e) {
       showError(e);
     }
@@ -186,10 +185,11 @@ const PersonalizeAPIs = () => {
     if (!requireCampaign()) return;
     if (!requireOfferings()) return;
     try {
-      const first = offerings[0];
-      console.log("offeringClicked", { experience: lastCampaign, offeringPayload: first });
-      personalize.offeringClicked(lastCampaign!, first);
-      Alert.alert('Tracked', `Offering Clicked: ${lastCampaign!.experienceKey}`);
+      const firstCampaign = campaigns[0]!;
+      const firstOffering = offerings[0];
+      console.log("offeringClicked", { experience: firstCampaign, offeringPayload: firstOffering });
+      personalize.offeringClicked(firstCampaign, firstOffering);
+      Alert.alert('Tracked', `Offering Clicked: ${firstCampaign.experienceKey}`);
     } catch (e) {
       showError(e);
     }
@@ -242,8 +242,10 @@ const PersonalizeAPIs = () => {
         <Text style={styles.buttonText}>Track Offering Clicked</Text>
       </TouchableOpacity>
 
-      {lastCampaign && (
-        <Text style={styles.footer}>Last campaign: {lastCampaign.experienceKey}</Text>
+      {campaigns.length > 0 && (
+        <Text style={styles.footer}>
+          Campaigns ({campaigns.length}): {campaigns.map((c) => c.experienceKey).join(', ')}
+        </Text>
       )}
     </ScrollView>
   );

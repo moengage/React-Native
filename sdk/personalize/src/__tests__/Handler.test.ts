@@ -154,5 +154,25 @@ describe("Handler", () => {
             expect(sent.data.experience.experienceKey).toBe("o");
             expect(sent.data.offeringPayload).toEqual({ sku: "s1" });
         });
+
+        // Regression guards for the "plural API drops items past the first" bug:
+        // every campaign / offering passed to the plural APIs must reach the wire.
+        it("experiencesShown preserves ALL N campaigns on the wire (no dropping)", () => {
+            const campaigns = [makeCampaign("a"), makeCampaign("b"), makeCampaign("c")];
+            handler.experiencesShown(campaigns);
+
+            const sent = JSON.parse(mockNative.experiencesShown.mock.calls[0]![0] as string);
+            expect(sent.data.experiences).toHaveLength(3);
+            expect(sent.data.experiences.map((e: any) => e.experienceKey)).toEqual(["a", "b", "c"]);
+        });
+
+        it("offeringsShown preserves ALL N offering payloads on the wire (no dropping)", () => {
+            const offerings = [{ offer_id: "o_0" }, { offer_id: "o_1" }, { offer_id: "o_2" }];
+            handler.offeringsShown(offerings);
+
+            const sent = JSON.parse(mockNative.offeringsShown.mock.calls[0]![0] as string);
+            expect(sent.data.offeringPayloads).toHaveLength(3);
+            expect(sent.data.offeringPayloads.map((o: any) => o.offer_id)).toEqual(["o_0", "o_1", "o_2"]);
+        });
     });
 });

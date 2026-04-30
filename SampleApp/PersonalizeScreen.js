@@ -53,7 +53,7 @@ const parseList = (s) => s.split(",").map((x) => x.trim()).filter(Boolean);
 export default function PersonalizeScreen() {
   const [statusInput, setStatusInput] = useState("active");
   const [keysInput, setKeysInput] = useState("");
-  const [lastCampaign, setLastCampaign] = useState(null);
+  const [campaigns, setCampaigns] = useState([]);
   const [offerings, setOfferings] = useState([]);
 
   const showError = (e) => Alert.alert("Error", e?.message || String(e));
@@ -84,11 +84,8 @@ export default function PersonalizeScreen() {
       }
       const result = await personalize.fetchExperiences(keys);
       console.log(result)
-      if (result.experiences.length > 0) {
-        const campaign = result.experiences[0];
-        setLastCampaign(campaign);
-        setOfferings(extractOfferings(campaign));
-      }
+      setCampaigns(result.experiences);
+      setOfferings(result.experiences.flatMap(extractOfferings));
       const expLines = result.experiences
         .map((e) => `- ${e.experienceKey} [${e.source}]`)
         .join("\n");
@@ -105,7 +102,7 @@ export default function PersonalizeScreen() {
   };
 
   const requireCampaign = () => {
-    if (!lastCampaign) {
+    if (campaigns.length === 0) {
       Alert.alert(
         "No campaign",
         "Run 'Fetch Experiences' first to obtain a campaign to track."
@@ -118,9 +115,9 @@ export default function PersonalizeScreen() {
   const onTrackExperiencesShown = () => {
     if (!requireCampaign()) return;
     try {
-      MoEngageLogger.debug("experiencesShown", lastCampaign);
-      personalize.experiencesShown([lastCampaign]);
-      Alert.alert("Tracked", `Experiences Shown: ${lastCampaign.experienceKey}`);
+      MoEngageLogger.debug("experiencesShown", campaigns);
+      personalize.experiencesShown(campaigns);
+      Alert.alert("Tracked", `Experiences Shown: ${campaigns.length}`);
     } catch (e) {
       showError(e);
     }
@@ -129,9 +126,10 @@ export default function PersonalizeScreen() {
   const onTrackExperienceShown = () => {
     if (!requireCampaign()) return;
     try {
-      MoEngageLogger.debug("experienceShown", lastCampaign);
-      personalize.experienceShown(lastCampaign);
-      Alert.alert("Tracked", `Experience Shown: ${lastCampaign.experienceKey}`);
+      const first = campaigns[0];
+      MoEngageLogger.debug("experienceShown", first);
+      personalize.experienceShown(first);
+      Alert.alert("Tracked", `Experience Shown: ${first.experienceKey}`);
     } catch (e) {
       showError(e);
     }
@@ -140,9 +138,10 @@ export default function PersonalizeScreen() {
   const onTrackExperienceClicked = () => {
     if (!requireCampaign()) return;
     try {
-      MoEngageLogger.debug("experienceClicked", lastCampaign);
-      personalize.experienceClicked(lastCampaign);
-      Alert.alert("Tracked", `Experience Clicked: ${lastCampaign.experienceKey}`);
+      const first = campaigns[0];
+      MoEngageLogger.debug("experienceClicked", first);
+      personalize.experienceClicked(first);
+      Alert.alert("Tracked", `Experience Clicked: ${first.experienceKey}`);
     } catch (e) {
       showError(e);
     }
@@ -186,10 +185,11 @@ export default function PersonalizeScreen() {
     if (!requireCampaign()) return;
     if (!requireOfferings()) return;
     try {
-      const first = offerings[0];
-      MoEngageLogger.debug("offeringClicked", { experience: lastCampaign, offeringPayload: first });
-      personalize.offeringClicked(lastCampaign, first);
-      Alert.alert("Tracked", `Offering Clicked: ${lastCampaign.experienceKey}`);
+      const firstCampaign = campaigns[0];
+      const firstOffering = offerings[0];
+      MoEngageLogger.debug("offeringClicked", { experience: firstCampaign, offeringPayload: firstOffering });
+      personalize.offeringClicked(firstCampaign, firstOffering);
+      Alert.alert("Tracked", `Offering Clicked: ${firstCampaign.experienceKey}`);
     } catch (e) {
       showError(e);
     }
@@ -232,9 +232,9 @@ export default function PersonalizeScreen() {
       <Button title="Track Offering Shown (singular)" onPress={onTrackOfferingShown} />
       <Button title="Track Offering Clicked" onPress={onTrackOfferingClicked} />
 
-      {lastCampaign && (
+      {campaigns.length > 0 && (
         <Text style={styles.footer}>
-          Last campaign: {lastCampaign.experienceKey}
+          Campaigns ({campaigns.length}): {campaigns.map((c) => c.experienceKey).join(", ")}
         </Text>
       )}
     </ScrollView>
