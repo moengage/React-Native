@@ -14,6 +14,7 @@ import { CardsScreen } from './src/component/CardsScreen';
 import { SelfHandledCardUI } from './src/component/SelfHandledCardUI';
 import ShowNudgeScreen from './ShowNudgeScreen';
 import MultipleInAppsScreen from "./MultipleInAppsScreen"
+import PersonalizeScreen from "./PersonalizeScreen";
 
 const Stack = createNativeStackNavigator()
 
@@ -42,6 +43,7 @@ export default AppNavigator = () => {
         <Stack.Screen name="SelfHandledCardUI" component={SelfHandledCardUI} headerTitle="Self-Handled Cards UI" />
         <Stack.Screen name="ShowNudgeScreen" component={ ShowNudgeScreen } headerTitle="Show Nudge" />
         <Stack.Screen name="MultipleInAppsScreen" component={MultipleInAppsScreen} headerTitle="MultipleInAppsScreen"/>
+        <Stack.Screen name="PersonalizeScreen" component={PersonalizeScreen} headerTitle="Personalize"/>
       </Stack.Navigator>
     </NavigationContainer>
   );

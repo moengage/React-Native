@@ -14,6 +14,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
     { key: 'GeofenceAPIs', title: 'Geofence APIs' },
     { key: 'InAppAPIs', title: 'InApp APIs' },
     { key: 'InboxAPIs', title: 'Inbox APIs' },
+    { key: 'PersonalizeAPIs', title: 'Personalize APIs' },
     { key: 'PushAPIs', title: 'Push APIs' },
   ];
 
