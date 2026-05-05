@@ -9,6 +9,8 @@ import {getMoEPushPayload, getMoEPushToken} from "../moeParser/MoEPushNotificati
 import {MOE_DATA, ACCOUNT_META, MOE_PAYLOAD} from "./MoEConstants";
 import {PERMISSION_RESULT} from "..";
 import {getPermissionResult} from "../moeParser/MoEngagePayloadParser";
+import MoEngageLogger from "../logger/MoEngageLogger";
+
 
 export function executeHandler(
     handler: Function,
@@ -18,6 +20,7 @@ export function executeHandler(
     if (handler && type) {
         const payload = notification[MOE_PAYLOAD];
         const notificationPayload = JSON.parse(payload);
+        MoEngageLogger.verbose("executeHandler() : type: ", type);
         if (isValidObject(notificationPayload)) {
             if (type == "pushTokenGenerated") {
                 var pushTokenObject = getMoEPushToken(notificationPayload);
