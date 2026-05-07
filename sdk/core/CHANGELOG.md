@@ -1,3 +1,12 @@
+# Release Date
+
+## Release Version
+
+- Android
+  - [minor] updating `android-bom` to `2.2.2`
+- iOS
+  - [minor] Updated `MoEngage-iOS-SDK` to `10.12.0`
+
 # 15-04-2026
 
 ## 12.6.0
@@ -8,6 +17,7 @@
     - Migrating the common gradle configuration to the gradle config
 - iOS
   - `MoEngage-iOS-SDK` version updated to `10.10.2`
+
 # 09-02-2026
 
 ## 12.5.0
@@ -28,7 +38,7 @@
   - Moving the internal native dependencies to bill-of-materials (BOM) for better version management.
 - iOS
   - `MoEngage-iOS-SDK` version updated to `10.08.0`
-  
+
 # 17-10-2025
 
 ## 12.3.0
@@ -42,10 +52,8 @@
 
 ## 12.2.0
 
-- iOS
-  -`MoEngage-iOS-SDK` version updated to `10.05.0`
-- Android
-  -`moe-android-sdk` version updated to `14.03.03`
+- iOS -`MoEngage-iOS-SDK` version updated to `10.05.0`
+- Android -`moe-android-sdk` version updated to `14.03.03`
 
 # 29-07-2025
 
@@ -208,7 +216,6 @@
 | optOutDataTracking(true)  | disableDataTracking() |
 
 - iOS
-
   - Removed support for SDK initialization from Info.plist.
   - Removed APIs
 
@@ -338,7 +345,6 @@
 ## 8.2.0
 
 - iOS
-
   - MoEngage-iOS-SDK version updated to `~>9.2.0`.
   - Updated API
 
@@ -368,7 +374,6 @@
 ## 8.1.0
 
 - Android
-
   - AGP version updated to `7.3.1`
   - Gradle version updated to `7.4`
   - Target SDK version - 31

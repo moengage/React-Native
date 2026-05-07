@@ -1,3 +1,12 @@
+# Release Date
+
+## Release Version
+
+- Android
+  - updating `android-bom` to `2.2.2`
+- iOS
+  - [minor] Updated `MoEngage-iOS-SDK` to `10.12.0`
+
 # 15-04-2026
 
 ## 6.4.0
@@ -7,7 +16,7 @@
     - AGP version updated from `8.7.3` to `8.13.2`
     - Migrating the common gradle configuration to the gradle config
 - iOS
-    - Updated MoEngageCards to `5.01.11`
+  - Updated MoEngageCards to `5.01.11`
 
 # 09-02-2026
 
@@ -27,7 +36,7 @@
   - Moving the internal native dependencies to bill-of-materials (BOM) for better version management.
 - iOS
   - `MoEngage-iOS-SDK` version updated to `10.08.0`
-  
+
 # 17-10-2025
 
 ## 6.0.5

@@ -19,6 +19,8 @@ import com.moengage.core.config.MoEDefaultConfig;
 import com.moengage.core.config.NotificationConfig;
 import com.moengage.pushbase.MoEPushHelper;
 import com.moengage.react.MoEInitializer;
+import com.moengage.core.config.MoEngageEnvironmentConfig;
+import com.moengage.core.model.environment.MoEngageEnvironment;
 import java.io.IOException;
 import java.util.List;
 
@@ -82,6 +84,7 @@ public class MainApplication extends Application implements ReactApplication {
     MoEngage.Builder moEngage =
         new MoEngage.Builder(this, BuildConfig.MOENAGE_APP_ID, DataCenter.DATA_CENTER_1)
             .configureLogs(new LogConfig(LogLevel.VERBOSE, true))
+                .configureMoEngageEnvironment(new MoEngageEnvironmentConfig(MoEngageEnvironment.DEFAULT))
             .configureNotificationMetaData(
                 new NotificationConfig(
                     R.drawable.small_icon,

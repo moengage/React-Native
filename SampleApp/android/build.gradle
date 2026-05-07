@@ -10,6 +10,10 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven {
+            name = 'Central Portal Snapshots'
+            url = 'https://central.sonatype.com/repository/maven-snapshots/'
+        }
     }
     dependencies {
         classpath('com.android.tools.build:gradle:8.13.2')
@@ -24,6 +28,10 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+            name = 'Central Portal Snapshots'
+            url = 'https://central.sonatype.com/repository/maven-snapshots/'
+        }
     }
 }
 

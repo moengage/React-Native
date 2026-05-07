@@ -7,8 +7,8 @@ repositories {
 
 ext {
     // MoEngage Versions
-    moengageNativeBOMVersion = "2.1.0"
-    moengagePluginBaseBOMVersion = "2.0.0"
+    moengageNativeBOMVersion = "2.2.2"
+    moengagePluginBaseBOMVersion = "3.0.1"
 
     // AndroidX Support Libraries Versions
     androidXCore = "1.15.0"
@@ -20,7 +20,7 @@ dependencies {
     implementation(platform("com.moengage:plugin-base-bom:$moengagePluginBaseBOMVersion"))
     api("com.moengage:plugin-base")
 
-    implementation(platform("com.moengage:android-bom:$moengageNativeBOMVersion"))
+    api(platform("com.moengage:android-bom:$moengageNativeBOMVersion"))
     api("com.moengage:moe-android-sdk")
     api("com.moengage:inapp")
 
