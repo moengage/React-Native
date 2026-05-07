@@ -2,6 +2,8 @@
 
 ## Release Version
 
+- Android
+  - [minor] updating `android-bom` to `2.2.2`
 - iOS
   - [minor] Updated `MoEngage-iOS-SDK` to `10.12.0`
 
@@ -16,7 +18,7 @@
 
 - iOS
   - Updated MoEngageInbox to `3.02.1`
-  
+
 # 09-02-2026
 
 ## 6.2.0
