@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+
+- iOS
+  - [minor] Updated `MoEngage-iOS-SDK` to `10.12.0`
+
 # 15-04-2026
 
 ## 6.3.0
