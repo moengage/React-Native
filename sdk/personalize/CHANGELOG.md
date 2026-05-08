@@ -1,5 +1,5 @@
-# Release Date
+# 08-05-2026
 
-## Release Version
+## 1.0.0
 
-- [major] Added personalization feature module and support.
+- Added personalization feature module and support.
