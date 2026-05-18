@@ -4,6 +4,7 @@ import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.WritableMap
 import com.moengage.core.internal.logger.Logger
 import com.moengage.core.model.AccountMeta
+import com.moengage.core.model.authentication.AuthenticationError
 import com.moengage.inapp.model.ClickData
 import com.moengage.inapp.model.InAppData
 import com.moengage.inapp.model.SelfHandledCampaignData
@@ -67,6 +68,14 @@ internal class PayloadGenerator {
         val map = Arguments.createMap()
         val json = permissionResultToJson(result)
         Logger.print { "$tag permissionResultToWriteableMap() : Payload Json: $json" }
+        map.putString(ARGUMENT_PAYLOAD, json.toString())
+        return map
+    }
+
+    fun authenticationErrorToWriteableMap(error: AuthenticationError): WritableMap {
+        val map = Arguments.createMap()
+        val json = authenticationErrorToJson(error)
+        Logger.print { "$tag authenticationErrorToWriteableMap() : $json" }
         map.putString(ARGUMENT_PAYLOAD, json.toString())
         return map
     }

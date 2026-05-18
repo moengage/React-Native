@@ -156,4 +156,8 @@ class MoEReactBridge(reactContext: ReactApplicationContext) : NativeMoEngageSpec
     override fun registerForProvisionalPush() {
         //iOS only
     }
+
+    override fun setAuthenticationDetails(payload: String) {
+        bridgeHandler.setAuthenticationDetails(payload)
+    }
 }

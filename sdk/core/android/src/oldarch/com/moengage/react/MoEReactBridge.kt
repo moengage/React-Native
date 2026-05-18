@@ -184,4 +184,9 @@ class MoEReactBridge(
     fun getUserIdentities(payload: String, promise: Promise) {
         bridgeHandler.getUserIdentities(payload, promise)
     }
+
+    @ReactMethod
+    fun setAuthenticationDetails(payload: String) {
+        bridgeHandler.setAuthenticationDetails(payload)
+    }
 }

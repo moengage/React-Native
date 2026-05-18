@@ -6,3 +6,5 @@ package com.moengage.react
  */
 const val INTEGRATION_TYPE = "react_native"
 const val MODULE_TAG = "MoEReactBridge_"
+
+internal const val EVENT_AUTHENTICATION_ERROR = "MoEAuthenticationError"

@@ -11,6 +11,7 @@ import com.moengage.core.PUSH_NOTIFICATION_NAVIGATION_ACTIVITY_NAME
 import com.moengage.core.PUSH_NOTIFICATION_NAVIGATION_DEEPLINK_LEGACY
 import com.moengage.core.internal.logger.Logger
 import com.moengage.plugin.base.internal.EventEmitter
+import com.moengage.plugin.base.internal.model.events.AuthenticationErrorEvent
 import com.moengage.plugin.base.internal.model.events.Event
 import com.moengage.plugin.base.internal.model.events.EventType
 import com.moengage.plugin.base.internal.model.events.inapp.InAppActionEvent
@@ -44,6 +45,7 @@ class EventEmitterImpl(private val reactContext: ReactContext) : EventEmitter {
                 )
                 EventType.INAPP_SELF_HANDLED_AVAILABLE -> emitInAppSelfHandled(event as InAppSelfHandledEvent)
                 EventType.PERMISSION -> emitPermissionResult(event as PermissionEvent)
+                EventType.AUTHENTICATION_ERROR -> emitAuthenticationError(event as AuthenticationErrorEvent)
                 else -> {}
             }
         } catch (t: Throwable) {
@@ -102,6 +104,13 @@ class EventEmitterImpl(private val reactContext: ReactContext) : EventEmitter {
         val payload = PayloadGenerator().permissionResultToWriteableMap(event.result)
         emit(eventName, payload)
     }
+
+    private fun emitAuthenticationError(event: AuthenticationErrorEvent) {
+        Logger.print { "$tag emitAuthenticationError() : Event $event" }
+        val eventName = eventMapping[event.eventType] ?: return
+        val payload = PayloadGenerator().authenticationErrorToWriteableMap(event.authenticationError)
+        emit(eventName, payload)
+    }
 }
 
 val eventMapping = mapOf<EventType, String>(
@@ -112,5 +121,6 @@ val eventMapping = mapOf<EventType, String>(
     EventType.INAPP_CUSTOM_ACTION to "MoEInAppCampaignCustomAction",
     EventType.INAPP_SELF_HANDLED_AVAILABLE to "MoEInAppCampaignSelfHandled",
     EventType.PUSH_TOKEN_GENERATED to "MoEPushTokenGenerated",
-    EventType.PERMISSION to "MoEPermissionResult"
+    EventType.PERMISSION to "MoEPermissionResult",
+    EventType.AUTHENTICATION_ERROR to EVENT_AUTHENTICATION_ERROR
 )

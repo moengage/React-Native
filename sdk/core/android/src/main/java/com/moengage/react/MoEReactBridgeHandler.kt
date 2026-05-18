@@ -310,7 +310,16 @@
             promise.reject(t)
         }
     }
- 
+
+    fun setAuthenticationDetails(payload: String) {
+        try {
+            Logger.print { "$tag setAuthenticationDetails() : Payload: $payload" }
+            pluginHelper.setAuthenticationDetails(context, payload)
+        } catch (t: Throwable) {
+            Logger.print(LogLevel.ERROR, t) { "$tag setAuthenticationDetails() : " }
+        }
+    }
+
      companion object {
          const val NAME = "MoEReactBridge"
      }
