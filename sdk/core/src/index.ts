@@ -13,6 +13,7 @@ import {
   getAndroidIdTrackingJson,
   getAppIdJson,
   getAppStatusJson,
+  getAuthenticationDetailsJson,
   getInAppContextJson,
   getMoEPropertiesJson,
   getMoEPushCampaignJson,
@@ -30,6 +31,7 @@ import {
   getIdentifyUserPayload
 } from "./utils/MoEJsonBuilder";
 import {
+  EVENT_AUTHENTICATION_ERROR,
   USER_ATTRIBUTE_UNIQUE_ID,
   USER_ATTRIBUTE_USER_BDAY,
   USER_ATTRIBUTE_USER_EMAIL,
@@ -55,7 +57,9 @@ import MoEReactBridge from "./NativeMoEngage";
 import MoEPushToken from "../src/models/MoEPushToken";
 import MoEPushPayload from "../src/models/MoEPushPayload";
 import MoEInAppData from "../src/models/MoEInAppData";
-import { getUserDeletionData, getUserIdentitiesData } from "../src/moeParser/MoEngagePayloadParser";
+import { getAuthenticationErrorData, getUserDeletionData, getUserIdentitiesData } from "../src/moeParser/MoEngagePayloadParser";
+import MoEAuthenticationErrorData from "../src/models/MoEAuthenticationErrorData";
+import MoEJwtErrorCode from "../src/models/MoEJwtErrorCode";
 import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
 import MoEAnalyticsConfig from "../src/models/MoEAnalyticsConfig";
 import { MoESupportedAttributes } from "./models/MoESupportedAttributes";
@@ -78,6 +82,7 @@ const MOE_INAPP_DISMISSED = "MoEInAppCampaignDismissed";
 const MOE_INAPP_CUSTOM_ACTION = "MoEInAppCampaignCustomAction";
 const MOE_INAPP_SELF_HANDLE = "MoEInAppCampaignSelfHandled";
 const MOE_PERMISSION_RESULT = "MoEPermissionResult";
+const MOE_AUTHENTICATION_ERROR_BROADCAST = EVENT_AUTHENTICATION_ERROR;
 
 const eventBroadcastNames = [
   MOE_PUSH_CLICKED,
@@ -87,7 +92,8 @@ const eventBroadcastNames = [
   MOE_INAPP_DISMISSED,
   MOE_INAPP_CUSTOM_ACTION,
   MOE_INAPP_SELF_HANDLE,
-  MOE_PERMISSION_RESULT
+  MOE_PERMISSION_RESULT,
+  MOE_AUTHENTICATION_ERROR_BROADCAST
 ];
 
 // JS Event Names
@@ -99,6 +105,7 @@ const INAPP_DISMISSED = "inAppCampaignDismissed";
 const INAPP_CUTOM_ACTION = "inAppCampaignCustomAction";
 const INAPP_SELF_HANDLE = "inAppCampaignSelfHandled";
 export const PERMISSION_RESULT = "permissionResult";
+export const AUTHENTICATION_ERROR = "authenticationError";
 
 const PUSH_SERVICE_FCM = "FCM"
 const PUSH_SERVICE_PUSH_KIT = "PUSH_KIT"
@@ -111,7 +118,8 @@ const _eventNames = [
   INAPP_DISMISSED,
   INAPP_CUTOM_ACTION,
   INAPP_SELF_HANDLE,
-  PERMISSION_RESULT
+  PERMISSION_RESULT,
+  AUTHENTICATION_ERROR
 ];
 
 var _eventTypeHandler = new Map();
@@ -135,14 +143,15 @@ function handleEventBroadcast(type: string | String, broadcast: string) {
   });
 }
 
-export type NotificationEventName = 'pushTokenGenerated' | 
-  'pushClicked' | 
-  'inAppCampaignShown' | 
-  'inAppCampaignClicked' | 
-  'inAppCampaignDismissed' | 
-  'inAppCampaignCustomAction' | 
-  'inAppCampaignSelfHandled' | 
-  'permissionResult';
+export type NotificationEventName = 'pushTokenGenerated' |
+  'pushClicked' |
+  'inAppCampaignShown' |
+  'inAppCampaignClicked' |
+  'inAppCampaignDismissed' |
+  'inAppCampaignCustomAction' |
+  'inAppCampaignSelfHandled' |
+  'permissionResult' |
+  'authenticationError';
 
 type NotificationEventTypeMap = {
   "pushTokenGenerated": MoEPushToken,
@@ -152,7 +161,8 @@ type NotificationEventTypeMap = {
   "inAppCampaignDismissed": MoEInAppData,
   "inAppCampaignCustomAction": MoEInAppData,
   "inAppCampaignSelfHandled": MoESelfHandledCampaignData,
-  "permissionResult": MoEngagePersimissionResultData
+  "permissionResult": MoEngagePersimissionResultData,
+  "authenticationError": MoEAuthenticationErrorData
 }
 
 var ReactMoE = {
@@ -790,6 +800,17 @@ var ReactMoE = {
       MoEngageLogger.error(`getUserIdentities(): ${error}`);
       return null;
     }
+  },
+
+  /**
+   * Pass JWT authentication details to the MoEngage SDK.
+   *
+   * @param token JWT token
+   * @param userIdentifier unique identifier of the user
+   */
+  setAuthenticationDetails: function (token: string, userIdentifier: string) {
+    MoEngageLogger.verbose("Will set authentication details");
+    MoEReactBridge.setAuthenticationDetails(getAuthenticationDetailsJson(token, userIdentifier, moeAppId));
   }
 };
 
@@ -808,7 +829,9 @@ export {
   MoEngageNudgePosition,
   MoEAnalyticsConfig,
   MoEAccessibilityData,
-  KEY_ACCESSIBILITY
+  KEY_ACCESSIBILITY,
+  MoEAuthenticationErrorData,
+  MoEJwtErrorCode
 };
 export default ReactMoE;
 

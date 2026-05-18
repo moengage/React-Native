@@ -1,11 +1,19 @@
 import MoEAccountMeta from "../models/MoEAccountMeta";
+import MoEAuthenticationErrorData from "../models/MoEAuthenticationErrorData";
+import MoEJwtErrorCode from "../models/MoEJwtErrorCode";
 import MoEngagePersimissionResultData from "../models/MoEngagePersimissionResultData";
 import UserDeletionData from "../models/UserDeletionData";
 import {
     ACCOUNT_META,
     APP_ID,
     IS_USER_DELETION_SUCCESS,
+    MOE_AUTHENTICATION_CODE,
+    MOE_AUTHENTICATION_MESSAGE,
+    MOE_AUTHENTICATION_TOKEN,
+    MOE_AUTHENTICATION_TYPE,
+    MOE_AUTHENTICATION_USER_IDENTIFIER,
     MOE_DATA,
+    MOE_PAYLOAD,
     MOE_PERMISSION_STATE,
     MOE_PERMISSION_TYPE,
     MOE_PLATFORM
@@ -55,4 +63,27 @@ export function getUserIdentitiesData(payload: string | null): { [k: string]: st
         mappedIdentities[key] = value;
     }
     return mappedIdentities;
+}
+
+/**
+ * Parse the native authentication error event payload into a typed model.
+ *
+ * @param notification - raw event data object from the native event emitter
+ * @returns instance of {@link MoEAuthenticationErrorData} or null on parse failure
+ */
+export function getAuthenticationErrorData(notification: { [k: string]: any }): MoEAuthenticationErrorData | null {
+    try {
+        const payloadJson = JSON.parse(notification[MOE_PAYLOAD]);
+        const accountMeta = getMoEAccountMeta(payloadJson[ACCOUNT_META]);
+        const platform: string = payloadJson[MOE_PLATFORM] ?? "";
+        const data: { [k: string]: any } = payloadJson[MOE_DATA] ?? {};
+        const authenticationType: string = data[MOE_AUTHENTICATION_TYPE] ?? "";
+        const code: MoEJwtErrorCode = data[MOE_AUTHENTICATION_CODE] as MoEJwtErrorCode ?? MoEJwtErrorCode.Unknown;
+        const token: string = data[MOE_AUTHENTICATION_TOKEN] ?? "";
+        const userIdentifier: string = data[MOE_AUTHENTICATION_USER_IDENTIFIER] ?? "";
+        const message: string = data[MOE_AUTHENTICATION_MESSAGE] ?? "";
+        return new MoEAuthenticationErrorData(accountMeta, platform, authenticationType, code, token, userIdentifier, message);
+    } catch (e) {
+        return null;
+    }
 }

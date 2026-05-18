@@ -135,6 +135,12 @@ export interface Spec extends TurboModule {
    */
   getUserIdentities: (payload: string) => Promise<string | null>;
 
+  /**
+   * Pass authentication details to the MoEngage SDK.
+   * @param payload Stringified JSON payload containing authenticationType, token, and userIdentifier
+   */
+  setAuthenticationDetails: (payload: string) => void;
+
   /// Anroid specific
 
   /**

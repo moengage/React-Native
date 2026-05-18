@@ -11,7 +11,17 @@ import { MoEngageNudgePosition } from "../models/MoEngageNudgePosition";
 import { MoESupportedAttributes } from "../models/MoESupportedAttributes";
 import MoESelfHandledCampaign from "../models/MoESelfHandledCampaign";
 import MoEInAppRules from "../models/MoEInAppRules";
-import { ACCOUNT_META, APP_ID, MOE_DATA, USER_IDENTITY, USER_UNIQUE_IDENTITY } from "./MoEConstants";
+import {
+    ACCOUNT_META,
+    APP_ID,
+    MOE_AUTHENTICATION_TOKEN,
+    MOE_AUTHENTICATION_TYPE,
+    MOE_AUTHENTICATION_TYPE_JWT,
+    MOE_AUTHENTICATION_USER_IDENTIFIER,
+    MOE_DATA,
+    USER_IDENTITY,
+    USER_UNIQUE_IDENTITY
+} from "./MoEConstants";
 
 export function getInAppCampaignJson(moEInAppData: MoEInAppData, type: string, appId: String) {
   var json: { [k: string]: any } = {
@@ -307,6 +317,18 @@ export function getDisplayRulesJson(displayRules: MoEInAppRules) {
   }
   MoEngageLogger.verbose("getDisplayRulesJson(): payload json: ", json);
   return json;
+}
+
+export function getAuthenticationDetailsJson(token: string, userIdentifier: string, appId: string): string {
+    const json: { [k: string]: any } = {
+        [ACCOUNT_META]: { [APP_ID]: appId },
+        [MOE_DATA]: {
+            [MOE_AUTHENTICATION_TYPE]: MOE_AUTHENTICATION_TYPE_JWT,
+            [MOE_AUTHENTICATION_TOKEN]: token,
+            [MOE_AUTHENTICATION_USER_IDENTIFIER]: userIdentifier
+        }
+    };
+    return JSON.stringify(json);
 }
 
 export function getIdentifyUserPayload(identity: string | { [k: string]: string }, appId: string): string {

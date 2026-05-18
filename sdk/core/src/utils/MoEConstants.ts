@@ -92,3 +92,12 @@ export const USER_UNIQUE_IDENTITY = 'uid';
 export const KEY_ACCESSIBILITY = 'accessibility';
 export const KEY_ACCESSIBILITY_TEXT = 'text';
 export const KEY_ACCESSIBILITY_HINT = 'hint';
+
+// Authentication
+export const MOE_AUTHENTICATION_TYPE = 'authenticationType';
+export const MOE_AUTHENTICATION_TOKEN = 'token';
+export const MOE_AUTHENTICATION_USER_IDENTIFIER = 'userIdentifier';
+export const MOE_AUTHENTICATION_CODE = 'code';
+export const MOE_AUTHENTICATION_MESSAGE = 'message';
+export const MOE_AUTHENTICATION_TYPE_JWT = 'JWT';
+export const EVENT_AUTHENTICATION_ERROR = 'MoEAuthenticationError';
