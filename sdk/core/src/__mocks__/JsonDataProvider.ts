@@ -28,3 +28,17 @@ export const expectedUserIdentityStringObjectTypePayload = {
         [USER_IDENTITY]: userIdentityStringObjectType
     }
 };
+
+export const logoutCompleteIosPayload = JSON.stringify({
+    platform: "iOS",
+    accountMeta: { appId: appId }
+});
+
+export const logoutCompleteAndroidPayload = JSON.stringify({
+    platform: "android",
+    accountMeta: { appId: appId }
+});
+
+export const logoutCompleteInvalidPayload = JSON.stringify({
+    platform: "iOS"
+});

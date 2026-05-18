@@ -7,8 +7,8 @@ import {
 } from "../moeParser/MoEInAppParser";
 import {getMoEPushPayload, getMoEPushToken} from "../moeParser/MoEPushNotificationParser";
 import {MOE_DATA, ACCOUNT_META, MOE_PAYLOAD} from "./MoEConstants";
-import {PERMISSION_RESULT} from "..";
-import {getPermissionResult} from "../moeParser/MoEngagePayloadParser";
+import {PERMISSION_RESULT, LOGOUT_COMPLETE} from "..";
+import {getPermissionResult, getLogoutCompleteData} from "../moeParser/MoEngagePayloadParser";
 
 export function executeHandler(
     handler: Function,
@@ -25,6 +25,9 @@ export function executeHandler(
             } else if (type == PERMISSION_RESULT) {
                 let payload = getPermissionResult(notificationPayload)
                 handler(payload)
+            } else if (type == LOGOUT_COMPLETE) {
+                let logoutData = getLogoutCompleteData(notificationPayload);
+                logoutData != undefined ? handler(logoutData) : null;
             } else {
                 const accountMeta = notificationPayload[ACCOUNT_META];
                 if (accountMeta != undefined && isValidObject(accountMeta)) {

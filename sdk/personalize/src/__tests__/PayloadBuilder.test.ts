@@ -82,16 +82,16 @@ describe("PayloadBuilder", () => {
                 accountMeta: { appId: APP_ID },
                 data: {
                     experiences: [
-                        { experienceKey: "exp_a", payload: { payloadKey: "payloadValue" }, experienceContext: { contextKey: "contextValue" } },
-                        { experienceKey: "exp_b", payload: { payloadKey: "payloadValue" }, experienceContext: { contextKey: "contextValue" } }
+                        { experienceKey: "exp_a", payload: { payloadKey: "payloadValue" }, experienceContext: { contextKey: "contextValue" }, source: "NETWORK" },
+                        { experienceKey: "exp_b", payload: { payloadKey: "payloadValue" }, experienceContext: { contextKey: "contextValue" }, source: "NETWORK" }
                     ]
                 }
             });
         });
 
-        it("does NOT include 'source' in serialized campaign (wire contract)", () => {
+        it("does includes 'source' in serialized campaign (wire contract)", () => {
             const json = JSON.parse(PayloadBuilder.buildExperiencesShownPayload(APP_ID, [makeCampaign()]));
-            expect(json.data.experiences[0]).not.toHaveProperty("source");
+            expect(json.data.experiences[0]).toHaveProperty("source");
         });
     });
 
@@ -104,7 +104,8 @@ describe("PayloadBuilder", () => {
                     experience: {
                         experienceKey: "exp_x",
                         payload: { payloadKey: "payloadValue" },
-                        experienceContext: { contextKey: "contextValue" }
+                        experienceContext: { contextKey: "contextValue" }, 
+                        source: "NETWORK"
                     }
                 }
             });
@@ -135,7 +136,8 @@ describe("PayloadBuilder", () => {
                     experience: {
                         experienceKey: "exp_o",
                         payload: { payloadKey: "payloadValue" },
-                        experienceContext: { contextKey: "contextValue" }
+                        experienceContext: { contextKey: "contextValue" }, 
+                        source: "NETWORK"
                     },
                     offeringPayload: { sku: "123" }
                 }
