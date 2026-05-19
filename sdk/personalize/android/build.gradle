@@ -59,8 +59,7 @@ dependencies {
     api("com.moengage:personalization-core")
 
     implementation(platform("com.moengage:plugin-base-bom:$moengagePluginBaseBOMVersion"))
-    implementation("com.moengage:plugin-base-personalization:0.0.3-SNAPSHOT")
-    implementation("com.moengage:plugin-base-personalization:0.0.3-SNAPSHOT")
+    implementation("com.moengage:plugin-base-personalization")
     compileOnly("com.moengage:plugin-base")
 }
 
