@@ -1,6 +1,6 @@
 {
   "name": "react-native-moengage-personalize",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Personalize Module for the MoEngage Platform",
   "main": "src/index.ts",
   "files": [
