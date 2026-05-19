@@ -2,7 +2,7 @@
 
 ## Release Version
 
-- [patch] Removing the snapshot build from android module
+- [patch] Removing the snapshot build from android module.
 
 # 08-05-2026
 
