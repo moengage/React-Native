@@ -2,7 +2,14 @@
 
 ## Release Version
 
-- [minor] Added support for logout completion callback
+- Android
+  - [patch] Support for compiling SDK with JVM 17 or below
+
+# 20-05-2026
+
+## 12.8.0
+
+- Added support for logout completion callback
 
 # 07-05-2026
 

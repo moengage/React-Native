@@ -15,7 +15,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:8.13.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "com.moengage.android.hybrid.module.config.plugin:com.moengage.android.hybrid.module.config.plugin.gradle.plugin:0.0.4"
+        classpath "com.moengage.android.hybrid.module.config.plugin:com.moengage.android.hybrid.module.config.plugin.gradle.plugin:0.0.5"
     }
 }
 
