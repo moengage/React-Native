@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+
+- Android
+  - [patch] Support for compiling SDK with JVM 17 or below
+
 # 15-04-2026
 
 ## 1.1.1
