@@ -1,8 +1,8 @@
-# Release Date
+# 19-05-2026
 
-## Release Version
+## 12.8.0
 
-- [minor] Added support for logout completion callback
+- Added support for logout completion callback
 
 # 07-05-2026
 
