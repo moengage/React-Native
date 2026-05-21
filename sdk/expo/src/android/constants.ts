@@ -45,7 +45,11 @@ export const moEngageExpoNotificationServiceEntry = {
 };
 
 export const drawableResourcePath = './android/app/src/main/res/drawable';
-export const xmlValuesResourcePath = './android/app/src/main/res/values';
+// android_initialisation_config.xml uses <MoEngageConfiguration> as its root
+// element, which is not a valid Android resource type. Files in res/values/
+// must use <resources> as their root. The correct directory is res/xml/, which
+// accepts arbitrary XML and is not processed by the resource merger.
+export const xmlValuesResourcePath = './android/app/src/main/res/xml';
 
 export const googleFirebaseMessagingGroup = 'com.google.firebase';
 export const googleFirebaseMessagingModule = 'firebase-messaging';
