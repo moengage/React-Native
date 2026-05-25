@@ -11,7 +11,9 @@ import {
   MOENGAGE_IOS_NOTIFICATION_SERVICE_POD,
   MOENGAGE_IOS_PUSH_TEMPLATE_POD,
   MOENGAGE_IOS_DEVICE_TRIGGER_POD,
-  MOENGAGE_IOS_LIVE_ACTIVITY_POD
+  MOENGAGE_IOS_LIVE_ACTIVITY_POD,
+  MOENGAGE_IOS_PODSPEC_SOURCE,
+  MOENGAGE_IOS_COCOAPODS_SOURCE
 } from './constants';
 
 const plist = require('plist');
@@ -64,6 +66,27 @@ export const withMoEngageDangerousMod: ConfigPlugin<MoEngagePluginProps> = (conf
         const message = `Could not import MoEngage configuration: ${e}`;
         console.error(message);
         throw new Error(message);
+      }
+
+      /**
+       * Add custom CocoaPods specs source if not already present
+       *
+       * MoEngage pods are hosted on a custom specs repository. If the Podfile
+       * doesn't already include this source, we prepend both the MoEngage specs
+       * source and the default CocoaPods specs source to ensure proper resolution.
+       */
+      const podfilePath = path.join(projectRoot, 'ios', 'Podfile');
+      if (apple.addCustomPodspecSource && fs.existsSync(podfilePath)) {
+        let podfile = fs.readFileSync(podfilePath, 'utf8');
+        if (!podfile.includes(MOENGAGE_IOS_PODSPEC_SOURCE)) {
+          const sources: string[] = [`source '${MOENGAGE_IOS_PODSPEC_SOURCE}'`];
+          if (!podfile.includes(MOENGAGE_IOS_COCOAPODS_SOURCE)) {
+            sources.push(`source '${MOENGAGE_IOS_COCOAPODS_SOURCE}'`);
+          }
+          sources.push('');
+          podfile = sources.join('\n') + podfile;
+          fs.writeFileSync(podfilePath, podfile);
+        }
       }
 
       /**
