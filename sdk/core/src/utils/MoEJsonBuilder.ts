@@ -8,7 +8,7 @@ import { MoEngagePermissionType } from "../models/MoEngagePermissionType";
 import MoEInitConfig from "../models/MoEInitConfig";
 import MoEngageLogger from "../logger/MoEngageLogger";
 import { MoEngageNudgePosition } from "../models/MoEngageNudgePosition";
-import { MoESupportedAttributes } from "../models/MoESupportedAttributes";
+import { type MoESupportedAttributes } from "../models/MoESupportedAttributes";
 import MoESelfHandledCampaign from "../models/MoESelfHandledCampaign";
 import MoEInAppRules from "../models/MoEInAppRules";
 import { ACCOUNT_META, APP_ID, MOE_DATA, USER_IDENTITY, USER_UNIQUE_IDENTITY } from "./MoEConstants";
