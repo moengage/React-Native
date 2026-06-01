@@ -18,7 +18,7 @@ parameters:
     description: "Branch in 'mobile-sdk-contracts' with the feature contract. E.g. 'MOEN-44072_jwt_contract'."
   - name: "android_bom_version"
     description: "Target MoEngage Android BOM version. E.g. '2.2.1'."
-  - name: "plugin_base_pr_url"
+  - name: "android_plugin_base_pr_url"
     description: "URL of the android-plugin-base PR from plugin-base-feature-implementation."
 ---
 
@@ -81,10 +81,28 @@ Strip everything up to and including the first `/` or `_MOEN-XXXXX_` prefix:
 | `featureNameUpper` | `JWT` | UPPER_SNAKE of featureName |
 | `contractDir` | `authentication` | subdirectory found in contracts `json/` after checkout |
 | `androidModuleName` | `plugin-base-jwt` | `plugin-base-<featureName>` (or the actual module from plugin-base PR) |
-| `rnSdkDir` | `sdk/jwt` | `sdk/<featureName>` in the React-Native repo |
+| `rnSdkDir` | `sdk/core` | see rule below |
 | `rnPackage` | `com.moengage.react.jwt` | `com.moengage.react.<featureName>` |
 | `rnBridgeName` | `MoEngageJwtBridge` | `MoEngage<featureNameCamel>Bridge` |
-| `branchName` | `feature/jwt_contract` | `feature/<contractSuffix>` |
+| `branchName` | `feature/MOEN-44072-jwt_contract` | `feature/<ticketId>-<contractSuffix>` |
+
+### 1.3 Resolve `rnSdkDir`
+
+Scan `feature_description` for a framework keyword and map to the existing SDK module directory:
+
+| Keyword in `feature_description` | `rnSdkDir` |
+|---|---|
+| `core`, `analytics`, `inapps`, or `messaging` | `sdk/core` |
+| `cards` | `sdk/cards` |
+| `geofence` | `sdk/geofence` |
+| `inbox` | `sdk/inbox` |
+| `personalize` | `sdk/personalize` |
+| none of the above | ask the user which SDK module to add the feature to |
+
+Examples:
+- `"JWT authentication parity from core"` → `sdk/core`
+- `"get clicked cards count"` → `sdk/cards`
+- `"start geofence monitoring"` → `sdk/geofence`
 
 ---
 
@@ -124,7 +142,7 @@ git checkout <contract_branch>
 ```bash
 cd React-Native
 git fetch
-git checkout -b feature/<contractSuffix>
+git checkout -b feature/<ticketId>-<contractSuffix>
 ```
 
 ### 3.2 Check if SDK module already exists
@@ -204,7 +222,7 @@ git commit -m "<ticketId>: Add React-Native Android bridge for <featureName>"
 ## Phase 4 — Create Pull Request
 
 ```bash
-git push -u origin feature/<contractSuffix>
+git push -u origin feature/<ticketId>-<contractSuffix>
 gh pr create \
   --title "<ticketId>: Add React-Native Android bridge for <featureName>" \
   --base development \
@@ -216,7 +234,7 @@ gh pr create \
 - Android BOM version: <android_bom_version>
 
 ## Related PRs
-- android-plugin-base: <plugin_base_pr_url>
+- android-plugin-base: <android_plugin_base_pr_url>
 
 ## Contract
 Branch: `<contract_branch>` in mobile-sdk-contracts
