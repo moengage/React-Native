@@ -158,12 +158,12 @@ Print:
 
 ## Focused Skills (use these when you only need one layer)
 
-| When | Use |
-|---|---|
-| Android bridge only | `react-native-android-bridge-implementation` |
-| iOS bridge only | `react-native-ios-bridge-implementation` |
-| TypeScript only (bridges already done) | `react-native-ts-implementation` |
-| All layers at once | `react-native-feature-implementation` (this skill) |
+| When                                   | Use                                                |
+|----------------------------------------|----------------------------------------------------|
+| Android bridge only                    | `react-native-android-bridge-implementation`       |
+| iOS bridge only                        | `react-native-ios-bridge-implementation`           |
+| TypeScript only (bridges already done) | `react-native-ts-implementation`                   |
+| All layers at once                     | `react-native-feature-implementation` (this skill) |
 
 ---
 

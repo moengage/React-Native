@@ -77,30 +77,30 @@ Strip everything up to and including the first `/` or `_MOEN-XXXXX_` prefix:
 
 ### 1.2 Identifiers table
 
-| Identifier | Example | Rule |
-|---|---|---|
-| `ticketId` | `MOEN-44072` | `MOEN-\d+` from raw command or parameter |
-| `contractSuffix` | `jwt_contract` | branch name after first `/` or `_MOEN-XXXXX_` |
-| `featureName` | `jwt` | lowercase slug from feature_description |
-| `featureNameCamel` | `Jwt` | PascalCase of featureName |
-| `featureNameUpper` | `JWT` | UPPER_SNAKE of featureName |
-| `contractDir` | `authentication` | subdirectory found in contracts `json/` after checkout |
-| `rnSdkDir` | `sdk/core` | see rule below |
-| `rnPackage` | `com.moengage.react.jwt` | `com.moengage.react.<featureName>` |
-| `branchName` | `feature/MOEN-44072-jwt_contract` | `feature/<ticketId>-<contractSuffix>` |
+| Identifier         | Example                           | Rule                                                   |
+|--------------------|-----------------------------------|--------------------------------------------------------|
+| `ticketId`         | `MOEN-44072`                      | `MOEN-\d+` from raw command or parameter               |
+| `contractSuffix`   | `jwt_contract`                    | branch name after first `/` or `_MOEN-XXXXX_`          |
+| `featureName`      | `jwt`                             | lowercase slug from feature_description                |
+| `featureNameCamel` | `Jwt`                             | PascalCase of featureName                              |
+| `featureNameUpper` | `JWT`                             | UPPER_SNAKE of featureName                             |
+| `contractDir`      | `authentication`                  | subdirectory found in contracts `json/` after checkout |
+| `rnSdkDir`         | `sdk/core`                        | see rule below                                         |
+| `rnPackage`        | `com.moengage.react.jwt`          | `com.moengage.react.<featureName>`                     |
+| `branchName`       | `feature/MOEN-44072-jwt_contract` | `feature/<ticketId>-<contractSuffix>`                  |
 
 ### 1.3 Resolve `rnSdkDir`
 
 Scan `feature_description` for a framework keyword and map to the existing SDK module directory:
 
-| Keyword in `feature_description` | `rnSdkDir` |
-|---|---|
-| `core`, `analytics`, `inapps`, or `messaging` | `sdk/core` |
-| `cards` | `sdk/cards` |
-| `geofence` | `sdk/geofence` |
-| `inbox` | `sdk/inbox` |
-| `personalize` | `sdk/personalize` |
-| none of the above | ask the user which SDK module to add the feature to |
+| Keyword in `feature_description`              | `rnSdkDir`                                          |
+|-----------------------------------------------|-----------------------------------------------------|
+| `core`, `analytics`, `inapps`, or `messaging` | `sdk/core`                                          |
+| `cards`                                       | `sdk/cards`                                         |
+| `geofence`                                    | `sdk/geofence`                                      |
+| `inbox`                                       | `sdk/inbox`                                         |
+| `personalize`                                 | `sdk/personalize`                                   |
+| none of the above                             | ask the user which SDK module to add the feature to |
 
 Examples:
 - `"JWT authentication parity from core"` → `sdk/core`
@@ -129,21 +129,21 @@ git checkout <contract_branch>
 
 ### Method classification
 
-| Condition | TypeScript return | NativeSpec type | Notes |
-|---|---|---|---|
-| `hybridToNative` only | `void` | `(payload: string) => void` | Calls native method directly |
-| both `hybridToNative` + `nativeToHybrid` | **ambiguous** — ask user | depends | see below |
-| `nativeToHybrid` only | callback/listener | event listener in Handler | Uses `addListener` / `removeListeners` |
+| Condition                                | TypeScript return        | NativeSpec type             | Notes                                  |
+|------------------------------------------|--------------------------|-----------------------------|----------------------------------------|
+| `hybridToNative` only                    | `void`                   | `(payload: string) => void` | Calls native method directly           |
+| both `hybridToNative` + `nativeToHybrid` | **ambiguous** — ask user | depends                     | see below                              |
+| `nativeToHybrid` only                    | callback/listener        | event listener in Handler   | Uses `addListener` / `removeListeners` |
 
 **When both `hybridToNative` and `nativeToHybrid` exist**, ask the user before proceeding:
 > "Both hybridToNative and nativeToHybrid contracts exist for `<methodName>`. Should this be implemented as:
 > 1. **Promise** — JS calls native, native returns data via resolve/reject
 > 2. **Event** — JS triggers the flow, but native pushes the response asynchronously via an event emitter"
 
-| User answer | TypeScript return | NativeSpec type | Notes |
-|---|---|---|---|
-| Promise | `Promise<ModelType>` | `(payload: string) => Promise<Object>` | PayloadParser converts response |
-| Event | `void` call + callback/listener | `(payload: string) => void` + `addListener` / `removeListeners` | PayloadBuilder for trigger, JsonToModelMapper for event |
+| User answer | TypeScript return               | NativeSpec type                                                 | Notes                                                   |
+|-------------|---------------------------------|-----------------------------------------------------------------|---------------------------------------------------------|
+| Promise     | `Promise<ModelType>`            | `(payload: string) => Promise<Object>`                          | PayloadParser converts response                         |
+| Event       | `void` call + callback/listener | `(payload: string) => void` + `addListener` / `removeListeners` | PayloadBuilder for trigger, JsonToModelMapper for event |
 
 **Build a complete method table before writing any code.**
 
@@ -338,19 +338,19 @@ Print:
 Read these before generating the corresponding output — copy copyright headers, naming
 conventions, and structural patterns exactly.
 
-| What | Codebase path |
-|---|---|
-| NativeSpec reference | `React-Native/sdk/cards/src/NativeMoEngageCards.ts` |
-| Handler reference | `React-Native/sdk/cards/src/internal/MoEngageCardHandler.ts` |
-| PayloadBuilder reference | `React-Native/sdk/cards/src/internal/utils/PayloadBuilder.ts` |
-| PayloadParser reference | `React-Native/sdk/cards/src/internal/utils/PayloadParser.ts` |
-| JsonToModelMapper reference | `React-Native/sdk/cards/src/internal/utils/JsonToModelMapper.ts` |
-| PublicApi reference | `React-Native/sdk/cards/src/ReactMoEngageCards.ts` |
-| index reference | `React-Native/sdk/cards/src/index.ts` |
-| package.json reference | `React-Native/sdk/cards/package.json` |
-| Model reference | `React-Native/sdk/cards/src/model/` |
-| plugin-base module | `../android-plugin-base/<androidModuleName>/` |
-| Android bridge Constants | `React-Native/<rnSdkDir>/android/src/main/java/<rnPackage>/Constants.kt` (just written) |
+| What                        | Codebase path                                                                           |
+|-----------------------------|-----------------------------------------------------------------------------------------|
+| NativeSpec reference        | `React-Native/sdk/cards/src/NativeMoEngageCards.ts`                                     |
+| Handler reference           | `React-Native/sdk/cards/src/internal/MoEngageCardHandler.ts`                            |
+| PayloadBuilder reference    | `React-Native/sdk/cards/src/internal/utils/PayloadBuilder.ts`                           |
+| PayloadParser reference     | `React-Native/sdk/cards/src/internal/utils/PayloadParser.ts`                            |
+| JsonToModelMapper reference | `React-Native/sdk/cards/src/internal/utils/JsonToModelMapper.ts`                        |
+| PublicApi reference         | `React-Native/sdk/cards/src/ReactMoEngageCards.ts`                                      |
+| index reference             | `React-Native/sdk/cards/src/index.ts`                                                   |
+| package.json reference      | `React-Native/sdk/cards/package.json`                                                   |
+| Model reference             | `React-Native/sdk/cards/src/model/`                                                     |
+| plugin-base module          | `../android-plugin-base/<androidModuleName>/`                                           |
+| Android bridge Constants    | `React-Native/<rnSdkDir>/android/src/main/java/<rnPackage>/Constants.kt` (just written) |
 
 ---
 
