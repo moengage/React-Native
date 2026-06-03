@@ -18,7 +18,7 @@ parameters:
     description: "Branch in 'mobile-sdk-contracts' with the feature contract. E.g. 'MOEN-44072_jwt_contract'."
   - name: "android_bom_version"
     description: "Target MoEngage Android BOM version. E.g. '2.2.1'."
-  - name: "plugin_base_pr_url"
+  - name: "android_plugin_base_pr_url"
     description: "URL of the android-plugin-base PR from plugin-base-feature-implementation."
 ---
 
@@ -72,19 +72,37 @@ Strip everything up to and including the first `/` or `_MOEN-XXXXX_` prefix:
 
 ### 1.2 Identifiers table
 
-| Identifier | Example | Rule |
-|---|---|---|
-| `ticketId` | `MOEN-44072` | `MOEN-\d+` from raw command or parameter |
-| `contractSuffix` | `jwt_contract` | branch name after first `/` or `_MOEN-XXXXX_` |
-| `featureName` | `jwt` | lowercase slug from feature_description |
-| `featureNameCamel` | `Jwt` | PascalCase of featureName |
-| `featureNameUpper` | `JWT` | UPPER_SNAKE of featureName |
-| `contractDir` | `authentication` | subdirectory found in contracts `json/` after checkout |
-| `androidModuleName` | `plugin-base-jwt` | `plugin-base-<featureName>` (or the actual module from plugin-base PR) |
-| `rnSdkDir` | `sdk/jwt` | `sdk/<featureName>` in the React-Native repo |
-| `rnPackage` | `com.moengage.react.jwt` | `com.moengage.react.<featureName>` |
-| `rnBridgeName` | `MoEngageJwtBridge` | `MoEngage<featureNameCamel>Bridge` |
-| `branchName` | `feature/jwt_contract` | `feature/<contractSuffix>` |
+| Identifier          | Example                           | Rule                                                                   |
+|---------------------|-----------------------------------|------------------------------------------------------------------------|
+| `ticketId`          | `MOEN-44072`                      | `MOEN-\d+` from raw command or parameter                               |
+| `contractSuffix`    | `jwt_contract`                    | branch name after first `/` or `_MOEN-XXXXX_`                          |
+| `featureName`       | `jwt`                             | lowercase slug from feature_description                                |
+| `featureNameCamel`  | `Jwt`                             | PascalCase of featureName                                              |
+| `featureNameUpper`  | `JWT`                             | UPPER_SNAKE of featureName                                             |
+| `contractDir`       | `authentication`                  | subdirectory found in contracts `json/` after checkout                 |
+| `androidModuleName` | `plugin-base-jwt`                 | `plugin-base-<featureName>` (or the actual module from plugin-base PR) |
+| `rnSdkDir`          | `sdk/core`                        | see rule below                                                         |
+| `rnPackage`         | `com.moengage.react.jwt`          | `com.moengage.react.<featureName>`                                     |
+| `rnBridgeName`      | `MoEngageJwtBridge`               | `MoEngage<featureNameCamel>Bridge`                                     |
+| `branchName`        | `feature/MOEN-44072-jwt_contract` | `feature/<ticketId>-<contractSuffix>`                                  |
+
+### 1.3 Resolve `rnSdkDir`
+
+Scan `feature_description` for a framework keyword and map to the existing SDK module directory:
+
+| Keyword in `feature_description`              | `rnSdkDir`                                          |
+|-----------------------------------------------|-----------------------------------------------------|
+| `core`, `analytics`, `inapps`, or `messaging` | `sdk/core`                                          |
+| `cards`                                       | `sdk/cards`                                         |
+| `geofence`                                    | `sdk/geofence`                                      |
+| `inbox`                                       | `sdk/inbox`                                         |
+| `personalize`                                 | `sdk/personalize`                                   |
+| none of the above                             | ask the user which SDK module to add the feature to |
+
+Examples:
+- `"JWT authentication parity from core"` → `sdk/core`
+- `"get clicked cards count"` → `sdk/cards`
+- `"start geofence monitoring"` → `sdk/geofence`
 
 ---
 
@@ -124,7 +142,7 @@ git checkout <contract_branch>
 ```bash
 cd React-Native
 git fetch
-git checkout -b feature/<contractSuffix>
+git checkout -b feature/<ticketId>-<contractSuffix>
 ```
 
 ### 3.2 Check if SDK module already exists
@@ -204,7 +222,7 @@ git commit -m "<ticketId>: Add React-Native Android bridge for <featureName>"
 ## Phase 4 — Create Pull Request
 
 ```bash
-git push -u origin feature/<contractSuffix>
+git push -u origin feature/<ticketId>-<contractSuffix>
 gh pr create \
   --title "<ticketId>: Add React-Native Android bridge for <featureName>" \
   --base development \
@@ -216,7 +234,7 @@ gh pr create \
 - Android BOM version: <android_bom_version>
 
 ## Related PRs
-- android-plugin-base: <plugin_base_pr_url>
+- android-plugin-base: <android_plugin_base_pr_url>
 
 ## Contract
 Branch: `<contract_branch>` in mobile-sdk-contracts
@@ -264,15 +282,15 @@ If the user says yes, remind them to invoke:
 Read these before generating the corresponding output — copy copyright headers, logging
 conventions, and structural patterns exactly.
 
-| What | Codebase path |
-|---|---|
-| BridgeHandler reference | `React-Native/sdk/cards/android/src/main/java/.../MoEngageCardsBridgeHandler.kt` |
-| EventEmitterImpl reference | `React-Native/sdk/cards/android/src/main/java/.../EventEmitterImpl.kt` |
-| PayloadGenerator reference | `React-Native/sdk/cards/android/src/main/java/.../PayloadGenerator.kt` |
-| Package reference | `React-Native/sdk/cards/android/src/main/java/.../MoEngageCardsPackage.kt` |
-| New-arch bridge reference | `React-Native/sdk/cards/android/src/newarch/.../MoEngageCardsBridge.kt` |
-| Old-arch bridge reference | `React-Native/sdk/cards/android/src/oldarch/.../MoEngageCardsBridge.kt` |
-| build.gradle reference | `React-Native/sdk/cards/android/build.gradle` |
+| What                         | Codebase path                                                                                |
+|------------------------------|----------------------------------------------------------------------------------------------|
+| BridgeHandler reference      | `React-Native/sdk/cards/android/src/main/java/.../MoEngageCardsBridgeHandler.kt`             |
+| EventEmitterImpl reference   | `React-Native/sdk/cards/android/src/main/java/.../EventEmitterImpl.kt`                       |
+| PayloadGenerator reference   | `React-Native/sdk/cards/android/src/main/java/.../PayloadGenerator.kt`                       |
+| Package reference            | `React-Native/sdk/cards/android/src/main/java/.../MoEngageCardsPackage.kt`                   |
+| New-arch bridge reference    | `React-Native/sdk/cards/android/src/newarch/.../MoEngageCardsBridge.kt`                      |
+| Old-arch bridge reference    | `React-Native/sdk/cards/android/src/oldarch/.../MoEngageCardsBridge.kt`                      |
+| build.gradle reference       | `React-Native/sdk/cards/android/build.gradle`                                                |
 | plugin-base module reference | `../android-plugin-base/<androidModuleName>/` (output of plugin-base-feature-implementation) |
 
 ---
