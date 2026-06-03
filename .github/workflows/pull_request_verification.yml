@@ -14,6 +14,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: moengage/sdk-automation-scripts
+          ref: patch/MOEN-45218_android_ci_optimisation
           path: sdk-automation-scripts
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Checkout code
@@ -34,13 +35,14 @@ jobs:
         run: |
           kotlinc -script .github/scripts/verify-plugins.main.kts iOS
   verify-react:
-    runs-on: macos-15-xlarge
+    runs-on: ubuntu-latest
     if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checkout sdk automation scripts
         uses: actions/checkout@v4
         with:
           repository: moengage/sdk-automation-scripts
+          ref: patch/MOEN-45218_android_ci_optimisation
           path: sdk-automation-scripts
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Checkout code
@@ -57,13 +59,14 @@ jobs:
         run: |
           kotlinc -script .github/scripts/verify-plugins.main.kts react-native
   verify-android-sample:
-    runs-on: macos-15-xlarge
+    runs-on: SDKRunner
     if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checkout sdk automation scripts
         uses: actions/checkout@v4
         with:
           repository: moengage/sdk-automation-scripts
+          ref: patch/MOEN-45218_android_ci_optimisation
           path: sdk-automation-scripts
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Checkout code
@@ -85,13 +88,14 @@ jobs:
         run: |
           kotlinc -script .github/scripts/verify-plugins.main.kts android-sample
   verify-android-expo:
-    runs-on: macos-15-xlarge
+    runs-on: SDKRunner
     if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checkout sdk automation scripts
         uses: actions/checkout@v4
         with:
           repository: moengage/sdk-automation-scripts
+          ref: patch/MOEN-45218_android_ci_optimisation
           path: sdk-automation-scripts
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Checkout code
