@@ -14,6 +14,7 @@ export const mockProps = {
     richPushNotificationEnabled: false,
     pushTemplatesEnabled: false,
     deviceTriggerEnabled: false,
+    addCustomPodspecSource: true,
     liveActivityTargetPath: '',
   },
 };

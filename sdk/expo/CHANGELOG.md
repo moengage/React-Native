@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+
+- iOS
+  - [minor] Automated expo new cocoapods source integration
+
 # 15-04-2026
 
 ## 1.1.1

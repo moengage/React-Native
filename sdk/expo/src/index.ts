@@ -18,6 +18,7 @@ const defaultProps: MoEngagePluginProps = {
     pushTemplatesEnabled: false,
     deviceTriggerEnabled: false,
     liveActivityTargetPath: '',
+    addCustomPodspecSource: true,
   },
 };
 
