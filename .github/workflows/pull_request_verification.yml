@@ -85,7 +85,7 @@ jobs:
         run: |
           kotlinc -script .github/scripts/verify-plugins.main.kts android-sample
   verify-android-expo:
-    runs-on: macos-latest
+    runs-on: macos-15-xlarge
     if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checkout sdk automation scripts
@@ -99,16 +99,21 @@ jobs:
         with:
           path: source
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      # Use -bin in CI for faster build
-      - name: Use Gradle bin distribution for CI
-        working-directory: source/SampleApp/android/gradle/wrapper
-        run: |
-          sed -i '' 's/-all\.zip/-bin.zip/' gradle-wrapper.properties
+      - name: Cache ExpoSampleApp android
+        id: expo-prebuild-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            source/ExpoSampleApp/android
+            source/ExpoSampleApp/node_modules
+          key: expo-prebuild-${{ hashFiles('source/sdk/expo/**', 'source/ExpoSampleApp/app.json', 'source/ExpoSampleApp/package.json') }}
       - name: Automation script setup
         uses: ./sdk-automation-scripts/actions/npm-repository-setup
         with:
           platform: android
       - name: Verify Android ExpoSampleApp
         working-directory: source
+        env:
+          EXPO_PREBUILD_CACHED: ${{ steps.expo-prebuild-cache.outputs.cache-hit == 'true' }}
         run: |
           kotlinc -script .github/scripts/verify-plugins.main.kts android-expo

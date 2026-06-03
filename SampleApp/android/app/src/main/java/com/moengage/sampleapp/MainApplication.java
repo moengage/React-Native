@@ -3,12 +3,14 @@ package com.moengage.sampleapp;
 import android.app.Application;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.facebook.react.ReactHost;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.soloader.OpenSourceMergedSoMapping;
 import com.facebook.soloader.SoLoader;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
+import com.facebook.react.defaults.DefaultReactHost;
 import com.moengage.core.DataCenter;
 import com.moengage.core.LogLevel;
 import com.moengage.core.MoEngage;
@@ -48,6 +50,11 @@ public class MainApplication extends Application implements ReactApplication {
           return BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
         }
       };
+
+  @Override
+  public ReactHost getReactHost() {
+    return DefaultReactHost.getDefaultReactHost(getApplicationContext(), mReactNativeHost, null);
+  }
 
   @Override
   public ReactNativeHost getReactNativeHost() {
