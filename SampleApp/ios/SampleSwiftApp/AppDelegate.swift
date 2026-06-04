@@ -98,3 +98,30 @@ class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {
     #endif
   }
 }
+
+// MARK: - UNUserNotificationCenterDelegate
+//
+// Mirrors the canonical pattern in MoEngageTestApp/AppDelegate.swift:241-245 — forwards
+// the notification to the MoEngage SDK for analytics + inbox + impression tracking, then
+// tells iOS what to display in foreground via `completionHandler`. Without these methods
+// iOS suppresses the foreground banner because the SDK's proxy default is `[]`.
+extension AppDelegate {
+
+  func userNotificationCenter(
+    _ center: UNUserNotificationCenter,
+    willPresent notification: UNNotification,
+    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+  ) {
+    MoEngageSDKMessaging.sharedInstance.userNotificationCenter(center, willPresent: notification)
+    completionHandler([.alert, .sound, .badge])
+  }
+
+  func userNotificationCenter(
+    _ center: UNUserNotificationCenter,
+    didReceive response: UNNotificationResponse,
+    withCompletionHandler completionHandler: @escaping () -> Void
+  ) {
+    MoEngageSDKMessaging.sharedInstance.userNotificationCenter(center, didReceive: response)
+    completionHandler()
+  }
+}
