@@ -103,4 +103,29 @@
   return config;
 }
 
+#pragma mark - UNUserNotificationCenterDelegate (MOEN-45163)
+//
+// Mirrors the canonical pattern in MoEngageTestApp/AppDelegate.swift:241-245 — forwards
+// the notification to the MoEngage SDK for analytics + inbox + impression tracking, then
+// tells iOS what to display in foreground via `completionHandler`. Without these methods
+// iOS suppresses the foreground banner because the SDK's proxy default is `[]`.
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+       willPresentNotification:(UNNotification *)notification
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
+  [[MoEngageSDKMessaging sharedInstance] userNotificationCenter:center
+                                                    willPresent:notification];
+  completionHandler(UNNotificationPresentationOptionAlert
+                    | UNNotificationPresentationOptionSound
+                    | UNNotificationPresentationOptionBadge);
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+         withCompletionHandler:(void (^)(void))completionHandler {
+  [[MoEngageSDKMessaging sharedInstance] userNotificationCenter:center
+                                                     didReceive:response];
+  completionHandler();
+}
+
 @end
