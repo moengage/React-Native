@@ -12,11 +12,19 @@ when (val platform = args[0]) {
         )
     }
 
-    "android" -> {
+    "android-sample" -> {
         verifyPullRequest(
-            plugins= getAllPluginsPath(), 
-            coreModule= "sdk/core", 
-            platform= PLATFORM.ANDROID
+            plugins= getAllPluginsPath(),
+            coreModule= "sdk/core",
+            platform= PLATFORM.ANDROID_SAMPLE
+        )
+    }
+
+    "android-expo" -> {
+        verifyPullRequest(
+            plugins= getAllPluginsPath(),
+            coreModule= "sdk/core",
+            platform= PLATFORM.ANDROID_EXPO
         )
     }
 

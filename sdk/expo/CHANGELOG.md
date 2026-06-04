@@ -3,6 +3,7 @@
 ## Release Version
 
 - iOS
+  - [patch] Internal improvements for testing.
   - [minor] Automated expo new cocoapods source integration
 
 # 15-04-2026

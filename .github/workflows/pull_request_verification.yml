@@ -7,90 +7,113 @@ on:
     branches: [ "development", "master" ]
 jobs:
   verify-ios:
-    runs-on: macos-15
+    runs-on: macos-15-xlarge
     if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checkout sdk automation scripts
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: moengage/sdk-automation-scripts
           path: sdk-automation-scripts
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          path: source
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Automation script setup
         uses: ./sdk-automation-scripts/actions/npm-repository-setup
+        with:
+          platform: ios
       - name: Setup dev environment
         uses: ./sdk-automation-scripts/actions/ios-action-setup
         env:
           SDK_BOT_ACCESS_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with: 
-          path: source
-          fetch-depth: 0
-          fetch-tags: true
-          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      - name: Setup script
-        working-directory: source
-        run: |
-          chmod +x .github/scripts/react-utils.main.kts
-          chmod +x .github/scripts/verify-plugins.main.kts
       - name: Verify iOS
         working-directory: source
         run: |
           kotlinc -script .github/scripts/verify-plugins.main.kts iOS
   verify-react:
-    runs-on: macos-latest
+    runs-on: macos-15-xlarge
     if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checkout sdk automation scripts
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: moengage/sdk-automation-scripts
           path: sdk-automation-scripts
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      - name: Automation script setup
-        uses: ./sdk-automation-scripts/actions/npm-repository-setup
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: source
-          fetch-depth: 0
-          fetch-tags: true
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      - name: Setup script
-        working-directory: source
-        run: |
-          chmod +x .github/scripts/react-utils.main.kts
-          chmod +x .github/scripts/verify-plugins.main.kts
+      - name: Automation script setup
+        uses: ./sdk-automation-scripts/actions/npm-repository-setup
+        with:
+          platform: hybrid
       - name: Verify React Framework
         working-directory: source
         run: |
           kotlinc -script .github/scripts/verify-plugins.main.kts react-native
-  verify-android:
-    runs-on: macos-latest
+  verify-android-sample:
+    runs-on: macos-15-xlarge
     if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checkout sdk automation scripts
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: moengage/sdk-automation-scripts
           path: sdk-automation-scripts
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      - name: Automation script setup
-        uses: ./sdk-automation-scripts/actions/npm-repository-setup    
       - name: Checkout code
-        uses: actions/checkout@v3
-        with: 
+        uses: actions/checkout@v4
+        with:
           path: source
-          fetch-depth: 0
-          fetch-tags: true
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      - name: Setup script
+      # Use -bin in CI for faster build
+      - name: Use Gradle bin distribution for CI
+        working-directory: source/SampleApp/android/gradle/wrapper
+        run: |
+          sed -i '' 's/-all\.zip/-bin.zip/' gradle-wrapper.properties
+      - name: Automation script setup
+        uses: ./sdk-automation-scripts/actions/npm-repository-setup
+        with:
+          platform: android
+      - name: Verify Android SampleApp
         working-directory: source
         run: |
-          chmod +x .github/scripts/react-utils.main.kts
-          chmod +x .github/scripts/verify-plugins.main.kts
-      - name: Verify Android
+          kotlinc -script .github/scripts/verify-plugins.main.kts android-sample
+  verify-android-expo:
+    runs-on: macos-15-xlarge
+    if: ${{ !github.event.pull_request.draft }}
+    steps:
+      - name: Checkout sdk automation scripts
+        uses: actions/checkout@v4
+        with:
+          repository: moengage/sdk-automation-scripts
+          path: sdk-automation-scripts
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          path: source
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Cache ExpoSampleApp android
+        id: expo-prebuild-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            source/ExpoSampleApp/android
+            source/ExpoSampleApp/node_modules
+          key: expo-prebuild-${{ hashFiles('source/sdk/expo/**', 'source/ExpoSampleApp/app.json', 'source/ExpoSampleApp/package.json') }}
+      - name: Automation script setup
+        uses: ./sdk-automation-scripts/actions/npm-repository-setup
+        with:
+          platform: android
+      - name: Verify Android ExpoSampleApp
         working-directory: source
+        env:
+          EXPO_PREBUILD_CACHED: ${{ steps.expo-prebuild-cache.outputs.cache-hit == 'true' }}
         run: |
-          kotlinc -script .github/scripts/verify-plugins.main.kts android
+          kotlinc -script .github/scripts/verify-plugins.main.kts android-expo
