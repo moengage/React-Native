@@ -99,7 +99,7 @@ class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {
   }
 }
 
-// MARK: - UNUserNotificationCenterDelegate (MOEN-45163)
+// MARK: - UNUserNotificationCenterDelegate
 //
 // Mirrors the canonical pattern in MoEngageTestApp/AppDelegate.swift:241-245 — forwards
 // the notification to the MoEngage SDK for analytics + inbox + impression tracking, then

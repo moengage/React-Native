@@ -103,7 +103,7 @@
   return config;
 }
 
-#pragma mark - UNUserNotificationCenterDelegate (MOEN-45163)
+#pragma mark - UNUserNotificationCenterDelegate
 //
 // Mirrors the canonical pattern in MoEngageTestApp/AppDelegate.swift:241-245 — forwards
 // the notification to the MoEngage SDK for analytics + inbox + impression tracking, then
