@@ -4,6 +4,8 @@
 
 - iOS
     - [patch] Added compatibility for React Native pre-built libraries.
+- Android
+  - [patch] Downgrading Compile Java Version to 17
   
 # 19-05-2026
 
