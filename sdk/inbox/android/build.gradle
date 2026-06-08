@@ -16,7 +16,7 @@ buildscript {
   dependencies {
     classpath 'com.android.tools.build:gradle:8.13.2'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    classpath "com.moengage.android.hybrid.module.config.plugin:com.moengage.android.hybrid.module.config.plugin.gradle.plugin:0.0.4"
+    classpath "com.moengage.android.hybrid.module.config.plugin:com.moengage.android.hybrid.module.config.plugin.gradle.plugin:0.0.5"
   }
 }
 
@@ -55,7 +55,7 @@ dependencies {
   compileOnly('com.facebook.react:react-native')
   compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-  implementation(platform("com.moengage:android-bom:$moengageNativeBOMVersion")) 
+  implementation(platform("com.moengage:android-bom:$moengageNativeBOMVersion"))
   compileOnly("com.moengage:moe-android-sdk")
   api("com.moengage:inbox-core")
 

@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+
+- Android
+  - [patch] Downgrading Compile Java Version to 17
+
 # 07-05-2026
 
 ## 6.4.0

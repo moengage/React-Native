@@ -5,6 +5,8 @@
 - iOS
   - [patch] Internal improvements for testing.
   - [minor] Automated expo new cocoapods source integration
+- Android
+  - [patch] Downgrading Compile Java Version to 17
 
 # 15-04-2026
 
