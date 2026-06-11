@@ -1,11 +1,11 @@
-# Release Date
+# 11-06-2026
 
-## Release Version
+## 12.8.1
 
 - iOS
-    - [patch] Added compatibility for React Native pre-built libraries.
+    - Added compatibility for React Native pre-built libraries.
 - Android
-  - [patch] Downgrading Compile Java Version to 17
+  - Downgrading Compile Java Version to 17
   
 # 19-05-2026
 

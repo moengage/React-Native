@@ -1,9 +1,9 @@
-# Release Date 
+# 11-06-2026 
 
-## Release Version
+## 1.0.2
 
 - Android
-  - [patch] Downgrading Compile Java Version to 17
+  - Downgrading Compile Java Version to 17
 
 # 19-05-2026
 

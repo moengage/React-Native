@@ -1,12 +1,12 @@
-# Release Date
+# 11-06-2026
 
-## Release Version
+## 1.2.0
 
 - iOS
-  - [patch] Internal improvements for testing.
-  - [minor] Automated expo new cocoapods source integration
+  - Internal improvements for testing.
+  - Automated expo new cocoapods source integration
 - Android
-  - [patch] Downgrading Compile Java Version to 17
+  - Downgrading Compile Java Version to 17
 
 # 15-04-2026
 
