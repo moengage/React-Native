@@ -8,6 +8,8 @@
 - iOS
   - [minor] updating `MoEngagePluginPersonalize` to `1.1.0`
 
+- iOS
+  - [minor] updating `MoEngagePluginPersonalize` to `1.1.0`
 # 19-05-2026
 
 ## 1.0.1
