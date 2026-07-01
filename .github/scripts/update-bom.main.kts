@@ -57,6 +57,12 @@ val moduleConfigs = listOf(
         changelogPath = "sdk/geofence/CHANGELOG.md",
         androidBomArtifacts = setOf("moe-android-sdk", "geofence"),
         pluginBaseBomArtifacts = setOf("plugin-base-geofence")
+    ),
+    ModuleConfig(
+        gradleFilePath = "sdk/personalize/android/build.gradle",
+        changelogPath = "sdk/personalize/CHANGELOG.md",
+        androidBomArtifacts = setOf("moe-android-sdk", "personalization-core"),
+        pluginBaseBomArtifacts = setOf("plugin-base-personalization")
     )
 )
 
