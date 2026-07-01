@@ -32,7 +32,7 @@ jobs:
       - name: Verify iOS
         working-directory: source
         run: |
-          .github/scripts/verify-plugins.main.kts iOS
+          kotlin .github/scripts/verify-plugins.main.kts iOS
   verify-react:
     runs-on: macos-15-xlarge
     if: ${{ !github.event.pull_request.draft }}
@@ -55,7 +55,7 @@ jobs:
       - name: Verify React Framework
         working-directory: source
         run: |
-          .github/scripts/verify-plugins.main.kts react-native
+          kotlin .github/scripts/verify-plugins.main.kts react-native
   verify-android-sample:
     runs-on: macos-15-xlarge
     if: ${{ !github.event.pull_request.draft }}
@@ -83,7 +83,7 @@ jobs:
       - name: Verify Android SampleApp
         working-directory: source
         run: |
-          .github/scripts/verify-plugins.main.kts android-sample
+          kotlin .github/scripts/verify-plugins.main.kts android-sample
   verify-android-expo:
     runs-on: macos-15-xlarge
     if: ${{ !github.event.pull_request.draft }}
@@ -116,4 +116,4 @@ jobs:
         env:
           EXPO_PREBUILD_CACHED: ${{ steps.expo-prebuild-cache.outputs.cache-hit == 'true' }}
         run: |
-          .github/scripts/verify-plugins.main.kts android-expo
+          kotlin .github/scripts/verify-plugins.main.kts android-expo
