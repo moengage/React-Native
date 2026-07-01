@@ -2,6 +2,8 @@
 
 ## Release Version
 
+- Android
+  - [minor] updating `android-bom` to `2.3.0`
 - iOS
   - [minor] updating `MoEngagePluginInbox` to `4.10.0`
 
@@ -10,7 +12,6 @@
 ## 6.4.1
 
 - Android
-  - [minor] updating `android-bom` to `2.3.0`
   - Downgrading Compile Java Version to 17
 
 # 07-05-2026

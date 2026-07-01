@@ -2,6 +2,8 @@
 
 ## Release Version
 
+- Android
+  - [minor] updating `android-bom` to `2.3.0`
 - iOS
   - [minor] updating `MoEngagePluginBase` to `6.10.0`
   - [minor] updating `MoEngage-iOS-SDK` to `10.14.0`
@@ -13,7 +15,6 @@
 - iOS
     - Added compatibility for React Native pre-built libraries.
 - Android
-  - [minor] updating `android-bom` to `2.3.0`
   - Downgrading Compile Java Version to 17
   
 # 19-05-2026
