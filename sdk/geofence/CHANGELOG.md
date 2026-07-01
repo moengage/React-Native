@@ -1,8 +1,16 @@
+# Release Date
+
+## Release Version
+
+- iOS
+  - [minor] updating `MoEngagePluginGeofence` to `4.10.0`
+
 # 11-06-2026
 
 ## 7.4.1
 
 - Android
+  - [minor] updating `android-bom` to `2.3.0`
   - Downgrading Compile Java Version to 17
   
 # 07-05-2026
