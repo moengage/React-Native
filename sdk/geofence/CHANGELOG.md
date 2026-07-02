@@ -1,11 +1,11 @@
-# Release Date
+# 02-07-2026
 
-## Release Version
+## 7.5.0
 
 - Android
-  - [minor] updating `android-bom` to `2.3.0`
+  - updating `android-bom` to `2.3.0`
 - iOS
-  - [minor] updating `MoEngagePluginGeofence` to `4.10.0`
+  - updating `MoEngagePluginGeofence` to `4.10.0`
 
 # 11-06-2026
 
