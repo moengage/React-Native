@@ -1,3 +1,13 @@
+# Release Date
+
+## Release Version
+
+- Android
+  - [minor] updating `android-bom` to `2.3.0`
+- iOS
+  - [minor] updating `MoEngagePluginBase` to `6.10.0`
+  - [minor] updating `MoEngage-iOS-SDK` to `10.14.0`
+
 # 11-06-2026
 
 ## 12.8.1

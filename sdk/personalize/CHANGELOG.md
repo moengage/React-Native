@@ -3,7 +3,10 @@
 ## 1.0.2
 
 - Android
+  - [minor] updating `android-bom` to `2.3.0`
   - Downgrading Compile Java Version to 17
+- iOS
+  - [minor] updating `MoEngagePluginPersonalize` to `1.1.0`
 
 # 19-05-2026
 

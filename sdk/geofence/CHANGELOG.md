@@ -1,3 +1,12 @@
+# Release Date
+
+## Release Version
+
+- Android
+  - [minor] updating `android-bom` to `2.3.0`
+- iOS
+  - [minor] updating `MoEngagePluginGeofence` to `4.10.0`
+
 # 11-06-2026
 
 ## 7.4.1

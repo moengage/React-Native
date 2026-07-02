@@ -47,7 +47,7 @@ jobs:
       - name: Publishing plugins
         working-directory: source
         run: |
-          .github/scripts/release.main.kts ${{ github.event.inputs.releaseNotes }} ${{ github.event.inputs.releaseTicket }}
+          kotlin .github/scripts/release.main.kts ${{ github.event.inputs.releaseNotes }} ${{ github.event.inputs.releaseTicket }}
         env:
           GH_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Notify release
