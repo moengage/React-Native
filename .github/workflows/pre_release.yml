@@ -1,0 +1,87 @@
+# Merges development into master, publishes the plugins, then merges master back into
+# development and notifies about the release.
+#
+# Structured as three chained jobs instead of one job that dispatch-and-polls the publish
+# workflow:
+#   merge-dev-to-master  ->  publish-plugins (reusable workflow)  ->  finalize
+# `publish-plugins` uses `uses:` so GitHub natively waits for it to finish, and `finalize`
+# declares `needs: publish-plugins`, so it is skipped automatically if publishing fails.
+name: Release - Pre Release
+
+on:
+  workflow_call:
+    inputs:
+      releaseNotes:
+        type: string
+        description: 'Enter the Release note'
+        required: true
+      releaseTicket:
+        type: string
+        description: 'Enter the Release ticket'
+        required: true
+
+permissions:
+  id-token: write # Required for OIDC (the called publish workflow needs it)
+  contents: read
+
+jobs:
+  merge-dev-to-master:
+    runs-on: ubuntu-latest
+    steps:
+      # Bootstrap checkout: needed so `./source/.github/actions/release-setup` exists.
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          path: source
+          fetch-depth: 0
+          fetch-tags: true
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      # Shared setup: checks out sdk-automation-scripts, npm setup, chmod release scripts.
+      - name: Release setup
+        uses: ./source/.github/actions/release-setup
+        with:
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Merge Development to Master
+        uses: ./sdk-automation-scripts/actions/action-git-development-to-master
+        with:
+          working-directory: source
+
+  # Called as a reusable workflow: the job does not complete until publishing finishes,
+  # and a failure here propagates to dependents (see `finalize`) — no dispatch/poll/watch.
+  publish-plugins:
+    needs: merge-dev-to-master
+    uses: ./.github/workflows/publish_plugins.yml
+    with:
+      releaseNotes: ${{ inputs.releaseNotes }}
+      releaseTicket: ${{ inputs.releaseTicket }}
+    secrets:
+      SDK_BOT_ACCESS_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+
+  finalize:
+    # `needs` defaults to requiring success, so this whole job is skipped if
+    # publish-plugins fails or is cancelled.
+    needs: publish-plugins
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          path: source
+          fetch-depth: 0
+          fetch-tags: true
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Release setup
+        uses: ./source/.github/actions/release-setup
+        with:
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Merge Master to Development
+        uses: ./sdk-automation-scripts/actions/action-git-master-to-development
+        with:
+          working-directory: source
+      - name: Notify release
+        working-directory: source
+        run: |
+          kotlin .github/scripts/notify-release.main.kts "$RELEASE_NOTES"
+        env:
+          RELEASE_NOTES: ${{ inputs.releaseNotes }}
+          GITHUB_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}

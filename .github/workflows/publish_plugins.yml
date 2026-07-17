@@ -1,0 +1,65 @@
+# Publishes the React-Native plugins to npm and creates the GitHub releases.
+# Can be triggered manually, or is called by the Pre Release workflow.
+name: Publish Plugins
+
+on:
+  workflow_dispatch: # manual trigger
+    inputs:
+      releaseNotes:
+        type: string
+        description: 'Enter the Release note'
+        required: true
+      releaseTicket:
+        type: string
+        description: 'Enter the Release ticket'
+        required: true
+  workflow_call: # invoked as a reusable workflow by pre_release.yml
+    inputs:
+      releaseNotes:
+        type: string
+        description: 'Enter the Release note'
+        required: true
+      releaseTicket:
+        type: string
+        description: 'Enter the Release ticket'
+        required: true
+    secrets:
+      SDK_BOT_ACCESS_TOKEN:
+        required: true
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      # Bootstrap checkout: needed so `./source/.github/actions/release-setup` exists.
+      # Always publish from master: when called by pre_release.yml the run's ref is the
+      # caller's branch (e.g. development), but the plugins must be published from the
+      # freshly merged master. Pinning the ref keeps both the manual and called paths correct.
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          path: source
+          ref: master
+          fetch-depth: 0
+          fetch-tags: true
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      # Shared setup: checks out sdk-automation-scripts, npm setup, chmod release scripts.
+      - name: Release setup
+        uses: ./source/.github/actions/release-setup
+        with:
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Publishing plugins
+        working-directory: source
+        run: |
+          kotlin .github/scripts/release.main.kts "$RELEASE_NOTES" "$RELEASE_TICKET"
+        env:
+          # Passed via env (not inline `${{ }}`) so values with spaces/quotes are not
+          # word-split or shell-injected. `inputs` is populated for both workflow_dispatch
+          # and workflow_call, so this works on both trigger paths.
+          RELEASE_NOTES: ${{ inputs.releaseNotes }}
+          RELEASE_TICKET: ${{ inputs.releaseTicket }}
+          GH_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
