@@ -47,6 +47,17 @@ hybridModuleConfig.configurePlugin {
 
 android {
   namespace "com.moengage.react"
+  sourceSets {
+    main {
+      if (isNewArchitectureEnabled()) {
+        java.srcDirs += ['src/newarch']
+        kotlin.srcDirs += ['src/newarch']
+      } else {
+        java.srcDirs += ['src/oldarch']
+        kotlin.srcDirs += ['src/oldarch']
+      }
+    }
+  }
 }
 
 dependencies {
