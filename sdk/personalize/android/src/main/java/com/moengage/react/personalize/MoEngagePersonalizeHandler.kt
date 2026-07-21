@@ -19,8 +19,8 @@ import android.content.Context
 import com.facebook.react.bridge.Promise
 import com.moengage.plugin.base.personalization.PersonalizationHelper
 import com.moengage.plugin.base.personalization.PersonalizeExperienceListener
-import com.moengage.core.LogLevel
-import com.moengage.core.internal.logger.Logger
+import com.moengage.platform.internal.logger.Logger
+import com.moengage.platform.internal.logger.PlatformLogLevel
 import com.moengage.core.model.RequestFailureReasonCode
 
 /**
@@ -36,7 +36,7 @@ internal class MoEngagePersonalizeHandler(private val context: Context) {
 
     fun fetchExperiencesMeta(payload: String, promise: Promise) {
         try {
-            Logger.print { "$tag fetchExperiencesMeta(): $payload" }
+            Logger.record { "$tag fetchExperiencesMeta(): $payload" }
             pluginHelper.fetchExperiencesMeta(
                 context,
                 payload,
@@ -46,19 +46,19 @@ internal class MoEngagePersonalizeHandler(private val context: Context) {
                     }
 
                     override fun onFailure(reason: RequestFailureReasonCode, message: String) {
-                        Logger.print { "$tag fetchExperiencesMeta(): failed with reason: $reason and message: $message" }
+                        Logger.record { "$tag fetchExperiencesMeta(): failed with reason: $reason and message: $message" }
                         promise.reject(reason.name, message)
                     }
                 })
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag fetchExperiencesMeta(): " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag fetchExperiencesMeta(): " }
             promise.reject(RequestFailureReasonCode.UNKNOWN_ERROR.name, t.message ?: "")
         }
     }
 
     fun fetchExperiences(payload: String, promise: Promise) {
         try {
-            Logger.print { "$tag fetchExperiences(): $payload" }
+            Logger.record { "$tag fetchExperiences(): $payload" }
             pluginHelper.fetchExperiences(
                 context,
                 payload,
@@ -68,33 +68,33 @@ internal class MoEngagePersonalizeHandler(private val context: Context) {
                     }
 
                     override fun onFailure(reason: RequestFailureReasonCode, message: String) {
-                        Logger.print { "$tag fetchExperiences(): failed with reason: $reason and message: $message" }
+                        Logger.record { "$tag fetchExperiences(): failed with reason: $reason and message: $message" }
                         promise.reject(reason.name, message)
                     }
                 })
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag fetchExperiences(): " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag fetchExperiences(): " }
             promise.reject(RequestFailureReasonCode.UNKNOWN_ERROR.name, t.message ?: "")
         }
     }
 
     fun trackExperienceShown(payload: String) {
-        Logger.print { "$tag trackExperienceShown(): $payload" }
+        Logger.record { "$tag trackExperienceShown(): $payload" }
         pluginHelper.experiencesShown(context, payload)
     }
 
     fun trackExperienceClicked(payload: String) {
-        Logger.print { "$tag trackExperienceClicked(): $payload" }
+        Logger.record { "$tag trackExperienceClicked(): $payload" }
         pluginHelper.experienceClicked(context, payload)
     }
 
     fun trackOfferingShown(payload: String) {
-        Logger.print { "$tag trackOfferingShown(): $payload" }
+        Logger.record { "$tag trackOfferingShown(): $payload" }
         pluginHelper.offeringsShown(context, payload)
     }
 
     fun trackOfferingClicked(payload: String) {
-        Logger.print { "$tag trackOfferingClicked(): $payload" }
+        Logger.record { "$tag trackOfferingClicked(): $payload" }
         pluginHelper.offeringClicked(context, payload)
     }
 

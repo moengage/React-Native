@@ -1,6 +1,10 @@
 import com.moengage.gradle.android.library.plugin.configs.BuildConfigType
 import groovy.json.JsonSlurper
 
+ext {
+    kotlinVersion = "2.3.20"
+}
+
 buildscript {
     repositories {
         google()
@@ -10,11 +14,20 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "com.moengage.android.hybrid.module.config.plugin:com.moengage.android.hybrid.module.config.plugin.gradle.plugin:0.0.5"
+        classpath "com.moengage.android.hybrid.module.config.plugin:com.moengage.android.hybrid.module.config.plugin.gradle.plugin:2.0.0"
     }
 }
 
 apply plugin: 'com.moengage.android.hybrid.module.config.plugin'
+
+// In AGP 9+ built-in Kotlin's default is true
+def builtInKotlin = providers.gradleProperty("android.builtInKotlin")
+        .map { it.toBoolean() }
+        .orElse(true)
+        .get()
+if (!builtInKotlin) {
+    apply plugin: 'kotlin-android'
+}
 
 hybridModuleConfig.configurePlugin {
     kotlinOptions {
@@ -38,7 +51,7 @@ dependencies {
     implementation(project(':expo-modules-core'))
     implementation(project(':react-native-moengage'))
     compileOnly("host.exp.exponent:expo.modules.notifications:+")
-    compileOnly('com.google.firebase:firebase-messaging:24.1.0')
+    compileOnly('com.google.firebase:firebase-messaging:25.0.1')
     compileOnly('com.facebook.react:react-native')
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 }

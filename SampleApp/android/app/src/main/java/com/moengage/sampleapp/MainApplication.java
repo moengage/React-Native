@@ -75,9 +75,9 @@ public class MainApplication extends Application implements ReactApplication {
       // If you opted-in for the New Architecture, we load the native entry point for this app.
       DefaultNewArchitectureEntryPoint.load();
     }
-    // replace DataCenter.DATA_CENTER_1 with your data center.
+    // replace DataCenter.getDataCenter1() with your data center.
     MoEngage.Builder moEngage =
-        new MoEngage.Builder(this, BuildConfig.MOENAGE_APP_ID, DataCenter.DATA_CENTER_1)
+        MoEngage.builder(this, BuildConfig.MOENAGE_APP_ID, DataCenter.getDataCenter1())
             .configureLogs(new LogConfig(LogLevel.VERBOSE, true))
                 .configureMoEngageEnvironment(new MoEngageEnvironmentConfig(MoEngageEnvironment.DEFAULT))
             .configureNotificationMetaData(

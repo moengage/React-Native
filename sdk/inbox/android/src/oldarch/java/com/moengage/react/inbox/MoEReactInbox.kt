@@ -17,8 +17,8 @@ import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
-import com.moengage.core.internal.logger.Logger
-import com.moengage.core.LogLevel
+import com.moengage.platform.internal.logger.Logger
+import com.moengage.platform.internal.logger.PlatformLogLevel
 import com.moengage.plugin.base.inbox.internal.InboxPluginHelper
 import com.moengage.plugin.base.inbox.internal.inboxDataToJson
 import com.moengage.plugin.base.inbox.internal.unClickedCountToJson
