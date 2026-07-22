@@ -22,6 +22,7 @@ val MOENGAGE_GROUP = "com.moengage"
 
 val ANDROID_BOM_VERSION_KEY = "moengageNativeBOMVersion"
 val PLUGIN_BASE_BOM_VERSION_KEY = "moengagePluginBaseBOMVersion"
+val BUMP_SUMMARY_FILE = ".github/scripts/.bump-summary.txt"
 
 data class ModuleConfig(
     val gradleFilePath: String,
@@ -164,33 +165,52 @@ fun updateVersionInFile(file: File, versionKey: String, oldVersion: String, newV
 
 // ── Changelog Update ────────────────────────────────────────────────────────────
 
+// Anchor on the explicit "# Release Date" unreleased marker. Never scans past the first
+// "# ..." heading — released content is never touched.
+
+val RELEASE_DATE_MARKER = "# Release Date"
+
 fun updateChangelog(file: File, newAndroidBomVersion: String) {
-    val lines = file.readLines().toMutableList()
-    val bomLineRegex = Regex("""^\s+-\s+\[minor]\s+updating\s+`android-bom`\s+to\s+`[^`]+`""")
-    val androidSectionRegex = Regex("""^- Android$""")
+    val fileLines = file.readLines().toMutableList()
     val newBomLine = "  - [minor] updating `android-bom` to `$newAndroidBomVersion`"
+    val bomLineRegex = Regex("""^\s+-\s+\[minor]\s+updating\s+`android-bom`\s+to\s+`[^`]+`""")
 
-    // Look for existing android-bom line in the unreleased section (before the first dated entry)
-    val firstDatedEntry = lines.indexOfFirst { it.matches(Regex("""^# \d{2}-\d{2}-\d{4}$""")) }
-    val searchEnd = if (firstDatedEntry > 0) firstDatedEntry else lines.size
+    val hasUnreleasedSection = fileLines.isNotEmpty() && fileLines[0].trim() == RELEASE_DATE_MARKER
 
-    val existingBomLineIndex = lines.subList(0, searchEnd).indexOfFirst { bomLineRegex.matches(it) }
-    if (existingBomLineIndex >= 0) {
-        lines[existingBomLineIndex] = newBomLine
-    } else {
-        // Find the "- Android" section in the unreleased block and add the line after it
-        val androidIndex = lines.subList(0, searchEnd).indexOfFirst { androidSectionRegex.matches(it) }
-        if (androidIndex >= 0) {
-            lines.add(androidIndex + 1, newBomLine)
-        } else {
-            // No Android section exists, add one before the first dated entry or at end of unreleased block
-            val insertAt = if (firstDatedEntry > 0) firstDatedEntry else lines.size
-            lines.add(insertAt, "- Android")
-            lines.add(insertAt + 1, newBomLine)
-        }
+    if (!hasUnreleasedSection) {
+        // No unreleased section — prepend one with the "- Android" heading and the bom bullet.
+        val prefix = mutableListOf("# Release Date", "", "## Release Version", "", "- Android", newBomLine, "")
+        fileLines.addAll(0, prefix)
+        file.writeText(fileLines.joinToString("\n") + "\n")
+        return
     }
 
-    file.writeText(lines.joinToString("\n") + "\n")
+    // Unreleased section exists. Its end is the next "# ..." heading (any format).
+    val unreleasedEnd = (1 until fileLines.size)
+        .firstOrNull { fileLines[it].startsWith("# ") }
+        ?: fileLines.size
+
+    // If an android-bom bullet already exists in the unreleased section, update it in place.
+    val existingBomLineIndex = fileLines.subList(0, unreleasedEnd).indexOfFirst { bomLineRegex.matches(it) }
+    if (existingBomLineIndex >= 0) {
+        fileLines[existingBomLineIndex] = newBomLine
+        file.writeText(fileLines.joinToString("\n") + "\n")
+        return
+    }
+
+    // Find or create the "- Android" heading within the unreleased section.
+    val androidIndex = fileLines.subList(0, unreleasedEnd).indexOfFirst { it == "- Android" }
+    if (androidIndex >= 0) {
+        // Insert after existing "- Android" sub-bullets.
+        var cursor = androidIndex + 1
+        while (cursor < unreleasedEnd && fileLines[cursor].startsWith("  ")) cursor++
+        fileLines.add(cursor, newBomLine)
+    } else {
+        fileLines.add(unreleasedEnd, "- Android")
+        fileLines.add(unreleasedEnd + 1, newBomLine)
+    }
+
+    file.writeText(fileLines.joinToString("\n") + "\n")
 }
 
 // ── Main ───────────────────────────────────────────────────────────────────────
@@ -237,6 +257,15 @@ fun updateBom() {
 
     println()
     println("Updating modules...")
+
+    val summaryFile = File(projectRoot, BUMP_SUMMARY_FILE)
+    summaryFile.parentFile?.mkdirs()
+    if (currentAndroidBomVersion != newAndroidBomVersion && androidBomChanged.isNotEmpty()) {
+        summaryFile.appendText("- Android: `android-bom` $currentAndroidBomVersion → $newAndroidBomVersion\n")
+    }
+    if (currentPluginBaseBomVersion != newPluginBaseBomVersion && pluginBaseBomChanged.isNotEmpty()) {
+        summaryFile.appendText("- Android: `plugin-base-bom` $currentPluginBaseBomVersion → $newPluginBaseBomVersion\n")
+    }
 
     for (config in moduleConfigs) {
         val file = File(projectRoot, config.gradleFilePath)
