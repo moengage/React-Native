@@ -12,6 +12,7 @@ import com.moengage.plugin.base.internal.model.PermissionResult
 import com.moengage.plugin.base.internal.model.PushPayload
 import com.moengage.plugin.base.internal.model.events.push.TokenEvent
 import com.moengage.plugin.base.internal.model.events.LogoutCompleteEvent
+import com.moengage.plugin.base.internal.model.events.authentication.AuthenticationErrorEvent
 
 /**
  * @author Umang Chamaria
@@ -69,6 +70,14 @@ internal class PayloadGenerator {
         val json = permissionResultToJson(result)
         Logger.print { "$tag permissionResultToWriteableMap() : Payload Json: $json" }
         map.putString(ARGUMENT_PAYLOAD, json.toString())
+        return map
+    }
+
+    fun authenticationErrorToWritableMap(event: AuthenticationErrorEvent): WritableMap {
+        val map = Arguments.createMap()
+        val resultJson = authenticationErrorToJson(event)
+        Logger.print { "$tag authenticationErrorToWritableMap() : Payload Json: $resultJson" }
+        map.putString(ARGUMENT_PAYLOAD, resultJson.toString())
         return map
     }
 

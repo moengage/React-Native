@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import ReactMoE, {
   MoEAppStatus,
+  MoEAuthenticationType,
 } from "react-native-moengage";
 
 import ReactMoEGeofence from 'react-native-moengage-geofence';
@@ -120,6 +121,20 @@ export const HomeScreen = (props) => {
             action: () => {
               //For User Logout
               ReactMoE.logout();
+            },
+          },
+          {
+            id: "passAuthenticationDetails",
+            title: "Pass Authentication Details (JWT)",
+            action: () => {
+              //Pass the JWT token after login / token refresh
+              ReactMoE.passAuthenticationDetails({
+                authenticationType: MoEAuthenticationType.JWT,
+                data: {
+                  token: "SAMPLE_JWT_TOKEN",
+                  userIdentifier: "SAMPLE_USER_IDENTIFIER",
+                },
+              });
             },
           },
           {

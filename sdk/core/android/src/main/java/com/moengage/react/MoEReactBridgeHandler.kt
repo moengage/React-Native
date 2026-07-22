@@ -79,6 +79,15 @@
              Logger.print(LogLevel.ERROR, t) { "$tag logout() : " }
          }
      }
+
+     fun passAuthenticationDetails(payload: String) {
+         try {
+             Logger.print { "$tag passAuthenticationDetails() : $payload" }
+             pluginHelper.passAuthenticationDetails(context, payload)
+         } catch (t: Throwable) {
+             Logger.print(LogLevel.ERROR, t) { "$tag passAuthenticationDetails() : " }
+         }
+     }
  
      fun setAlias(payload: String) {
          try {

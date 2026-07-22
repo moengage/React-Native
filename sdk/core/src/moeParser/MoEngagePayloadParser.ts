@@ -2,14 +2,21 @@ import MoEAccountMeta from "../models/MoEAccountMeta";
 import MoELogoutCompleteData from "../models/MoELogoutCompleteData";
 import MoEngagePersimissionResultData from "../models/MoEngagePersimissionResultData";
 import UserDeletionData from "../models/UserDeletionData";
+import MoEAuthenticationErrorData from "../models/MoEAuthenticationErrorData";
+import MoEJwtAuthenticationErrorData from "../models/MoEJwtAuthenticationErrorData";
 import {
     ACCOUNT_META,
     APP_ID,
+    AUTHENTICATION_TYPE,
+    AUTH_ERROR_CODE,
+    AUTH_ERROR_MESSAGE,
     IS_USER_DELETION_SUCCESS,
     MOE_DATA,
     MOE_PERMISSION_STATE,
     MOE_PERMISSION_TYPE,
-    MOE_PLATFORM
+    MOE_PLATFORM,
+    MOE_TOKEN,
+    USER_IDENTIFIER
 } from "../utils/MoEConstants";
 
 export function getPermissionResult(payload: { [k: string]: any }) {
@@ -58,6 +65,32 @@ export function getLogoutCompleteData(payload: { [k: string]: any }): MoELogoutC
         return new MoELogoutCompleteData(
             getMoEAccountMeta(payload[ACCOUNT_META]),
             payload[MOE_PLATFORM]
+        );
+    } catch (e) {
+        return null;
+    }
+}
+
+/**
+ * Create an instance of {@link MoEAuthenticationErrorData} from json object
+ *
+ * @param payload - JSON Object with required keys
+ * @returns instance of {@link MoEAuthenticationErrorData} or null if parsing fails
+ * @since 12.10.0
+ */
+export function getAuthenticationErrorData(payload: { [k: string]: any }): MoEAuthenticationErrorData | null {
+    try {
+        const data = payload[MOE_DATA];
+        return new MoEAuthenticationErrorData(
+            getMoEAccountMeta(payload[ACCOUNT_META]),
+            payload[MOE_PLATFORM],
+            data[AUTHENTICATION_TYPE],
+            new MoEJwtAuthenticationErrorData(
+                data[AUTH_ERROR_CODE],
+                data[MOE_TOKEN],
+                data[USER_IDENTIFIER],
+                data[AUTH_ERROR_MESSAGE]
+            )
         );
     } catch (e) {
         return null;

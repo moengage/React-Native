@@ -43,6 +43,9 @@ function addMoEngageListeners() {
   ReactMoE.setEventListener("inAppCampaignSelfHandled", (payload) => {
     console.debug("inAppCampaignSelfHandled", payload);
   });
+  ReactMoE.setEventListener("authenticationError", (data) =>
+    console.debug("authenticationError", data)
+  );
 }
 
 export default App;

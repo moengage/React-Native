@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, FlatList } from 'react-native';
-import ReactMoE, { MoEProperties } from 'react-native-moengage';
+import ReactMoE, { MoEProperties, MoEAuthenticationType } from 'react-native-moengage';
 
 const coreApiActions = [
   {
@@ -23,6 +23,18 @@ const coreApiActions = [
     text: 'Logout',
     action: () => {
       ReactMoE.logout();
+    },
+  },
+  {
+    text: 'Pass Authentication Details (JWT)',
+    action: () => {
+      ReactMoE.passAuthenticationDetails({
+        authenticationType: MoEAuthenticationType.JWT,
+        data: {
+          token: 'SAMPLE_JWT_TOKEN',
+          userIdentifier: 'SAMPLE_USER_IDENTIFIER',
+        },
+      });
     },
   },
   {
