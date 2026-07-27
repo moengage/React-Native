@@ -70,6 +70,8 @@ import MoEAuthenticationErrorData from "./models/MoEAuthenticationErrorData";
 import MoEJwtAuthenticationErrorData from "./models/MoEJwtAuthenticationErrorData";
 import MoEAuthenticationData from "./models/MoEAuthenticationData";
 import MoEJwtAuthenticationData from "./models/MoEJwtAuthenticationData";
+import MoEAuthenticationDetails from "./models/MoEAuthenticationDetails";
+import MoEAuthenticationErrorDetails from "./models/MoEAuthenticationErrorDetails";
 import { MoEAuthenticationType } from "./models/MoEAuthenticationType";
 import { MoEJwtErrorCode } from "./models/MoEJwtErrorCode";
 
@@ -845,9 +847,12 @@ export {
   KEY_ACCESSIBILITY,
   MoEAuthenticationErrorData,
   MoEJwtAuthenticationErrorData,
+  MoEJwtAuthenticationData,
+  MoEAuthenticationDetails,
+  MoEAuthenticationErrorDetails,
   MoEAuthenticationType,
   MoEJwtErrorCode
 };
-export type { MoEAuthenticationData, MoEJwtAuthenticationData };
+export type { MoEAuthenticationData };
 export default ReactMoE;
 

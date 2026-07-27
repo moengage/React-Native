@@ -1,7 +1,7 @@
 import MoEAccountMeta from "./MoEAccountMeta";
 import { MoEPlatform } from "./MoEPlatform";
 import { MoEAuthenticationType } from "./MoEAuthenticationType";
-import MoEJwtAuthenticationErrorData from "./MoEJwtAuthenticationErrorData";
+import MoEAuthenticationErrorDetails from "./MoEAuthenticationErrorDetails";
 
 /**
  * Data delivered with the `authenticationError` event when the SDK fails to
@@ -29,16 +29,17 @@ export default class MoEAuthenticationErrorData {
     authenticationType: MoEAuthenticationType;
 
     /**
-     * Scheme specific error details. For {@link MoEAuthenticationType.JWT} this
-     * is a {@link MoEJwtAuthenticationErrorData}.
+     * Scheme specific error details — a {@link MoEAuthenticationErrorDetails}
+     * subtype. For {@link MoEAuthenticationType.JWT} this is a
+     * {@link MoEJwtAuthenticationErrorData}.
      */
-    data: MoEJwtAuthenticationErrorData;
+    data: MoEAuthenticationErrorDetails;
 
     constructor(
         accountMeta: MoEAccountMeta,
         platform: MoEPlatform,
         authenticationType: MoEAuthenticationType,
-        data: MoEJwtAuthenticationErrorData
+        data: MoEAuthenticationErrorDetails
     ) {
         this.accountMeta = accountMeta;
         this.platform = platform;

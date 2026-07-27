@@ -1,5 +1,5 @@
 import { MoEAuthenticationType } from "./MoEAuthenticationType";
-import MoEJwtAuthenticationData from "./MoEJwtAuthenticationData";
+import MoEAuthenticationDetails from "./MoEAuthenticationDetails";
 
 /**
  * Authentication details passed to the SDK via
@@ -14,8 +14,8 @@ export default interface MoEAuthenticationData {
     authenticationType: MoEAuthenticationType;
 
     /**
-     * Scheme specific payload. For {@link MoEAuthenticationType.JWT} this is a
-     * {@link MoEJwtAuthenticationData}.
+     * Scheme specific payload — a {@link MoEAuthenticationDetails} subtype. For
+     * {@link MoEAuthenticationType.JWT} pass a {@link MoEJwtAuthenticationData}.
      */
-    data: MoEJwtAuthenticationData;
+    data: MoEAuthenticationDetails;
 }

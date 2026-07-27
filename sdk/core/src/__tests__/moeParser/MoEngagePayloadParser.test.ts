@@ -2,6 +2,7 @@ import { userIdentityStringObjectType, logoutCompleteIosPayload, logoutCompleteA
 import { getUserIdentitiesData, getLogoutCompleteData, getAuthenticationErrorData } from "../../moeParser/MoEngagePayloadParser";
 import MoELogoutCompleteData from "../../models/MoELogoutCompleteData";
 import MoEAuthenticationErrorData from "../../models/MoEAuthenticationErrorData";
+import MoEJwtAuthenticationErrorData from "../../models/MoEJwtAuthenticationErrorData";
 import { MoEPlatform } from "../../models/MoEPlatform";
 import { MoEAuthenticationType } from "../../models/MoEAuthenticationType";
 import { MoEJwtErrorCode } from "../../models/MoEJwtErrorCode";
@@ -46,10 +47,11 @@ describe('MoEngagePayloadParser', () => {
             expect(result?.platform).toEqual(MoEPlatform.IOS);
             expect(result?.accountMeta.appId).toEqual(appId);
             expect(result?.authenticationType).toEqual(MoEAuthenticationType.JWT);
-            expect(result?.data.code).toEqual(MoEJwtErrorCode.TokenNotAvailable);
-            expect(result?.data.token).toEqual("dummy-token");
-            expect(result?.data.userIdentifier).toEqual("dummy-user");
-            expect(result?.data.message).toEqual("token not available");
+            const data = result?.data as MoEJwtAuthenticationErrorData;
+            expect(data.code).toEqual(MoEJwtErrorCode.TokenNotAvailable);
+            expect(data.token).toEqual("dummy-token");
+            expect(data.userIdentifier).toEqual("dummy-user");
+            expect(data.message).toEqual("token not available");
         });
 
         it('Android payload should return MoEAuthenticationErrorData with android platform and JWT error details', () => {
@@ -57,7 +59,7 @@ describe('MoEngagePayloadParser', () => {
             expect(result).toBeInstanceOf(MoEAuthenticationErrorData);
             expect(result?.platform).toEqual(MoEPlatform.Android);
             expect(result?.accountMeta.appId).toEqual(appId);
-            expect(result?.data.code).toEqual(MoEJwtErrorCode.InvalidSignature);
+            expect((result?.data as MoEJwtAuthenticationErrorData).code).toEqual(MoEJwtErrorCode.InvalidSignature);
         });
 
         it('invalid payload missing accountMeta should return null', () => {
