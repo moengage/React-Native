@@ -12,8 +12,6 @@ import {
 } from "react-native";
 import ReactMoE, {
   MoEAppStatus,
-  MoEAuthenticationType,
-  MoEJwtAuthenticationData,
 } from "react-native-moengage";
 
 import ReactMoEGeofence from 'react-native-moengage-geofence';
@@ -125,17 +123,10 @@ export const HomeScreen = (props) => {
             },
           },
           {
-            id: "passAuthenticationDetails",
-            title: "Pass Authentication Details (JWT)",
+            id: "authentication",
+            title: "Authentication",
             action: () => {
-              // Replace with a real signed JWT and the matching identified user.
-              ReactMoE.passAuthenticationDetails({
-                authenticationType: MoEAuthenticationType.JWT,
-                data: new MoEJwtAuthenticationData(
-                  "<YOUR_JWT_TOKEN>",
-                  "<YOUR_USER_IDENTIFIER>"
-                ),
-              });
+              props.navigation.navigate("JwtAuthenticationScreen");
             },
           },
           {
