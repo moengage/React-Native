@@ -28,4 +28,5 @@ runs:
       shell: bash
       run: |
         chmod +x .github/scripts/react-utils.main.kts
+        chmod +x .github/scripts/pre-release.main.kts
         chmod +x .github/scripts/release.main.kts

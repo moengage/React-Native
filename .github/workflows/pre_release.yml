@@ -1,11 +1,10 @@
-# Merges development into master, publishes the plugins, then merges master back into
-# development and notifies about the release.
+# Merges development into master, prepares the release (version bumps, changelogs,
+# release metadata) on master, then merges master back into development.
 #
-# Structured as three chained jobs instead of one job that dispatch-and-polls the publish
-# workflow:
-#   merge-dev-to-master  ->  publish-plugins (reusable workflow)  ->  finalize
-# `publish-plugins` uses `uses:` so GitHub natively waits for it to finish, and `finalize`
-# declares `needs: publish-plugins`, so it is skipped automatically if publishing fails.
+# Structured as three chained jobs:
+#   merge-dev-to-master  ->  pre-release  ->  merge-master-to-dev
+# Publishing happens separately: publish_plugins.yml triggers via `workflow_run`
+# once the Release workflow (which calls this one) completes.
 name: Release - Pre Release
 
 on:
@@ -45,24 +44,11 @@ jobs:
         uses: ./sdk-automation-scripts/actions/action-git-development-to-master
         with:
           working-directory: source
-
-  # Called as a reusable workflow: the job does not complete until publishing finishes,
-  # and a failure here propagates to dependents (see `finalize`) — no dispatch/poll/watch.
-  publish-plugins:
-    needs: merge-dev-to-master
-    uses: ./.github/workflows/publish_plugins.yml
-    with:
-      releaseNotes: ${{ inputs.releaseNotes }}
-      releaseTicket: ${{ inputs.releaseTicket }}
-    secrets:
-      SDK_BOT_ACCESS_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-
-  finalize:
-    # `needs` defaults to requiring success, so this whole job is skipped if
-    # publish-plugins fails or is cancelled.
-    needs: publish-plugins
+  pre-release:
     runs-on: ubuntu-latest
+    needs: merge-dev-to-master
     steps:
+      # Bootstrap checkout: needed so `./source/.github/actions/release-setup` exists.
       - name: Checkout code
         uses: actions/checkout@v3
         with:
@@ -70,6 +56,32 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      # Shared setup: checks out sdk-automation-scripts, npm setup, chmod release scripts.
+      - name: Release setup
+        uses: ./source/.github/actions/release-setup
+        with:
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Pre release
+        working-directory: source
+        run: |
+          kotlin .github/scripts/pre-release.main.kts "$RELEASE_NOTES" "$RELEASE_TICKET"
+        env:
+          RELEASE_NOTES: ${{ inputs.releaseNotes }}
+          RELEASE_TICKET: ${{ inputs.releaseTicket }}
+          GH_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+  merge-master-to-dev:
+    runs-on: ubuntu-latest
+    needs: pre-release
+    steps:
+      # Bootstrap checkout: needed so `./source/.github/actions/release-setup` exists.
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          path: source
+          fetch-depth: 0
+          fetch-tags: true
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      # Shared setup: checks out sdk-automation-scripts, npm setup, chmod release scripts.
       - name: Release setup
         uses: ./source/.github/actions/release-setup
         with:
@@ -78,10 +90,3 @@ jobs:
         uses: ./sdk-automation-scripts/actions/action-git-master-to-development
         with:
           working-directory: source
-      - name: Notify release
-        working-directory: source
-        run: |
-          kotlin .github/scripts/notify-release.main.kts "$RELEASE_NOTES"
-        env:
-          RELEASE_NOTES: ${{ inputs.releaseNotes }}
-          GITHUB_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}

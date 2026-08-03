@@ -1,6 +1,6 @@
 # Manual entry point for releasing the React-Native plugins.
 # Collects the release inputs and hands off to the Pre Release workflow.
-name: Release Plugins
+name: Release
 
 on:
   workflow_dispatch: # manual trigger

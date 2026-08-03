@@ -1,31 +1,16 @@
-# Publishes the React-Native plugins to npm and creates the GitHub releases.
-# Can be triggered manually, or is called by the Pre Release workflow.
-name: Publish Plugins
+# Publishes the React-Native plugins staged by the Release workflow to npm and
+# creates the GitHub releases. Runs automatically once the Release workflow
+# completes successfully, or can be triggered manually. The plugin list and
+# release inputs are read from the `release/` JSON files committed by
+# pre-release.main.kts.
+name: Publish to NPM
 
 on:
-  workflow_dispatch: # manual trigger
-    inputs:
-      releaseNotes:
-        type: string
-        description: 'Enter the Release note'
-        required: true
-      releaseTicket:
-        type: string
-        description: 'Enter the Release ticket'
-        required: true
-  workflow_call: # invoked as a reusable workflow by pre_release.yml
-    inputs:
-      releaseNotes:
-        type: string
-        description: 'Enter the Release note'
-        required: true
-      releaseTicket:
-        type: string
-        description: 'Enter the Release ticket'
-        required: true
-    secrets:
-      SDK_BOT_ACCESS_TOKEN:
-        required: true
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Release"]
+    types:
+      - completed
 
 permissions:
   id-token: write # Required for OIDC
@@ -34,11 +19,12 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # For workflow_run triggers, only publish when the Release workflow succeeded.
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     steps:
       # Bootstrap checkout: needed so `./source/.github/actions/release-setup` exists.
-      # Always publish from master: when called by pre_release.yml the run's ref is the
-      # caller's branch (e.g. development), but the plugins must be published from the
-      # freshly merged master. Pinning the ref keeps both the manual and called paths correct.
+      # Always publish from master: the plugins must be published from the freshly
+      # merged master, regardless of the ref this workflow was triggered on.
       - name: Checkout code
         uses: actions/checkout@v3
         with:
@@ -55,11 +41,15 @@ jobs:
       - name: Publishing plugins
         working-directory: source
         run: |
-          kotlin .github/scripts/release.main.kts "$RELEASE_NOTES" "$RELEASE_TICKET"
+          kotlin .github/scripts/release.main.kts
         env:
-          # Passed via env (not inline `${{ }}`) so values with spaces/quotes are not
-          # word-split or shell-injected. `inputs` is populated for both workflow_dispatch
-          # and workflow_call, so this works on both trigger paths.
-          RELEASE_NOTES: ${{ inputs.releaseNotes }}
-          RELEASE_TICKET: ${{ inputs.releaseTicket }}
           GH_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Notify release
+        working-directory: source
+        # Release notes are read from the inputs file committed by pre-release.main.kts.
+        run: |
+          RELEASE_NOTES=$(node -p "require('./release/release-workflow-inputs.json').releaseNotes")
+          kotlin .github/scripts/notify-release.main.kts "$RELEASE_NOTES"
+        env:
+          GH_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
