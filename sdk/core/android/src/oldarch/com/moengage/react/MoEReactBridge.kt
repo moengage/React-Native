@@ -65,6 +65,11 @@ class MoEReactBridge(
     }
 
     @ReactMethod
+    fun passAuthenticationDetails(payload: String) {
+        bridgeHandler.passAuthenticationDetails(payload)
+    }
+
+    @ReactMethod
     fun setAlias(payload: String) {
         bridgeHandler.setAlias(payload)
     }

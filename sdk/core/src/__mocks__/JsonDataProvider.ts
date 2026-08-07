@@ -42,3 +42,38 @@ export const logoutCompleteAndroidPayload = JSON.stringify({
 export const logoutCompleteInvalidPayload = JSON.stringify({
     platform: "iOS"
 });
+
+export const authenticationErrorIosPayload = JSON.stringify({
+    accountMeta: { appId: appId },
+    platform: "iOS",
+    data: {
+        authenticationType: "JWT",
+        code: "TOKEN_NOT_AVAILABLE",
+        token: "dummy-token",
+        userIdentifier: "dummy-user",
+        message: "token not available"
+    }
+});
+
+export const authenticationErrorAndroidPayload = JSON.stringify({
+    accountMeta: { appId: appId },
+    platform: "android",
+    data: {
+        authenticationType: "JWT",
+        code: "INVALID_SIGNATURE",
+        token: "dummy-token",
+        userIdentifier: "dummy-user",
+        message: "invalid signature"
+    }
+});
+
+export const authenticationErrorInvalidPayload = JSON.stringify({
+    platform: "iOS",
+    data: {
+        authenticationType: "JWT",
+        code: "UNKNOWN",
+        token: "",
+        userIdentifier: "",
+        message: ""
+    }
+});

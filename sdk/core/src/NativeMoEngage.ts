@@ -135,6 +135,13 @@ export interface Spec extends TurboModule {
    */
   getUserIdentities: (payload: string) => Promise<string | null>;
 
+  /**
+   * Pass JWT authentication details to the native SDK (after login / token refresh).
+   *
+   * @param payload Stringified JSON payload
+   */
+  passAuthenticationDetails: (payload: string) => void;
+
   /// Anroid specific
 
   /**

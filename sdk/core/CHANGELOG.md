@@ -1,3 +1,9 @@
+# Release Date
+
+## Release Version
+
+- [minor] Added support for JWT authentication. Use `ReactMoE.passAuthenticationDetails()` to pass the JWT token after login / token refresh, and listen to the `authenticationError` event for authentication failures.
+
 # 02-07-2026
 
 ## 12.9.0

@@ -130,6 +130,11 @@
     [[MoEngagePluginBridge sharedInstance] resetUser:jsonPayload];
 }
 
+-(void)passAuthenticationDetails:(NSString *)payload {
+    NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
+    [[MoEngagePluginBridge sharedInstance] passAuthenticationDetails:jsonPayload];
+}
+
 -(void)optOutDataTracking:(NSString *)payload {
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginBridge sharedInstance] optOutDataTracking:jsonPayload];

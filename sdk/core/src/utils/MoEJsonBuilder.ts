@@ -11,7 +11,9 @@ import { MoEngageNudgePosition } from "../models/MoEngageNudgePosition";
 import { MoESupportedAttributes } from "../models/MoESupportedAttributes";
 import MoESelfHandledCampaign from "../models/MoESelfHandledCampaign";
 import MoEInAppRules from "../models/MoEInAppRules";
-import { ACCOUNT_META, APP_ID, MOE_DATA, USER_IDENTITY, USER_UNIQUE_IDENTITY } from "./MoEConstants";
+import { ACCOUNT_META, APP_ID, AUTHENTICATION_TYPE, MOE_DATA, MOE_TOKEN, USER_IDENTIFIER, USER_IDENTITY, USER_UNIQUE_IDENTITY } from "./MoEConstants";
+import MoEAuthenticationData from "../models/MoEAuthenticationData";
+import MoEJwtAuthenticationData from "../models/MoEJwtAuthenticationData";
 
 export function getInAppCampaignJson(moEInAppData: MoEInAppData, type: string, appId: String) {
   var json: { [k: string]: any } = {
@@ -324,5 +326,26 @@ export function getIdentifyUserPayload(identity: string | { [k: string]: string 
       [USER_IDENTITY]: identity
     };
   }
+  return JSON.stringify(payload);
+}
+
+/**
+ * Build the payload for {@link ReactMoE.passAuthenticationDetails}. Flattens the
+ * scheme specific data into the wire `data` object expected by the native SDK.
+ *
+ * @since 12.10.0
+ */
+export function getAuthenticationDetailsJson(authenticationData: MoEAuthenticationData, appId: string): string {
+  const jwtData = authenticationData.data as MoEJwtAuthenticationData;
+  var payload: { [k: string]: any } = {
+    [ACCOUNT_META]: {
+      [APP_ID]: appId
+    },
+    [MOE_DATA]: {
+      [AUTHENTICATION_TYPE]: authenticationData.authenticationType,
+      [MOE_TOKEN]: jwtData.token,
+      [USER_IDENTIFIER]: jwtData.userIdentifier
+    }
+  };
   return JSON.stringify(payload);
 }

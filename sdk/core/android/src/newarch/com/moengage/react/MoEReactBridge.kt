@@ -61,6 +61,10 @@ class MoEReactBridge(reactContext: ReactApplicationContext) : NativeMoEngageSpec
         bridgeHandler.logout(payload)
     }
 
+    override fun passAuthenticationDetails(payload: String) {
+        bridgeHandler.passAuthenticationDetails(payload)
+    }
+
     override fun showInApp(payload: String) {
         bridgeHandler.showInApp(payload)
     }

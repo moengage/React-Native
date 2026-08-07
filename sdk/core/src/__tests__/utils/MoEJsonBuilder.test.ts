@@ -1,7 +1,8 @@
 import { appId, expectedUserIdentityStringObjectTypePayload, expectedUserIdentityStringTypePayload, userIdentityStringObjectType, userIdentityStringType } from "../../__mocks__/JsonDataProvider";
 import MoEngageLogger from "../../logger/MoEngageLogger";
 import MoEInAppRules from "../../models/MoEInAppRules";
-import { getDisplayRulesJson, getIdentifyUserPayload } from "../../utils/MoEJsonBuilder";
+import { getDisplayRulesJson, getIdentifyUserPayload, getAuthenticationDetailsJson } from "../../utils/MoEJsonBuilder";
+import { MoEAuthenticationType } from "../../models/MoEAuthenticationType";
 
 describe('MoEJsonBuilder', () => {
 
@@ -12,6 +13,24 @@ describe('MoEJsonBuilder', () => {
 
         it('should return object identity', () => {
             expect(getIdentifyUserPayload(userIdentityStringObjectType, appId)).toEqual(JSON.stringify(expectedUserIdentityStringObjectTypePayload));
+        });
+    });
+
+    describe('getAuthenticationDetailsJson', () => {
+        it('should flatten authentication data into the wire payload expected by the native SDK', () => {
+            const authenticationData = {
+                authenticationType: MoEAuthenticationType.JWT,
+                data: { token: "sample-token", userIdentifier: "sample-user" }
+            };
+            const expected = {
+                accountMeta: { appId: appId },
+                data: {
+                    authenticationType: "JWT",
+                    token: "sample-token",
+                    userIdentifier: "sample-user"
+                }
+            };
+            expect(getAuthenticationDetailsJson(authenticationData, appId)).toEqual(JSON.stringify(expected));
         });
     });
 });
