@@ -1,9 +1,9 @@
-# Release Date
+# 12-08-2026
 
-## Release Version
+## 1.1.1
 
 - Android
-  - [patch] Handled a case where updating from a version below 14.09.00 failed to update the storage schema
+  - Handled a case where updating from a version below 14.09.00 failed to update the storage schema
 
 # 02-07-2026
 
