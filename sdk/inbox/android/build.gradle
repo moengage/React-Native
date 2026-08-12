@@ -1,7 +1,7 @@
 import com.moengage.gradle.android.library.plugin.configs.BuildConfigType
 
 ext {
-  moengageNativeBOMVersion = "2.3.0"
+  moengageNativeBOMVersion = "2.3.1"
   moengagePluginBaseBOMVersion = "3.1.0"
   kotlinVersion = "1.9.23"
 }
