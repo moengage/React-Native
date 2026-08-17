@@ -27,27 +27,16 @@ private fun releasePlugins() {
         return
     }
 
-    for (pluginPath in pluginsToBeReleased) {
-        val releaseVersion = getPluginVersionFromPackage(pluginPath)
-        releaseAndTagPlugin(
-            isBuildRequired = true,
-            pluginPath = pluginPath,
-            releaseVersion = releaseVersion
+    val tags = pluginsToBeReleased.map { pluginPath ->
+    releaseAndTagPlugin(
+        isBuildRequired = true,
+        pluginPath = pluginPath,
+        releaseVersion = getPluginVersionFromPackage(pluginPath)
         )
     }
-
-    // Push git tags
+    // push tags, then create the GitHub release for every released plugin
     pushLocalTags()
-
-    // create the GitHub release for every released plugin
-    for (pluginPath in pluginsToBeReleased) {
-        val releaseVersion = getPluginVersionFromPackage(pluginPath)
-        var moduleBaseTag = getPluginNameFromPackage(pluginPath)
-        if (moduleBaseTag.isBlank()) {
-            moduleBaseTag = pluginPath.split("/").last()
-        }
-        createGitRelease("$moduleBaseTag-v$releaseVersion", releaseNotes)
-    }
+    tags.forEach { createGitRelease(it, releaseNotes) }
 }
 
 private fun getReleasePlugins(): List<String> {
