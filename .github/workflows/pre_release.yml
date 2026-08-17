@@ -39,6 +39,12 @@ jobs:
         uses: ./source/.github/actions/npm-automation-repo-setup
         with:
           sdk_bot_access_token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      # First gate of the release: runs before anything is merged or pushed, so a
+      # SNAPSHOT dependency stops the release while master is still untouched.
+      - name: Verify no SNAPSHOT dependencies
+        uses: ./sdk-automation-scripts/actions/android-verify-no-snapshots
+        with:
+          working-directory: source
       - name: Merge Development to Master
         uses: ./sdk-automation-scripts/actions/action-git-development-to-master
         with:
