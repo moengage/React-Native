@@ -7,16 +7,12 @@ on:
     inputs:
       releaseNotes:
         type: string
-        description: 'Enter the Release note'
+        description: "Enter the Release note"
         required: true
       releaseTicket:
         type: string
-        description: 'Enter the Release ticket'
+        description: "Enter the Release ticket"
         required: true
-
-permissions:
-  id-token: write # Required for OIDC
-  contents: read
 
 jobs:
   pre-release:
@@ -25,4 +21,5 @@ jobs:
     with:
       releaseNotes: ${{ github.event.inputs.releaseNotes }}
       releaseTicket: ${{ github.event.inputs.releaseTicket }}
-    secrets: inherit
+    secrets:
+      SDK_BOT_ACCESS_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}

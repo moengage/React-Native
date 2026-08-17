@@ -1,8 +1,8 @@
 # Merges development into master, prepares the release (version bumps, changelogs,
 # release metadata) on master, then merges master back into development.
 #
-# Structured as three chained jobs:
-#   merge-dev-to-master  ->  pre-release  ->  merge-master-to-dev
+# All three stages run as steps of a single job, sharing one checkout and setup:
+#   merge development to master  ->  pre release  ->  merge master to development
 # Publishing happens separately: publish_plugins.yml triggers via `workflow_run`
 # once the Release workflow (which calls this one) completes.
 name: Release - Pre Release
@@ -18,16 +18,15 @@ on:
         type: string
         description: 'Enter the Release ticket'
         required: true
-
-permissions:
-  id-token: write # Required for OIDC (the called publish workflow needs it)
-  contents: read
+    secrets:
+      SDK_BOT_ACCESS_TOKEN:
+        required: true
 
 jobs:
-  merge-dev-to-master:
+  pre-release:
     runs-on: ubuntu-latest
     steps:
-      # Bootstrap checkout: needed so `./source/.github/actions/release-setup` exists.
+      # Bootstrap checkout: needed so `./source/.github/actions/npm-automation-repo-setup` exists.
       - name: Checkout code
         uses: actions/checkout@v3
         with:
@@ -35,32 +34,15 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      # Shared setup: checks out sdk-automation-scripts, npm setup, chmod release scripts.
+      # Shared setup: checks out sdk-automation-scripts and configures npm.
       - name: Release setup
-        uses: ./source/.github/actions/release-setup
+        uses: ./source/.github/actions/npm-automation-repo-setup
         with:
-          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+          sdk_bot_access_token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Merge Development to Master
         uses: ./sdk-automation-scripts/actions/action-git-development-to-master
         with:
           working-directory: source
-  pre-release:
-    runs-on: ubuntu-latest
-    needs: merge-dev-to-master
-    steps:
-      # Bootstrap checkout: needed so `./source/.github/actions/release-setup` exists.
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          path: source
-          fetch-depth: 0
-          fetch-tags: true
-          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      # Shared setup: checks out sdk-automation-scripts, npm setup, chmod release scripts.
-      - name: Release setup
-        uses: ./source/.github/actions/release-setup
-        with:
-          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Pre release
         working-directory: source
         run: |
@@ -69,23 +51,6 @@ jobs:
           RELEASE_NOTES: ${{ inputs.releaseNotes }}
           RELEASE_TICKET: ${{ inputs.releaseTicket }}
           GH_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-  merge-master-to-dev:
-    runs-on: ubuntu-latest
-    needs: pre-release
-    steps:
-      # Bootstrap checkout: needed so `./source/.github/actions/release-setup` exists.
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          path: source
-          fetch-depth: 0
-          fetch-tags: true
-          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      # Shared setup: checks out sdk-automation-scripts, npm setup, chmod release scripts.
-      - name: Release setup
-        uses: ./source/.github/actions/release-setup
-        with:
-          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Merge Master to Development
         uses: ./sdk-automation-scripts/actions/action-git-master-to-development
         with:

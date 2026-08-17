@@ -22,7 +22,7 @@ jobs:
     # For workflow_run triggers, only publish when the Release workflow succeeded.
     if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     steps:
-      # Bootstrap checkout: needed so `./source/.github/actions/release-setup` exists.
+      # Bootstrap checkout: needed so `./source/.github/actions/npm-automation-repo-setup` exists.
       # Always publish from master: the plugins must be published from the freshly
       # merged master, regardless of the ref this workflow was triggered on.
       - name: Checkout code
@@ -33,11 +33,11 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-      # Shared setup: checks out sdk-automation-scripts, npm setup, chmod release scripts.
+      # Shared setup: checks out sdk-automation-scripts and configures npm.
       - name: Release setup
-        uses: ./source/.github/actions/release-setup
+        uses: ./source/.github/actions/npm-automation-repo-setup
         with:
-          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+          sdk_bot_access_token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Publishing plugins
         working-directory: source
         run: |
@@ -52,4 +52,3 @@ jobs:
           kotlin .github/scripts/notify-release.main.kts "$RELEASE_NOTES"
         env:
           GH_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}

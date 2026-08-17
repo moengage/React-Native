@@ -2,13 +2,12 @@
 # The caller must check out this repository to `source/` first, since that is what
 # hosts this action and the release scripts. This action then checks out the SDK
 # automation scripts as a workspace-root sibling (release.main.kts imports them via
-# `../../../sdk-automation-scripts/...`), configures the npm repository, and makes the
-# release scripts executable.
-name: Release setup
-description: Checks out the SDK automation scripts, configures the npm repository, and makes the release scripts executable.
+# `../../../sdk-automation-scripts/...`) and configures the npm repository.
+name: Set up NPM SDK automation scripts
+description: Checks out the SDK automation scripts and configures the npm repository.
 
 inputs:
-  token:
+  sdk_bot_access_token:
     description: Personal Access Token used to check out the private sdk-automation-scripts repository.
     required: true
 
@@ -20,13 +19,6 @@ runs:
       with:
         repository: moengage/sdk-automation-scripts
         path: sdk-automation-scripts
-        token: ${{ inputs.token }}
+        token: ${{ inputs.sdk_bot_access_token }}
     - name: Automation script setup
       uses: ./sdk-automation-scripts/actions/npm-repository-setup
-    - name: Script setup
-      working-directory: source
-      shell: bash
-      run: |
-        chmod +x .github/scripts/react-utils.main.kts
-        chmod +x .github/scripts/pre-release.main.kts
-        chmod +x .github/scripts/release.main.kts

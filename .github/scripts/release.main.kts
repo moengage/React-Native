@@ -1,7 +1,7 @@
 #!/usr/bin/env kotlin
 
 @file:DependsOn("org.json:json:20240303")
-@file:Import("../../../sdk-automation-scripts/scripts/hybrid/hybrid-utils.main.kts")
+@file:Import("../../../sdk-automation-scripts/scripts/common/utils.main.kts")
 
 import org.json.JSONArray
 import org.json.JSONObject
