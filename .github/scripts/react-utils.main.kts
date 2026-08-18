@@ -17,3 +17,14 @@ private val pluginsPath = setOf(
  * Returns all the plugins list
  */
 fun getAllPluginsPath(): Set<String> = pluginsPath
+
+private val pluginPackageNameAndPathMap = mapOf<String, String>(
+    "cards" to "sdk/cards",
+    "core" to "sdk/core",
+    "geofence" to "sdk/geofence",
+    "inbox" to "sdk/inbox",
+    "expo" to "sdk/expo",
+    "personalize" to "sdk/personalize"
+)
+
+fun getAllPluginPackageNameAndPaths(): Map<String, String> = pluginPackageNameAndPathMap

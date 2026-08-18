@@ -1,0 +1,57 @@
+# Merges development into master, prepares the release (version bumps, changelogs,
+# release metadata) on master, then merges master back into development.
+#
+# All three stages run as steps of a single job, sharing one checkout and setup:
+#   merge development to master  ->  pre release  ->  merge master to development
+# Publishing happens separately: publish_plugins.yml triggers via `workflow_run`
+# once the Release workflow (which calls this one) completes.
+name: Release - Pre Release
+
+on:
+  workflow_call:
+    inputs:
+      releaseNotes:
+        type: string
+        description: 'Enter the Release note'
+        required: true
+      releaseTicket:
+        type: string
+        description: 'Enter the Release ticket'
+        required: true
+    secrets:
+      SDK_BOT_ACCESS_TOKEN:
+        required: true
+
+jobs:
+  pre-release:
+    runs-on: ubuntu-latest
+    steps:
+      # Bootstrap checkout: needed so `./source/.github/actions/npm-automation-repo-setup` exists.
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          path: source
+          fetch-depth: 0
+          fetch-tags: true
+          token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      # Shared setup: checks out sdk-automation-scripts and configures npm.
+      - name: Release setup
+        uses: ./source/.github/actions/npm-automation-repo-setup
+        with:
+          sdk_bot_access_token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Merge Development to Master
+        uses: ./sdk-automation-scripts/actions/action-git-development-to-master
+        with:
+          working-directory: source
+      - name: Pre release
+        working-directory: source
+        run: |
+          kotlin .github/scripts/pre-release.main.kts "$RELEASE_NOTES" "$RELEASE_TICKET"
+        env:
+          RELEASE_NOTES: ${{ inputs.releaseNotes }}
+          RELEASE_TICKET: ${{ inputs.releaseTicket }}
+          GH_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      - name: Merge Master to Development
+        uses: ./sdk-automation-scripts/actions/action-git-master-to-development
+        with:
+          working-directory: source

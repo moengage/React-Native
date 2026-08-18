@@ -1,0 +1,24 @@
+# Shared setup for the release workflows (pre_release.yml and publish_plugins.yml).
+# The caller must check out this repository to `source/` first, since that is what
+# hosts this action and the release scripts. This action then checks out the SDK
+# automation scripts as a workspace-root sibling (release.main.kts imports them via
+# `../../../sdk-automation-scripts/...`) and configures the npm repository.
+name: Set up NPM SDK automation scripts
+description: Checks out the SDK automation scripts and configures the npm repository.
+
+inputs:
+  sdk_bot_access_token:
+    description: Personal Access Token used to check out the private sdk-automation-scripts repository.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout sdk automation scripts
+      uses: actions/checkout@v3
+      with:
+        repository: moengage/sdk-automation-scripts
+        path: sdk-automation-scripts
+        token: ${{ inputs.sdk_bot_access_token }}
+    - name: Automation script setup
+      uses: ./sdk-automation-scripts/actions/npm-repository-setup
