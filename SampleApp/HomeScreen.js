@@ -123,6 +123,13 @@ export const HomeScreen = (props) => {
             },
           },
           {
+            id: "authentication",
+            title: "Authentication",
+            action: () => {
+              props.navigation.navigate("JwtAuthenticationScreen");
+            },
+          },
+          {
             id: "9",
             title: "Enable Ad Id Tracking(Android)",
             action: () => {

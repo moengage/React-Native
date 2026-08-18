@@ -15,6 +15,7 @@ import { SelfHandledCardUI } from './src/component/SelfHandledCardUI';
 import ShowNudgeScreen from './ShowNudgeScreen';
 import MultipleInAppsScreen from "./MultipleInAppsScreen"
 import PersonalizeScreen from "./PersonalizeScreen";
+import JwtAuthenticationScreen from "./JwtAuthenticationScreen";
 
 const Stack = createNativeStackNavigator()
 
@@ -44,6 +45,7 @@ export default AppNavigator = () => {
         <Stack.Screen name="ShowNudgeScreen" component={ ShowNudgeScreen } headerTitle="Show Nudge" />
         <Stack.Screen name="MultipleInAppsScreen" component={MultipleInAppsScreen} headerTitle="MultipleInAppsScreen"/>
         <Stack.Screen name="PersonalizeScreen" component={PersonalizeScreen} headerTitle="Personalize"/>
+        <Stack.Screen name="JwtAuthenticationScreen" component={JwtAuthenticationScreen} headerTitle="JWT Authentication"/>
       </Stack.Navigator>
     </NavigationContainer>
   );

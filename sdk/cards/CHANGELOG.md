@@ -1,3 +1,10 @@
+# 12-08-2026
+
+## 6.6.1
+
+- Android
+  - Handled a case where updating from a version below 14.09.00 failed to update the storage schema
+
 # 02-07-2026
 
 ## 6.6.0

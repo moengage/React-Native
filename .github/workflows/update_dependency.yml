@@ -27,6 +27,23 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
 
+      - name: Verify ticket branch is fresh
+        env:
+          GH_TOKEN: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+          TICKET: ${{ github.event.inputs.ticketNumber }}
+        run: |
+          BRANCH="patch/${TICKET}/dependency_update"
+          if gh api "repos/${{ github.repository }}/branches/${BRANCH}" >/dev/null 2>&1; then
+            echo "::error::Branch '${BRANCH}' already exists on the remote. Use a fresh ticket, or delete the existing branch first."
+            exit 1
+          fi
+          echo "Branch '${BRANCH}' is available."
+
+      - name: Reset bump-summary tracker
+        run: |
+          mkdir -p .github/scripts
+          : > .github/scripts/.bump-summary.txt
+
       - name: Update Android dependencies
         id: android
         if: inputs.target == 'android' || inputs.target == 'both'
@@ -44,13 +61,14 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
-          if git diff --quiet; then
+          # The bump-summary tracker is informational only; exclude from diff check.
+          if git diff --quiet -- ':(exclude).github/scripts/.bump-summary.txt'; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No files were updated."
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
             echo "Files updated:"
-            git diff --name-only
+            git diff --name-only -- ':(exclude).github/scripts/.bump-summary.txt'
           fi
 
       - name: Create Pull Request
@@ -65,7 +83,7 @@ jobs:
           git config user.name "sdk-bot-user"
           git config user.email "sdk.bot@moengage.com"
           DATE=$(date +%Y-%m-%d)
-          BRANCH="${TICKET}/dependency_update"
+          BRANCH="patch/${TICKET}/dependency_update"
 
           case "$TARGET" in
             android) SCOPE_LABEL="Android Dependency Update" ;;
@@ -73,7 +91,7 @@ jobs:
             *)       SCOPE_LABEL="Dependency Update" ;;
           esac
 
-          # Build PR body
+          # Per-platform outcome section
           PLATFORM_STATUS=""
           if [ "$TARGET" = "android" ] || [ "$TARGET" = "both" ]; then
             PLATFORM_STATUS+="- Android: ${ANDROID_OUTCOME:-skipped}\n"
@@ -82,13 +100,19 @@ jobs:
             PLATFORM_STATUS+="- iOS: ${IOS_OUTCOME:-skipped}\n"
           fi
 
+          # Bumps section (from the tracker file both scripts wrote to)
+          BUMPS_SECTION=""
+          if [ -s .github/scripts/.bump-summary.txt ]; then
+            BUMPS_SECTION="\n## Bumps\n$(cat .github/scripts/.bump-summary.txt)\n"
+          fi
+
           git checkout -b "$BRANCH"
-          git add -A
+          git add -A -- ':(exclude).github/scripts/.bump-summary.txt'
           git commit -m "${TICKET}: ${SCOPE_LABEL} ${DATE}"
           git push -u origin "$BRANCH"
 
-          BODY=$(printf "## Summary\nAutomated dependency update (target: \`%s\`).\n\n## Platform status\n%b" \
-            "$TARGET" "$PLATFORM_STATUS")
+          BODY=$(printf "## Summary\nAutomated dependency update (target: \`%s\`).\n\n## Platform status\n%b%b" \
+            "$TARGET" "$PLATFORM_STATUS" "$BUMPS_SECTION")
 
           gh pr create \
             --base development \

@@ -88,6 +88,12 @@ export const IS_USER_DELETION_SUCCESS = "isUserDeletionSuccess";
 export const USER_IDENTITY = 'identity';
 export const USER_UNIQUE_IDENTITY = 'uid';
 
+// AUTHENTICATION / JWT
+export const AUTHENTICATION_TYPE = 'authenticationType';
+export const USER_IDENTIFIER = 'userIdentifier';
+export const AUTH_ERROR_CODE = 'code';
+export const AUTH_ERROR_MESSAGE = 'message';
+
 // Accessibility Keys
 export const KEY_ACCESSIBILITY = 'accessibility';
 export const KEY_ACCESSIBILITY_TEXT = 'text';

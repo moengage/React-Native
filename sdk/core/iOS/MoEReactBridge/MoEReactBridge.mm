@@ -81,7 +81,7 @@ RCT_EXPORT_MODULE(MoEReactBridge);
 #pragma mark- Event Emitters
 - (NSArray<NSString *> *)supportedEvents
 {
-    return @[kPushClicked, kPushTokenGenerated, kInAppShown, kInAppClicked, kInAppDismissed, kInAppCustomAction, kInAppSelfHandled, kPermissionResult, kLogoutComplete];
+    return @[kPushClicked, kPushTokenGenerated, kInAppShown, kInAppClicked, kInAppDismissed, kInAppCustomAction, kInAppSelfHandled, kPermissionResult, kLogoutComplete, kAuthenticationError];
 }
 
 #pragma mark- Initialization Method
@@ -174,6 +174,10 @@ RCT_EXPORT_METHOD(identifyUser:(NSString *)payload) {
 
 RCT_EXPORT_METHOD(getUserIdentities:(NSString *)payload resolve:(RCTPromiseResolveBlock) resolve reject:(RCTPromiseRejectBlock)reject) {
     [[MoEReactNativeHandler sharedInstance] getUserIdentities:payload resolve:resolve reject:reject];
+}
+
+RCT_EXPORT_METHOD(passAuthenticationDetails:(NSString *)payload) {
+    [[MoEReactNativeHandler sharedInstance] passAuthenticationDetails:payload];
 }
 
 // MARK: Unimplemented method

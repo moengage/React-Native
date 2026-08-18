@@ -27,7 +27,8 @@ import {
   getInitConfigJson,
   getPermissionResponseJson,
   getNudgeDisplayJson,
-  getIdentifyUserPayload
+  getIdentifyUserPayload,
+  getAuthenticationDetailsJson
 } from "./utils/MoEJsonBuilder";
 import {
   USER_ATTRIBUTE_UNIQUE_ID,
@@ -65,6 +66,14 @@ import { KEY_ACCESSIBILITY } from "./utils/MoEConstants";
 
 import MoEngagePersimissionResultData from "./models/MoEngagePersimissionResultData";
 import MoELogoutCompleteData from "./models/MoELogoutCompleteData";
+import MoEAuthenticationErrorData from "./models/MoEAuthenticationErrorData";
+import MoEJwtAuthenticationErrorData from "./models/MoEJwtAuthenticationErrorData";
+import MoEAuthenticationData from "./models/MoEAuthenticationData";
+import MoEJwtAuthenticationData from "./models/MoEJwtAuthenticationData";
+import MoEAuthenticationDetails from "./models/MoEAuthenticationDetails";
+import MoEAuthenticationErrorDetails from "./models/MoEAuthenticationErrorDetails";
+import { MoEAuthenticationType } from "./models/MoEAuthenticationType";
+import { MoEJwtErrorCode } from "./models/MoEJwtErrorCode";
 
 const PLATFORM_IOS = "ios";
 const PLATFORM_ANDROID = "android";
@@ -80,6 +89,7 @@ const MOE_INAPP_CUSTOM_ACTION = "MoEInAppCampaignCustomAction";
 const MOE_INAPP_SELF_HANDLE = "MoEInAppCampaignSelfHandled";
 const MOE_PERMISSION_RESULT = "MoEPermissionResult";
 const MOE_LOGOUT_COMPLETE = "MoELogoutComplete";
+const MOE_AUTHENTICATION_ERROR = "MoEAuthenticationError";
 
 const eventBroadcastNames = [
   MOE_PUSH_CLICKED,
@@ -90,7 +100,8 @@ const eventBroadcastNames = [
   MOE_INAPP_CUSTOM_ACTION,
   MOE_INAPP_SELF_HANDLE,
   MOE_PERMISSION_RESULT,
-  MOE_LOGOUT_COMPLETE
+  MOE_LOGOUT_COMPLETE,
+  MOE_AUTHENTICATION_ERROR
 ];
 
 // JS Event Names
@@ -103,6 +114,7 @@ const INAPP_CUTOM_ACTION = "inAppCampaignCustomAction";
 const INAPP_SELF_HANDLE = "inAppCampaignSelfHandled";
 export const PERMISSION_RESULT = "permissionResult";
 export const LOGOUT_COMPLETE = "logoutComplete";
+export const AUTHENTICATION_ERROR = "authenticationError";
 
 const PUSH_SERVICE_FCM = "FCM"
 const PUSH_SERVICE_PUSH_KIT = "PUSH_KIT"
@@ -116,7 +128,8 @@ const _eventNames = [
   INAPP_CUTOM_ACTION,
   INAPP_SELF_HANDLE,
   PERMISSION_RESULT,
-  LOGOUT_COMPLETE
+  LOGOUT_COMPLETE,
+  AUTHENTICATION_ERROR
 ];
 
 var _eventTypeHandler = new Map();
@@ -148,7 +161,8 @@ export type NotificationEventName = 'pushTokenGenerated' |
   'inAppCampaignCustomAction' |
   'inAppCampaignSelfHandled' |
   'permissionResult' |
-  'logoutComplete';
+  'logoutComplete' |
+  'authenticationError';
 
 type NotificationEventTypeMap = {
   "pushTokenGenerated": MoEPushToken,
@@ -159,7 +173,8 @@ type NotificationEventTypeMap = {
   "inAppCampaignCustomAction": MoEInAppData,
   "inAppCampaignSelfHandled": MoESelfHandledCampaignData,
   "permissionResult": MoEngagePersimissionResultData,
-  "logoutComplete": MoELogoutCompleteData
+  "logoutComplete": MoELogoutCompleteData,
+  "authenticationError": MoEAuthenticationErrorData
 }
 
 var ReactMoE = {
@@ -380,6 +395,19 @@ var ReactMoE = {
   logout: function () {
     MoEngageLogger.verbose("Will logout user");
     MoEReactBridge.logout(getAppIdJson(moeAppId));
+  },
+
+  /**
+   * Pass JWT authentication details to the SDK. Call this after login and again
+   * whenever the token is refreshed (for example in response to the
+   * `authenticationError` event).
+   *
+   * @param authenticationData authentication details, an instance of {@link MoEAuthenticationData}
+   * @since 12.10.0
+   */
+  passAuthenticationDetails: function (authenticationData: MoEAuthenticationData) {
+    MoEngageLogger.verbose("Will pass authentication details");
+    MoEReactBridge.passAuthenticationDetails(getAuthenticationDetailsJson(authenticationData, moeAppId));
   },
 
   /**
@@ -816,7 +844,15 @@ export {
   MoEngageNudgePosition,
   MoEAnalyticsConfig,
   MoEAccessibilityData,
-  KEY_ACCESSIBILITY
+  KEY_ACCESSIBILITY,
+  MoEAuthenticationErrorData,
+  MoEJwtAuthenticationErrorData,
+  MoEJwtAuthenticationData,
+  MoEAuthenticationDetails,
+  MoEAuthenticationErrorDetails,
+  MoEAuthenticationType,
+  MoEJwtErrorCode
 };
+export type { MoEAuthenticationData };
 export default ReactMoE;
 

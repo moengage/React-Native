@@ -10,6 +10,7 @@ import org.json.JSONObject
 
 val MOENGAGE_OWNER = "moengage"
 val PLUGINBASE_REPO = "iOS-PluginBase"
+val BUMP_SUMMARY_FILE = ".github/scripts/.bump-summary.txt"
 
 data class PodConfig(
     val podName: String,
@@ -79,41 +80,84 @@ fun updatePodspecVersion(file: File, podName: String, oldVersion: String, newVer
     file.writeText(content.replace(oldLine, newLine))
 }
 
-// ── Changelog edits (translated from update-bom.main.kts) ──────────────────────
+// ── Changelog edits ────────────────────────────────────────────────────────────
 
-fun appendIosChangelogEntries(file: File, lines: List<String>) {
-    if (lines.isEmpty()) return
+// Anchor on the explicit "# Release Date" unreleased marker (the convention already in use).
+// This avoids trying to detect where released content STARTS via regex — that approach was
+// fragile against trailing whitespace on dated headings and other formatting quirks.
+
+val RELEASE_DATE_MARKER = "# Release Date"
+
+// Extract artifact name (e.g. "MoEngagePluginBase") from a bullet like
+//   "  - [minor] updating `MoEngagePluginBase` to `6.10.0`"
+// so a subsequent run can UPDATE the existing bullet rather than duplicating it.
+val ARTIFACT_LINE_REGEX = Regex("""updating\s+`([^`]+)`\s+to\s+`[^`]+`""")
+
+fun artifactMatcher(bullet: String): Regex? {
+    val m = ARTIFACT_LINE_REGEX.find(bullet) ?: return null
+    val artifact = Regex.escape(m.groupValues[1])
+    return Regex("""updating\s+`$artifact`\s+to\s+`[^`]+`""")
+}
+
+fun appendIosChangelogEntries(file: File, bullets: List<String>) {
+    if (bullets.isEmpty()) return
     val fileLines = file.readLines().toMutableList()
-    val iosSectionRegex = Regex("""^- iOS$""")
-    val datedEntryRegex = Regex("""^# \d{2}-\d{2}-\d{4}$""")
 
-    val firstDatedEntry = fileLines.indexOfFirst { datedEntryRegex.matches(it) }
+    val hasUnreleasedSection = fileLines.isNotEmpty() && fileLines[0].trim() == RELEASE_DATE_MARKER
 
-    // If the file starts with a dated entry, there is no unreleased section. Prepend one
-    // so we never pollute a released entry.
-    if (firstDatedEntry == 0) {
-        val unreleased = mutableListOf("# Release Date", "", "## Release Version", "", "- iOS")
-        unreleased.addAll(lines)
-        unreleased.add("")
-        fileLines.addAll(0, unreleased)
+    if (!hasUnreleasedSection) {
+        // No unreleased section — prepend a fresh one with the platform heading and bullets.
+        val prefix = mutableListOf("# Release Date", "", "## Release Version", "", "- iOS")
+        prefix.addAll(bullets)
+        prefix.add("")
+        fileLines.addAll(0, prefix)
         file.writeText(fileLines.joinToString("\n") + "\n")
         return
     }
 
-    val searchEnd = if (firstDatedEntry > 0) firstDatedEntry else fileLines.size
-    val iosIndex = fileLines.subList(0, searchEnd).indexOfFirst { iosSectionRegex.matches(it) }
+    // Unreleased section exists. Its end is the next top-level "# ..." heading — whatever
+    // format it uses (dated, annotated, trailing whitespace — irrelevant). We never
+    // touch anything past this boundary.
+    val unreleasedEnd = (1 until fileLines.size)
+        .firstOrNull { fileLines[it].startsWith("# ") }
+        ?: fileLines.size
+
+    // For each new bullet: if an existing bullet for the same artifact is present in the
+    // unreleased section, REPLACE it (so re-runs update in place instead of duplicating).
+    // Otherwise queue it for insertion under the "- iOS" heading.
+    val remaining = mutableListOf<String>()
+    for (bullet in bullets) {
+        val matcher = artifactMatcher(bullet)
+        var replaced = false
+        if (matcher != null) {
+            for (i in 0 until unreleasedEnd) {
+                if (matcher.containsMatchIn(fileLines[i])) {
+                    fileLines[i] = bullet
+                    replaced = true
+                    break
+                }
+            }
+        }
+        if (!replaced) remaining.add(bullet)
+    }
+    if (remaining.isEmpty()) {
+        file.writeText(fileLines.joinToString("\n") + "\n")
+        return
+    }
+
+    // Find or create the "- iOS" heading inside the unreleased section, then insert
+    // after its existing sub-bullets.
+    val iosIndex = fileLines.subList(0, unreleasedEnd).indexOfFirst { it == "- iOS" }
     val insertAt: Int
     if (iosIndex >= 0) {
-        // Insert after the iOS heading (and any existing iOS sub-bullets, before next top-level heading)
         var cursor = iosIndex + 1
-        while (cursor < searchEnd && fileLines[cursor].startsWith("  ")) cursor++
+        while (cursor < unreleasedEnd && fileLines[cursor].startsWith("  ")) cursor++
         insertAt = cursor
     } else {
-        val tail = if (firstDatedEntry > 0) firstDatedEntry else fileLines.size
-        fileLines.add(tail, "- iOS")
-        insertAt = tail + 1
+        fileLines.add(unreleasedEnd, "- iOS")
+        insertAt = unreleasedEnd + 1
     }
-    fileLines.addAll(insertAt, lines)
+    fileLines.addAll(insertAt, remaining)
     file.writeText(fileLines.joinToString("\n") + "\n")
 }
 
@@ -170,6 +214,8 @@ fun updateIos() {
     println()
     println("Updating CHANGELOGs...")
     val sdkVerMin = if (pluginBaseBumped) fetchPluginBaseSdkVerMin() else null
+    val summaryFile = File(projectRoot, BUMP_SUMMARY_FILE)
+    summaryFile.parentFile?.mkdirs()
     for (u in updates) {
         val changelog = File(projectRoot, u.config.changelogPath)
         if (!changelog.exists()) {
@@ -183,6 +229,10 @@ fun updateIos() {
         }
         appendIosChangelogEntries(changelog, lines)
         println("  UPDATED: ${u.config.changelogPath}")
+        summaryFile.appendText("- iOS: `${u.config.podName}` ${u.oldVersion} → ${u.newVersion}\n")
+    }
+    if (pluginBaseBumped && sdkVerMin != null) {
+        summaryFile.appendText("- iOS: `MoEngage-iOS-SDK` → $sdkVerMin\n")
     }
 
     println()

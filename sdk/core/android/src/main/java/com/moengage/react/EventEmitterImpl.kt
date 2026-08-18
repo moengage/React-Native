@@ -24,6 +24,7 @@ import com.moengage.pushbase.NAVIGATION_TYPE_SCREEN_NAME
 import com.moengage.pushbase.NAV_ACTION
 import com.moengage.pushbase.model.action.NavigationAction
 import com.moengage.plugin.base.internal.model.events.LogoutCompleteEvent
+import com.moengage.plugin.base.internal.model.events.authentication.AuthenticationErrorEvent
 
 
 /**
@@ -46,6 +47,7 @@ class EventEmitterImpl(private val reactContext: ReactContext) : EventEmitter {
                 EventType.INAPP_SELF_HANDLED_AVAILABLE -> emitInAppSelfHandled(event as InAppSelfHandledEvent)
                 EventType.PERMISSION -> emitPermissionResult(event as PermissionEvent)
                 EventType.LOGOUT_COMPLETE -> emitLogoutComplete(event as LogoutCompleteEvent)
+                EventType.AUTHENTICATION_ERROR -> emitAuthenticationError(event as AuthenticationErrorEvent)
                 else -> {}
             }
         } catch (t: Throwable) {
@@ -111,6 +113,13 @@ class EventEmitterImpl(private val reactContext: ReactContext) : EventEmitter {
         val payload = PayloadGenerator().logoutResultToWritableMap(event)
         emit(eventName, payload)
     }
+
+    private fun emitAuthenticationError(event: AuthenticationErrorEvent) {
+        Logger.print { "$tag emitAuthenticationError() : Event $event" }
+        val eventName = eventMapping[event.eventType] ?: return
+        val payload = PayloadGenerator().authenticationErrorToWritableMap(event)
+        emit(eventName, payload)
+    }
 }
 
 val eventMapping = mapOf<EventType, String>(
@@ -122,5 +131,6 @@ val eventMapping = mapOf<EventType, String>(
     EventType.INAPP_SELF_HANDLED_AVAILABLE to "MoEInAppCampaignSelfHandled",
     EventType.PUSH_TOKEN_GENERATED to "MoEPushTokenGenerated",
     EventType.PERMISSION to "MoEPermissionResult",
-    EventType.LOGOUT_COMPLETE to "MoELogoutComplete"
+    EventType.LOGOUT_COMPLETE to "MoELogoutComplete",
+    EventType.AUTHENTICATION_ERROR to "MoEAuthenticationError"
 )

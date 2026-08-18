@@ -1,3 +1,11 @@
+# 12-08-2026
+
+## 12.9.1
+
+- Added support for JWT authentication. Use `ReactMoE.passAuthenticationDetails()` to pass the JWT token after login / token refresh, and listen to the `authenticationError` event for authentication failures.
+- Android
+  - Handled a case where updating from a version below 14.09.00 failed to update the storage schema
+
 # 02-07-2026
 
 ## 12.9.0
