@@ -56,6 +56,11 @@ jobs:
         working-directory: source
         run: |
           kotlin .github/scripts/verify-plugins.main.kts react-native
+      # Last step: a failure here is the do-not-merge signal for the PR.
+      - name: Verify no SNAPSHOT dependencies
+        uses: ./sdk-automation-scripts/actions/android-verify-no-snapshots
+        with:
+          working-directory: source
   verify-android-sample:
     runs-on: macos-15-xlarge
     if: ${{ !github.event.pull_request.draft }}
