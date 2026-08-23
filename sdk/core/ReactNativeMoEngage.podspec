@@ -14,6 +14,7 @@ Pod::Spec.new do |s|
   s.source              = {:file => './' }
   s.platforms = { :ios => "13.0", :tvos => "13.0" }
   s.source_files        = 'iOS/MoEReactBridge/**/*.{h,m,mm}', 'iOS/MoEReactSwift/**/*.swift'
+  s.static_framework    = true
 
   headers = [
     'MoEngageInitializer',

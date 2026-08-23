@@ -14,6 +14,7 @@ Pod::Spec.new do |s|
   s.source              = {:file => './' }
   s.platform            = :ios, "13.0"
   s.dependency          'MoEngagePluginGeofence', '5.00.0'
+  s.static_framework    = true
   s.dependency          'React'
   s.dependency 'ReactNativeMoEngage'
   s.source_files        = "ios/**/*.{h,m,mm,swift}"
