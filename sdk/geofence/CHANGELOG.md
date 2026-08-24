@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+
+- iOS
+  - MOEN-46639: Declared the iOS plugin pod as a static framework. The MoEngage iOS SDK now links its app-only modules statically, and CocoaPods rejects a target using `use_frameworks!` whose transitive dependencies include statically linked binaries — without this, `pod install` fails for integrating apps.
+
 # 12-08-2026
 
 ## 7.5.1
