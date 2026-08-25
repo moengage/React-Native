@@ -104,3 +104,21 @@ export interface MoEngagePluginProps {
    */
   apple: MoEngageIosConfig;
 }
+
+export type AppExtension = {
+  targetName: string;
+  bundleIdentifier: string;
+  entitlements: Record<string, string[]>;
+};
+
+export type EasManagedExtra = {
+  eas?: {
+    build?: {
+      experimental?: {
+        ios?: {
+          appExtensions?: AppExtension[];
+        };
+      };
+    };
+  };
+};
