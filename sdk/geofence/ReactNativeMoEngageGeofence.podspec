@@ -13,6 +13,7 @@ Pod::Spec.new do |s|
   s.authors             = "MoEngage Inc."
   s.source              = {:file => './' }
   s.platform            = :ios, "13.0"
+  s.static_framework    = true
   s.dependency          'MoEngagePluginGeofence', '4.10.0'
   s.dependency          'React'
   s.dependency 'ReactNativeMoEngage'

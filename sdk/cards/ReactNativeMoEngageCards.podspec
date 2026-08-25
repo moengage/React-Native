@@ -16,6 +16,7 @@ Pod::Spec.new do |s|
   s.authors      = "MoEngage Inc."
   s.platforms    = { :ios => "13.0" }
  s.source              = {:file => './' }
+  s.static_framework = true
   s.source_files = "ios/**/*.{h,m,mm,swift}"
   s.public_header_files = 'ios/**/*.h'
   s.dependency          'React'
