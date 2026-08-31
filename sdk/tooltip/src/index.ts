@@ -14,24 +14,24 @@ import MoEngageTooltipBridge from './NativeMoEngageTooltip';
 import TooltipAnchorView from './TooltipAnchorView';
 import type { TooltipAnchorViewProps } from './TooltipAnchorView';
 
-/** Dismisses whatever {@link findAndShowByNativeId} is showing (renders via a decor-view overlay). */
+/** Dismisses whatever {@link findAndShowToolTipByNativeId} is showing (renders via a decor-view overlay). */
 export function dismissOverlay(): void {
     MoEngageTooltipBridge.dismissOverlay();
 }
 
-/** Dismisses whatever {@link findAndShowByAccessibilityLabel} is showing (a floating window). */
+/** Dismisses whatever {@link findAndShowToolTipByAccessibilityLabel} is showing (a floating window). */
 export function dismissFloatingWindowOverlay(): void {
     MoEngageTooltipBridge.dismissFloatingWindowOverlay();
 }
 
-/** viewresolution/nativetreewalk — native resolves the view by tag, no ref/measure round-trip. */
-export function findAndShowByNativeId(nativeId: string, label: string): void {
-    MoEngageTooltipBridge.findAndShowByNativeId(nativeId, label);
+/** nudge/tooltip/nativetreewalk — native resolves the view by tag, no ref/measure round-trip. */
+export function findAndShowToolTipByNativeId(nativeId: string, label: string): void {
+    MoEngageTooltipBridge.findAndShowToolTipByNativeId(nativeId, label);
 }
 
-/** viewresolution/accessibilitylabelwalk. */
-export function findAndShowByAccessibilityLabel(text: string, label: string): void {
-    MoEngageTooltipBridge.findAndShowByAccessibilityLabel(text, label);
+/** nudge/tooltip/accessibilitylabelwalk. */
+export function findAndShowToolTipByAccessibilityLabel(text: string, label: string): void {
+    MoEngageTooltipBridge.findAndShowToolTipByAccessibilityLabel(text, label);
 }
 
 /** nudge/beacon — pulsating dot resolved by nativeID; tap reveals a tooltip card. */

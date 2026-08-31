@@ -16,11 +16,23 @@ package com.moengage.react.tooltip.nudge.coachmark
 import android.app.Activity
 import android.util.Log
 import com.moengage.react.tooltip.common.NativeIdViewFinder
+import com.moengage.tooltip.CoachMarkCampaign
+import com.moengage.tooltip.CoachMarkStep
+import com.moengage.tooltip.MoECoachMarkHelper
 
 /**
- * Walks a sequence of `nativeID`s, showing one [CoachmarkOverlay] step at a time. JS only tags each
- * step's element once and calls [start] with the ordered lists of nativeIDs/titles/bodies — native
- * owns resolution, the bitmap "lift" snapshot, and all stepping.
+ * Resolves each `nativeIds[i]` via the shared `nativeID` tree walk, then hands the whole sequence
+ * to the real native MoEngage Tooltip SDK's [MoECoachMarkHelper] — unlike the plain
+ * tooltip/beacon/walkthrough helpers, [CoachMarkStep] takes real `title`/`body` text per step, so
+ * this bridge's custom-copy contract is a full match and nothing is reimplemented locally anymore.
+ *
+ * [MoECoachMarkHelper] resolves its XML targets by `View.tag` (the plain `View.setTag(Any?)` slot,
+ * via [android.view.View.findViewWithTag]) rather than RN's `nativeID`, so each view resolved here
+ * is tagged with a locally-generated string before handing the campaign over — that's what lets the
+ * SDK's own internal lookup find the exact view this bridge already resolved. Note this reuses the
+ * same tag slot RN's `testID` prop also writes to (`BaseViewManager.setTestId`); harmless here since
+ * none of this exploration module's screens set `testID`, but a real integration should pick a
+ * dedicated view id slot instead of the default tag if `testID` usage nearby is a possibility.
  *
  * @author Abhishek Kumar
  * @since Todo: Add Version
@@ -28,64 +40,37 @@ import com.moengage.react.tooltip.common.NativeIdViewFinder
 internal object CoachmarkExploration {
 
     private const val TAG = "MoETooltipCoachmark"
-
-    private var nativeIds: List<String> = emptyList()
-    private var titles: List<String> = emptyList()
-    private var bodies: List<String> = emptyList()
-    private var stepIndex = 0
-    private var activityRef: Activity? = null
+    private const val ANCHOR_TAG_PREFIX = "moe_rn_coachmark_"
 
     fun start(activity: Activity, nativeIds: List<String>, titles: List<String>, bodies: List<String>) {
         if (nativeIds.isEmpty()) return
-        this.nativeIds = nativeIds
-        this.titles = titles
-        this.bodies = bodies
-        this.activityRef = activity
-        stepIndex = 0
-        showStep()
+
+        val steps = mutableListOf<CoachMarkStep>()
+        nativeIds.forEachIndexed { index, nativeId ->
+            val match = NativeIdViewFinder.find(activity.window.decorView, nativeId)
+            if (match == null) {
+                Log.w(TAG, "start() : no view found for nativeID='$nativeId', skipping")
+                return@forEachIndexed
+            }
+
+            val anchorTag = "$ANCHOR_TAG_PREFIX$index"
+            match.tag = anchorTag
+            steps += CoachMarkStep(
+                anchorTag = anchorTag,
+                title = titles.getOrElse(index) { "" },
+                body = bodies.getOrElse(index) { "" },
+            )
+        }
+
+        if (steps.isEmpty()) {
+            Log.w(TAG, "start() : no nativeIds resolved to a view, nothing to show")
+            return
+        }
+
+        MoECoachMarkHelper.start(activity, CoachMarkCampaign(id = "rn_coachmark", steps = steps))
     }
 
     fun dismiss() {
-        CoachmarkOverlay.dismiss()
-        activityRef = null
-        nativeIds = emptyList()
-        titles = emptyList()
-        bodies = emptyList()
-        stepIndex = 0
-    }
-
-    private fun showStep() {
-        val activity = activityRef ?: return
-        if (stepIndex >= nativeIds.size) {
-            dismiss()
-            return
-        }
-
-        val nativeId = nativeIds[stepIndex]
-        val match = NativeIdViewFinder.find(activity.window.decorView, nativeId)
-        if (match == null) {
-            Log.w(TAG, "showStep() : no view found for nativeID='$nativeId', skipping")
-            stepIndex++
-            showStep()
-            return
-        }
-
-        val location = IntArray(2)
-        match.getLocationOnScreen(location)
-        val isLast = stepIndex == nativeIds.size - 1
-        CoachmarkOverlay.show(
-            activity,
-            match,
-            location[0],
-            location[1],
-            match.width,
-            match.height,
-            titles.getOrElse(stepIndex) { "" },
-            bodies.getOrElse(stepIndex) { "" },
-            isLast
-        ) {
-            stepIndex++
-            showStep()
-        }
+        MoECoachMarkHelper.dismiss()
     }
 }

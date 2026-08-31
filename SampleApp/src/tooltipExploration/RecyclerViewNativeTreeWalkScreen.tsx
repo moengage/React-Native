@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
-import { dismissOverlay, findAndShowByNativeId } from 'react-native-moengage-tooltip-exploration';
+import { dismissOverlay, findAndShowToolTipByNativeId } from 'react-native-moengage-tooltip-exploration';
 import { explorationStyles as styles } from './styles';
 
 const ROW_COUNT = 40;
@@ -18,7 +18,7 @@ export default function RecyclerViewNativeTreeWalkScreen() {
   const [status, setStatus] = useState('Idle');
 
   const showTooltipForRow = (nativeId: string, title: string) => {
-    findAndShowByNativeId(nativeId, `Tooltip on ${title}`);
+    findAndShowToolTipByNativeId(nativeId, `Tooltip on ${title}`);
     setStatus(
       `Requested tooltip for nativeID="${nativeId}". If nothing appears, check Logcat for ` +
         'MoETooltipNativeTreeWalk — the row may be clipped (removeClippedSubviews) or not yet mounted.',

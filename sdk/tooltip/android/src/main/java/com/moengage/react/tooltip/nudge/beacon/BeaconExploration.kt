@@ -16,12 +16,19 @@ package com.moengage.react.tooltip.nudge.beacon
 import android.app.Activity
 import android.util.Log
 import com.moengage.react.tooltip.common.NativeIdViewFinder
+import com.moengage.tooltip.BeaconPosition
+import com.moengage.tooltip.MoEBeaconHelper
 
 /**
  * Resolves [nativeId] by walking the real Android view tree (same mechanism as
- * [com.moengage.react.tooltip.viewresolution.nativetreewalk.NativeTreeWalkExploration]) and renders
- * via [BeaconOverlay] — JS only tags the element and triggers this by nativeID, never measures or
- * renders anything itself.
+ * [com.moengage.react.tooltip.nudge.tooltip.NativeTreeWalkExploration]) and hands the
+ * resolved [android.view.View] to the real native MoEngage Tooltip SDK's [MoEBeaconHelper]
+ * (`com.moengage:tooltip`, published locally via publishToMavenLocal).
+ *
+ * [label] is accepted for API compatibility but unused: [MoEBeaconHelper]'s tap-to-reveal card is
+ * driven internally by the same fixed placeholder [MoETooltipHelper][com.moengage.tooltip.MoETooltipHelper]
+ * copy — there's no public parameter to pass custom text — so this "way" now demonstrates the real
+ * production beacon (pulse animation, dot placement, reveal card) rather than a custom-labelled one.
  *
  * @author Abhishek Kumar
  * @since Todo: Add Version
@@ -36,13 +43,10 @@ internal object BeaconExploration {
             Log.w(TAG, "findAndShow() : no view found for nativeID='$nativeId'")
             return
         }
-
-        val location = IntArray(2)
-        match.getLocationOnScreen(location)
-        BeaconOverlay.show(activity, location[0], location[1], match.width, match.height, label)
+        MoEBeaconHelper.showBeacon(activity, match, BeaconPosition.TOP_END)
     }
 
     fun dismiss() {
-        BeaconOverlay.dismiss()
+        MoEBeaconHelper.dismiss()
     }
 }

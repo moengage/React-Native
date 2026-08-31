@@ -16,13 +16,20 @@ package com.moengage.react.tooltip.nudge.walkthrough
 import android.app.Activity
 import android.util.Log
 import com.moengage.react.tooltip.common.NativeIdViewFinder
-import com.moengage.react.tooltip.common.OverlayHost
+import com.moengage.tooltip.MoEWalkthroughHelper
 
 /**
- * Walks a sequence of `nativeID`s, showing one tooltip bubble per step via
- * [com.moengage.react.tooltip.common.OverlayHost]. Tapping the bubble advances to the next step;
- * the last step's bubble finishes the sequence on tap. JS only tags each step's element once and
- * calls [start] with the ordered list of nativeIDs — native owns all stepping/advancement.
+ * Resolves each `nativeIds[i]` via the shared `nativeID` tree walk, then hands the whole sequence to
+ * the real native MoEngage Tooltip SDK's [MoEWalkthroughHelper] (`com.moengage:tooltip`, published
+ * locally via publishToMavenLocal) — native now owns all stepping/advancement/back-navigation
+ * itself, including its own "Next →" / "← Back" / "Done" chrome.
+ *
+ * [MoEWalkthroughHelper] resolves each step by `View.tag` (via
+ * [android.view.View.findViewWithTag]) rather than RN's `nativeID`, so each view resolved here is
+ * tagged with a locally-generated string before handing the ordered tag list over — same technique
+ * [com.moengage.react.tooltip.nudge.coachmark.CoachmarkExploration] uses. [labels] is accepted for
+ * API compatibility but unused: the SDK's per-step copy is fixed placeholder text with only the
+ * step counter/Next/Back chrome varying — there's no public parameter for custom step text.
  *
  * @author Abhishek Kumar
  * @since Todo: Add Version
@@ -30,54 +37,32 @@ import com.moengage.react.tooltip.common.OverlayHost
 internal object WalkthroughExploration {
 
     private const val TAG = "MoETooltipWalkthrough"
-
-    private var nativeIds: List<String> = emptyList()
-    private var labels: List<String> = emptyList()
-    private var stepIndex = 0
-    private var activityRef: Activity? = null
+    private const val ANCHOR_TAG_PREFIX = "moe_rn_walkthrough_"
 
     fun start(activity: Activity, nativeIds: List<String>, labels: List<String>) {
         if (nativeIds.isEmpty()) return
-        this.nativeIds = nativeIds
-        this.labels = labels
-        this.activityRef = activity
-        stepIndex = 0
-        showStep()
+
+        val anchorTags = mutableListOf<String>()
+        nativeIds.forEachIndexed { index, nativeId ->
+            val match = NativeIdViewFinder.find(activity.window.decorView, nativeId)
+            if (match == null) {
+                Log.w(TAG, "start() : no view found for nativeID='$nativeId', skipping")
+                return@forEachIndexed
+            }
+            val anchorTag = "$ANCHOR_TAG_PREFIX$index"
+            match.tag = anchorTag
+            anchorTags += anchorTag
+        }
+
+        if (anchorTags.isEmpty()) {
+            Log.w(TAG, "start() : no nativeIds resolved to a view, nothing to show")
+            return
+        }
+
+        MoEWalkthroughHelper.start(activity, anchorTags)
     }
 
     fun dismiss() {
-        OverlayHost.dismiss()
-        activityRef = null
-        nativeIds = emptyList()
-        labels = emptyList()
-        stepIndex = 0
-    }
-
-    private fun showStep() {
-        val activity = activityRef ?: return
-        if (stepIndex >= nativeIds.size) {
-            dismiss()
-            return
-        }
-
-        val nativeId = nativeIds[stepIndex]
-        val match = NativeIdViewFinder.find(activity.window.decorView, nativeId)
-        if (match == null) {
-            Log.w(TAG, "showStep() : no view found for nativeID='$nativeId', skipping")
-            stepIndex++
-            showStep()
-            return
-        }
-
-        val isLast = stepIndex == nativeIds.size - 1
-        val label = labels.getOrElse(stepIndex) { "" }
-        val hint = if (isLast) "(tap to finish)" else "(tap for next)"
-
-        val location = IntArray(2)
-        match.getLocationOnScreen(location)
-        OverlayHost.show(activity, location[0], location[1], match.width, match.height, "$label $hint") {
-            stepIndex++
-            showStep()
-        }
+        MoEWalkthroughHelper.dismiss()
     }
 }

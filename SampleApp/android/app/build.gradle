@@ -177,6 +177,19 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
 
+    // MoEDesignMode.enableFloatingButton() — locally published via publishToMavenLocal from
+    // ../../MoEngage-Android-SDK (branch exploration/tootip_and_walkthrough). Deliberately
+    // published as 10.3.0 to match the version-catalog BOM's strict constraint on com.moengage:inapp
+    // (pulled in transitively via com.moengage:moe-android-sdk) and resolved from mavenLocal()
+    // (checked before mavenCentral() in the root build.gradle) so it wins over the real Central
+    // release at that version. KNOWN TRADEOFF, accepted deliberately: this replaces the app's real
+    // InApp SDK app-wide with this exploration branch's copy, which is ~10 releases behind real
+    // main for the inapp module (missing e.g. the auto-dismiss-timer fix, HTML nudge re-render fix,
+    // video-nudge z-order fix, and the showInApp()-blocked-after-dismiss fix). Revert this override
+    // (and the mavenLocal()-before-mavenCentral() ordering in the root build.gradle) once
+    // MoEDesignMode ships in a real inapp release.
+    implementation("com.moengage:inapp:10.3.0")
+
     // From node_modules
     implementation("com.facebook.react:react-android")
     if (hermesEnabled.toBoolean()) {

@@ -54,6 +54,7 @@ dependencies {
     // noinspection GradleDynamicVersion
     compileOnly('com.facebook.react:react-native')
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation 'com.moengage:tooltip:1.0.1'
 }
 
 def isNewArchitectureEnabled() {

@@ -21,6 +21,7 @@ import com.moengage.pushbase.MoEPushHelper;
 import com.moengage.react.MoEInitializer;
 import com.moengage.core.config.MoEngageEnvironmentConfig;
 import com.moengage.core.model.environment.MoEngageEnvironment;
+import com.moengage.inapp.MoEDesignMode;
 import java.io.IOException;
 import java.util.List;
 
@@ -94,5 +95,10 @@ public class MainApplication extends Application implements ReactApplication {
 //    MoEInitializer.INSTANCE.initializeDefaultInstance(this, true);
 
     MoEPushHelper.getInstance().setUpNotificationChannels(this.getApplicationContext());
+
+    // Attaches a draggable element-picker FAB to every Activity — tap the boom menu to pick a
+    // native view (✎) or share the current screen's layout tree (↗). See MoEDesignMode in
+    // ../../MoEngage-Android-SDK/inapp/src/main/java/com/moengage/inapp/MoEDesignMode.kt.
+    MoEDesignMode.INSTANCE.enableFloatingButton(this);
   }
 }

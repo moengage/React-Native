@@ -4,8 +4,8 @@ import {
   TooltipAnchorView,
   dismissFloatingWindowOverlay,
   dismissOverlay,
-  findAndShowByAccessibilityLabel,
-  findAndShowByNativeId,
+  findAndShowToolTipByAccessibilityLabel,
+  findAndShowToolTipByNativeId,
 } from 'react-native-moengage-tooltip-exploration';
 import { explorationStyles as styles } from './styles';
 
@@ -92,7 +92,7 @@ function NativeIdWalkSection() {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          findAndShowByNativeId('tooltip_target', 'Tooltip via native tree walk');
+          findAndShowToolTipByNativeId('tooltip_target', 'Tooltip via native tree walk');
           setStatus('Shown');
         }}
       >
@@ -127,7 +127,7 @@ function AccessibilityLabelWalkSection() {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          findAndShowByAccessibilityLabel('tooltip_target', 'Tooltip via accessibility label walk');
+          findAndShowToolTipByAccessibilityLabel('tooltip_target', 'Tooltip via accessibility label walk');
           setStatus('Shown');
         }}
       >

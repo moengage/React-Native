@@ -11,18 +11,18 @@ import { TurboModuleRegistry } from 'react-native';
  */
 export interface Spec extends TurboModule {
     /**
-     * Removes the bubble added by {@link findAndShowByNativeId} (renders via a decor-view overlay).
+     * Removes the bubble added by {@link findAndShowToolTipByNativeId} (renders via a decor-view overlay).
      */
     dismissOverlay: () => void;
 
     /**
-     * Removes the window added by {@link findAndShowByAccessibilityLabel} (renders via a floating
+     * Removes the window added by {@link findAndShowToolTipByAccessibilityLabel} (renders via a floating
      * WindowManager window).
      */
     dismissFloatingWindowOverlay: () => void;
 
     /**
-     * viewresolution/nativetreewalk: native walks the real Android view tree from the Activity's
+     * nudge/tooltip/nativetreewalk: native walks the real Android view tree from the Activity's
      * decor view looking for a `View` tagged with this `nativeID`, resolves its actual on-screen rect
      * itself ([android.view.View.getLocationOnScreen]), and renders a tooltip bubble attached to it —
      * no RN measurement involved, and never a fixed position.
@@ -30,17 +30,17 @@ export interface Spec extends TurboModule {
      * @param nativeId The `nativeID` prop value set on the target RN element.
      * @param label Text shown inside the tooltip bubble.
      */
-    findAndShowByNativeId: (nativeId: string, label: string) => void;
+    findAndShowToolTipByNativeId: (nativeId: string, label: string) => void;
 
     /**
-     * viewresolution/accessibilitylabelwalk: same resolution idea as {@link findAndShowByNativeId},
+     * nudge/tooltip/accessibilitylabelwalk: same resolution idea as {@link findAndShowToolTipByNativeId},
      * but matches on `View.contentDescription` (RN's `accessibilityLabel` prop) instead of a
      * dedicated tag, and renders through a floating window instead of the decor view.
      */
-    findAndShowByAccessibilityLabel: (text: string, label: string) => void;
+    findAndShowToolTipByAccessibilityLabel: (text: string, label: string) => void;
 
     /**
-     * nudge/beacon: resolves `nativeId` the same way as {@link findAndShowByNativeId}, then renders
+     * nudge/beacon: resolves `nativeId` the same way as {@link findAndShowToolTipByNativeId}, then renders
      * a pulsating dot at a corner of the resolved view instead of a bubble — tapping the dot reveals
      * a tooltip card. JS only tags the element; native owns the dot, the pulse animation, and the
      * reveal/hide toggle.
@@ -51,7 +51,7 @@ export interface Spec extends TurboModule {
     dismissBeacon: () => void;
 
     /**
-     * nudge/spotlight: resolves `nativeId` the same way as {@link findAndShowByNativeId}, then
+     * nudge/spotlight: resolves `nativeId` the same way as {@link findAndShowToolTipByNativeId}, then
      * renders a full-screen dim scrim with a transparent cutout around the resolved view. Tap
      * anywhere to dismiss.
      */

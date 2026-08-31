@@ -11,27 +11,28 @@
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.moengage.react.tooltip.viewresolution.accessibilitylabelwalk
+package com.moengage.react.tooltip.nudge.tooltip
 
 import android.app.Activity
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import com.moengage.react.tooltip.viewinjection.floatingwindow.FloatingWindowExploration
+import com.moengage.tooltip.MoETooltipHelper
+import com.moengage.tooltip.TooltipPosition
 
 /**
- * Exploration way (viewresolution/accessibilitylabelwalk): recursively walks the real Android view
+ * Exploration way (nudge/tooltip/accessibilitylabelwalk): recursively walks the real Android view
  * tree from the Activity's decor view matching on [View.getContentDescription] (RN's
  * `accessibilityLabel` prop) instead of a dedicated `nativeID` tag — i.e. no SDK-specific tagging
  * needed at all, reusing metadata the app likely already has for accessibility. No
  * `AccessibilityService`/special permission required: this walks the real view tree directly rather
  * than going through the OS accessibility tree.
  *
- * Renders through [FloatingWindowExploration] at the *resolved* View's actual on-screen rect
- * ([View.getLocationOnScreen]) — paired deliberately with the other injection mechanism (rather than
- * duplicating [com.moengage.react.tooltip.viewresolution.nativetreewalk.NativeTreeWalkExploration]'s
- * decor-view rendering), so every "way" in this module ends up demonstrating a distinct
- * (resolution strategy × injection mechanism) combination rather than repeating one.
+ * Hands the resolved [View] to the real native MoEngage Tooltip SDK's [MoETooltipHelper], same as
+ * [NativeTreeWalkExploration] — the two "ways" now differ only in *resolution strategy*
+ * (accessibilityLabel walk vs. `nativeID` walk), not in rendering, since both hand off to the same
+ * SDK call once a View is found. [label] is accepted for API compatibility but unused — see
+ * [MoETooltipHelper] for why.
  *
  * @author Abhishek Kumar
  * @since Todo: Add Version
@@ -46,14 +47,7 @@ internal object AccessibilityLabelWalkExploration {
             Log.w(TAG, "findAndShow() : no view found for accessibilityLabel='$text'")
             return
         }
-
-        val location = IntArray(2)
-        match.getLocationOnScreen(location)
-        FloatingWindowExploration.show(activity, location[0], location[1], match.height, label)
-    }
-
-    fun dismiss() {
-        FloatingWindowExploration.dismiss()
+        MoETooltipHelper.showTooltip(activity, match, TooltipPosition.AUTO)
     }
 
     private fun findViewByContentDescription(root: View, text: String): View? {

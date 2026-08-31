@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, ScrollView, Text, TouchableOpacity, View, type ViewProps } from 'react-native';
-import { dismissOverlay, findAndShowByNativeId } from 'react-native-moengage-tooltip-exploration';
+import { dismissOverlay, findAndShowToolTipByNativeId } from 'react-native-moengage-tooltip-exploration';
 import { explorationStyles as styles } from './styles';
 
 const HINT = 'If nothing appears below the anchor, check Logcat for MoETooltipNativeTreeWalk.';
@@ -43,7 +43,7 @@ function NestedTextCase() {
       <TouchableOpacity
         style={[styles.button, { marginTop: 12 }]}
         onPress={() => {
-          findAndShowByNativeId('nested_text_target', 'Nested Text tooltip');
+          findAndShowToolTipByNativeId('nested_text_target', 'Nested Text tooltip');
           setStatus('Requested — expect no view found');
         }}
       >
@@ -81,7 +81,7 @@ function ModalCase() {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                findAndShowByNativeId('modal_target', 'Modal tooltip');
+                findAndShowToolTipByNativeId('modal_target', 'Modal tooltip');
                 setStatus('Requested — expect no view found (different window)');
               }}
             >
@@ -130,7 +130,7 @@ function NonForwardingWrapperCase() {
       <TouchableOpacity
         style={[styles.button, { marginTop: 12 }]}
         onPress={() => {
-          findAndShowByNativeId('wrapper_target', 'Non-forwarding wrapper tooltip');
+          findAndShowToolTipByNativeId('wrapper_target', 'Non-forwarding wrapper tooltip');
           setStatus('Requested — expect no view found');
         }}
       >
@@ -164,7 +164,7 @@ function DuplicateNativeIdCase() {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          findAndShowByNativeId('dup_target', 'Duplicate nativeID tooltip');
+          findAndShowToolTipByNativeId('dup_target', 'Duplicate nativeID tooltip');
           setStatus('Requested — should anchor to "First", never "Second"');
         }}
       >

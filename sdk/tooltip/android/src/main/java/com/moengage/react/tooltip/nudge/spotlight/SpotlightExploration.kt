@@ -16,10 +16,15 @@ package com.moengage.react.tooltip.nudge.spotlight
 import android.app.Activity
 import android.util.Log
 import com.moengage.react.tooltip.common.NativeIdViewFinder
+import com.moengage.tooltip.MoESpotlightHelper
+import com.moengage.tooltip.SpotlightShape
 
 /**
- * Resolves [nativeId] via the shared `nativeID` tree walk and renders via [SpotlightOverlay]. JS
- * only tags the element and calls this — no coordinate or measurement ever crosses the bridge.
+ * Resolves [nativeId] via the shared `nativeID` tree walk, same as every other "way" in this
+ * module, then hands the resolved [android.view.View] straight to the real native MoEngage
+ * Tooltip SDK's [MoESpotlightHelper] — spotlight has no text content (just a scrim + cutout), so
+ * its public View-based API is a full match for what this bridge needs; nothing here is
+ * reimplemented locally anymore.
  *
  * @author Abhishek Kumar
  * @since Todo: Add Version
@@ -34,13 +39,10 @@ internal object SpotlightExploration {
             Log.w(TAG, "findAndShow() : no view found for nativeID='$nativeId'")
             return
         }
-
-        val location = IntArray(2)
-        match.getLocationOnScreen(location)
-        SpotlightOverlay.show(activity, location[0], location[1], match.width, match.height)
+        MoESpotlightHelper.showSpotlight(activity, match, SpotlightShape.ROUNDED_RECT)
     }
 
     fun dismiss() {
-        SpotlightOverlay.dismiss()
+        MoESpotlightHelper.dismiss()
     }
 }

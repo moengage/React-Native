@@ -53,13 +53,13 @@ class MoEngageTooltipBridge(
     }
 
     @ReactMethod
-    fun findAndShowByNativeId(nativeId: String, label: String) {
-        bridgeHandler.findAndShowByNativeId(nativeId, label)
+    fun findAndShowToolTipByNativeId(nativeId: String, label: String) {
+        bridgeHandler.findAndShowToolTipByNativeId(nativeId, label)
     }
 
     @ReactMethod
-    fun findAndShowByAccessibilityLabel(text: String, label: String) {
-        bridgeHandler.findAndShowByAccessibilityLabel(text, label)
+    fun findAndShowToolTipByAccessibilityLabel(text: String, label: String) {
+        bridgeHandler.findAndShowToolTipByAccessibilityLabel(text, label)
     }
 
     @ReactMethod

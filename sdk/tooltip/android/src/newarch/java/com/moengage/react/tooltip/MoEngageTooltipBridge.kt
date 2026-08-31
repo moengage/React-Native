@@ -43,12 +43,12 @@ class MoEngageTooltipBridge(reactContext: ReactApplicationContext) :
         bridgeHandler.dismissFloatingWindowOverlay()
     }
 
-    override fun findAndShowByNativeId(nativeId: String, label: String) {
-        bridgeHandler.findAndShowByNativeId(nativeId, label)
+    override fun findAndShowToolTipByNativeId(nativeId: String, label: String) {
+        bridgeHandler.findAndShowToolTipByNativeId(nativeId, label)
     }
 
-    override fun findAndShowByAccessibilityLabel(text: String, label: String) {
-        bridgeHandler.findAndShowByAccessibilityLabel(text, label)
+    override fun findAndShowToolTipByAccessibilityLabel(text: String, label: String) {
+        bridgeHandler.findAndShowToolTipByAccessibilityLabel(text, label)
     }
 
     override fun findAndShowBeaconByNativeId(nativeId: String, label: String) {

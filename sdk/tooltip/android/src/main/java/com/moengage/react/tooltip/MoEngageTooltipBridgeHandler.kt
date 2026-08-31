@@ -16,13 +16,13 @@ package com.moengage.react.tooltip
 import android.util.Log
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.UiThreadUtil
-import com.moengage.react.tooltip.common.OverlayHost
 import com.moengage.react.tooltip.nudge.beacon.BeaconExploration
 import com.moengage.react.tooltip.nudge.coachmark.CoachmarkExploration
 import com.moengage.react.tooltip.nudge.spotlight.SpotlightExploration
 import com.moengage.react.tooltip.nudge.walkthrough.WalkthroughExploration
-import com.moengage.react.tooltip.viewresolution.accessibilitylabelwalk.AccessibilityLabelWalkExploration
-import com.moengage.react.tooltip.viewresolution.nativetreewalk.NativeTreeWalkExploration
+import com.moengage.react.tooltip.nudge.tooltip.AccessibilityLabelWalkExploration
+import com.moengage.react.tooltip.nudge.tooltip.NativeTreeWalkExploration
+import com.moengage.tooltip.MoETooltipHelper
 
 /**
  * Handles all requests from [MoEngageTooltipBridge] from both old and new arch, delegating each
@@ -48,45 +48,48 @@ internal class MoEngageTooltipBridgeHandler(private val reactContext: ReactAppli
 
     fun dismissOverlay() {
         Log.d(tag, "dismissOverlay() : ")
-        runOnUiThread("dismissOverlay") { OverlayHost.dismiss() }
+        runOnUiThread("dismissOverlay") { MoETooltipHelper.dismiss() }
     }
 
     fun dismissFloatingWindowOverlay() {
         Log.d(tag, "dismissFloatingWindowOverlay() : ")
-        runOnUiThread("dismissFloatingWindowOverlay") { AccessibilityLabelWalkExploration.dismiss() }
+        runOnUiThread("dismissFloatingWindowOverlay") { MoETooltipHelper.dismiss() }
     }
 
-    /** viewresolution/nativetreewalk — resolves by nativeID tag, renders via [OverlayHost]. */
-    fun findAndShowByNativeId(nativeId: String, label: String) {
-        Log.d(tag, "findAndShowByNativeId() : nativeId=$nativeId label=$label")
+    /**
+     * nudge/tooltip/nativetreewalk — resolves by nativeID tag, renders via the real native
+     * MoEngage Tooltip SDK's [MoETooltipHelper].
+     */
+    fun findAndShowToolTipByNativeId(nativeId: String, label: String) {
+        Log.d(tag, "findAndShowToolTipByNativeId() : nativeId=$nativeId label=$label")
         val activity = reactContext.currentActivity
         if (activity == null) {
-            Log.w(tag, "findAndShowByNativeId() : no current activity")
+            Log.w(tag, "findAndShowToolTipByNativeId() : no current activity")
             return
         }
-        runOnUiThread("findAndShowByNativeId") {
+        runOnUiThread("findAndShowToolTipByNativeId") {
             NativeTreeWalkExploration.findAndShow(activity, nativeId, label)
         }
     }
 
     /**
-     * viewresolution/accessibilitylabelwalk — resolves by contentDescription, renders via a floating
-     * [android.view.WindowManager] window instead, so this module's two resolution ways also cover
-     * two distinct injection mechanisms rather than repeating one.
+     * nudge/tooltip/accessibilitylabelwalk — resolves by contentDescription instead of nativeID,
+     * renders via the same real native MoEngage Tooltip SDK's [MoETooltipHelper] as
+     * [findAndShowToolTipByNativeId] — the two "ways" differ only in resolution strategy now.
      */
-    fun findAndShowByAccessibilityLabel(text: String, label: String) {
-        Log.d(tag, "findAndShowByAccessibilityLabel() : text=$text label=$label")
+    fun findAndShowToolTipByAccessibilityLabel(text: String, label: String) {
+        Log.d(tag, "findAndShowToolTipByAccessibilityLabel() : text=$text label=$label")
         val activity = reactContext.currentActivity
         if (activity == null) {
-            Log.w(tag, "findAndShowByAccessibilityLabel() : no current activity")
+            Log.w(tag, "findAndShowToolTipByAccessibilityLabel() : no current activity")
             return
         }
-        runOnUiThread("findAndShowByAccessibilityLabel") {
+        runOnUiThread("findAndShowToolTipByAccessibilityLabel") {
             AccessibilityLabelWalkExploration.findAndShow(activity, text, label)
         }
     }
 
-    /** nudge/beacon — pulsating dot resolved by nativeID, tap reveals a tooltip card. */
+    /** nudge/beacon — pulsating dot resolved by nativeID, rendered by the real native SDK's MoEBeaconHelper. */
     fun findAndShowBeaconByNativeId(nativeId: String, label: String) {
         Log.d(tag, "findAndShowBeaconByNativeId() : nativeId=$nativeId label=$label")
         val activity = reactContext.currentActivity
@@ -122,7 +125,7 @@ internal class MoEngageTooltipBridgeHandler(private val reactContext: ReactAppli
         runOnUiThread("dismissSpotlight") { SpotlightExploration.dismiss() }
     }
 
-    /** nudge/walkthrough — sequence of nativeIDs, one tooltip per step, tap advances. */
+    /** nudge/walkthrough — sequence of nativeIDs, stepped by the real native SDK's MoEWalkthroughHelper. */
     fun startWalkthroughByNativeIds(nativeIds: List<String>, labels: List<String>) {
         Log.d(tag, "startWalkthroughByNativeIds() : nativeIds=$nativeIds")
         val activity = reactContext.currentActivity
