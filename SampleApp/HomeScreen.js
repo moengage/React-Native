@@ -130,6 +130,13 @@ export const HomeScreen = (props) => {
             },
           },
           {
+            id: "tooltipExploration",
+            title: "Tooltip Exploration",
+            action: () => {
+              props.navigation.navigate("TooltipExplorationMenuScreen");
+            },
+          },
+          {
             id: "9",
             title: "Enable Ad Id Tracking(Android)",
             action: () => {

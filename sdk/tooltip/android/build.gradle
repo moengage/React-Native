@@ -1,0 +1,61 @@
+import com.moengage.gradle.android.library.plugin.configs.BuildConfigType
+
+ext {
+    kotlinVersion = "1.9.23"
+}
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.13.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.4.0"
+        classpath "com.moengage.android.hybrid.module.config.plugin:com.moengage.android.hybrid.module.config.plugin.gradle.plugin:0.0.5"
+    }
+}
+
+apply plugin: 'com.moengage.android.hybrid.module.config.plugin'
+apply plugin: "org.jlleitschuh.gradle.ktlint"
+apply plugin: 'com.facebook.react'
+
+hybridModuleConfig.configurePlugin {
+    kotlinOptions {
+        enableJvmTarget = false
+        compilerArgs = ['-Xjvm-default=all']
+    }
+    buildFeature {
+        buildConfigField(
+            BuildConfigType.BOOLEAN,
+            "IS_NEW_ARCHITECTURE_ENABLED",
+            isNewArchitectureEnabled().toString()
+        )
+    }
+}
+
+android {
+    namespace "com.moengage.react.tooltip"
+    sourceSets {
+        main {
+            if (isNewArchitectureEnabled()) {
+                java.srcDirs += ['src/newarch']
+            } else {
+                java.srcDirs += ['src/oldarch']
+            }
+        }
+    }
+}
+
+dependencies {
+    // noinspection GradleDynamicVersion
+    compileOnly('com.facebook.react:react-native')
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+}
+
+def isNewArchitectureEnabled() {
+  return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}

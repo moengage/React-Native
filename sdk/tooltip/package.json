@@ -1,0 +1,47 @@
+{
+  "name": "react-native-moengage-tooltip-exploration",
+  "version": "0.0.1",
+  "description": "Exploration plugin for MoEngage Tooltip/Beacon/Walkthrough element-selection and placement approaches on React Native (Android)",
+  "main": "src/index.ts",
+  "keywords": [
+    "moengage",
+    "react-native",
+    "android",
+    "plugin",
+    "tooltip",
+    "exploration"
+  ],
+  "files": [
+    "android",
+    "src",
+    "package.json"
+  ],
+  "scripts": {
+    "test": "echo \"Not required\" && exit 0",
+    "build": "echo \"Not required\" && exit 0"
+  },
+  "author": {
+    "name": "MoEngage",
+    "email": "mobiledevs@moengage.com"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "peerDependencies": {
+    "react-native-moengage": "^12.0.0"
+  },
+  "devDependencies": {
+    "react-native": "0.81.1",
+    "typescript": "^4.3.0"
+  },
+  "codegenConfig": {
+    "name": "NativeMoEngageTooltipSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.moengage.react.tooltip"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moengage/React-Native"
+  }
+}

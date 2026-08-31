@@ -16,6 +16,15 @@ import ShowNudgeScreen from './ShowNudgeScreen';
 import MultipleInAppsScreen from "./MultipleInAppsScreen"
 import PersonalizeScreen from "./PersonalizeScreen";
 import JwtAuthenticationScreen from "./JwtAuthenticationScreen";
+import TooltipExplorationMenuScreen from './src/tooltipExploration/TooltipExplorationMenuScreen';
+import TooltipMenuScreen from './src/tooltipExploration/TooltipMenuScreen';
+import AllApproachesScreen from './src/tooltipExploration/AllApproachesScreen';
+import RecyclerViewNativeTreeWalkScreen from './src/tooltipExploration/RecyclerViewNativeTreeWalkScreen';
+import NativeIdFailureCasesScreen from './src/tooltipExploration/NativeIdFailureCasesScreen';
+import BeaconScreen from './src/tooltipExploration/BeaconScreen';
+import WalkthroughScreen from './src/tooltipExploration/WalkthroughScreen';
+import SpotlightScreen from './src/tooltipExploration/SpotlightScreen';
+import CoachmarkScreen from './src/tooltipExploration/CoachmarkScreen';
 
 const Stack = createNativeStackNavigator()
 
@@ -46,6 +55,15 @@ export default AppNavigator = () => {
         <Stack.Screen name="MultipleInAppsScreen" component={MultipleInAppsScreen} headerTitle="MultipleInAppsScreen"/>
         <Stack.Screen name="PersonalizeScreen" component={PersonalizeScreen} headerTitle="Personalize"/>
         <Stack.Screen name="JwtAuthenticationScreen" component={JwtAuthenticationScreen} headerTitle="JWT Authentication"/>
+        <Stack.Screen name="TooltipExplorationMenuScreen" component={TooltipExplorationMenuScreen} headerTitle="Tooltip Exploration"/>
+        <Stack.Screen name="TooltipMenuScreen" component={TooltipMenuScreen} headerTitle="Tooltip"/>
+        <Stack.Screen name="AllApproachesScreen" component={AllApproachesScreen} headerTitle="All Approaches"/>
+        <Stack.Screen name="RecyclerViewNativeTreeWalkScreen" component={RecyclerViewNativeTreeWalkScreen} headerTitle="Native Tree Walk in FlatList"/>
+        <Stack.Screen name="NativeIdFailureCasesScreen" component={NativeIdFailureCasesScreen} headerTitle="nativeID Failure Cases"/>
+        <Stack.Screen name="BeaconScreen" component={BeaconScreen} headerTitle="Beacon"/>
+        <Stack.Screen name="WalkthroughScreen" component={WalkthroughScreen} headerTitle="Walkthrough"/>
+        <Stack.Screen name="SpotlightScreen" component={SpotlightScreen} headerTitle="Spotlight"/>
+        <Stack.Screen name="CoachmarkScreen" component={CoachmarkScreen} headerTitle="Coachmark"/>
       </Stack.Navigator>
     </NavigationContainer>
   );

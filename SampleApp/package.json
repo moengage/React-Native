@@ -25,6 +25,7 @@
     "react-native-moengage-geofence": "^7.0.0",
     "react-native-moengage-inbox": "^6.0.0",
     "react-native-moengage-personalize": "^1.0.0",
+    "react-native-moengage-tooltip-exploration": "0.0.1",
     "react-native-render-html": "^6.3.4",
     "react-native-safe-area-context": "^5.5.2",
     "react-native-screens": "4.24.0",
