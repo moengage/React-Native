@@ -16,7 +16,7 @@ export default function CoachmarkScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.description}>
+      <Text nativeID="coachmark_description" testID="coachmark_description" style={styles.description}>
         JS only tags each step's element with nativeID and calls one native function with the
         ordered lists — native resolves each view, dims the screen, lifts that step above the scrim
         (no cutout), and advances on tap entirely on its own.
@@ -25,12 +25,21 @@ export default function CoachmarkScreen() {
         <View
           key={step.nativeId}
           nativeID={step.nativeId}
+          testID={step.nativeId}
           style={[styles.anchor, { backgroundColor: index === 0 ? '#088A85' : '#222222' }]}
         >
-          <Text style={styles.anchorText}>{step.title}</Text>
+          <Text
+            nativeID={`${step.nativeId}_text`}
+            testID={`${step.nativeId}_text`}
+            style={styles.anchorText}
+          >
+            {step.title}
+          </Text>
         </View>
       ))}
       <TouchableOpacity
+        nativeID="coachmark_button_start"
+        testID="coachmark_button_start"
         style={styles.button}
         onPress={() => {
           startCoachmarkByNativeIds(
@@ -44,6 +53,8 @@ export default function CoachmarkScreen() {
         <Text style={styles.buttonText}>Start Coachmark</Text>
       </TouchableOpacity>
       <TouchableOpacity
+        nativeID="coachmark_button_dismiss"
+        testID="coachmark_button_dismiss"
         style={styles.button}
         onPress={() => {
           dismissCoachmark();
@@ -52,7 +63,9 @@ export default function CoachmarkScreen() {
       >
         <Text style={styles.buttonText}>Dismiss</Text>
       </TouchableOpacity>
-      <Text style={styles.status}>Status: {status}</Text>
+      <Text nativeID="coachmark_status" testID="coachmark_status" style={styles.status}>
+        Status: {status}
+      </Text>
     </View>
   );
 }

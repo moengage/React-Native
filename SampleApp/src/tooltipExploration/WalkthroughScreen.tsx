@@ -17,17 +17,25 @@ export default function WalkthroughScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.description}>
+      <Text nativeID="walkthrough_description" testID="walkthrough_description" style={styles.description}>
         JS only tags each step's element with nativeID and calls one native function with the
         ordered list — native resolves each view, shows one tooltip per step, and advances on tap
         entirely on its own.
       </Text>
       {STEPS.map((step) => (
-        <View key={step.nativeId} nativeID={step.nativeId} style={styles.anchor}>
-          <Text style={styles.anchorText}>{step.title}</Text>
+        <View key={step.nativeId} nativeID={step.nativeId} testID={step.nativeId} style={styles.anchor}>
+          <Text
+            nativeID={`${step.nativeId}_text`}
+            testID={`${step.nativeId}_text`}
+            style={styles.anchorText}
+          >
+            {step.title}
+          </Text>
         </View>
       ))}
       <TouchableOpacity
+        nativeID="walkthrough_button_start"
+        testID="walkthrough_button_start"
         style={styles.button}
         onPress={() => {
           startWalkthroughByNativeIds(
@@ -40,6 +48,8 @@ export default function WalkthroughScreen() {
         <Text style={styles.buttonText}>Start Walkthrough</Text>
       </TouchableOpacity>
       <TouchableOpacity
+        nativeID="walkthrough_button_dismiss"
+        testID="walkthrough_button_dismiss"
         style={styles.button}
         onPress={() => {
           dismissWalkthrough();
@@ -48,7 +58,9 @@ export default function WalkthroughScreen() {
       >
         <Text style={styles.buttonText}>Dismiss</Text>
       </TouchableOpacity>
-      <Text style={styles.status}>Status: {status}</Text>
+      <Text nativeID="walkthrough_status" testID="walkthrough_status" style={styles.status}>
+        Status: {status}
+      </Text>
     </View>
   );
 }

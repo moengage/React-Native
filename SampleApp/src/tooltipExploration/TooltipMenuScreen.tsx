@@ -5,7 +5,8 @@ import { explorationStyles as styles } from './styles';
 const WAYS = [
   { key: 'AllApproachesScreen', title: 'All resolution approaches (one screen, switchable)' },
   { key: 'RecyclerViewNativeTreeWalkScreen', title: 'nativeID walk inside a FlatList (RecyclerView-style)' },
-  { key: 'NativeIdFailureCasesScreen', title: 'nativeID set but unresolvable (4 failure cases)' },
+  { key: 'NativeIdFailureCasesScreen', title: 'nativeID resolution: 4 failure cases + 1 control' },
+  { key: 'ModalPresentationsScreen', title: 'Dialog box & Bottom sheet (cross-window resolution)' },
 ];
 
 export default function TooltipMenuScreen({ navigation }: any) {
@@ -14,6 +15,8 @@ export default function TooltipMenuScreen({ navigation }: any) {
       {WAYS.map((way) => (
         <TouchableOpacity
           key={way.key}
+          nativeID={`tooltip_menu_button_${way.key}`}
+          testID={`tooltip_menu_button_${way.key}`}
           style={styles.button}
           onPress={() => navigation.navigate(way.key)}
         >

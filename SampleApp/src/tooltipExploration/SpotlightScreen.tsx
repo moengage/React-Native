@@ -11,14 +11,16 @@ export default function SpotlightScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.description}>
+      <Text nativeID="spotlight_description" testID="spotlight_description" style={styles.description}>
         JS only tags the element with nativeID and calls one native function — native resolves the
         view and draws the full-screen dim scrim with a cutout around it. Tap anywhere to dismiss.
       </Text>
-      <View nativeID="spotlight_target" style={styles.anchor}>
+      <View nativeID="spotlight_target" testID="spotlight_target" style={styles.anchor}>
         <Text style={styles.anchorText}>Checkout Button</Text>
       </View>
       <TouchableOpacity
+        nativeID="spotlight_button_show"
+        testID="spotlight_button_show"
         style={styles.button}
         onPress={() => {
           findAndShowSpotlightByNativeId('spotlight_target');
@@ -28,6 +30,8 @@ export default function SpotlightScreen() {
         <Text style={styles.buttonText}>Show Spotlight</Text>
       </TouchableOpacity>
       <TouchableOpacity
+        nativeID="spotlight_button_dismiss"
+        testID="spotlight_button_dismiss"
         style={styles.button}
         onPress={() => {
           dismissSpotlight();
@@ -36,7 +40,9 @@ export default function SpotlightScreen() {
       >
         <Text style={styles.buttonText}>Dismiss</Text>
       </TouchableOpacity>
-      <Text style={styles.status}>Status: {status}</Text>
+      <Text nativeID="spotlight_status" testID="spotlight_status" style={styles.status}>
+        Status: {status}
+      </Text>
     </View>
   );
 }

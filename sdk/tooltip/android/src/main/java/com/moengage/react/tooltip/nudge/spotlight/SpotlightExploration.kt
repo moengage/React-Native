@@ -34,7 +34,7 @@ internal object SpotlightExploration {
     private const val TAG = "MoETooltipSpotlight"
 
     fun findAndShow(activity: Activity, nativeId: String) {
-        val match = NativeIdViewFinder.find(activity.window.decorView, nativeId)
+        val match = NativeIdViewFinder.find(activity, nativeId)
         if (match == null) {
             Log.w(TAG, "findAndShow() : no view found for nativeID='$nativeId'")
             return

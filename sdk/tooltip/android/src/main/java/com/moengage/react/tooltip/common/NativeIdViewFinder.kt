@@ -13,6 +13,7 @@
 
 package com.moengage.react.tooltip.common
 
+import android.app.Activity
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,23 @@ import android.view.ViewGroup
 internal object NativeIdViewFinder {
 
     private const val TAG = "MoETooltipNativeIdFinder"
+
+    /**
+     * Searches every top-level window currently open for [activity] — not just its own decorView
+     * — topmost first, so a `nativeID` inside a `<Modal>` (which RN renders into its own, separate
+     * Dialog window) resolves too. See [AppWindows] for why the Activity's decorView alone isn't
+     * enough here. Topmost-first also means that if the same `nativeID` exists in more than one
+     * open window at once, the one actually on top (what the user is currently looking at) wins.
+     */
+    fun find(activity: Activity, nativeId: String): View? {
+        val windows = AppWindows.openWindowDecorViews()
+        for (window in windows.asReversed()) {
+            find(window, nativeId)?.let { return it }
+        }
+        // Defensive fallback if AppWindows' reflection failed to resolve anything (e.g. an OEM
+        // build with a reshaped WindowManagerGlobal) — still search the one window we know exists.
+        return if (windows.isEmpty()) find(activity.window.decorView, nativeId) else null
+    }
 
     fun find(root: View, nativeId: String): View? {
         if (readNativeId(root) == nativeId) {

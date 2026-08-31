@@ -42,18 +42,22 @@ internal object CoachmarkExploration {
     private const val TAG = "MoETooltipCoachmark"
     private const val ANCHOR_TAG_PREFIX = "moe_rn_coachmark_"
 
+    private var campaignSequence = 0
+    private fun nextAnchorTagPrefix(): String = "$ANCHOR_TAG_PREFIX${campaignSequence++}_"
+
     fun start(activity: Activity, nativeIds: List<String>, titles: List<String>, bodies: List<String>) {
         if (nativeIds.isEmpty()) return
 
+        val prefix = nextAnchorTagPrefix()
         val steps = mutableListOf<CoachMarkStep>()
         nativeIds.forEachIndexed { index, nativeId ->
-            val match = NativeIdViewFinder.find(activity.window.decorView, nativeId)
+            val match = NativeIdViewFinder.find(activity, nativeId)
             if (match == null) {
                 Log.w(TAG, "start() : no view found for nativeID='$nativeId', skipping")
                 return@forEachIndexed
             }
 
-            val anchorTag = "$ANCHOR_TAG_PREFIX$index"
+            val anchorTag = "$prefix$index"
             match.tag = anchorTag
             steps += CoachMarkStep(
                 anchorTag = anchorTag,

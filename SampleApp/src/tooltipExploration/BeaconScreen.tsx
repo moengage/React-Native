@@ -8,14 +8,16 @@ export default function BeaconScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.description}>
+      <Text nativeID="beacon_description" testID="beacon_description" style={styles.description}>
         JS only tags the element with nativeID and calls one native function — native resolves the
         view, draws the pulsating dot, and handles the tap-to-reveal card entirely on its own.
       </Text>
-      <View nativeID="beacon_target" style={styles.anchor}>
+      <View nativeID="beacon_target" testID="beacon_target" style={styles.anchor}>
         <Text style={styles.anchorText}>Feature Icon</Text>
       </View>
       <TouchableOpacity
+        nativeID="beacon_button_show"
+        testID="beacon_button_show"
         style={styles.button}
         onPress={() => {
           findAndShowBeaconByNativeId('beacon_target', 'New: try the Feature Icon.');
@@ -25,6 +27,8 @@ export default function BeaconScreen() {
         <Text style={styles.buttonText}>Show Beacon</Text>
       </TouchableOpacity>
       <TouchableOpacity
+        nativeID="beacon_button_dismiss"
+        testID="beacon_button_dismiss"
         style={styles.button}
         onPress={() => {
           dismissBeacon();
@@ -33,7 +37,9 @@ export default function BeaconScreen() {
       >
         <Text style={styles.buttonText}>Dismiss</Text>
       </TouchableOpacity>
-      <Text style={styles.status}>Status: {status}</Text>
+      <Text nativeID="beacon_status" testID="beacon_status" style={styles.status}>
+        Status: {status}
+      </Text>
     </View>
   );
 }

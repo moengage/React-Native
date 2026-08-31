@@ -27,7 +27,7 @@ export default function RecyclerViewNativeTreeWalkScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.description}>
+      <Text nativeID="recycler_walk_description" testID="recycler_walk_description" style={styles.description}>
         Same native tree walk as the plain screen, now inside a FlatList (RN's RecyclerView-style
         list). Tap a visible row to anchor a tooltip to that exact row's real view. Two things to
         watch: (1) the tooltip is a one-shot overlay — it does not track scroll, so scrolling after
@@ -37,6 +37,8 @@ export default function RecyclerViewNativeTreeWalkScreen() {
         considers the row mounted.
       </Text>
       <TouchableOpacity
+        nativeID="recycler_walk_button_try_offscreen"
+        testID="recycler_walk_button_try_offscreen"
         style={styles.button}
         onPress={() =>
           showTooltipForRow(
@@ -50,6 +52,8 @@ export default function RecyclerViewNativeTreeWalkScreen() {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
+        nativeID="recycler_walk_button_dismiss"
+        testID="recycler_walk_button_dismiss"
         style={styles.button}
         onPress={() => {
           dismissOverlay();
@@ -58,7 +62,9 @@ export default function RecyclerViewNativeTreeWalkScreen() {
       >
         <Text style={styles.buttonText}>Dismiss</Text>
       </TouchableOpacity>
-      <Text style={styles.status}>Status: {status}</Text>
+      <Text nativeID="recycler_walk_status" testID="recycler_walk_status" style={styles.status}>
+        Status: {status}
+      </Text>
       <FlatList
         style={styles.list}
         contentContainerStyle={styles.listContent}
@@ -67,11 +73,24 @@ export default function RecyclerViewNativeTreeWalkScreen() {
         renderItem={({ item }) => (
           <TouchableOpacity
             nativeID={item.nativeId}
+            testID={item.nativeId}
             style={styles.row}
             onPress={() => showTooltipForRow(item.nativeId, item.title)}
           >
-            <Text style={styles.rowText}>{item.title}</Text>
-            <Text style={styles.rowSubText}>nativeID="{item.nativeId}" — tap to anchor tooltip</Text>
+            <Text
+              nativeID={`${item.nativeId}_title`}
+              testID={`${item.nativeId}_title`}
+              style={styles.rowText}
+            >
+              {item.title}
+            </Text>
+            <Text
+              nativeID={`${item.nativeId}_subtitle`}
+              testID={`${item.nativeId}_subtitle`}
+              style={styles.rowSubText}
+            >
+              nativeID="{item.nativeId}" — tap to anchor tooltip
+            </Text>
           </TouchableOpacity>
         )}
       />

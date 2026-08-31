@@ -44,7 +44,7 @@ internal object WalkthroughExploration {
 
         val anchorTags = mutableListOf<String>()
         nativeIds.forEachIndexed { index, nativeId ->
-            val match = NativeIdViewFinder.find(activity.window.decorView, nativeId)
+            val match = NativeIdViewFinder.find(activity, nativeId)
             if (match == null) {
                 Log.w(TAG, "start() : no view found for nativeID='$nativeId', skipping")
                 return@forEachIndexed
