@@ -23,7 +23,7 @@ import com.moengage.plugin.base.inbox.internal.inboxDataToJson
 import com.moengage.plugin.base.inbox.internal.unClickedCountToJson
 
 /**
- * Class to handle all the request from the [MoEReactInbox] from both old and new arch
+ * Class to handle all the request from the [MoEReactInbox]
  *
  * @author Abhishek Kumar
  * @since Todo: Add Version

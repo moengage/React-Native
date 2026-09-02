@@ -17,47 +17,38 @@ package com.moengage.react.personalize
 
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
 
 /**
- * Bridge to communicate with personalize plugin JS code in old arch.
+ * Bridge to communicate with personalize plugin JS code.
  */
-class MoEReactPersonalize(
-    reactContext: ReactApplicationContext
-) : ReactContextBaseJavaModule(reactContext) {
+class MoEReactPersonalize(reactContext: ReactApplicationContext) :
+    NativeMoEngagePersonalizeSpec(reactContext) {
 
     private val bridgeHandler = MoEngagePersonalizeHandler(reactContext.applicationContext)
 
     override fun getName() = bridgeHandler.getName()
 
-    @ReactMethod
-    fun fetchExperiencesMeta(payload: String, promise: Promise) {
+    override fun fetchExperiencesMeta(payload: String, promise: Promise) {
         bridgeHandler.fetchExperiencesMeta(payload, promise)
     }
 
-    @ReactMethod
-    fun fetchExperiences(payload: String, promise: Promise) {
+    override fun fetchExperiences(payload: String, promise: Promise) {
         bridgeHandler.fetchExperiences(payload, promise)
     }
 
-    @ReactMethod
-    fun experiencesShown(payload: String) {
+    override fun experiencesShown(payload: String) {
         bridgeHandler.trackExperienceShown(payload)
     }
 
-    @ReactMethod
-    fun experienceClicked(payload: String) {
+    override fun experienceClicked(payload: String) {
         bridgeHandler.trackExperienceClicked(payload)
     }
 
-    @ReactMethod
-    fun offeringsShown(payload: String) {
+    override fun offeringsShown(payload: String) {
         bridgeHandler.trackOfferingShown(payload)
     }
 
-    @ReactMethod
-    fun offeringClicked(payload: String) {
+    override fun offeringClicked(payload: String) {
         bridgeHandler.trackOfferingClicked(payload)
     }
 }

@@ -19,7 +19,7 @@ import com.moengage.platform.internal.logger.PlatformLogLevel
 import com.moengage.plugin.base.geofence.internal.GeofencePluginHelper
 
 /**
- * Class to handle all the request from the [MoEReactGeofence] from both old and new arch
+ * Class to handle all the request from the [MoEReactGeofence]
  *
  * @author Abhishek Kumar
  * @since Todo: Add Version

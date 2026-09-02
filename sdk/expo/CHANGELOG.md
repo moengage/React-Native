@@ -3,7 +3,7 @@
 ## Release Version
 
 - Android
-  - [major] `android-bom` version updated from `2.3.0` to `4.3.0`
+  - [major] `android-bom` version updated from `2.3.1` to `4.3.0`
   - [minor] `com.google.firebase:firebase-messaging` version updated from `24.1.0` to `25.0.1`
   - [major] compile and target sdk updated to `36`
 

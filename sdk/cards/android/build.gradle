@@ -1,5 +1,3 @@
-import com.moengage.gradle.android.library.plugin.configs.BuildConfigType
-
 ext {
     moengageNativeBOMVersion = "4.3.0"
     moengagePluginBaseBOMVersion = "4.0.0"
@@ -39,28 +37,10 @@ hybridModuleConfig.configurePlugin {
         enableJvmTarget = false
         compilerArgs = ['-Xjvm-default=all']
     }
-    buildFeature {
-        buildConfigField(
-            BuildConfigType.BOOLEAN,
-            "IS_NEW_ARCHITECTURE_ENABLED",
-            isNewArchitectureEnabled().toString()
-        )
-    }
 }
 
 android {
     namespace "com.moengage.react.cards"
-    sourceSets {
-        main {
-            if (isNewArchitectureEnabled()) {
-                java.srcDirs += ['src/newarch']
-                kotlin.srcDirs += ['src/newarch']
-            } else {
-                java.srcDirs += ['src/oldarch']
-                kotlin.srcDirs += ['src/oldarch']
-            }
-        }
-    }
 }
 
 dependencies {
@@ -74,9 +54,5 @@ dependencies {
     implementation(platform("com.moengage:plugin-base-bom:$moengagePluginBaseBOMVersion"))
     implementation("com.moengage:plugin-base-cards")
     compileOnly("com.moengage:plugin-base")
-}
-
-def isNewArchitectureEnabled() {
-  return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
 }
 

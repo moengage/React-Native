@@ -38,7 +38,6 @@ class MoEngageCardsPackage : TurboReactPackage() {
     override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
         return ReactModuleInfoProvider {
             val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
-            val isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
             moduleInfos[MoEngageCardsBridgeHandler.NAME] = ReactModuleInfo(
                 MoEngageCardsBridgeHandler.NAME,
                 MoEngageCardsBridgeHandler.NAME,
@@ -46,7 +45,7 @@ class MoEngageCardsPackage : TurboReactPackage() {
                 false,  // needsEagerInit
                 true,  // hasConstants
                 false,  // isCxxModule
-                isTurboModule // isTurboModule
+                true // isTurboModule
             )
             moduleInfos
         }
