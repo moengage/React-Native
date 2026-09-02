@@ -35,7 +35,6 @@ class MoEReactPackage : TurboReactPackage() {
     override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
         return ReactModuleInfoProvider {
             val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
-            val isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
             moduleInfos[MoEReactBridgeHandler.NAME] = ReactModuleInfo(
                 MoEReactBridgeHandler.NAME,
                 MoEReactBridgeHandler.NAME,
@@ -43,7 +42,7 @@ class MoEReactPackage : TurboReactPackage() {
                 false,  // needsEagerInit
                 true,  // hasConstants
                 false,  // isCxxModule
-                isTurboModule // isTurboModule
+                true // isTurboModule
             )
             moduleInfos
         }
