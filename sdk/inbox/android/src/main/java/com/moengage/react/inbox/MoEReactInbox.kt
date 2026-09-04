@@ -11,28 +11,37 @@
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
  
-package com.moengage.react.geofence
+package com.moengage.react.inbox
 
+import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 
 /**
- * Bridge to communicate with React-Native Goefence Plugin in new arch
+ * Bridge to communicate with inbox plugin js code
  *
  * @author Abhishek Kumar
  * @since Todo: Add Version
  */
-class MoEReactGeofence(reactContext: ReactApplicationContext) :
-    NativeMoEngageGeofenceSpec(reactContext) {
+class MoEReactInbox(reactContext: ReactApplicationContext) :
+    NativeMoEngageInboxSpec(reactContext) {
 
-    private val bridgeHandler = MoEngageGeofenceHandler(reactContext.applicationContext)
+    private val bridgeHandler = MoEngageInboxHandler(reactContext.applicationContext)
 
     override fun getName() = bridgeHandler.getName()
 
-    override fun startGeofenceMonitoring(payload: String) {
-        bridgeHandler.startGeofenceMonitoring(payload)
+    override fun getUnClickedCount(payload: String, promise: Promise) {
+        bridgeHandler.getUnClickedCount(payload, promise)
     }
 
-    override fun stopGeofenceMonitoring(payload: String) {
-        bridgeHandler.stopGeofenceMonitoring(payload)
+    override fun fetchAllMessages(payload: String, promise: Promise) {
+        bridgeHandler.fetchAllMessages(payload, promise)
+    }
+
+    override fun deleteMessage(payload: String) {
+        bridgeHandler.deleteMessage(payload)
+    }
+
+    override fun trackMessageClicked(payload: String) {
+        bridgeHandler.trackMessageClicked(payload)
     }
 }

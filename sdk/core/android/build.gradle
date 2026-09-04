@@ -38,11 +38,6 @@ hybridModuleConfig.configurePlugin {
     }
     buildFeature {
         buildConfigField(
-            BuildConfigType.BOOLEAN,
-           "IS_NEW_ARCHITECTURE_ENABLED",
-            isNewArchitectureEnabled().toString()
-        )
-        buildConfigField(
             BuildConfigType.STRING,
             "MOENGAGE_REACT_LIBRARY_VERSION",
             "\"${getCorePluginVersion().toString()}\""
@@ -52,17 +47,6 @@ hybridModuleConfig.configurePlugin {
 
 android {
   namespace "com.moengage.react"
-  sourceSets {
-    main {
-      if (isNewArchitectureEnabled()) {
-        java.srcDirs += ['src/newarch']
-        kotlin.srcDirs += ['src/newarch']
-      } else {
-        java.srcDirs += ['src/oldarch']
-        kotlin.srcDirs += ['src/oldarch']
-      }
-    }
-  }
 }
 
 dependencies {
@@ -73,10 +57,6 @@ dependencies {
 }
 
 apply from: file("./moengage-dependency-helper.gradle")
-
-def isNewArchitectureEnabled() {
-  return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
-}
 
 def getCorePluginVersion() {
     String libraryVersionName = "UNKNOWN"
