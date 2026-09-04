@@ -16,8 +16,8 @@ package com.moengage.react.inbox
 import android.content.Context
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.moengage.core.internal.logger.Logger
-import com.moengage.core.LogLevel
+import com.moengage.platform.internal.logger.Logger
+import com.moengage.platform.internal.logger.PlatformLogLevel
 import com.moengage.plugin.base.inbox.internal.InboxPluginHelper
 import com.moengage.plugin.base.inbox.internal.inboxDataToJson
 import com.moengage.plugin.base.inbox.internal.unClickedCountToJson
@@ -38,14 +38,14 @@ internal class MoEngageInboxHandler(private val context: Context){
 
     fun getUnClickedCount(payload: String, promise: Promise) {
         try {
-            Logger.print { "$tag getUnClickedCount()" }
+            Logger.record { "$tag getUnClickedCount()" }
             val unClickedMessagesCount = pluginHelper.getUnClickedMessagesCount(context, payload)
             if (unClickedMessagesCount != null)
                 promise.resolve(unClickedMessagesCount.toString())
             else promise.resolve(unClickedCountToJson(0).toString())
 
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag getUClickedCount() : " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag getUClickedCount() : " }
             promise.resolve(unClickedCountToJson(0).toString())
         }
     }
@@ -53,7 +53,7 @@ internal class MoEngageInboxHandler(private val context: Context){
     fun fetchAllMessages(payload: String, promise: Promise) {
         try {
             val messages = pluginHelper.fetchAllMessages(context, payload) ?: run {
-                Logger.print { "$tag fetchAllMessages() : No messages." }
+                Logger.record { "$tag fetchAllMessages() : No messages." }
                 return
             }
             val serialisedMessages = inboxDataToJson(messages)
@@ -63,7 +63,7 @@ internal class MoEngageInboxHandler(private val context: Context){
                 promise.resolve(serialisedMessages.toString())
             }
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag fetchAllMessages() : " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag fetchAllMessages() : " }
         }
     }
 
@@ -71,7 +71,7 @@ internal class MoEngageInboxHandler(private val context: Context){
         try {
             pluginHelper.deleteMessage(context, payload)
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag deleteMessage() : " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag deleteMessage() : " }
         }
     }
 
@@ -79,7 +79,7 @@ internal class MoEngageInboxHandler(private val context: Context){
         try {
             pluginHelper.trackMessageClicked(context, payload)
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag trackMessageClicked() : " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag trackMessageClicked() : " }
         }
     }
 

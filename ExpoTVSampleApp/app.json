@@ -2,6 +2,17 @@
   "expo": {
     "plugins": [
       [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 24,
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36,
+            "kotlinVersion": "2.3.20"
+          }
+        }
+      ],
+      [
         "@react-native-tvos/config-tv",
         {
           "androidTVBanner": "./assets/images/icon-400x240.png",

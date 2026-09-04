@@ -1,8 +1,8 @@
 package com.moengage.react
 
 import com.moengage.core.internal.inapp.InAppManager
-import com.moengage.core.internal.logger.Logger
 import com.moengage.inapp.MoEInAppHelper
+import com.moengage.platform.internal.logger.Logger
 
 /**
  * @author Umang Chamaria
@@ -14,7 +14,7 @@ public class MoEReactHelper {
 
     public fun onConfigurationChanged() {
         if (!InAppManager.hasModule()){
-            Logger.print { "$tag onConfigurationChanged() :  InApp Module not present." }
+            Logger.record { "$tag onConfigurationChanged() :  InApp Module not present." }
             return
         }
         MoEInAppHelper.getInstance().onConfigurationChanged()

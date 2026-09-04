@@ -2,8 +2,8 @@ package expo.modules.moengage
 
 import android.app.Application
 import expo.modules.core.interfaces.ApplicationLifecycleListener
-import com.moengage.core.internal.logger.Logger
-import com.moengage.core.LogLevel
+import com.moengage.platform.internal.logger.Logger
+import com.moengage.platform.internal.logger.PlatformLogLevel
 import expo.modules.moengage.internal.BASE_TAG
 import expo.modules.moengage.internal.INTEGRATION_TYPE
 import com.moengage.plugin.base.internal.PluginInitializer
@@ -16,7 +16,7 @@ class MoEngageApplicationLifecycleListener() : ApplicationLifecycleListener {
     override fun onCreate(application: Application) {
         super.onCreate(application)
         try {
-            Logger.print { "$tag onCreate(): Initialising MoEngage SDK" }
+            Logger.record { "$tag onCreate(): Initialising MoEngage SDK" }
             PluginInitializer.initialize(
                 application = application,
                 integrationMeta = IntegrationMeta(
@@ -25,7 +25,7 @@ class MoEngageApplicationLifecycleListener() : ApplicationLifecycleListener {
                 )
             )
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag onCreate(): " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag onCreate(): " }
         }
     }
 }

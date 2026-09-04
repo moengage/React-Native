@@ -13,8 +13,8 @@
 package expo.modules.moengage
 
 import com.google.firebase.messaging.RemoteMessage
-import com.moengage.core.LogLevel
-import com.moengage.core.internal.logger.Logger
+import com.moengage.platform.internal.logger.Logger
+import com.moengage.platform.internal.logger.PlatformLogLevel
 import com.moengage.pushbase.MoEPushHelper
 import com.moengage.firebase.MoEFireBaseHelper
 import expo.modules.notifications.service.ExpoFirebaseMessagingService
@@ -30,27 +30,27 @@ public class MoEExpoFireBaseMessagingService : ExpoFirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         try {
-            Logger.print { "$tag onMessageReceived(): " }
+            Logger.record { "$tag onMessageReceived(): " }
             val pushPayload = remoteMessage.data
             if (MoEPushHelper.getInstance().isFromMoEngagePlatform(pushPayload)) {
-                Logger.print { "$tag onMessageReceived(): Will try to show push" }
+                Logger.record { "$tag onMessageReceived(): Will try to show push" }
                 MoEFireBaseHelper.getInstance().passPushPayload(applicationContext, pushPayload)
             } else {
-                Logger.print { "$tag onMessageReceived(): passing callback to expo service" }
+                Logger.record { "$tag onMessageReceived(): passing callback to expo service" }
                 super.onMessageReceived(remoteMessage)
             }
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag onMessageReceived() : " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag onMessageReceived() : " }
         }
     }
 
     override fun onNewToken(token: String) {
         try {
-            Logger.print { "$tag onNewToken(): $token" }
+            Logger.record { "$tag onNewToken(): $token" }
             MoEFireBaseHelper.getInstance().passPushToken(applicationContext, token)
             super.onNewToken(token)
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag onNewToken(): " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag onNewToken(): " }
         }
     }
 }
