@@ -2,6 +2,9 @@
   "compilerOptions": {
     "target": "es2016",
     "module": "commonjs",
+    "paths": {
+      "react-native": ["./node_modules/react-native/types_generated"]
+    },
     "types": ["jest", "node"],
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
