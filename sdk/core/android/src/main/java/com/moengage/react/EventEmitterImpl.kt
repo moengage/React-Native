@@ -6,10 +6,10 @@ import com.facebook.react.bridge.WritableMap
 import com.facebook.react.common.LifecycleState
 import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.moe.pushlibrary.activities.MoEActivity
-import com.moengage.core.LogLevel
 import com.moengage.core.PUSH_NOTIFICATION_NAVIGATION_ACTIVITY_NAME
 import com.moengage.core.PUSH_NOTIFICATION_NAVIGATION_DEEPLINK_LEGACY
-import com.moengage.core.internal.logger.Logger
+import com.moengage.platform.internal.logger.Logger
+import com.moengage.platform.internal.logger.PlatformLogLevel
 import com.moengage.plugin.base.internal.EventEmitter
 import com.moengage.plugin.base.internal.model.events.Event
 import com.moengage.plugin.base.internal.model.events.EventType
@@ -36,7 +36,7 @@ class EventEmitterImpl(private val reactContext: ReactContext) : EventEmitter {
 
     override fun emit(event: Event) {
         try {
-            Logger.print { "$tag emit() : $event" }
+            Logger.record { "$tag emit() : $event" }
             when (event.eventType) {
                 EventType.PUSH_CLICKED -> emitPushClicked(event as PushClickedEvent)
                 EventType.PUSH_TOKEN_GENERATED -> emitPushToken(event as TokenEvent)
@@ -51,26 +51,26 @@ class EventEmitterImpl(private val reactContext: ReactContext) : EventEmitter {
                 else -> {}
             }
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag emit() : " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag emit() : " }
         }
     }
 
     private fun emitInAppAction(event: InAppActionEvent) {
-        Logger.print { "$tag emitInAppNavigation() : $event" }
+        Logger.record { "$tag emitInAppNavigation() : $event" }
         val eventName = eventMapping[event.eventType] ?: return
         val payload = PayloadGenerator().inAppNavigationToWriteableMap(event.clickData)
         emit(eventName, payload)
     }
 
     private fun emitInAppLifecycle(event: InAppLifecycleEvent) {
-        Logger.print { "$tag emitInAppLifecycle() : $event" }
+        Logger.record { "$tag emitInAppLifecycle() : $event" }
         val eventName = eventMapping[event.eventType] ?: return
         val payload = PayloadGenerator().inAppDataToWriteableMap(event.inAppData)
         emit(eventName, payload)
     }
 
     private fun emitInAppSelfHandled(event: InAppSelfHandledEvent) {
-        Logger.print { "$tag emitInAppSelfHandled() : $event" }
+        Logger.record { "$tag emitInAppSelfHandled() : $event" }
         val eventName = eventMapping[event.eventType] ?: return
         val payload =
             PayloadGenerator().selfHandledDataToWriteableMap(event.accountMeta, event.data)
@@ -78,14 +78,14 @@ class EventEmitterImpl(private val reactContext: ReactContext) : EventEmitter {
     }
 
     private fun emitPushClicked(event: PushClickedEvent) {
-        Logger.print { "$tag emitPushClicked() : $event" }
+        Logger.record { "$tag emitPushClicked() : $event" }
         val eventName = eventMapping[event.eventType] ?: return
         val payload = PayloadGenerator().pushPayloadToWriteableMap(event.payload)
         emit(eventName, payload)
     }
 
     private fun emitPushToken(tokenEvent: TokenEvent) {
-        Logger.print { "$tag emitPushToken() : $tokenEvent" }
+        Logger.record { "$tag emitPushToken() : $tokenEvent" }
         val eventName = eventMapping[tokenEvent.eventType] ?: return
         val payload = PayloadGenerator().tokenToWriteableMap(tokenEvent)
         emit(eventName, payload)
@@ -96,26 +96,26 @@ class EventEmitterImpl(private val reactContext: ReactContext) : EventEmitter {
             reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
                 .emit(eventName, params)
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag emit() : " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag emit() : " }
         }
     }
 
     private fun emitPermissionResult(event: PermissionEvent) {
-        Logger.print { "$tag emitPermissionResult() : Event $event" }
+        Logger.record { "$tag emitPermissionResult() : Event $event" }
         val eventName = eventMapping[event.eventType] ?: return
         val payload = PayloadGenerator().permissionResultToWriteableMap(event.result)
         emit(eventName, payload)
     }
 
     private fun emitLogoutComplete(event: LogoutCompleteEvent) {
-        Logger.print { "$tag emitLogoutComplete() : Event $event" }
+        Logger.record { "$tag emitLogoutComplete() : Event $event" }
         val eventName = eventMapping[event.eventType] ?: return
         val payload = PayloadGenerator().logoutResultToWritableMap(event)
         emit(eventName, payload)
     }
 
     private fun emitAuthenticationError(event: AuthenticationErrorEvent) {
-        Logger.print { "$tag emitAuthenticationError() : Event $event" }
+        Logger.record { "$tag emitAuthenticationError() : Event $event" }
         val eventName = eventMapping[event.eventType] ?: return
         val payload = PayloadGenerator().authenticationErrorToWritableMap(event)
         emit(eventName, payload)

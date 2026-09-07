@@ -5,19 +5,22 @@ buildscript {
         compileSdkVersion = 36
         targetSdkVersion = 36
         ndkVersion = "27.1.12297006"
-        kotlinVersion = "1.9.23"
+        kotlinVersion = "2.3.20"
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath('com.android.tools.build:gradle:8.13.2')
-        classpath("com.google.gms:google-services:4.4.2")
+        classpath('com.android.tools.build:gradle:9.1.1')
+        classpath("com.google.gms:google-services:4.4.4")
         classpath("com.facebook.react:react-native-gradle-plugin")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
 
     }
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.android' version '2.3.20' apply false
 }
 
 allprojects {

@@ -1,12 +1,12 @@
 package com.moengage.react
 
 import android.content.Context
-import com.moengage.core.LogLevel
 import com.moengage.core.MoEngage
-import com.moengage.core.internal.logger.Logger
 import com.moengage.core.internal.model.IntegrationMeta
 import com.moengage.core.model.SdkState
 import com.moengage.plugin.base.internal.PluginInitializer
+import com.moengage.platform.internal.logger.Logger
+import com.moengage.platform.internal.logger.PlatformLogLevel
 import android.app.Application
 
 
@@ -24,14 +24,14 @@ object MoEInitializer {
         lifecycleAwareCallbackEnabled: Boolean = false
     ) {
         try {
-            Logger.print { "$tag initialize() : Will try to initialize the sdk." }
+            Logger.record { "$tag initialize() : Will try to initialize the sdk." }
             GlobalCache.lifecycleAwareCallbackEnabled = lifecycleAwareCallbackEnabled
             PluginInitializer.initialize(
                 builder,
                 IntegrationMeta(INTEGRATION_TYPE, BuildConfig.MOENGAGE_REACT_LIBRARY_VERSION)
             )
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag initialize() : " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag initialize() : " }
         }
     }
 
@@ -43,16 +43,16 @@ object MoEInitializer {
         lifecycleAwareCallbackEnabled: Boolean = false
     ) {
         try {
-            Logger.print { "$tag initialize() : Initialising MoEngage SDK." }
+            Logger.record { "$tag initialize() : Initialising MoEngage SDK." }
             GlobalCache.lifecycleAwareCallbackEnabled = lifecycleAwareCallbackEnabled
             PluginInitializer.initialize(
                 builder,
                 IntegrationMeta(INTEGRATION_TYPE, BuildConfig.MOENGAGE_REACT_LIBRARY_VERSION),
                 sdkState
             )
-            Logger.print { "$tag initialize() : " }
+            Logger.record { "$tag initialize() : " }
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag initialize() : " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag initialize() : " }
         }
     }
 
@@ -69,7 +69,7 @@ object MoEInitializer {
         sdkState: SdkState? = null,
     ) {
         try {
-            Logger.print { "$tag initialize(): Initialising MoEngage SDK" }
+            Logger.record { "$tag initialize(): Initialising MoEngage SDK" }
             GlobalCache.lifecycleAwareCallbackEnabled = lifecycleAwareCallbackEnabled
             PluginInitializer.initialize(
                 application = application,
@@ -80,7 +80,7 @@ object MoEInitializer {
                 sdkState = sdkState
             )
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag initialize(): " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag initialize(): " }
         }
     }
 }

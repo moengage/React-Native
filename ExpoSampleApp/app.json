@@ -54,11 +54,7 @@
         "android.permission.SCHEDULE_EXACT_ALARM"
       ],
       "package": "com.moengage.sampleapp",
-      "googleServicesFile": "./assets/google-services.json",
-      "kotlinVersion": "1.9.23",
-      "minSdkVersion": 24,
-      "targetSdkVersion": 35,
-      "compileSdkVersion": 35
+      "googleServicesFile": "./assets/google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -67,6 +63,17 @@
     },
     "plugins": [
       "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 24,
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36,
+            "kotlinVersion": "2.3.20"
+          }
+        }
+      ],
       [
         "expo-splash-screen",
         {
