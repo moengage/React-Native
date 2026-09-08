@@ -1,3 +1,13 @@
+# Release Date
+
+## Release Version
+
+- Android
+  - [major] AGP version updated from `8.13.2` to `9.1.1`
+  - [major] Kotlin version updated from `1.9.23` to `2.3.20`
+  - [major] `android-bom` version updated from `2.3.1` to `4.3.0`
+  - [major] compile and target sdk updated to `36`
+
 # 12-08-2026
 
 ## 6.5.1

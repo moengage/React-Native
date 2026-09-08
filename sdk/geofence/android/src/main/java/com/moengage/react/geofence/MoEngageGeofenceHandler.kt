@@ -14,8 +14,8 @@
 package com.moengage.react.geofence
 
 import android.content.Context
-import com.moengage.core.internal.logger.Logger
-import com.moengage.core.LogLevel
+import com.moengage.platform.internal.logger.Logger
+import com.moengage.platform.internal.logger.PlatformLogLevel
 import com.moengage.plugin.base.geofence.internal.GeofencePluginHelper
 
 /**
@@ -34,19 +34,19 @@ internal class MoEngageGeofenceHandler(private val context: Context) {
 
     fun startGeofenceMonitoring(payload: String) {
         try {
-            Logger.print { "$tag startGeofenceMonitoring() - $payload" }
+            Logger.record { "$tag startGeofenceMonitoring() - $payload" }
             pluginHelper.startGeofenceMonitoring(context, payload)
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag startGeofenceMonitoring() : " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag startGeofenceMonitoring() : " }
         }
     }
 
     fun stopGeofenceMonitoring(payload: String) {
         try {
-            Logger.print { "$tag stopGeofenceMonitoring() - $payload" }
+            Logger.record { "$tag stopGeofenceMonitoring() - $payload" }
             pluginHelper.stopGeofenceMonitoring(context, payload)
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag stopGeofenceMonitoring() : " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag stopGeofenceMonitoring() : " }
         }
     }
 

@@ -1,9 +1,9 @@
 import com.moengage.gradle.android.library.plugin.configs.BuildConfigType
 
 ext {
-  moengageNativeBOMVersion = "2.3.1"
-  moengagePluginBaseBOMVersion = "3.1.0"
-  kotlinVersion = "1.9.23"
+  moengageNativeBOMVersion = "4.3.0"
+  moengagePluginBaseBOMVersion = "4.0.0"
+  kotlinVersion = "2.3.20"
 }
 
 buildscript {
@@ -14,14 +14,23 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:8.13.2'
+    classpath 'com.android.tools.build:gradle:9.1.1'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    classpath "com.moengage.android.hybrid.module.config.plugin:com.moengage.android.hybrid.module.config.plugin.gradle.plugin:0.0.5"
+    classpath "com.moengage.android.hybrid.module.config.plugin:com.moengage.android.hybrid.module.config.plugin.gradle.plugin:2.0.0"
   }
 }
 
 apply plugin: 'com.moengage.android.hybrid.module.config.plugin'
 apply plugin: 'com.facebook.react'
+
+// In AGP 9+ built-in Kotlin's default is true
+def builtInKotlin = providers.gradleProperty("android.builtInKotlin")
+        .map { it.toBoolean() }
+        .orElse(true)
+        .get()
+if (!builtInKotlin) {
+    apply plugin: 'kotlin-android'
+}
 
 hybridModuleConfig.configurePlugin {
   kotlinOptions {
@@ -43,8 +52,10 @@ android {
     main {
       if (isNewArchitectureEnabled()) {
         java.srcDirs += ['src/newarch']
+        kotlin.srcDirs += ['src/newarch']
       } else {
         java.srcDirs += ['src/oldarch']
+        kotlin.srcDirs += ['src/oldarch']
       }
     }
   }
@@ -56,7 +67,6 @@ dependencies {
   compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
   implementation(platform("com.moengage:android-bom:$moengageNativeBOMVersion"))
-  compileOnly("com.moengage:moe-android-sdk")
   api("com.moengage:inbox-core")
 
   implementation(platform("com.moengage:plugin-base-bom:$moengagePluginBaseBOMVersion"))
