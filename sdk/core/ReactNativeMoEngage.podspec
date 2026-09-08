@@ -13,6 +13,7 @@ Pod::Spec.new do |s|
   s.authors             = "MoEngage Inc."
   s.source              = {:file => './' }
   s.platforms = { :ios => "13.0", :tvos => "13.0" }
+  s.static_framework    = true
   s.source_files        = 'iOS/MoEReactBridge/**/*.{h,m,mm,swift}'
 
   headers = [
