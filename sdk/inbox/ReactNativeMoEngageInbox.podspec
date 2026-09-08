@@ -21,5 +21,10 @@ Pod::Spec.new do |s|
   s.dependency 'ReactNativeMoEngage'
   s.module_map = false
 
-  install_modules_dependencies(s)
+  if defined?(install_modules_dependencies()) != nil
+    install_modules_dependencies(s);
+  else
+    s.dependency "React-Core"
+  end
+
 end
