@@ -17,7 +17,7 @@ import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 
 /**
- * Bridge to communicate with React-Native Cards Plugin in new arch
+ * Bridge to communicate with React-Native Cards Plugin
  *
  * @author Abhishek Kumar
  * @since Todo: Add Version

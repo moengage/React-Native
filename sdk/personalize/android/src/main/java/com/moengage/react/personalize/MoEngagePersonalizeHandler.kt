@@ -24,7 +24,7 @@ import com.moengage.platform.internal.logger.PlatformLogLevel
 import com.moengage.core.model.RequestFailureReasonCode
 
 /**
- * Class to handle all the requests from [MoEReactPersonalize] from both old and new arch.
+ * Class to handle all the requests from [MoEReactPersonalize].
  * @author Abhishek Kumar
  */
 internal class MoEngagePersonalizeHandler(private val context: Context) {
