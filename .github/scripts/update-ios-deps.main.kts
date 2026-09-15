@@ -80,8 +80,10 @@ fun updateManifestPin(file: File, repoFragment: String, newVersion: String) {
     val content = file.readText()
     val regex = manifestPinRegex(repoFragment)
     if (regex.find(content) == null) {
-        println("  WARN: no `$repoFragment` exact pin found in ${file.path}; skipping.")
-        return
+        // A miss here means the podspec would be bumped while the manifest keeps a
+        // stale pin — CocoaPods and SPM consumers would then resolve different native
+        // SDK versions. Fail the run rather than warn: this is a release gate.
+        error("No `$repoFragment` exact pin found in ${file.path}; SPM and CocoaPods pins would drift.")
     }
     file.writeText(regex.replace(content) { m -> "${m.groupValues[1]}$newVersion${m.groupValues[3]}" })
 }
@@ -254,7 +256,7 @@ fun updateIos() {
                 updateManifestPin(manifest, config.pluginRepo, latest)
                 println("  BUMP: ${config.manifestPath} `${config.pluginRepo}` exact pin -> $latest")
             } else {
-                println("  WARN: ${config.manifestPath} not found, skipping SPM pin update.")
+                error("${config.manifestPath} not found; its podspec was bumped to $latest and the SPM pin would drift.")
             }
             if (config.podName == "MoEngagePluginBase") pluginBaseBumped = true
         }
@@ -266,10 +268,17 @@ fun updateIos() {
         val coreManifest = File(projectRoot, "sdk/core/Package.swift")
         val newPluginBase = updates.first { it.config.podName == "MoEngagePluginBase" }.newVersion
         val appleSdkPin = fetchPluginBaseAppleSdkPin(newPluginBase)
-        if (coreManifest.exists() && appleSdkPin != null) {
-            updateManifestPin(coreManifest, "apple-sdk", appleSdkPin)
-            println("  BUMP: sdk/core/Package.swift `apple-sdk` exact pin -> $appleSdkPin")
+        if (!coreManifest.exists()) {
+            error("sdk/core/Package.swift not found; cannot align its apple-sdk pin with $PLUGINBASE_REPO@$newPluginBase.")
         }
+        if (appleSdkPin == null) {
+            // Transient gh api failures land here. Silently leaving the old pin ships a
+            // core manifest whose apple-sdk version disagrees with the PluginBase it now
+            // depends on, so stop and let the run be retried.
+            error("Could not read the apple-sdk pin from $PLUGINBASE_REPO@$newPluginBase; re-run once the API is reachable.")
+        }
+        updateManifestPin(coreManifest, "apple-sdk", appleSdkPin)
+        println("  BUMP: sdk/core/Package.swift `apple-sdk` exact pin -> $appleSdkPin")
     }
 
     if (updates.isEmpty()) {
