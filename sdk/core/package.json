@@ -10,6 +10,8 @@
     "CHANGELOG.md",
     "README.md",
     "ReactNativeMoEngage.podspec",
+    "Package.swift",
+    "react-native.config.js",
     "package.json",
     "!**/__tests__",
     "!**/__mocks__"
@@ -25,7 +27,8 @@
   ],
   "scripts": {
     "test": "jest",
-    "build": "echo \"Not required\" && exit 0"
+    "build": "echo \"Not required\" && exit 0",
+    "prepack": "node ./scripts/generate-ios-plugin-info.js"
   },
   "author": {
     "name": "MoEngage",

@@ -10,6 +10,8 @@
     "ios",
     "cpp",
     "ReactNativeMoEngageInbox.podspec",
+    "Package.swift",
+    "react-native.config.js",
     "!lib/typescript/example",
     "!android/build",
     "!ios/build",

@@ -39,7 +39,7 @@ This skill is a **three-step orchestrator**. It runs:
 1. **`react-native-android-bridge-implementation`** — Android Kotlin bridge (BridgeHandler, arch
    bridges, Package, EventEmitterImpl, PayloadGenerator, Constants, build.gradle)
 2. **`react-native-ios-bridge-implementation`** — iOS ObjC bridge (Bridge .h/.mm, Handler .h/.m,
-   Constants .h/.m, optional Util .h/.m, podspec)
+   Constants .h/.m, optional Util .h/.m, podspec, Package.swift SPM manifest + react-native.config.js)
 3. **`react-native-ts-implementation`** — TypeScript layer (NativeSpec, models, enums,
    PayloadBuilder, PayloadParser, JsonToModelMapper, Handler, PublicApi, index, package.json,
    podspec)
@@ -120,7 +120,7 @@ When updating the PR body after Step 3, replace it with — omit iOS rows if Ste
 ```
 ## Summary
 - Android: BridgeHandler + new/old arch bridges + EventEmitterImpl + PayloadGenerator
-- iOS: Bridge .h/.mm + Handler .h/.m + Constants + optional Util + podspec   ← omit if skipped
+- iOS: Bridge .h/.mm + Handler .h/.m + Constants + optional Util + podspec + Package.swift + react-native.config.js   ← omit if skipped
 - TypeScript: TurboModule spec, models, enums, PayloadBuilder, PayloadParser, Handler, PublicApi
 - Android BOM version: <android_bom_version>
 - iOS plugin version: <ios_plugin_version>                                    ← omit if skipped

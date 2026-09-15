@@ -5,7 +5,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MoEReactNativePersonalizeHandler.h"
-#import "ReactNativeMoEngage/MoEngageReactUtils.h"
+#import "MoEngageReactUtils.h"
 
 @import MoEngagePluginPersonalize;
 
