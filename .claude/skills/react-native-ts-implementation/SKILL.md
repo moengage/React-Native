@@ -169,6 +169,31 @@ ls <rnSdkDir>/src/ 2>/dev/null
 - Not found → scaffold full TS layer (Steps 3.3–3.12)
 - Found → read existing files first, add only the missing methods/models
 
+**When a module already exists, some (e.g. `sdk/core`) predate the Cards-based standard** — a
+single `MoEHelper`/index.ts public API object instead of separate PayloadBuilder/PayloadParser/
+JsonToModelMapper/Handler/PublicApi files. In that case follow the file's own existing pattern
+(reuse whichever json-builder/parser utility file it already has) instead of forcing the newer
+per-concern file split.
+
+**Check the event's actual JSON shape before deciding which existing event-handling branch to
+mirror.** In `sdk/core`'s `MoEEventHandlerHelper.ts`, some event types are handled by a flat,
+no-`accountMeta` special case (e.g. `pushTokenGenerated`, matching a native listener that carries
+no account context), while most others go through a generic branch that first validates
+`notificationPayload[ACCOUNT_META]` and then extracts `notificationPayload[MOE_DATA]`. Read the
+contract's `nativeToHybrid` JSON for the new event — if it has an `accountMeta` wrapper, route it
+through the generic accountMeta-checked branch (passing both the `data` payload and `accountMeta`
+to the parser, same as `pushClicked`/in-app events), not the flat special case, even if the
+nearest similarly-named existing event (e.g. an older token/id-available event) happens to be
+flat.
+
+**Append new exports/methods/array entries/switch-cases at the bottom, not interleaved among
+existing ones.** New public API methods go last in the exported object; new model/enum files are
+new files so this doesn't apply to them; new entries in parallel arrays (e.g. an event-broadcast-name
+array and its corresponding JS-event-name array) must be appended at the same index position in
+*every* one of the parallel arrays, keeping them in sync, and always at the end, not spliced into
+the middle; new `if`/`else if` branches in a parser or event-handler function go last, immediately
+before the final `else` (if any).
+
 ### 3.3 Constants.ts
 → See `examples/typescript/Constants.ts`
 Generate at: `<rnSdkDir>/src/internal/Constants.ts`

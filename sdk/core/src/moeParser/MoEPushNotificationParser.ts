@@ -1,9 +1,10 @@
 import MoEngageLogger from "../logger/MoEngageLogger";
 import MoEAccountMeta from "../models/MoEAccountMeta";
+import MoEFirebaseInstallationIdResult from "../models/MoEFirebaseInstallationIdResult";
 import MoEPushCampaign from "../models/MoEPushCampaign";
 import MoEPushPayload from "../models/MoEPushPayload";
 import MoEPushToken from "../models/MoEPushToken";
-import { APP_ID, MOE_CLICKED_ACTION, MOE_IS_DEFAULT_ACTION, MOE_PAYLOAD, MOE_PLATFORM, MOE_PUSH_CAMPAIGN_OBJ_ERROR, MOE_PUSH_SERVICE, MOE_PUSH_TOKEN_OBJ_ERROR, MOE_TOKEN, SELF_HANDLED_PUSH_REDIRECTION_KEY } from "../utils/MoEConstants";
+import { APP_ID, MOE_CLICKED_ACTION, MOE_INSTALLATION_ID, MOE_IS_DEFAULT_ACTION, MOE_PAYLOAD, MOE_PLATFORM, MOE_PUSH_CAMPAIGN_OBJ_ERROR, MOE_PUSH_SERVICE, MOE_PUSH_TOKEN_OBJ_ERROR, MOE_TOKEN, SELF_HANDLED_PUSH_REDIRECTION_KEY } from "../utils/MoEConstants";
 
 
 /**
@@ -79,4 +80,19 @@ export function getMoEPushPayload(pushPayload: { [k: string]: any },accountMetaP
     }
     else return undefined
 
+}
+
+/**
+ * this function creates MoEFirebaseInstallationIdResult Object from the
+ * `firebaseInstallationIdAvailable` event's `data` json and `accountMeta` json
+ */
+export function getFirebaseInstallationIdResult(payload: { [k: string]: any }, accountMetaPayload: { [k: string]: any }) {
+    if (payload != undefined && payload[MOE_PLATFORM] != undefined && payload[MOE_PUSH_SERVICE] != undefined && payload[MOE_INSTALLATION_ID] != undefined) {
+        var accountMeta = new MoEAccountMeta(accountMetaPayload[APP_ID]);
+        var platform = payload[MOE_PLATFORM];
+        var pushService = payload[MOE_PUSH_SERVICE];
+        var installationId = payload[MOE_INSTALLATION_ID];
+        return new MoEFirebaseInstallationIdResult(accountMeta, platform, pushService, installationId);
+    }
+    else return undefined
 }

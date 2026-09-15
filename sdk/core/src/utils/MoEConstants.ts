@@ -98,3 +98,6 @@ export const AUTH_ERROR_MESSAGE = 'message';
 export const KEY_ACCESSIBILITY = 'accessibility';
 export const KEY_ACCESSIBILITY_TEXT = 'text';
 export const KEY_ACCESSIBILITY_HINT = 'hint';
+
+// FIREBASE INSTALLATION ID
+export const MOE_INSTALLATION_ID = 'installationId';

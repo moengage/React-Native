@@ -225,6 +225,22 @@ export interface Spec extends TurboModule {
 
   addListener: (eventType: string) => void;
   removeListeners: (count: number) => void;
+
+  /**
+   * Pass a Firebase Installation Id obtained by the app to the MoEngage SDK.
+   * Note: This API is only for Android platform and is a no-operation method for other platforms.
+   *
+   * @param payload Stringified JSON with data as Firebase Installation Id
+   */
+  passFirebaseInstallationId: (payload: string) => void;
+
+  /**
+   * Get the saved Firebase Installation Id, if any, for the given account.
+   * Note: This API is only for Android platform and is a no-operation method for other platforms.
+   *
+   * @param payload Stringified JSON payload
+   */
+  getFirebaseInstallationId: (payload: string) => Promise<string | null>;
 }
 
 const MoEReactBridge = TurboModuleRegistry.getEnforcing<Spec>('MoEReactBridge');
