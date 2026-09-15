@@ -16,15 +16,19 @@ data class PodConfig(
     val podName: String,
     val pluginRepo: String,
     val podspecPath: String,
-    val changelogPath: String
+    val changelogPath: String,
+    // Swift Package Manager manifest carrying an `exact:` pin on pluginRepo.
+    // Must stay in lockstep with the podspec version, or SPM consumers resolve
+    // stale/conflicting native SDKs while CocoaPods consumers get new ones.
+    val manifestPath: String
 )
 
 val podConfigs = listOf(
-    PodConfig("MoEngagePluginBase",        "iOS-PluginBase",           "sdk/core/ReactNativeMoEngage.podspec",                   "sdk/core/CHANGELOG.md"),
-    PodConfig("MoEngagePluginInbox",       "apple-plugin-inbox",       "sdk/inbox/ReactNativeMoEngageInbox.podspec",             "sdk/inbox/CHANGELOG.md"),
-    PodConfig("MoEngagePluginCards",       "apple-plugin-cards",       "sdk/cards/ReactNativeMoEngageCards.podspec",             "sdk/cards/CHANGELOG.md"),
-    PodConfig("MoEngagePluginGeofence",    "apple-plugin-geofence",    "sdk/geofence/ReactNativeMoEngageGeofence.podspec",       "sdk/geofence/CHANGELOG.md"),
-    PodConfig("MoEngagePluginPersonalize", "apple-plugin-personalize", "sdk/personalize/ReactNativeMoEngagePersonalize.podspec", "sdk/personalize/CHANGELOG.md")
+    PodConfig("MoEngagePluginBase",        "iOS-PluginBase",           "sdk/core/ReactNativeMoEngage.podspec",                   "sdk/core/CHANGELOG.md",        "sdk/core/Package.swift"),
+    PodConfig("MoEngagePluginInbox",       "apple-plugin-inbox",       "sdk/inbox/ReactNativeMoEngageInbox.podspec",             "sdk/inbox/CHANGELOG.md",       "sdk/inbox/Package.swift"),
+    PodConfig("MoEngagePluginCards",       "apple-plugin-cards",       "sdk/cards/ReactNativeMoEngageCards.podspec",             "sdk/cards/CHANGELOG.md",       "sdk/cards/Package.swift"),
+    PodConfig("MoEngagePluginGeofence",    "apple-plugin-geofence",    "sdk/geofence/ReactNativeMoEngageGeofence.podspec",       "sdk/geofence/CHANGELOG.md",    "sdk/geofence/Package.swift"),
+    PodConfig("MoEngagePluginPersonalize", "apple-plugin-personalize", "sdk/personalize/ReactNativeMoEngagePersonalize.podspec", "sdk/personalize/CHANGELOG.md", "sdk/personalize/Package.swift")
 )
 
 // ── GitHub API: fetch upstream package.json ────────────────────────────────────
@@ -54,6 +58,50 @@ fun fetchPluginBaseSdkVerMin(): String? {
         fetchUpstreamPackageJson(PLUGINBASE_REPO).optString("sdkVerMin").ifEmpty { null }
     } catch (e: Exception) {
         println("  WARN: failed to read sdkVerMin from $PLUGINBASE_REPO: ${e.message}")
+        null
+    }
+}
+
+// ── Swift Package Manager manifest edits ──────────────────────────────────────
+// Each sdk module ships a Package.swift with `.package(url: ".../<repo>.git",
+// exact: "X.Y.Z")` pins that must match the podspec versions.
+
+fun manifestPinRegex(repoFragment: String): Regex {
+    val fragment = Regex.escape(repoFragment)
+    return Regex("""($fragment\.git",\s*exact:\s*")([^"]*)(")""")
+}
+
+fun readManifestPin(file: File, repoFragment: String): String? {
+    val match = manifestPinRegex(repoFragment).find(file.readText()) ?: return null
+    return match.groupValues[2]
+}
+
+fun updateManifestPin(file: File, repoFragment: String, newVersion: String) {
+    val content = file.readText()
+    val regex = manifestPinRegex(repoFragment)
+    if (regex.find(content) == null) {
+        println("  WARN: no `$repoFragment` exact pin found in ${file.path}; skipping.")
+        return
+    }
+    file.writeText(regex.replace(content) { m -> "${m.groupValues[1]}$newVersion${m.groupValues[3]}" })
+}
+
+// apple-sdk pin for sdk/core/Package.swift: read what iOS-PluginBase itself
+// pins at the given version tag, so our SPM graph resolves identically.
+fun fetchPluginBaseAppleSdkPin(pluginBaseVersion: String): String? {
+    return try {
+        val process = ProcessBuilder(
+            "gh", "api",
+            "-H", "Accept: application/vnd.github+json",
+            "repos/$MOENGAGE_OWNER/$PLUGINBASE_REPO/contents/Package.swift?ref=$pluginBaseVersion"
+        ).redirectErrorStream(true).start()
+        val output = process.inputStream.bufferedReader().readText()
+        if (process.waitFor() != 0) error(output)
+        val encoded = JSONObject(output).getString("content").replace("\n", "").replace(" ", "")
+        val decoded = String(Base64.getDecoder().decode(encoded))
+        Regex("""apple-sdk\.git",\s*exact:\s*"([^"]*)"""").find(decoded)?.groupValues?.get(1)
+    } catch (e: Exception) {
+        println("  WARN: failed to read apple-sdk pin from $PLUGINBASE_REPO@$pluginBaseVersion: ${e.message}")
         null
     }
 }
@@ -201,7 +249,26 @@ fun updateIos() {
             println("  BUMP: ${config.podName} $current -> $latest")
             updates.add(ResolvedUpdate(config, current, latest))
             updatePodspecVersion(podspec, config.podName, current, latest)
+            val manifest = File(projectRoot, config.manifestPath)
+            if (manifest.exists()) {
+                updateManifestPin(manifest, config.pluginRepo, latest)
+                println("  BUMP: ${config.manifestPath} `${config.pluginRepo}` exact pin -> $latest")
+            } else {
+                println("  WARN: ${config.manifestPath} not found, skipping SPM pin update.")
+            }
             if (config.podName == "MoEngagePluginBase") pluginBaseBumped = true
+        }
+    }
+
+    // Core's Package.swift also pins apple-sdk directly; keep it aligned with
+    // whatever the new iOS-PluginBase version pins.
+    if (pluginBaseBumped) {
+        val coreManifest = File(projectRoot, "sdk/core/Package.swift")
+        val newPluginBase = updates.first { it.config.podName == "MoEngagePluginBase" }.newVersion
+        val appleSdkPin = fetchPluginBaseAppleSdkPin(newPluginBase)
+        if (coreManifest.exists() && appleSdkPin != null) {
+            updateManifestPin(coreManifest, "apple-sdk", appleSdkPin)
+            println("  BUMP: sdk/core/Package.swift `apple-sdk` exact pin -> $appleSdkPin")
         }
     }
 

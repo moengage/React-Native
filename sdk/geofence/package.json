@@ -9,6 +9,8 @@
     "src",
     "CHANGELOG.md",
     "ReactNativeMoEngageGeofence.podspec",
+    "Package.swift",
+    "react-native.config.js",
     "package.json",
     "!**/__tests__",
     "!**/__mocks__"

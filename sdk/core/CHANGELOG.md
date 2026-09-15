@@ -8,6 +8,9 @@
   - [major] Kotlin version updated from `1.9.23` to `2.3.20`
   - [major] `android-bom` version updated from `2.3.1` to `4.3.0`
   - [major] compile and target sdk updated to `36`
+- iOS
+  - [minor] Added experimental Swift Package Manager support for React Native 0.87+ — the package now ships a `Package.swift` consumed by React Native's SPM autolinking (`npx react-native spm`). CocoaPods integration is unchanged.
+  - [major] Updated `MoEngage-iOS-SDK` to `11.00.0`
 
 # 12-08-2026
 

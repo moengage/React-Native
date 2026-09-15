@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MoEReactNativeInboxHandler.h"
-#import "ReactNativeMoEngage/MoEngageReactUtils.h"
+#import "MoEngageReactUtils.h"
 
 @import MoEngagePluginInbox;
 
