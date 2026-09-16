@@ -49,3 +49,9 @@ export const xmlValuesResourcePath = './android/app/src/main/res/values';
 
 export const googleFirebaseMessagingGroup = 'com.google.firebase';
 export const googleFirebaseMessagingModule = 'firebase-messaging';
+
+/**
+ * Meta-data to enable firebase installation id
+ */
+export const firebaseInstallationIdMetaDataName = 'firebase_messaging_installation_id_enabled';
+export const firebaseInstallationIdMetaDataValue = 'true';
