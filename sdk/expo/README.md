@@ -28,7 +28,7 @@ Add the plugin to your `app.json` or `app.config.js`:
               "isExpoNotificationIntegration": false,
               "_comment2": "enable includeFirebaseMessagingDependencies to include moengage firebase service class for receiving notification while supporting expo notification",
               "shouldIncludeMoEngageFirebaseMessagingService": false,
-              "_comment3": "enable includeFirebaseMessagingDependencies to include moengage firebase service class for receiving notification"
+              "_comment3": "enable includeFirebaseMessagingDependencies to include moengage firebase service class for receiving notification. Enabling this also adds the firebase_messaging_installation_id_enabled meta-data to the AndroidManifest.xml to enable firebase installation id support"
           }
         }
       ]

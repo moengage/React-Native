@@ -20,6 +20,22 @@ buildscript {
 
 apply plugin: 'com.moengage.android.hybrid.module.config.plugin'
 
+repositories {
+    mavenLocal()
+}
+
+configurations.all {
+    resolutionStrategy {
+        force(
+            "com.moengage:plugin-base:7.0.0-fid-local",
+            "com.moengage:core:10.2.0-fid-local",
+            "com.moengage:platform:1.1.0-fid-local",
+            "com.moengage:pushbase:10.1.0-fid-local",
+            "com.moengage:moe-push-firebase:9.2.0-fid-local",
+        )
+    }
+}
+
 // In AGP 9+ built-in Kotlin's default is true
 def builtInKotlin = providers.gradleProperty("android.builtInKotlin")
         .map { it.toBoolean() }
@@ -52,7 +68,7 @@ dependencies {
     implementation(project(':expo-modules-core'))
     implementation(project(':react-native-moengage'))
     compileOnly("host.exp.exponent:expo.modules.notifications:+")
-    compileOnly('com.google.firebase:firebase-messaging:25.0.1')
+    compileOnly('com.google.firebase:firebase-messaging:25.1.2')
     compileOnly('com.facebook.react:react-native')
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 }

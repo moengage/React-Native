@@ -76,6 +76,29 @@ describe('withMoEngageAndroidManifest', () => {
     expect(services.some((s: any) => s.$ && s.$['android:name'] === MoEFireBaseMessagingService)).toBe(false);
   });
 
+  it('should add firebase installation id meta-data to manifest if shouldIncludeMoEngageFirebaseMessagingService is true', () => {
+    const props = { ...mockProps, android: { ...mockProps.android, shouldIncludeMoEngageFirebaseMessagingService: true } };
+    const inputConfig = { ...mockConfig, modResults: getMockManifest() };
+    const updatedConfig = withMoEngageAndroid(inputConfig, props) as any;
+    const mainApplication = updatedConfig.modResults.manifest.application[0];
+    const metaData = (mainApplication['meta-data'] || []).find(
+      (item: any) => item.$ && item.$['android:name'] === 'firebase_messaging_installation_id_enabled'
+    );
+    expect(metaData).toBeDefined();
+    expect(metaData.$['android:value']).toBe('true');
+  });
+
+  it('should not add firebase installation id meta-data to manifest if shouldIncludeMoEngageFirebaseMessagingService is false', () => {
+    const props = { ...mockProps, android: { ...mockProps.android, shouldIncludeMoEngageFirebaseMessagingService: false } };
+    const inputConfig = { ...mockConfig, modResults: getMockManifest() };
+    const updatedConfig = withMoEngageAndroid(inputConfig, props) as any;
+    const mainApplication = updatedConfig.modResults.manifest.application[0];
+    const metaData = (mainApplication['meta-data'] || []).find(
+      (item: any) => item.$ && item.$['android:name'] === 'firebase_messaging_installation_id_enabled'
+    );
+    expect(metaData).toBeUndefined();
+  });
+
   it('should add MoEngage FCM Service to manifest with tools:node remove if shouldIncludeMoEngageFirebaseMessagingService is false', () => {
     const props = { ...mockProps, android: { ...mockProps.android, shouldIncludeMoEngageFirebaseMessagingService: false, isExpoNotificationIntegration: false } };
     const inputConfig = { ...mockConfig, modResults: getMockManifest() };

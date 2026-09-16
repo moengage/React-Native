@@ -4,8 +4,9 @@
 
 - Android
   - [major] `android-bom` version updated from `2.3.1` to `4.3.0`
-  - [minor] `com.google.firebase:firebase-messaging` version updated from `24.1.0` to `25.0.1`
+  - [minor] `com.google.firebase:firebase-messaging` version updated from `24.1.0` to `25.1.2`
   - [major] compile and target sdk updated to `36`
+  - [minor] Added support for firebase installation id.
 
 # 11-06-2026
 

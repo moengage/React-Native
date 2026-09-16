@@ -8,7 +8,9 @@ import {
   moEngageExpoNotificationServiceEntry,
   moEngageExpoNotificationServiceName,
   googleFirebaseMessagingGroup,
-  googleFirebaseMessagingModule
+  googleFirebaseMessagingModule,
+  firebaseInstallationIdMetaDataName,
+  firebaseInstallationIdMetaDataValue
 } from './constants';
 import { MoEngagePluginProps } from '../types';
 import { addServiceToManifestIfNotExist, copyFile, addDependencyToGradle, addServiceWithToolsRemove } from './utils';
@@ -55,6 +57,14 @@ const withMoEngageAndroidManifest: ConfigPlugin<MoEngagePluginProps> = (config, 
   withAndroidManifest(config, config => {
     const mainApplication = AndroidConfig.Manifest.getMainApplicationOrThrow(config.modResults);
     if (props.android.shouldIncludeMoEngageFirebaseMessagingService) {
+      console.log('Adding firebase installation id meta-data to manifest');
+      AndroidConfig.Manifest.addMetaDataItemToMainApplication(
+        mainApplication,
+        firebaseInstallationIdMetaDataName,
+        firebaseInstallationIdMetaDataValue,
+        'value'
+      );
+
       if (props.android.isExpoNotificationIntegration) {
         console.log('Adding Expo Notification Service to manifest');
         addServiceToManifestIfNotExist(
