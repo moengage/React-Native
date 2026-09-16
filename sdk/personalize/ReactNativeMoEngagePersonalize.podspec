@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.public_header_files = 'ios/**/*.h'
 
   s.dependency "React-Core"
-  s.dependency "MoEngagePluginPersonalize",'2.0.0'
+  s.dependency "MoEngagePluginPersonalize",'2.2.0'
   s.dependency 'ReactNativeMoEngage'
   s.module_map = false
 
