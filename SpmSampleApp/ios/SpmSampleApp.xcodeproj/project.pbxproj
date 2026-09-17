@@ -224,7 +224,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${OBJROOT}/../../SourcePackages/artifacts/apple-sdk/moengage-extensions-integration/moengage-extensions-integration.artifactbundle/moengage-extensions-integration/bin/moengage-extensions-integration --enable-push-notification-templates --notification-service-extension-name NotificationService --notification-content-extension-name NotificationContent\n";
+			shellScript = "set -euo pipefail\n\n# The tool ships as a SwiftPM binary artifact under <DerivedData>/SourcePackages.\n# OBJROOT is <DerivedData>/Build/Intermediates.noindex for a plain build, but an\n# archive (ACTION=install) inserts ArchiveIntermediates/<scheme>/IntermediateBuildFilesPath,\n# three levels deeper — so the walk up differs per action.\ncase \"$ACTION\" in\n  install) spm_root=\"$OBJROOT/../../../../..\" ;;\n  *)       spm_root=\"$OBJROOT/../..\" ;;\nesac\n\n\"$spm_root/SourcePackages/artifacts/apple-sdk/moengage-extensions-integration/moengage-extensions-integration.artifactbundle/moengage-extensions-integration/bin/moengage-extensions-integration\" \\\n  --enable-push-notification-templates \\\n  --notification-service-extension-name NotificationService \\\n  --notification-content-extension-name NotificationContent\n";
 		};
 		B174F870C259554596A4373B /* Embed React Native Flavored Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

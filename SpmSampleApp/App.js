@@ -21,6 +21,7 @@ import {
 import ReactMoE, {
   MoEGeoLocation,
   MoEInitConfig,
+  MoEngageLogger,
   MoEProperties,
   MoEPushConfig,
 } from 'react-native-moengage';
@@ -35,20 +36,50 @@ import {MOENGAGE_APP_ID} from './src/key';
 
 const moEInitConfig = new MoEInitConfig(new MoEPushConfig(true));
 
+// Every event in the core SDK's `NotificationEventName` union — the same set
+// SampleApp/App.js listens to. Listed by name rather than derived so a new event
+// added to the SDK shows up here as a visible gap.
+const MOENGAGE_EVENTS = [
+  'pushTokenGenerated',
+  'pushClicked',
+  'inAppCampaignShown',
+  'inAppCampaignClicked',
+  'inAppCampaignDismissed',
+  'inAppCampaignCustomAction',
+  'inAppCampaignSelfHandled',
+  'permissionResult',
+  'logoutComplete',
+  'authenticationError',
+];
+
 // Personalize is instance-scoped to a workspace, unlike the other modules.
 const personalize = new ReactMoEngagePersonalize(MOENGAGE_APP_ID);
 
 export default function App() {
   const [status, setStatus] = useState('initializing SDK…');
+  const [lastEvent, setLastEvent] = useState('no SDK events yet');
 
   // Initialize on mount, like the CocoaPods SampleApp does — no button needed.
   useEffect(() => {
+    // Registered before initialize() so events emitted during startup —
+    // pushTokenGenerated in particular — are not missed.
+    MOENGAGE_EVENTS.forEach(event => {
+      ReactMoE.setEventListener(event, payload => {
+        MoEngageLogger.debug(event, payload);
+        setLastEvent(`${event}: ${JSON.stringify(payload)}`);
+      });
+    });
+
     try {
       ReactMoE.initialize(MOENGAGE_APP_ID, moEInitConfig);
       setStatus('SDK initialized');
     } catch (e) {
       setStatus(`initialize failed: ${e.message}`);
     }
+
+    return () => {
+      MOENGAGE_EVENTS.forEach(event => ReactMoE.removeEventListener(event));
+    };
   }, []);
 
   const run = (label, fn) => async () => {
@@ -66,6 +97,9 @@ export default function App() {
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <Text style={styles.title}>MoEngage · Swift Package Manager</Text>
         <Text style={styles.status}>{status}</Text>
+        <Text style={styles.event} numberOfLines={3}>
+          {lastEvent}
+        </Text>
 
         <View style={styles.section}>
           <Text style={styles.heading}>react-native-moengage</Text>
@@ -160,6 +194,7 @@ const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#fff'},
   title: {fontSize: 20, fontWeight: '600', margin: 16},
   status: {marginHorizontal: 16, marginBottom: 8, color: '#555'},
+  event: {marginHorizontal: 16, marginBottom: 12, color: '#777', fontSize: 12},
   section: {marginHorizontal: 16, marginBottom: 20, gap: 8},
   heading: {fontSize: 13, fontWeight: '600', color: '#888'},
 });
