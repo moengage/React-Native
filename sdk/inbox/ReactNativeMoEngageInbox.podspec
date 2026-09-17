@@ -13,11 +13,12 @@ Pod::Spec.new do |s|
   s.platforms    = { :ios => "13.0" }
   s.source       = { :git => "https://github.com/moengage/React-Native.git", :tag => "#{s.version}" }
 
+  s.static_framework = true
   s.source_files = "ios/**/*.{h,m,mm,swift}"
   s.public_header_files = 'ios/**/*.h'
 
   s.dependency "React-Core"
-  s.dependency "MoEngagePluginInbox",'5.00.0'
+  s.dependency "MoEngagePluginInbox",'5.02.0'
   s.dependency 'ReactNativeMoEngage'
   s.module_map = false
 
