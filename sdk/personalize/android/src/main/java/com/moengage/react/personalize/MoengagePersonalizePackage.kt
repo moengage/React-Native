@@ -34,7 +34,6 @@ class MoengagePersonalizePackage : TurboReactPackage() {
     override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
         return ReactModuleInfoProvider {
             val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
-            val isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
             moduleInfos[MoEngagePersonalizeHandler.NAME] = ReactModuleInfo(
                 MoEngagePersonalizeHandler.NAME,
                 MoEngagePersonalizeHandler.NAME,
@@ -42,7 +41,7 @@ class MoengagePersonalizePackage : TurboReactPackage() {
                 false,  // needsEagerInit
                 true,   // hasConstants
                 false,  // isCxxModule
-                isTurboModule // isTurboModule
+                true // isTurboModule
             )
             moduleInfos
         }
