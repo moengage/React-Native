@@ -40,7 +40,9 @@ import {
   USER_ATTRIBUTE_USER_LAST_NAME,
   USER_ATTRIBUTE_USER_LOCATION,
   USER_ATTRIBUTE_USER_MOBILE,
-  USER_ATTRIBUTE_USER_NAME
+  USER_ATTRIBUTE_USER_NAME,
+  ACCOUNT_META,
+  MOE_DATA
 } from "./utils/MoEConstants";
 import MoESelfHandledCampaignData from "./models/MoESelfHandledCampaignData";
 import { MoEngagePermissionType } from "./models/MoEngagePermissionType";
@@ -57,7 +59,8 @@ import MoEReactBridge from "./NativeMoEngage";
 import MoEPushToken from "../src/models/MoEPushToken";
 import MoEPushPayload from "../src/models/MoEPushPayload";
 import MoEInAppData from "../src/models/MoEInAppData";
-import { getUserDeletionData, getUserIdentitiesData, getFirebaseInstallationIdData } from "../src/moeParser/MoEngagePayloadParser";
+import { getUserDeletionData, getUserIdentitiesData } from "../src/moeParser/MoEngagePayloadParser";
+import { getFirebaseInstallationIdResult } from "../src/moeParser/MoEPushNotificationParser";
 import MoEFirebaseInstallationIdResult from "../src/models/MoEFirebaseInstallationIdResult";
 import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
 import MoEAnalyticsConfig from "../src/models/MoEAnalyticsConfig";
@@ -119,7 +122,7 @@ const INAPP_SELF_HANDLE = "inAppCampaignSelfHandled";
 export const PERMISSION_RESULT = "permissionResult";
 export const LOGOUT_COMPLETE = "logoutComplete";
 export const AUTHENTICATION_ERROR = "authenticationError";
-export const FIREBASE_INSTALLATION_ID_AVAILABLE = "onFirebaseInstallationIdAvailable";
+export const FIREBASE_INSTALLATION_ID_AVAILABLE = "firebaseInstallationIdAvailable";
 
 const PUSH_SERVICE_FCM = "FCM"
 const PUSH_SERVICE_PUSH_KIT = "PUSH_KIT"
@@ -169,7 +172,7 @@ export type NotificationEventName = 'pushTokenGenerated' |
   'permissionResult' |
   'logoutComplete' |
   'authenticationError' |
-  'onFirebaseInstallationIdAvailable';
+  'firebaseInstallationIdAvailable';
 
 type NotificationEventTypeMap = {
   "pushTokenGenerated": MoEPushToken,
@@ -182,7 +185,7 @@ type NotificationEventTypeMap = {
   "permissionResult": MoEngagePersimissionResultData,
   "logoutComplete": MoELogoutCompleteData,
   "authenticationError": MoEAuthenticationErrorData,
-  "onFirebaseInstallationIdAvailable": MoEFirebaseInstallationIdResult
+  "firebaseInstallationIdAvailable": MoEFirebaseInstallationIdResult
 }
 
 var ReactMoE = {
@@ -861,13 +864,16 @@ var ReactMoE = {
    *
    * @since TODO
    */
-  getFirebaseInstallationId: async function (): Promise<string | null> {
+  getFirebaseInstallationId: async function (): Promise<MoEFirebaseInstallationIdResult | null> {
     MoEngageLogger.verbose("Will fetch firebase installation id");
     if (Platform.OS == PLATFORM_ANDROID) {
       try {
-        return getFirebaseInstallationIdData(
-          await MoEReactBridge.getFirebaseInstallationId(getAppIdJson(moeAppId))
-        );
+        const response = await MoEReactBridge.getFirebaseInstallationId(getAppIdJson(moeAppId));
+        if (response === null) {
+          return null;
+        }
+        const responseJson = JSON.parse(response);
+        return getFirebaseInstallationIdResult(responseJson[MOE_DATA], responseJson[ACCOUNT_META]) ?? null;
       } catch (error) {
         MoEngageLogger.error(`getFirebaseInstallationId(): ${error}`);
         throw error;

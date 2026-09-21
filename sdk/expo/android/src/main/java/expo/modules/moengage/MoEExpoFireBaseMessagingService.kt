@@ -46,7 +46,7 @@ public class MoEExpoFireBaseMessagingService : ExpoFirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         try {
-            Logger.record(PlatformLogLevel.WARN) { "$tag onNewToken(): legacy token registeration not supported" }
+            Logger.record(PlatformLogLevel.WARN) { "$tag onNewToken(): legacy token registration not supported" }
             super.onNewToken(token)
         } catch (t: Throwable) {
             Logger.record(PlatformLogLevel.ERROR, t) { "$tag onNewToken(): " }

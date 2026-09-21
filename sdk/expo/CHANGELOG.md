@@ -4,9 +4,10 @@
 
 - Android
   - [major] `android-bom` version updated from `2.3.1` to `4.3.0`
-  - [minor] `com.google.firebase:firebase-messaging` version updated from `24.1.0` to `25.1.2`
   - [major] compile and target sdk updated to `36`
+  - [minor] `com.google.firebase:firebase-messaging` version updated from `24.1.0` to `25.1.2`
   - [minor] Added support for firebase installation id.
+  - [minor] Legacy FCM token is no longer forwarded to MoEngage on `onNewToken()`; apps must rely on Firebase Installation Id or have the installation-id meta-data enabled.
 
 # 11-06-2026
 

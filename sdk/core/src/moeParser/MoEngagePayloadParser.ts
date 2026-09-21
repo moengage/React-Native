@@ -12,7 +12,6 @@ import {
     AUTH_ERROR_MESSAGE,
     IS_USER_DELETION_SUCCESS,
     MOE_DATA,
-    MOE_INSTALLATION_ID,
     MOE_PERMISSION_STATE,
     MOE_PERMISSION_TYPE,
     MOE_PLATFORM,
@@ -108,19 +107,4 @@ export function getUserIdentitiesData(payload: string | null): { [k: string]: st
         mappedIdentities[key] = value;
     }
     return mappedIdentities;
-}
-
-/**
- * Extract the saved Firebase Installation Id from the {@link ReactMoE.getFirebaseInstallationId}
- * native promise response.
- *
- * @param payload - stringified JSON Object with the `data.installationId` key, or null
- * @returns the installation id, or null if unavailable
- */
-export function getFirebaseInstallationIdData(payload: string | null): string | null {
-    if (payload === null) {
-        return null;
-    }
-    const payloadJsonObject = JSON.parse(payload);
-    return payloadJsonObject[MOE_DATA]?.[MOE_INSTALLATION_ID] ?? null;
 }
