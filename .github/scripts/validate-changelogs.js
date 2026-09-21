@@ -18,7 +18,7 @@
  * 3. Valid tags: major, minor, patch, NA (case-sensitive). Anything else in
  *    brackets contributes nothing toward the release type.
  *
- * Usage: node scripts/validate-changelogs.js [changelog files...]
+ * Usage: node .github/scripts/validate-changelogs.js [changelog files...]
  * Defaults to every sdk/<module>/CHANGELOG.md.
  */
 const fs = require('fs');
@@ -29,8 +29,7 @@ const TAG_RE = /\[([^\]]*)\]/;
 // Mirrors utils.main.kts: specialChangelogLine ("bugfix") after lowercasing
 // and stripping "-" / ":".
 const SPECIAL_LINES = ['bugfix'];
-// Platform grouping bullets, allowed untagged (ignored by the type parser).
-const PLATFORM_LINE_RE = /^-\s+(iOS|Android|Web)\s*$/i;
+const indentOf = l => l.length - l.trimStart().length;
 
 const files = process.argv.slice(2).length
   ? process.argv.slice(2)
@@ -97,19 +96,22 @@ for (const file of files) {
   }
 
   let taggedCount = 0;
-  for (const line of block) {
+  block.forEach((line, i) => {
     const trimmed = line.trim();
     const special = trimmed.toLowerCase().replace(/[-:]/g, '').trim();
-    if (PLATFORM_LINE_RE.test(trimmed) || SPECIAL_LINES.includes(special)) {
-      continue; // grouping bullet / special line — fine untagged
-    }
+    if (!trimmed.startsWith('-')) return;
+    // A bullet with nested content below it is a grouping header (`- iOS`,
+    // `- Deprecated API` above a table) — fine untagged, like platform bullets.
+    const next = block[i + 1];
+    const isGroupHeader = next !== undefined && indentOf(next) > indentOf(line);
+    if (isGroupHeader || SPECIAL_LINES.includes(special)) return;
     const m = trimmed.match(TAG_RE);
     if (!m) {
       fail(
         file,
         `untagged entry line (contributes nothing to the release type): "${trimmed.slice(0, 60)}"`
       );
-      continue;
+      return;
     }
     if (!VALID_TAGS.includes(m[1].trim())) {
       fail(
@@ -117,7 +119,7 @@ for (const file of files) {
         `invalid release tag "[${m[1]}]" (valid: ${VALID_TAGS.join(', ')}; case-sensitive): ` +
           `"${trimmed.slice(0, 60)}"`
       );
-      continue;
+      return;
     }
     if (new RegExp(`\\[${m[1]}\\]\\s*:`).test(trimmed)) {
       fail(
@@ -127,7 +129,7 @@ for (const file of files) {
       );
     }
     taggedCount++;
-  }
+  });
 
   if (taggedCount === 0) {
     fail(

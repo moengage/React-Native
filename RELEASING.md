@@ -17,14 +17,16 @@
     - [patch] What changed on Android
   ```
 
-  Format rules (enforced in CI by `scripts/validate-changelogs.js`):
+  Format rules (enforced in CI by `.github/scripts/validate-changelogs.js`):
   - Valid tags: `[major]`, `[minor]`, `[patch]` (lowercase; `[NA]` for
     entries that alone should not trigger a release).
   - **No colon after the tag** — the release strips the literal `" [minor]"`,
     so `- [minor] : Text` would be published as `- : Text`. Write
     `- [minor] Text`.
-  - Platform grouping bullets (`- iOS`, `- Android`) carry no tag; put the tag
-    on the nested entry lines.
+  - Grouping bullets (`- iOS`, `- Android`, or any bullet with nested content
+    such as `- Deprecated API` above a table) carry no tag; put the tag on the
+    nested entry lines. Non-bullet continuation lines (e.g. table rows `| … |`)
+    are not tagged either.
   - The literal words `Release Date` / `Release Version` are replaced with the
     actual date and version by the release workflow — don't fill them in.
 - Merge the feature / bug fixes branches into development

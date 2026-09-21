@@ -1,7 +1,7 @@
 import { appId, expectedUserIdentityStringObjectTypePayload, expectedUserIdentityStringTypePayload, userIdentityStringObjectType, userIdentityStringType } from "../../__mocks__/JsonDataProvider";
 import MoEngageLogger from "../../logger/MoEngageLogger";
 import MoEInAppRules from "../../models/MoEInAppRules";
-import { getDisplayRulesJson, getIdentifyUserPayload, getAuthenticationDetailsJson } from "../../utils/MoEJsonBuilder";
+import { getDisplayRulesJson, getIdentifyUserPayload, getAuthenticationDetailsJson, getFirebaseInstallationIdJson } from "../../utils/MoEJsonBuilder";
 import { MoEAuthenticationType } from "../../models/MoEAuthenticationType";
 
 describe('MoEJsonBuilder', () => {
@@ -31,6 +31,16 @@ describe('MoEJsonBuilder', () => {
                 }
             };
             expect(getAuthenticationDetailsJson(authenticationData, appId)).toEqual(JSON.stringify(expected));
+        });
+    });
+
+    describe('getFirebaseInstallationIdJson', () => {
+        it('should build the wire payload expected by the native SDK', () => {
+            const expected = {
+                accountMeta: { appId: appId },
+                data: { installationId: "sample-installation-id" }
+            };
+            expect(getFirebaseInstallationIdJson("sample-installation-id", appId)).toEqual(JSON.stringify(expected));
         });
     });
 });

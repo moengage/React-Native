@@ -1,6 +1,6 @@
 ext {
-    moengageNativeBOMVersion = "4.3.0"
-    moengagePluginBaseBOMVersion = "4.0.0"
+    moengageNativeBOMVersion = "4.4.0"
+    moengagePluginBaseBOMVersion = "4.1.0"
     kotlinVersion = "2.3.20"
 }
 
@@ -50,5 +50,4 @@ dependencies {
 
     implementation(platform("com.moengage:plugin-base-bom:$moengagePluginBaseBOMVersion"))
     implementation("com.moengage:plugin-base-personalization")
-    compileOnly("com.moengage:plugin-base")
 }

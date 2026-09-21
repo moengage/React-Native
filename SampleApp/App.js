@@ -23,8 +23,8 @@ ReactMoE.setEventListener("pushTokenGenerated", (payload) => {
   MoEngageLogger.debug("pushTokenGenerated", payload);
 });
 
-ReactMoE.setEventListener("onFirebaseInstallationIdAvailable", (result) => {
-  MoEngageLogger.debug("onFirebaseInstallationIdAvailable", result);
+ReactMoE.setEventListener("firebaseInstallationIdAvailable", (result) => {
+  MoEngageLogger.debug("firebaseInstallationIdAvailable", result);
 });
 
 ReactMoE.setEventListener("pushClicked", (notificationPayload) => {

@@ -3,30 +3,17 @@ import groovy.json.JsonSlurper
 repositories {
     google()
     mavenCentral()
-    mavenLocal()
 }
 
 ext {
     // MoEngage Versions
-    moengageNativeBOMVersion = "4.3.0"
-    moengagePluginBaseBOMVersion = "4.0.0"
+    moengageNativeBOMVersion = "4.4.0"
+    moengagePluginBaseBOMVersion = "4.1.0"
 
     // AndroidX Support Libraries Versions
     androidXCore = "1.16.0"
     androidXCompact = "1.7.1"
     androidXLifecycle = "2.10.0"
-}
-
-configurations.all {
-    resolutionStrategy {
-        force(
-            "com.moengage:plugin-base:7.0.0-fid-local",
-            "com.moengage:core:10.2.0-fid-local",
-            "com.moengage:platform:1.1.0-fid-local",
-            "com.moengage:pushbase:10.1.0-fid-local",
-            "com.moengage:moe-push-firebase:9.2.0-fid-local",
-        )
-    }
 }
 
 dependencies {

@@ -160,7 +160,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
     
-    implementation("com.google.firebase:firebase-messaging:25.0.1")
+    implementation("com.google.firebase:firebase-messaging:25.1.2")
     implementation("com.google.android.gms:play-services-ads-identifier:18.3.0")
     implementation("com.google.android.gms:play-services-location:21.3.0")
     implementation("com.github.bumptech.glide:glide:5.0.7")
