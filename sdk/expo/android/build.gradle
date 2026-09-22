@@ -45,6 +45,7 @@ hybridModuleConfig.configurePlugin {
 
 android {
     namespace "expo.modules.moengage"
+    compileSdk rootProject.ext.compileSdkVersion
 }
 
 dependencies {

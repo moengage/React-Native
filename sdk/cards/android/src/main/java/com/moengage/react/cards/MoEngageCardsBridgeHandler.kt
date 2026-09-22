@@ -25,7 +25,7 @@ import com.moengage.plugin.base.cards.internal.setCardsEventEmitter
 import org.json.JSONObject
 
 /**
- * Class to handle all the request from the [MoEngageCardsBridge] from both old and new arch
+ * Class to handle all the request from the [MoEngageCardsBridge]
  *
  * @author Abhishek Kumar
  * @since Todo: Add Version

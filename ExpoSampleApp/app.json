@@ -68,9 +68,10 @@
         {
           "android": {
             "minSdkVersion": 24,
-            "compileSdkVersion": 36,
-            "targetSdkVersion": 36,
-            "kotlinVersion": "2.3.20"
+            "compileSdkVersion": 37,
+            "targetSdkVersion": 37,
+            "kotlinVersion": "2.2.10",
+            "extraProguardRules": "-ignorewarnings"
           }
         }
       ],

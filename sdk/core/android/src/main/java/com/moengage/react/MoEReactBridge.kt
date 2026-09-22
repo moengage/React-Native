@@ -18,7 +18,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.moengage.platform.internal.logger.Logger
 
 /**
- * Bridge to communicate with js code in new arch
+ * Bridge to communicate with js code
  *
  * @author Abhishek Kumar
  * @since Todo: Add Version
@@ -37,7 +37,7 @@ class MoEReactBridge(reactContext: ReactApplicationContext) : NativeMoEngageSpec
     }
 
     override fun initialize(payload: String) {
-        Logger.record { "$tag initializing module in new arch" }
+        Logger.record { "$tag initializing module" }
         bridgeHandler.initialize(payload)
     }
 

@@ -27,7 +27,7 @@
  import org.json.JSONObject
 
 /**
-  * Class to handle all the request from the [MoEReactBridge] from both old and new arch
+  * Class to handle all the request from the [MoEReactBridge]
   *
   * @author Abhishek Kumar
   * @since Todo: Add Version
