@@ -46,11 +46,20 @@ public class MoEExpoFireBaseMessagingService : ExpoFirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         try {
-            Logger.record { "$tag onNewToken(): $token" }
-            MoEFireBaseHelper.getInstance().passPushToken(applicationContext, token)
+            Logger.record(PlatformLogLevel.WARN) { "$tag onNewToken(): legacy token registration not supported" }
             super.onNewToken(token)
         } catch (t: Throwable) {
             Logger.record(PlatformLogLevel.ERROR, t) { "$tag onNewToken(): " }
+        }
+    }
+
+    override fun onRegistered(installationId: String) {
+        try {
+            Logger.record { "$tag onRegistered(): $installationId" }
+            MoEFireBaseHelper.getInstance().passInstallationId(applicationContext, installationId)
+            super.onRegistered(installationId)
+        } catch (t: Throwable) {
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag onRegistered(): " }
         }
     }
 }

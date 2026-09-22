@@ -258,6 +258,14 @@ RCT_EXPORT_METHOD(deviceIdentifierTrackingStatusUpdate:(NSString *)payload) {
     RCTLogInfo(@"Warning: This is an Android only feature.");
 }
 
+RCT_EXPORT_METHOD(passFirebaseInstallationId:(NSString *)payload) {
+    RCTLogInfo(@"Warning: This is an Android only feature.");
+}
+
+RCT_EXPORT_METHOD(getFirebaseInstallationId:(NSString *)payload resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
+    RCTLogInfo(@"Warning: This is an Android only feature.");
+}
+
 
 #ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const facebook::react::ObjCTurboModule::InitParams &)params {

@@ -17,6 +17,7 @@ import {
   getMoEPropertiesJson,
   getMoEPushCampaignJson,
   getMoEPushTokenJson,
+  getFirebaseInstallationIdJson,
   getOptOutTrackingJson,
   getSdkStateJson,
   getSelfHandledJson,
@@ -39,7 +40,9 @@ import {
   USER_ATTRIBUTE_USER_LAST_NAME,
   USER_ATTRIBUTE_USER_LOCATION,
   USER_ATTRIBUTE_USER_MOBILE,
-  USER_ATTRIBUTE_USER_NAME
+  USER_ATTRIBUTE_USER_NAME,
+  ACCOUNT_META,
+  MOE_DATA
 } from "./utils/MoEConstants";
 import MoESelfHandledCampaignData from "./models/MoESelfHandledCampaignData";
 import { MoEngagePermissionType } from "./models/MoEngagePermissionType";
@@ -57,6 +60,8 @@ import MoEPushToken from "../src/models/MoEPushToken";
 import MoEPushPayload from "../src/models/MoEPushPayload";
 import MoEInAppData from "../src/models/MoEInAppData";
 import { getUserDeletionData, getUserIdentitiesData } from "../src/moeParser/MoEngagePayloadParser";
+import { getFirebaseInstallationIdResult } from "../src/moeParser/MoEPushNotificationParser";
+import MoEFirebaseInstallationIdResult from "../src/models/MoEFirebaseInstallationIdResult";
 import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
 import MoEAnalyticsConfig from "../src/models/MoEAnalyticsConfig";
 import { MoESupportedAttributes } from "./models/MoESupportedAttributes";
@@ -90,6 +95,7 @@ const MOE_INAPP_SELF_HANDLE = "MoEInAppCampaignSelfHandled";
 const MOE_PERMISSION_RESULT = "MoEPermissionResult";
 const MOE_LOGOUT_COMPLETE = "MoELogoutComplete";
 const MOE_AUTHENTICATION_ERROR = "MoEAuthenticationError";
+const MOE_FIREBASE_INSTALLATION_ID_AVAILABLE = "MoEInstallationIdAvailable";
 
 const eventBroadcastNames = [
   MOE_PUSH_CLICKED,
@@ -101,7 +107,8 @@ const eventBroadcastNames = [
   MOE_INAPP_SELF_HANDLE,
   MOE_PERMISSION_RESULT,
   MOE_LOGOUT_COMPLETE,
-  MOE_AUTHENTICATION_ERROR
+  MOE_AUTHENTICATION_ERROR,
+  MOE_FIREBASE_INSTALLATION_ID_AVAILABLE
 ];
 
 // JS Event Names
@@ -115,6 +122,7 @@ const INAPP_SELF_HANDLE = "inAppCampaignSelfHandled";
 export const PERMISSION_RESULT = "permissionResult";
 export const LOGOUT_COMPLETE = "logoutComplete";
 export const AUTHENTICATION_ERROR = "authenticationError";
+export const FIREBASE_INSTALLATION_ID_AVAILABLE = "firebaseInstallationIdAvailable";
 
 const PUSH_SERVICE_FCM = "FCM"
 const PUSH_SERVICE_PUSH_KIT = "PUSH_KIT"
@@ -129,7 +137,8 @@ const _eventNames = [
   INAPP_SELF_HANDLE,
   PERMISSION_RESULT,
   LOGOUT_COMPLETE,
-  AUTHENTICATION_ERROR
+  AUTHENTICATION_ERROR,
+  FIREBASE_INSTALLATION_ID_AVAILABLE
 ];
 
 var _eventTypeHandler = new Map();
@@ -162,7 +171,8 @@ export type NotificationEventName = 'pushTokenGenerated' |
   'inAppCampaignSelfHandled' |
   'permissionResult' |
   'logoutComplete' |
-  'authenticationError';
+  'authenticationError' |
+  'firebaseInstallationIdAvailable';
 
 type NotificationEventTypeMap = {
   "pushTokenGenerated": MoEPushToken,
@@ -174,7 +184,8 @@ type NotificationEventTypeMap = {
   "inAppCampaignSelfHandled": MoESelfHandledCampaignData,
   "permissionResult": MoEngagePersimissionResultData,
   "logoutComplete": MoELogoutCompleteData,
-  "authenticationError": MoEAuthenticationErrorData
+  "authenticationError": MoEAuthenticationErrorData,
+  "firebaseInstallationIdAvailable": MoEFirebaseInstallationIdResult
 }
 
 var ReactMoE = {
@@ -500,8 +511,11 @@ var ReactMoE = {
    * Note: This API is only for Android platform and is a no-operation method for other plaforms.
    *
    * @param {String} pushToken
+   *
+   * @deprecated FCM has deprecated the registration token. This API stops working when FCM removes the legacy token support, or it will be removed in 14.0.0. Use passFirebaseInstallationId() instead.
    */
   passFcmPushToken: function (pushToken: string) {
+    MoEngageLogger.warn("Deprecated function usage `passFcmPushToken`, use `passFirebaseInstallationId`");
     MoEngageLogger.verbose("Will process push token");
     if (Platform.OS == PLATFORM_ANDROID) {
       let payload = getMoEPushTokenJson(pushToken, PUSH_SERVICE_FCM, PLATFORM_ANDROID, moeAppId);
@@ -825,6 +839,49 @@ var ReactMoE = {
       MoEngageLogger.error(`getUserIdentities(): ${error}`);
       return null;
     }
+  },
+
+  /**
+   * Pass a Firebase Installation Id obtained by the app to the MoEngage SDK.
+   * Note: This API is only for Android platform and is a no-operation method for other platforms.
+   *
+   * @param installationId Firebase Installation Id obtained by the app
+   * @since TODO
+   */
+  passFirebaseInstallationId: function (installationId: string) {
+    MoEngageLogger.verbose("Will process firebase installation id");
+    if (Platform.OS == PLATFORM_ANDROID) {
+      let payload = getFirebaseInstallationIdJson(installationId, moeAppId);
+      MoEReactBridge.passFirebaseInstallationId(payload);
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
+    }
+  },
+
+  /**
+   * Get the saved Firebase Installation Id, if any, for the given account.
+   * Note: This API is only for Android platform and is a no-operation method for other platforms.
+   *
+   * @since TODO
+   */
+  getFirebaseInstallationId: async function (): Promise<MoEFirebaseInstallationIdResult | null> {
+    MoEngageLogger.verbose("Will fetch firebase installation id");
+    if (Platform.OS == PLATFORM_ANDROID) {
+      try {
+        const response = await MoEReactBridge.getFirebaseInstallationId(getAppIdJson(moeAppId));
+        if (response === null) {
+          return null;
+        }
+        const responseJson = JSON.parse(response);
+        return getFirebaseInstallationIdResult(responseJson[MOE_DATA], responseJson[ACCOUNT_META]) ?? null;
+      } catch (error) {
+        MoEngageLogger.error(`getFirebaseInstallationId(): ${error}`);
+        throw error;
+      }
+    } else {
+      MoEngageLogger.debug("This api is not supported on iOS platform.");
+      return null;
+    }
   }
 };
 
@@ -851,7 +908,8 @@ export {
   MoEAuthenticationDetails,
   MoEAuthenticationErrorDetails,
   MoEAuthenticationType,
-  MoEJwtErrorCode
+  MoEJwtErrorCode,
+  MoEFirebaseInstallationIdResult
 };
 export type { MoEAuthenticationData };
 export default ReactMoE;

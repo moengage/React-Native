@@ -8,6 +8,11 @@
   - [major] Kotlin version updated from `1.9.23` to `2.3.20`
   - [major] `android-bom` version updated from `2.3.1` to `4.3.0`
   - [major] compile and target sdk updated to `36`
+  - [minor] Added support for Firebase Installation Id. Use `ReactMoE.passFirebaseInstallationId()` to pass the Firebase Installation Id obtained by the app to the SDK, `ReactMoE.getFirebaseInstallationId()` to fetch the saved Id, and listen to the `firebaseInstallationIdAvailable` event for availability updates.
+  - [minor] Deprecated API
+    |            Then             |                    Now                     |
+    |:---------------------------:|:------------------------------------------:|
+    | passFcmPushToken(pushToken) | passFirebaseInstallationId(installationId) |
 
 # 12-08-2026
 
