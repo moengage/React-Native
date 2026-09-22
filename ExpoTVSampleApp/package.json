@@ -9,18 +9,19 @@
     "prebuild": "EXPO_TV=1 expo prebuild"
   },
   "dependencies": {
-    "expo": "^53.0.4",
-    "expo-splash-screen": "~0.30.6",
-    "expo-status-bar": "~2.2.2",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "react-native": "npm:react-native-tvos@0.79.2-0",
+    "expo": "^57.0.19",
+    "expo-build-properties": "~57.0.16",
+    "expo-splash-screen": "~57.0.8",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "npm:react-native-tvos@0.87.1-0",
     "react-native-moengage": "^12.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "@react-native-tvos/config-tv": "^0.1.1",
-    "@types/react": "~19.0.10",
+    "@react-native-tvos/config-tv": "^0.1.6",
+    "@types/react": "~19.2.18",
     "typescript": "~5.8.3"
   },
   "expo": {
