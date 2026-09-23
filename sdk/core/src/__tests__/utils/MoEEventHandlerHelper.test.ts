@@ -1,4 +1,4 @@
-import { appId, logoutCompleteIosPayload, logoutCompleteInvalidPayload, authenticationErrorIosPayload, authenticationErrorInvalidPayload, inAppCustomActionIosPayload, inAppCustomActionKeyValuePair, pushClickedWithoutActionIosPayload } from '../../__mocks__/JsonDataProvider';
+import { appId, logoutCompleteIosPayload, logoutCompleteInvalidPayload, authenticationErrorIosPayload, authenticationErrorInvalidPayload, inAppCustomActionIosPayload, inAppCustomActionKeyValuePair, pushClickedWithoutActionIosPayload, pushClickedWithoutActionAndroidPayload } from '../../__mocks__/JsonDataProvider';
 import { executeHandler } from '../../utils/MoEEventHandlerHelper';
 import MoELogoutCompleteData from '../../models/MoELogoutCompleteData';
 import MoEAuthenticationErrorData from '../../models/MoEAuthenticationErrorData';
@@ -85,13 +85,24 @@ describe('MoEEventHandlerHelper', () => {
     describe('executeHandler — pushClicked', () => {
         it('iOS push without screen name or key-value pairs should deliver an empty click action', () => {
             const handler = jest.fn();
-            executeHandler(handler, { [MOE_PAYLOAD]: pushClickedWithoutActionIosPayload }, PUSH_CLICKED);
+            executeHandler(handler, { [MOE_PAYLOAD]: pushClickedWithoutActionIosPayload, pushClickedWithoutActionAndroidPayload }, PUSH_CLICKED);
             expect(handler).toHaveBeenCalledTimes(1);
             const result = handler.mock.calls[0][0];
             expect(result).toBeInstanceOf(MoEPushPayload);
             expect(result.platform).toEqual(MoEPlatform.IOS);
             expect(result.data.clickAction).toEqual({});
             expect(result.data.clickAction.payload).toBeUndefined();
+        });
+
+        it('Android push without navigation action should deliver no click action', () => {
+            const handler = jest.fn();
+            executeHandler(handler, { [MOE_PAYLOAD]: pushClickedWithoutActionAndroidPayload }, PUSH_CLICKED);
+            expect(handler).toHaveBeenCalledTimes(1);
+            const result = handler.mock.calls[0][0];
+            expect(result).toBeInstanceOf(MoEPushPayload);
+            expect(result.platform).toEqual(MoEPlatform.Android);
+            expect(result.data.isDefaultAction).toBe(true);
+            expect(result.data.clickAction).toBeUndefined();
         });
     });
 });

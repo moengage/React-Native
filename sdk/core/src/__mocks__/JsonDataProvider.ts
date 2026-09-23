@@ -78,8 +78,8 @@ export const authenticationErrorInvalidPayload = JSON.stringify({
     }
 });
 
-// Shapes below mirror what MoEngagePluginBase (iOS) emits for the in-app custom action and
-// push click callbacks.
+// Shapes below mirror what the plugin bases emit for the in-app custom action and push click
+// callbacks.
 export const inAppCustomActionKeyValuePair = { key: "test321" };
 
 export const inAppCustomActionIosPayload = JSON.stringify({
@@ -100,5 +100,15 @@ export const pushClickedWithoutActionIosPayload = JSON.stringify({
         platform: "iOS",
         payload: { app_extra: { screenData: {} } },
         clickedAction: {}
+    }
+});
+
+// Android plugin-base omits `clickedAction` when the push carries no navigation action.
+export const pushClickedWithoutActionAndroidPayload = JSON.stringify({
+    accountMeta: { appId: appId },
+    data: {
+        platform: "android",
+        isDefaultAction: true,
+        payload: { gcm_title: "dummyTitle" }
     }
 });
