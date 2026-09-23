@@ -77,3 +77,28 @@ export const authenticationErrorInvalidPayload = JSON.stringify({
         message: ""
     }
 });
+
+// Shapes below mirror what MoEngagePluginBase (iOS) emits for the in-app custom action and
+// push click callbacks.
+export const inAppCustomActionKeyValuePair = { key: "test321" };
+
+export const inAppCustomActionIosPayload = JSON.stringify({
+    accountMeta: { appId: appId },
+    data: {
+        platform: "iOS",
+        campaignId: "dummyCampaignId",
+        campaignName: "dummyCampaignName",
+        campaignContext: { cid: "dummyCampaignId_F_T_IA_AB_1_P_0_L_0" },
+        actionType: "customAction",
+        customAction: { kvPair: inAppCustomActionKeyValuePair }
+    }
+});
+
+export const pushClickedWithoutActionIosPayload = JSON.stringify({
+    accountMeta: { appId: appId },
+    data: {
+        platform: "iOS",
+        payload: { app_extra: { screenData: {} } },
+        clickedAction: {}
+    }
+});
