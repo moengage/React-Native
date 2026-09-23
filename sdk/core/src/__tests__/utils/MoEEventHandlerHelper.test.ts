@@ -85,7 +85,7 @@ describe('MoEEventHandlerHelper', () => {
     describe('executeHandler — pushClicked', () => {
         it('iOS push without screen name or key-value pairs should deliver an empty click action', () => {
             const handler = jest.fn();
-            executeHandler(handler, { [MOE_PAYLOAD]: pushClickedWithoutActionIosPayload, pushClickedWithoutActionAndroidPayload }, PUSH_CLICKED);
+            executeHandler(handler, { [MOE_PAYLOAD]: pushClickedWithoutActionIosPayload }, PUSH_CLICKED);
             expect(handler).toHaveBeenCalledTimes(1);
             const result = handler.mock.calls[0][0];
             expect(result).toBeInstanceOf(MoEPushPayload);
