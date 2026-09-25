@@ -208,9 +208,11 @@ ls <rnSdkDir>/ios/ 2>/dev/null
 Generate at: `<rnSdkDir>/ios/MoEngage<featureNameCamel>ReactConstants.h/.m`
 
 Rules:
-- Always define `kPayload = @"payload"` (copy from Cards unless already imported via core)
+- **Never redefine globals that core already defines.** `kPayload` lives in core's `MoEngageReactConstants.h/.m` — `#import "MoEngageReactConstants.h"` where needed instead of defining it. A duplicate `NSString* const` compiles fine under CocoaPods static archives but **fails the final app link under React Native's SwiftPM integration** (SPM links whole per-target objects → duplicate symbol). This bug shipped in cards for years before SPM exposed it.
+- Every `NSString* const` this module defines must be globally unique across all `sdk/*` modules (prefix with the feature name).
 - One `NSString* const` per nativeToHybrid event name (omit section if no events)
 - Event name string values must exactly match the TS `Constants.ts` event names
+- Cross-module imports of core headers use the plain quoted form (`#import "MoEngageReactUtils.h"`), never `#import "ReactNativeMoEngage/..."` — the prefixed form only resolves via CocoaPods header maps and breaks under SwiftPM.
 
 ### 3.4 Handler (.h + .m)
 → See `examples/Handler.h` and `examples/Handler.m`
@@ -274,6 +276,23 @@ Methods to add if not already present:
   - On success: `resolver(strPayload)`; on failure: `rejecter(error.code, error.localizedDescription, error)`
 
 ### 3.6 Bridge (.h + .mm)
+
+> **Never import the codegen'd spec from the bridge header.** Put
+> `#import <NativeMoEngage<featureNameCamel>Spec/...>` in the **.mm** and declare
+> the New-Architecture conformance in a class extension there:
+> ```objc
+> #ifdef RCT_NEW_ARCH_ENABLED
+> #import <NativeMoEngage<featureNameCamel>Spec/NativeMoEngage<featureNameCamel>Spec.h>
+> @interface <iosBridgeName> () <NativeMoEngage<featureNameCamel>Spec>
+> @end
+> #endif
+> ```
+> The header then declares only `<RCTBridgeModule>` (valid in both
+> architectures). Reason: the spec header chain is Objective-C++ only
+> (`RCTRequired.h` includes `<utility>`), and SwiftPM turns a target's public
+> headers into a Clang module umbrella — a spec import there makes every plain
+> ObjC (`.m`) consumer of the module fail to compile. CocoaPods hides this
+> because it uses header maps instead of modules.
 → See `examples/Bridge.h` and `examples/Bridge.mm`
 Generate at: `<rnSdkDir>/ios/MoEngage<featureNameCamel>Bridge.h/.mm`
 
@@ -311,9 +330,44 @@ ls <rnSdkDir>/*.podspec 2>/dev/null
 - `s.dependency 'MoEngagePlugin<featureNameCamel>', '<ios_plugin_version>'`
 - Keep `s.dependency 'React'`, `s.dependency 'ReactNativeMoEngage'`, and `install_modules_dependencies` block
 
+### 3.7b Package.swift (Swift Package Manager manifest)
+
+Every module ships a `Package.swift` for React Native's experimental SPM support (RN 0.87+); it is only consumed by RN's SPM autolinker — CocoaPods keeps using the podspec.
+
+**Required in every manifest** (both are easy to miss and fail *silently*):
+- `.define("RCT_NEW_ARCH_ENABLED")` in **both** `cSettings` and `cxxSettings`.
+  CocoaPods sets this on pod targets under the New Architecture; SwiftPM does
+  not. Without it the bridge compiles its legacy `#else` branch, and React
+  Native 0.87 ships `turboModuleInteropEnabled = NO` with no setter — so the
+  module is never dispatched: JS calls resolve, native does nothing, no error.
+  It must be in both settings blocks because the arch conditional lives in
+  headers that the (mostly `.m`) sources include; defining it for `.mm` only
+  splits conformance across translation units in one target.
+- The bridge header must not import the spec (see 3.6).
+
+**If `<rnSdkDir>/Package.swift` already exists** (adding to an existing module):
+- Update the `.package(url: ".../apple-plugin-<featureName>.git", exact: "...")` pin to `<ios_plugin_version>` if it changed. Do **not** change anything else.
+
+**If it does not exist** (new module):
+- Copy `sdk/cards/Package.swift` to `<rnSdkDir>/Package.swift` and update:
+  - Package/product/target name → `ReactNativeMoEngage<featureNameCamel>` (capital `E`, matching the CocoaPods module name). The autolinker looks the product up by the Swift name it resolves for the package — which is `toSwiftName(<npm package name>)` unless overridden, i.e. `ReactNativeMoengage<featureNameCamel>` with a lowercase `e`. We override it rather than accept the derived name, so the `react-native.config.js` below is **required** and its `spm.name` must match this product name exactly.
+  - Native plugin dependency → `.package(url: "https://github.com/moengage/apple-plugin-<featureName>.git", exact: "<ios_plugin_version>")` with `.product(name: "MoEngagePlugin<featureNameCamel>", package: "apple-plugin-<featureName>")`
+  - Target `path:` → the module's actual iOS dir (`ios`), `exclude:` any `.xcodeproj`/`.xcworkspace` inside it
+  - Keep the React header products, the `../ReactNativeMoEngage` sibling reference, the DEBUG/NDEBUG cxxSettings, and the comment block explaining the relative paths — they are part of RN's self-managed autolinking contract.
+- Create `<rnSdkDir>/react-native.config.js` by copying `sdk/cards/react-native.config.js` and updating the name:
+  ```js
+  module.exports = {
+    spm: {
+      name: 'ReactNativeMoEngage<featureNameCamel>',
+    },
+  };
+  ```
+  `resolveSwiftName()` in React Native's `scripts/spm/expand-spm-dependencies.js` reads this from the *library's own* package directory, which is what lets the product use MoEngage's capitalisation instead of the derived `Moengage`. Omit it and the autolinker looks for `ReactNativeMoengage<featureNameCamel>` while the manifest declares `ReactNativeMoEngage<featureNameCamel>`, so resolution fails. The extra `spm` key is safe for the CocoaPods path too — the community CLI's config schema is `.unknown(true)`.
+- Ensure both `"Package.swift"` **and** `"react-native.config.js"` are listed in the module's `package.json` `"files"` array (the TS layer's package.json copy from cards already includes them). Missing the config file publishes a package whose product name cannot be resolved by consumers, even though it builds fine in this repo.
+
 ### 3.8 Commit
 ```bash
-git add <rnSdkDir>/ios/ <rnSdkDir>/*.podspec
+git add <rnSdkDir>/ios/ <rnSdkDir>/*.podspec <rnSdkDir>/Package.swift
 git commit -m "<ticketId>: Add React-Native iOS bridge for <featureName>"
 ```
 
