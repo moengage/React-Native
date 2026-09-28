@@ -37,7 +37,7 @@ let package = Package(
         .package(name: "ReactNative", path: "../../../../xcframeworks"),
         .package(name: "React-GeneratedCode", path: "../../../ios"),
         .package(name: "ReactNativeMoEngage", path: "../ReactNativeMoEngage"),
-        .package(url: "https://github.com/moengage/apple-plugin-personalize.git", exact: "2.0.0"),
+        .package(url: "https://github.com/moengage/apple-plugin-personalize.git", exact: "2.2.0"),
         // For development against a local checkout, comment the line above
         // and uncomment this one:
         // .package(path: "../../../../../../../../apple-plugin-personalize"),

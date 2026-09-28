@@ -51,11 +51,11 @@ let package = Package(
     dependencies: [
         .package(name: "ReactNative", path: "../../../../xcframeworks"),
         .package(name: "React-GeneratedCode", path: "../../../ios"),
-        .package(url: "https://github.com/moengage/iOS-PluginBase.git", exact: "7.00.0"),
+        .package(url: "https://github.com/moengage/iOS-PluginBase.git", exact: "7.02.0"),
         // For development against a local checkout, comment the line above
         // and uncomment this one:
         // .package(path: "../../../../../../../../iOS-PluginBase"),
-        .package(url: "https://github.com/moengage/apple-sdk.git", exact: "11.00.0"),
+        .package(url: "https://github.com/moengage/apple-sdk.git", exact: "11.02.0"),
         // For development against a local checkout, comment the line above
         // and uncomment this one:
         // .package(path: "../../../../../../../../apple-sdk"),
