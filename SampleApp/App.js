@@ -25,16 +25,14 @@ ReactMoE.setEventListener("pushTokenGenerated", (payload) => {
 
 ReactMoE.setEventListener("pushClicked", (notificationPayload) => {
   MoEngageLogger.debug("pushClicked", notificationPayload);
-  if (notificationPayload.data.isDefaultAction) {
-    MoEngageLogger.debug("pushClicked Screen Name default : ", notificationPayload.data.payload.Navigate);
-    if (notificationPayload.data.payload.Navigate) {
-      RootNavigation.navigate(notificationPayload.data.payload.Navigate, {});
-    }
-  } else {
-    MoEngageLogger.debug("pushClicked Screen Name : ", notificationPayload.data.clickAction.payload.kvPair.Navigate);
-    if (notificationPayload.data.clickAction.payload.kvPair.Navigate) {
-      RootNavigation.navigate(notificationPayload.data.clickAction.payload.kvPair.Navigate, {});
-    }
+  // A push without a screen name or key-value pairs has no click action payload
+  // (iOS sends an empty `clickedAction`), so every level below may be absent.
+  const screenName = notificationPayload.data.isDefaultAction
+    ? notificationPayload.data.payload?.Navigate
+    : notificationPayload.data.clickAction.payload?.kvPair?.Navigate;
+  MoEngageLogger.debug("pushClicked Screen Name : ", screenName);
+  if (screenName) {
+    RootNavigation.navigate(screenName, {});
   }
 });
 

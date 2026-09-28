@@ -265,6 +265,10 @@ Copy `sdk/cards/package.json`, then update:
 - `"description"` → appropriate description
 - `"codegenConfig"."name"` → `"NativeMoEngage<featureNameCamel>Spec"`
 - `"codegenConfig"."android"."javaPackageName"` → `"<rnPackage>"`
+- Keep `"Package.swift"` **and** `"react-native.config.js"` in the `"files"` array
+  (both carried over from cards) — the SPM manifest and the `spm.name` override are
+  created by the iOS bridge skill (step 3.7b there). Dropping the config file from
+  `files` publishes a package whose SPM product name cannot be resolved.
 
 ### 3.14 Podspec *(iOS shell — do not implement iOS logic)*
 Copy `sdk/cards/ReactNativeMoEngageCards.podspec`, rename to

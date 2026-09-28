@@ -104,14 +104,6 @@ target 'SampleSwiftApp' do
   )
 end
 
-target 'NotificationService' do
-  extension_pods
-end
-
-target 'NotificationContent' do
-  extension_pods
-end
-
 post_install do |installer|
   react_native_post_install(
     installer,

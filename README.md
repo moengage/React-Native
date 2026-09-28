@@ -16,6 +16,7 @@ This repository contains the React-Native plugins for the [MoEngage](https://www
 |     expo      | Contains the implementation for the prebuild plugin to configure SDK native implementation    |
 |   SampleApp   | Sample Integration for reference.                                                             |
 | ExpoSampleApp | Expo Sample Integration for reference.                                                        |
+| SpmSampleApp  | iOS Swift Package Manager Integration (React Native 0.87+ experimental SPM) for reference.   |
 
 
 ## How to use the sample application?

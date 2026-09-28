@@ -7,8 +7,9 @@
 
 #import <Foundation/Foundation.h>
 
-// Shared payload key — define locally if not already available from core:
-extern NSString* const kPayload;
+// NOTE: shared globals like kPayload come from core's MoEngageReactConstants.h
+// — never re-declare/define them here (duplicate-symbol link failure under
+// React Native's SwiftPM integration). Only feature-specific constants below.
 
 // One constant per nativeToHybrid event name (omit section if no events):
 extern NSString* const kOn<featureNameCamel>Event;  // e.g. kCardsSyncListener = @"onCardsSync"

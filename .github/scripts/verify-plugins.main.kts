@@ -6,8 +6,8 @@
 when (val platform = args[0]) {
     "iOS" -> {
         verifyPullRequest(
-            plugins= getAllPluginsPath(), 
-            coreModule= "sdk/core", 
+            plugins= getAllPluginsPath(),
+            coreModule= "sdk/core",
             platform= PLATFORM.IOS
         )
     }

@@ -7,6 +7,14 @@
 //
 
 #import "MoEngage<featureNameCamel>Bridge.h"
+
+// The TurboModule spec lives here (not in the header) — see Bridge.h.
+#ifdef RCT_NEW_ARCH_ENABLED
+#import <NativeMoEngage<featureNameCamel>Spec/NativeMoEngage<featureNameCamel>Spec.h>
+// TODO: verify TurboModule spec header name
+@interface MoEngage<featureNameCamel>Bridge () <NativeMoEngage<featureNameCamel>Spec>
+@end
+#endif
 #import "MoEngage<featureNameCamel>ReactConstants.h"
 #import "<iosHandlerName>.h"
 

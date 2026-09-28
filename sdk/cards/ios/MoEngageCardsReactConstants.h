@@ -8,7 +8,9 @@
 #import <Foundation/Foundation.h>
 
 
-extern NSString* const kPayload;
+// kPayload is declared in MoEngageReactConstants.h (react-native-moengage core)
+// and defined there; a second definition here caused a duplicate-symbol link
+// failure when both packages are linked from whole-target objects (SPM).
 extern NSString* const kCardsSyncListener;
 extern NSString* const kPullToRefreshCardsSyncListener;
 extern NSString* const kInboxOpenCardsSyncListener;
