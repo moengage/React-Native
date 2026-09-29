@@ -160,4 +160,12 @@ class MoEReactBridge(reactContext: ReactApplicationContext) : NativeMoEngageSpec
     override fun registerForProvisionalPush() {
         //iOS only
     }
+
+    override fun passFirebaseInstallationId(payload: String) {
+        bridgeHandler.passFirebaseInstallationId(payload)
+    }
+
+    override fun getFirebaseInstallationId(payload: String, promise: Promise) {
+        bridgeHandler.getFirebaseInstallationId(payload, promise)
+    }
 }

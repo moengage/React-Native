@@ -16,6 +16,7 @@ import com.moengage.plugin.base.internal.model.events.EventType
 import com.moengage.plugin.base.internal.model.events.inapp.InAppActionEvent
 import com.moengage.plugin.base.internal.model.events.inapp.InAppLifecycleEvent
 import com.moengage.plugin.base.internal.model.events.inapp.InAppSelfHandledEvent
+import com.moengage.plugin.base.internal.model.events.push.InstallationIdEvent
 import com.moengage.plugin.base.internal.model.events.push.PermissionEvent
 import com.moengage.plugin.base.internal.model.events.push.PushClickedEvent
 import com.moengage.plugin.base.internal.model.events.push.TokenEvent
@@ -48,6 +49,7 @@ class EventEmitterImpl(private val reactContext: ReactContext) : EventEmitter {
                 EventType.PERMISSION -> emitPermissionResult(event as PermissionEvent)
                 EventType.LOGOUT_COMPLETE -> emitLogoutComplete(event as LogoutCompleteEvent)
                 EventType.AUTHENTICATION_ERROR -> emitAuthenticationError(event as AuthenticationErrorEvent)
+                EventType.INSTALLATION_ID_AVAILABLE -> emitInstallationIdAvailable(event as InstallationIdEvent)
                 else -> {}
             }
         } catch (t: Throwable) {
@@ -120,6 +122,13 @@ class EventEmitterImpl(private val reactContext: ReactContext) : EventEmitter {
         val payload = PayloadGenerator().authenticationErrorToWritableMap(event)
         emit(eventName, payload)
     }
+
+    private fun emitInstallationIdAvailable(event: InstallationIdEvent) {
+        Logger.record { "$tag emitInstallationIdAvailable() : Event $event" }
+        val eventName = eventMapping[event.eventType] ?: return
+        val payload = PayloadGenerator().installationIdToWriteableMap(event)
+        emit(eventName, payload)
+    }
 }
 
 val eventMapping = mapOf<EventType, String>(
@@ -132,5 +141,6 @@ val eventMapping = mapOf<EventType, String>(
     EventType.PUSH_TOKEN_GENERATED to "MoEPushTokenGenerated",
     EventType.PERMISSION to "MoEPermissionResult",
     EventType.LOGOUT_COMPLETE to "MoELogoutComplete",
-    EventType.AUTHENTICATION_ERROR to "MoEAuthenticationError"
+    EventType.AUTHENTICATION_ERROR to "MoEAuthenticationError",
+    EventType.INSTALLATION_ID_AVAILABLE to "MoEInstallationIdAvailable"
 )

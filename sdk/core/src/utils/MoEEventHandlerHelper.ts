@@ -5,9 +5,9 @@ import {
     getNavigationObj,
     getMoESelfHandledCampaignData
 } from "../moeParser/MoEInAppParser";
-import {getMoEPushPayload, getMoEPushToken} from "../moeParser/MoEPushNotificationParser";
+import {getMoEPushPayload, getMoEPushToken, getFirebaseInstallationIdResult} from "../moeParser/MoEPushNotificationParser";
 import {MOE_DATA, ACCOUNT_META, MOE_PAYLOAD} from "./MoEConstants";
-import {PERMISSION_RESULT, LOGOUT_COMPLETE, AUTHENTICATION_ERROR} from "..";
+import {PERMISSION_RESULT, LOGOUT_COMPLETE, AUTHENTICATION_ERROR, FIREBASE_INSTALLATION_ID_AVAILABLE} from "..";
 import {getPermissionResult, getLogoutCompleteData, getAuthenticationErrorData} from "../moeParser/MoEngagePayloadParser";
 
 export function executeHandler(
@@ -50,6 +50,9 @@ export function executeHandler(
                     } else if (type == "pushClicked") {
                         var pushCampaignObject = getMoEPushPayload(payload, accountMeta);
                         pushCampaignObject != undefined ? handler(pushCampaignObject) : null;
+                    } else if (type == FIREBASE_INSTALLATION_ID_AVAILABLE) {
+                        var installationIdObject = getFirebaseInstallationIdResult(payload, accountMeta);
+                        installationIdObject != undefined ? handler(installationIdObject) : null;
                     }
                 }
 

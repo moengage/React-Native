@@ -5,6 +5,7 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import ReactMoE from "react-native-moengage";
 import { MOENGAGE_APP_ID } from "./src/key";
@@ -55,6 +56,28 @@ export class PushNotification extends React.Component {
               title: "Register for Provisional Push (iOS)",
               action: () => {
                 ReactMoE.registerForProvisionalPush();
+              },
+            },
+            {
+              id: "4",
+              title: "Pass Firebase Installation Id (android)",
+              action: () => {
+                ReactMoE.passFirebaseInstallationId("dummyInstallationId");
+              },
+            },
+            {
+              id: "5",
+              title: "Get Firebase Installation Id (android)",
+              action: () => {
+                ReactMoE.getFirebaseInstallationId()
+                  .then((installationId) => {
+                    console.log("Firebase Installation Id: ", installationId);
+                    Alert.alert("Firebase Installation Id", String(installationId));
+                  })
+                  .catch((error) => {
+                    console.log("Firebase Installation Id error: ", error);
+                    Alert.alert("Firebase Installation Id", `Failed to fetch: ${error}`);
+                  });
               },
             },
           ]}

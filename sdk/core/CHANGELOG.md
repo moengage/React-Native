@@ -6,8 +6,13 @@
 - Android
   - [major] AGP version updated from `8.13.2` to `9.1.1`
   - [major] Kotlin version updated from `1.9.23` to `2.3.20`
-  - [major] `android-bom` version updated from `2.3.1` to `4.3.0`
+  - [major] `android-bom` version updated from `2.3.1` to `4.4.0`
   - [major] compile and target sdk updated to `36`
+  - [minor] Added support for Firebase Installation Id. Use `ReactMoE.passFirebaseInstallationId()` to pass the Firebase Installation Id obtained by the app to the SDK, `ReactMoE.getFirebaseInstallationId()` to fetch the saved Id, and listen to the `firebaseInstallationIdAvailable` event for availability updates.
+  - [minor] Deprecated API
+    |            Then             |                    Now                     |
+    |:---------------------------:|:------------------------------------------:|
+    | passFcmPushToken(pushToken) | passFirebaseInstallationId(installationId) |
 - iOS
   - [minor] Added experimental Swift Package Manager support for React Native 0.87+ — the package now ships a `Package.swift` consumed by React Native's SPM autolinking (`npx react-native spm`). CocoaPods integration is unchanged.
   - [major] Updated `MoEngage-iOS-SDK` to `11.02.0`

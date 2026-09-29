@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Validate changelog format
-        run: node scripts/validate-changelogs.js
+        run: node .github/scripts/validate-changelogs.js
 
   verify-ios:
     runs-on: macos-15-xlarge

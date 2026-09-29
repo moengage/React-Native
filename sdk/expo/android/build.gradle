@@ -52,7 +52,7 @@ dependencies {
     implementation(project(':expo-modules-core'))
     implementation(project(':react-native-moengage'))
     compileOnly("host.exp.exponent:expo.modules.notifications:+")
-    compileOnly('com.google.firebase:firebase-messaging:25.0.1')
+    compileOnly('com.google.firebase:firebase-messaging:25.1.2')
     compileOnly('com.facebook.react:react-native')
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 }

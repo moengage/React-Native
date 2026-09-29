@@ -21,6 +21,7 @@
  import com.moengage.platform.internal.logger.Logger
  import com.moengage.platform.internal.logger.PlatformLogLevel
  import com.moengage.plugin.base.internal.PluginHelper
+ import com.moengage.plugin.base.internal.firebaseInstallationIdResultToJson
  import com.moengage.plugin.base.internal.selfHandledInAppsToJson
  import com.moengage.plugin.base.internal.setEventEmitter
  import com.moengage.plugin.base.internal.userDeletionDataToJson
@@ -319,7 +320,41 @@
             promise.reject(t)
         }
     }
- 
+
+    /**
+     * Pass a Firebase Installation Id obtained by the app to the MoEngage platform.
+     */
+    fun passFirebaseInstallationId(payload: String) {
+        try {
+            Logger.record { "$tag passFirebaseInstallationId() : $payload" }
+            pluginHelper.passFirebaseInstallationId(context, payload)
+        } catch (t: Throwable) {
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag passFirebaseInstallationId() : " }
+        }
+    }
+
+    /**
+     * Get the saved Firebase Installation Id, if any, for the given account.
+     */
+    fun getFirebaseInstallationId(payload: String, promise: Promise) {
+        try {
+            Logger.record { "$tag getFirebaseInstallationId() : $payload" }
+            pluginHelper.getFirebaseInstallationId(context, payload)
+                .onSuccess { result ->
+                    promise.resolve(firebaseInstallationIdResultToJson(payload, result).toString())
+                }
+                .onFailure { failure ->
+                    Logger.record(PlatformLogLevel.ERROR) {
+                        "$tag getFirebaseInstallationId() : failed with reason: ${failure.reason} and message: ${failure.message}"
+                    }
+                    promise.reject(failure.reason.toString(), failure.message)
+                }
+        } catch (t: Throwable) {
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag getFirebaseInstallationId() : " }
+            promise.reject(t)
+        }
+    }
+
      companion object {
          const val NAME = "MoEReactBridge"
      }

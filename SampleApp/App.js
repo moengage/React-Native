@@ -23,6 +23,10 @@ ReactMoE.setEventListener("pushTokenGenerated", (payload) => {
   MoEngageLogger.debug("pushTokenGenerated", payload);
 });
 
+ReactMoE.setEventListener("firebaseInstallationIdAvailable", (result) => {
+  MoEngageLogger.debug("firebaseInstallationIdAvailable", result);
+});
+
 ReactMoE.setEventListener("pushClicked", (notificationPayload) => {
   MoEngageLogger.debug("pushClicked", notificationPayload);
   // A push without a screen name or key-value pairs has no click action payload

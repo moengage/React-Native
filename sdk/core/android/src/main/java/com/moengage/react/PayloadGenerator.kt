@@ -10,6 +10,7 @@ import com.moengage.inapp.model.SelfHandledCampaignData
 import com.moengage.plugin.base.internal.*
 import com.moengage.plugin.base.internal.model.PermissionResult
 import com.moengage.plugin.base.internal.model.PushPayload
+import com.moengage.plugin.base.internal.model.events.push.InstallationIdEvent
 import com.moengage.plugin.base.internal.model.events.push.TokenEvent
 import com.moengage.plugin.base.internal.model.events.LogoutCompleteEvent
 import com.moengage.plugin.base.internal.model.events.authentication.AuthenticationErrorEvent
@@ -86,6 +87,14 @@ internal class PayloadGenerator {
         val resultJson = logoutCompleteEventToJson(event)
         Logger.record { "$tag logoutResultToWritableMap() : Payload Json: $resultJson" }
         map.putString(ARGUMENT_PAYLOAD, resultJson.toString())
+        return map
+    }
+
+    fun installationIdToWriteableMap(event: InstallationIdEvent): WritableMap {
+        val map = Arguments.createMap()
+        val installationIdJson = installationIdEventToJson(event)
+        Logger.record { "$tag installationIdToWriteableMap() : $installationIdJson" }
+        map.putString(ARGUMENT_PAYLOAD, installationIdJson.toString())
         return map
     }
 }
