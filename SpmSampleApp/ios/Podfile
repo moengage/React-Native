@@ -1,0 +1,11 @@
+# This app is integrated via React Native's experimental Swift Package Manager
+# support (`npx react-native spm`) — CocoaPods is NOT used and `pod install`
+# must not be run here.
+#
+# The file exists only because @react-native-community/cli locates an iOS
+# project by finding a Podfile; without one, `react-native config` reports no
+# iOS project and SPM autolinking cannot run.
+platform :ios, '16.0'
+
+target 'SpmSampleApp' do
+end

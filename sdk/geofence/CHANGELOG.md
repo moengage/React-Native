@@ -1,3 +1,19 @@
+# Release Date
+
+## Release Version
+
+- [major] Removed old architecture support
+- Android
+  - [major] AGP version updated from `8.13.2` to `9.1.1`
+  - [major] Kotlin version updated from `1.9.23` to `2.3.20`
+  - [major] `android-bom` version updated from `2.3.1` to `4.3.0`
+  - [major] compile and target sdk updated to `36`
+- iOS
+  - [minor] Added experimental Swift Package Manager support for React Native 0.87+ — the package now ships a `Package.swift` consumed by React Native's SPM autolinking (`npx react-native spm`). CocoaPods integration is unchanged.
+  - [major] Updated `MoEngage-iOS-SDK` to `11.02.0`
+  - [major] Updated `MoEngageGeofence` to `6.02.0`
+  - [patch] Declared the iOS plugin pod as a static framework. The MoEngage iOS SDK now links its app-only modules statically, and CocoaPods rejects a target using `use_frameworks!` whose transitive dependencies include statically linked binaries — without this, `pod install` fails for integrating apps.
+
 # 12-08-2026
 
 ## 7.5.1

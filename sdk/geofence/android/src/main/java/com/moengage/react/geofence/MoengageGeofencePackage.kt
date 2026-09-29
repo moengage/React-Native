@@ -32,7 +32,6 @@ class MoengageGeofencePackage : TurboReactPackage() {
     override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
         return ReactModuleInfoProvider {
             val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
-            val isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
             moduleInfos[MoEngageGeofenceHandler.NAME] = ReactModuleInfo(
                 MoEngageGeofenceHandler.NAME,
                 MoEngageGeofenceHandler.NAME,
@@ -40,7 +39,7 @@ class MoengageGeofencePackage : TurboReactPackage() {
                 false,  // needsEagerInit
                 true,  // hasConstants
                 false,  // isCxxModule
-                isTurboModule // isTurboModule
+                true // isTurboModule
             )
             moduleInfos
         }

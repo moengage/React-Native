@@ -1,6 +1,18 @@
 // MoEngageCardsBridge.m
 
 #import "MoEngageCardsBridge.h"
+
+// The codegen'd TurboModule spec header chain is Objective-C++ only
+// (RCTRequired.h includes <utility>), so it is imported here rather than
+// in the public header: under Swift Package Manager the public headers
+// form a Clang module umbrella, and a spec import there breaks every
+// plain Objective-C (.m) consumer of this module. The New-Architecture
+// conformance is declared in a class extension instead.
+#ifdef RCT_NEW_ARCH_ENABLED
+#import <NativeMoEngageCardsSpec/NativeMoEngageCardsSpec.h>
+@interface MoEngageCardsBridge () <NativeMoEngageCardsSpec>
+@end
+#endif
 #import "MoEngageCardsReactConstants.h"
 #import "MoEReactNativeCardsHandler.h"
 

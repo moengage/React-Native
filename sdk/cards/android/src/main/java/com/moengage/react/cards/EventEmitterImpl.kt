@@ -3,8 +3,8 @@ package com.moengage.react.cards
 import com.facebook.react.bridge.ReactContext
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.modules.core.DeviceEventManagerModule
-import com.moengage.core.LogLevel
-import com.moengage.core.internal.logger.Logger
+import com.moengage.platform.internal.logger.Logger
+import com.moengage.platform.internal.logger.PlatformLogLevel
 import com.moengage.plugin.base.cards.internal.CardsEventEmitter
 import com.moengage.plugin.base.cards.internal.model.events.CardEventType
 import com.moengage.plugin.base.cards.internal.model.events.CardsEvent
@@ -24,10 +24,10 @@ class EventEmitterImpl(private val reactContext: ReactContext) : CardsEventEmitt
         try {
             when (event) {
                 is CardsSyncEvent -> emitCardSyncEvent(event)
-                else -> Logger.print(LogLevel.ERROR) { "$tag emit() Unknown Event: $event" }
+                else -> Logger.record(PlatformLogLevel.ERROR) { "$tag emit() Unknown Event: $event" }
             }
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "emit(): $event" }
+            Logger.record(PlatformLogLevel.ERROR, t) { "emit(): $event" }
         }
     }
 
@@ -35,13 +35,13 @@ class EventEmitterImpl(private val reactContext: ReactContext) : CardsEventEmitt
         try {
             val syncCompleteData = event.syncCompleteData
             if (syncCompleteData == null) {
-                Logger.print(LogLevel.ERROR) { "emitCardSyncEvent(): $event : Sync CompleteData is null" }
+                Logger.record(PlatformLogLevel.ERROR) { "emitCardSyncEvent(): $event : Sync CompleteData is null" }
             }
             val syncCompletePayload = PayloadGenerator().cardsSyncToWritableMap(event)
             val method = eventMapping[event.cardEventType] ?: return
             emit(method, syncCompletePayload)
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag emitCardSyncEvent(): $event" }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag emitCardSyncEvent(): $event" }
         }
     }
 
@@ -50,7 +50,7 @@ class EventEmitterImpl(private val reactContext: ReactContext) : CardsEventEmitt
             reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
                 .emit(eventName, params)
         } catch (t: Throwable) {
-            Logger.print(LogLevel.ERROR, t) { "$tag emit() : " }
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag emit() : " }
         }
     }
 }

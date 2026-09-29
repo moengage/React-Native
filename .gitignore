@@ -1,4 +1,11 @@
+.idea
 .vscode/
 *.DS_Store
 *node_modules/
 *google-services.json
+*package-lock.json
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved

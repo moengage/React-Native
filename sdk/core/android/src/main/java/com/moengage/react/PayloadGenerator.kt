@@ -2,7 +2,7 @@ package com.moengage.react
 
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.WritableMap
-import com.moengage.core.internal.logger.Logger
+import com.moengage.platform.internal.logger.Logger
 import com.moengage.core.model.AccountMeta
 import com.moengage.inapp.model.ClickData
 import com.moengage.inapp.model.InAppData
@@ -25,7 +25,7 @@ internal class PayloadGenerator {
     fun pushPayloadToWriteableMap(payload: PushPayload): WritableMap {
         val map = Arguments.createMap()
         val pushJson = pushPayloadToJson(payload)
-        Logger.print { "$tag pushPayloadToWriteableMap() : $pushJson" }
+        Logger.record { "$tag pushPayloadToWriteableMap() : $pushJson" }
         map.putString(ARGUMENT_PAYLOAD, pushJson.toString())
         return map
     }
@@ -33,7 +33,7 @@ internal class PayloadGenerator {
     fun tokenToWriteableMap(pushToken: TokenEvent) : WritableMap{
         val map = Arguments.createMap()
         val tokenJson = tokenEventToJson(pushToken)
-        Logger.print { "$tag tokenToWriteableMap() : $tokenJson" }
+        Logger.record { "$tag tokenToWriteableMap() : $tokenJson" }
         map.putString(ARGUMENT_PAYLOAD, tokenJson.toString())
         return map
     }
@@ -41,7 +41,7 @@ internal class PayloadGenerator {
     fun inAppNavigationToWriteableMap(clickData: ClickData): WritableMap {
         val map = Arguments.createMap()
         val json = clickDataToJson(clickData)
-        Logger.print { "$tag inAppNavigationToWriteableMap() : $json" }
+        Logger.record { "$tag inAppNavigationToWriteableMap() : $json" }
         map.putString(ARGUMENT_PAYLOAD, json.toString())
         return map
     }
@@ -49,7 +49,7 @@ internal class PayloadGenerator {
     fun inAppDataToWriteableMap(inAppData: InAppData): WritableMap {
         val map = Arguments.createMap()
         val json = inAppDataToJson(inAppData)
-        Logger.print { "$tag inAppDataToWriteableMap() : $json" }
+        Logger.record { "$tag inAppDataToWriteableMap() : $json" }
         map.putString(ARGUMENT_PAYLOAD, json.toString())
         return map
     }
@@ -58,7 +58,7 @@ internal class PayloadGenerator {
         accountMeta: AccountMeta,
         data: SelfHandledCampaignData?
     ): WritableMap {
-        Logger.print { "$tag selfHandledDataToWriteableMap() : $data" }
+        Logger.record { "$tag selfHandledDataToWriteableMap() : $data" }
         val map = Arguments.createMap()
         val json = selfHandledDataToJson(accountMeta, data)
         map.putString(ARGUMENT_PAYLOAD, json.toString())
@@ -68,7 +68,7 @@ internal class PayloadGenerator {
     fun permissionResultToWriteableMap(result: PermissionResult): WritableMap {
         val map = Arguments.createMap()
         val json = permissionResultToJson(result)
-        Logger.print { "$tag permissionResultToWriteableMap() : Payload Json: $json" }
+        Logger.record { "$tag permissionResultToWriteableMap() : Payload Json: $json" }
         map.putString(ARGUMENT_PAYLOAD, json.toString())
         return map
     }
@@ -76,7 +76,7 @@ internal class PayloadGenerator {
     fun authenticationErrorToWritableMap(event: AuthenticationErrorEvent): WritableMap {
         val map = Arguments.createMap()
         val resultJson = authenticationErrorToJson(event)
-        Logger.print { "$tag authenticationErrorToWritableMap() : Payload Json: $resultJson" }
+        Logger.record { "$tag authenticationErrorToWritableMap() : Payload Json: $resultJson" }
         map.putString(ARGUMENT_PAYLOAD, resultJson.toString())
         return map
     }
@@ -84,7 +84,7 @@ internal class PayloadGenerator {
     fun logoutResultToWritableMap(event: LogoutCompleteEvent): WritableMap {
         val map = Arguments.createMap()
         val resultJson = logoutCompleteEventToJson(event)
-        Logger.print { "$tag logoutResultToWritableMap() : Payload Json: $resultJson" }
+        Logger.record { "$tag logoutResultToWritableMap() : Payload Json: $resultJson" }
         map.putString(ARGUMENT_PAYLOAD, resultJson.toString())
         return map
     }

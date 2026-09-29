@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MoEReactNativeGeofenceHandler.h"
-#import "ReactNativeMoEngage/MoEngageReactUtils.h"
+#import "MoEngageReactUtils.h"
 
 @import MoEngagePluginGeofence;
 

@@ -6,6 +6,15 @@ on:
     types: [ opened, reopened, ready_for_review, synchronize ]
     branches: [ "development", "master" ]
 jobs:
+  verify-changelogs:
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.pull_request.draft }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Validate changelog format
+        run: node scripts/validate-changelogs.js
+
   verify-ios:
     runs-on: macos-15-xlarge
     if: ${{ !github.event.pull_request.draft }}
@@ -21,6 +30,14 @@ jobs:
         with:
           path: source
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
+      # The prebuilt React Native SwiftPM artifacts (~GBs) are downloaded by
+      # setup-apple-spm.js into this shared cache, keyed by the RN version,
+      # for the SpmSampleApp verification that runs as part of Verify iOS.
+      - name: Cache React Native SwiftPM artifacts
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Caches/ReactNative
+          key: rn-spm-artifacts-${{ hashFiles('source/SpmSampleApp/package-lock.json') }}
       - name: Automation script setup
         uses: ./sdk-automation-scripts/actions/npm-repository-setup
         with:

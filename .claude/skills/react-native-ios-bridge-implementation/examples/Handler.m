@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 #import "MoEReactNative<featureNameCamel>Handler.h"
 #import "MoEngageReactUtils.h"
+#import "MoEngageReactConstants.h"  // core constants (kPayload etc.)
 #import "MoEngage<featureNameCamel>ReactConstants.h"
 #import "<iosUtilName>.h"  // omit if no promise or event methods
 

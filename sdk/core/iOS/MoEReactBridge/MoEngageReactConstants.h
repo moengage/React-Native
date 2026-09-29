@@ -8,6 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
+// The MoEngage React Native SDK builds only against the New Architecture —
+// old architecture support has been removed.
+//
+// Scoped to C++/Objective-C++ on purpose. CocoaPods puts
+// `-DRCT_NEW_ARCH_ENABLED=1` in OTHER_CPLUSPLUSFLAGS only (React Native's
+// scripts/cocoapods/new_architecture.rb, `computeFlags`), so plain `.m`
+// translation units never see the macro there and an unscoped check would fail
+// every CocoaPods build. When the New Architecture is off that flag is omitted
+// entirely rather than set to 0, which is why this tests defined-ness. Under
+// SwiftPM the define is set for both C and C++ (see Package.swift), so the
+// guard holds on that path too.
+#ifdef __cplusplus
+#ifndef RCT_NEW_ARCH_ENABLED
+#error "MoEngage React Native SDK supports only the New Architecture. Old architecture support has been removed — enable the New Architecture in your app (RCT_NEW_ARCH_ENABLED=1)."
+#endif
+#endif
+
+
 //Info.plist keys
 extern NSString* const kMoEngage;
 extern NSString* const kAppId;

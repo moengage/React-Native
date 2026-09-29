@@ -77,3 +77,38 @@ export const authenticationErrorInvalidPayload = JSON.stringify({
         message: ""
     }
 });
+
+// Shapes below mirror what the plugin bases emit for the in-app custom action and push click
+// callbacks.
+export const inAppCustomActionKeyValuePair = { key: "test321" };
+
+export const inAppCustomActionIosPayload = JSON.stringify({
+    accountMeta: { appId: appId },
+    data: {
+        platform: "iOS",
+        campaignId: "dummyCampaignId",
+        campaignName: "dummyCampaignName",
+        campaignContext: { cid: "dummyCampaignId_F_T_IA_AB_1_P_0_L_0" },
+        actionType: "customAction",
+        customAction: { kvPair: inAppCustomActionKeyValuePair }
+    }
+});
+
+export const pushClickedWithoutActionIosPayload = JSON.stringify({
+    accountMeta: { appId: appId },
+    data: {
+        platform: "iOS",
+        payload: { app_extra: { screenData: {} } },
+        clickedAction: {}
+    }
+});
+
+// Android plugin-base omits `clickedAction` when the push carries no navigation action.
+export const pushClickedWithoutActionAndroidPayload = JSON.stringify({
+    accountMeta: { appId: appId },
+    data: {
+        platform: "android",
+        isDefaultAction: true,
+        payload: { gcm_title: "dummyTitle" }
+    }
+});

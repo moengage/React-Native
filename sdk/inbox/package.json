@@ -10,6 +10,8 @@
     "ios",
     "cpp",
     "ReactNativeMoEngageInbox.podspec",
+    "Package.swift",
+    "react-native.config.js",
     "!lib/typescript/example",
     "!android/build",
     "!ios/build",
@@ -40,7 +42,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.0",
     "babel-jest": "^29.7.0",
-    "react-native": "0.73.0",
+    "react-native": "0.87.0",
     "ts-jest": "^29.1.0",
     "typescript": "^4.3.0"
   },
