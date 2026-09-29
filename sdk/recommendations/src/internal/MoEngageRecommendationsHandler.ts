@@ -2,8 +2,8 @@ import MoEngageRecommendationsBridge from "../NativeMoEngageRecommendations";
 import RecommendedItems from "../model/RecommendedItems";
 import { MoEngageLogger } from "react-native-moengage";
 import { MODULE_TAG } from "./Constants";
-import * as PayloadBuilder from "./utils/PayloadBuilder";
-import * as Parser from "./utils/PayloadParser";
+import { buildFetchRecommendationsPayload } from "./utils/PayloadBuilder";
+import { parseRecommendationsFailure, parseRecommendedItems } from "./utils/PayloadParser";
 
 /**
  * Helper class that translates Public Recommendations APIs into native bridge calls.
@@ -29,15 +29,15 @@ export default class MoEngageRecommendationsHandler {
     ): Promise<RecommendedItems> {
         let response: string;
         try {
-            const payload = PayloadBuilder.buildFetchRecommendationsPayload(
+            const payload = buildFetchRecommendationsPayload(
                 this.appId, recommendationId, itemId, includedFields
             );
             MoEngageLogger.verbose(`${this.TAG} fetchRecommendations() : ${payload}`);
             response = await MoEngageRecommendationsBridge.fetchRecommendations(payload);
         } catch (error) {
             MoEngageLogger.error(`${this.TAG} fetchRecommendations() : `, error);
-            throw Parser.parseRecommendationsFailure(error);
+            throw parseRecommendationsFailure(error);
         }
-        return Parser.parseRecommendedItems(response);
+        return parseRecommendedItems(response);
     }
 }

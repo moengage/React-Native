@@ -1,10 +1,6 @@
 ext {
-    moengageNativeBOMVersion = "4.3.0"
-    moengagePluginBaseBOMVersion = "4.0.0"
-    // Recommendations is not part of the BOMs yet — drop these pins and let the BOMs
-    // resolve the versions once both artifacts ship in a BOM release.
-    moengageRecommendationsVersion = "0.0.1"
-    moengagePluginBaseRecommendationsVersion = "0.0.1"
+    moengageNativeBOMVersion = "4.4.0"
+    moengagePluginBaseBOMVersion = "4.1.0"
     kotlinVersion = "2.3.20"
 }
 
@@ -50,9 +46,9 @@ dependencies {
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
     implementation(platform("com.moengage:android-bom:$moengageNativeBOMVersion"))
-    api("com.moengage:recommendations:$moengageRecommendationsVersion")
+    api("com.moengage:recommendations")
 
     implementation(platform("com.moengage:plugin-base-bom:$moengagePluginBaseBOMVersion"))
-    implementation("com.moengage:plugin-base-recommendations:$moengagePluginBaseRecommendationsVersion")
+    implementation("com.moengage:plugin-base-recommendations")
     compileOnly("com.moengage:plugin-base")
 }

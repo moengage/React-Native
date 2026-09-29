@@ -56,8 +56,9 @@ function parseFailurePayload(message: string): Record<string, unknown> | undefin
  *
  * - iOS rejects with `RECOMMENDATIONS_ERROR` and the stringified failure payload as the message;
  *   the reason and message are read from its `data` block.
- * - Android, and iOS failures raised before the plugin bridge (e.g. `PARSE_ERROR`), reject with
- *   the failure reason as the error `code`.
+ * - Android rejects with the failure reason as the error `code` and the failure message as the
+ *   error message. An exception thrown in the bridge itself rejects with React Native's default
+ *   code, which maps to `UNKNOWN_ERROR`.
  */
 export function parseRecommendationsFailure(error: unknown): RecommendationsFailure {
     const code = isRecord(error) ? error[keyCode] : undefined;

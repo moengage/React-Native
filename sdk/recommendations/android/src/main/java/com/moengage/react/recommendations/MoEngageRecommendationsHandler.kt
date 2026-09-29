@@ -17,10 +17,10 @@ package com.moengage.react.recommendations
 
 import android.content.Context
 import com.facebook.react.bridge.Promise
-import com.moengage.plugin.base.recommendations.RecommendationsHelper
-import com.moengage.plugin.base.recommendations.RecommendationsListener
 import com.moengage.platform.internal.logger.Logger
 import com.moengage.platform.internal.logger.PlatformLogLevel
+import com.moengage.plugin.base.recommendations.RecommendationsHelper
+import com.moengage.plugin.base.recommendations.RecommendationsListener
 
 /**
  * Class to handle all the requests from [MoEReactRecommendations].
