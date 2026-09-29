@@ -10,7 +10,8 @@ private val pluginsPath = setOf(
     "sdk/geofence",
     "sdk/inbox",
     "sdk/expo",
-    "sdk/personalize"
+    "sdk/personalize",
+    "sdk/recommendations"
 )
 
 /**
@@ -24,7 +25,8 @@ private val pluginPackageNameAndPathMap = mapOf<String, String>(
     "geofence" to "sdk/geofence",
     "inbox" to "sdk/inbox",
     "expo" to "sdk/expo",
-    "personalize" to "sdk/personalize"
+    "personalize" to "sdk/personalize",
+    "recommendations" to "sdk/recommendations"
 )
 
 fun getAllPluginPackageNameAndPaths(): Map<String, String> = pluginPackageNameAndPathMap

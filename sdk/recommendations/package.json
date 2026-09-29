@@ -1,0 +1,54 @@
+{
+  "name": "react-native-moengage-recommendations",
+  "version": "1.0.0",
+  "description": "Recommendations Module for the MoEngage Platform",
+  "main": "src/index.ts",
+  "files": [
+    "android",
+    "ios",
+    "src",
+    "package.json",
+    "ReactNativeMoEngageRecommendations.podspec",
+    "Package.swift",
+    "react-native.config.js",
+    "README.md",
+    "!**/__tests__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "test": "jest",
+    "build": "echo \"Not required\" && exit 0"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "moengage"
+  ],
+  "repository": "https://github.com/moengage/React-Native",
+  "author": {
+    "name": "MoEngage",
+    "email": "mobiledevs@moengage.com"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "react-native-moengage": "^12.0.0"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "react-native": "0.87.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^4.3.0"
+  },
+  "codegenConfig": {
+    "name": "NativeMoEngageRecommendationsSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.moengage.react.recommendations"
+    }
+  }
+}
