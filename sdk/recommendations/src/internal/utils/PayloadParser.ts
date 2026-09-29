@@ -5,7 +5,7 @@ import {
     recommendationsFailureReasonFromString
 } from "../../model/RecommendationsFailureReason";
 import { MoEngageLogger } from "react-native-moengage";
-import { MODULE_TAG, keyCode, keyData, keyError, keyItems, keyMessage } from "../Constants";
+import { MODULE_TAG, keyCode, keyData, keyItems, keyMessage, keyReason } from "../Constants";
 
 const TAG = `${MODULE_TAG}PayloadParser`;
 
@@ -38,14 +38,14 @@ export function parseRecommendedItems(payload: string): RecommendedItems {
 }
 
 /**
- * Reads the `error` block of a stringified failure payload
- * (`{ accountMeta, error: { code, message } }`), or `undefined` if `message` is not one.
+ * Reads the `data` block of a stringified failure payload
+ * (`{ accountMeta, data: { reason, message } }`), or `undefined` if `message` is not one.
  */
-function parseErrorPayload(message: string): Record<string, unknown> | undefined {
+function parseFailurePayload(message: string): Record<string, unknown> | undefined {
     try {
         const json: unknown = JSON.parse(message);
-        const error = isRecord(json) ? json[keyError] : undefined;
-        return isRecord(error) ? error : undefined;
+        const data = isRecord(json) ? json[keyData] : undefined;
+        return isRecord(data) && data[keyReason] !== undefined ? data : undefined;
     } catch {
         return undefined;
     }
@@ -55,24 +55,21 @@ function parseErrorPayload(message: string): Record<string, unknown> | undefined
  * Converts an error raised while fetching into a {@link RecommendationsFailure}.
  *
  * - iOS rejects with `RECOMMENDATIONS_ERROR` and the stringified failure payload as the message;
- *   the reason and message are read from its `error` block.
+ *   the reason and message are read from its `data` block.
  * - Android, and iOS failures raised before the plugin bridge (e.g. `PARSE_ERROR`), reject with
  *   the failure reason as the error `code`.
  */
 export function parseRecommendationsFailure(error: unknown): RecommendationsFailure {
-    if (error instanceof RecommendationsFailure) {
-        return error;
-    }
     const code = isRecord(error) ? error[keyCode] : undefined;
     const message = error instanceof Error
         ? error.message
         : (isRecord(error) && typeof error[keyMessage] === "string" ? error[keyMessage] as string : `${error}`);
 
-    const errorPayload = parseErrorPayload(message);
-    if (errorPayload != null) {
-        const payloadMessage = errorPayload[keyMessage];
+    const failurePayload = parseFailurePayload(message);
+    if (failurePayload != null) {
+        const payloadMessage = failurePayload[keyMessage];
         return new RecommendationsFailure(
-            recommendationsFailureReasonFromString(errorPayload[keyCode]),
+            recommendationsFailureReasonFromString(failurePayload[keyReason]),
             typeof payloadMessage === "string" ? payloadMessage : ""
         );
     }

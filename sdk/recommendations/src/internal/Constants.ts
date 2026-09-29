@@ -7,6 +7,6 @@ export const keyItemId = 'itemId'
 export const keyIncludedFields = 'includedFields'
 export const keyItems = 'items'
 
-export const keyError = 'error'
+export const keyReason = 'reason'
 export const keyCode = 'code'
 export const keyMessage = 'message'

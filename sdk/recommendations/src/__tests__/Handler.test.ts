@@ -76,15 +76,15 @@ describe("Handler", () => {
                 Object.assign(
                     new Error(JSON.stringify({
                         accountMeta: { appId: APP_ID },
-                        error: { code: "FEATURE_DISABLED", message: "Recommendations is blocked" }
+                        data: { reason: "RATE_LIMIT_EXCEEDED", message: "Rate limit exceeded" }
                     })),
                     { code: "RECOMMENDATIONS_ERROR" }
                 )
             );
 
             await expect(handler.fetchRecommendations("clothing", "", [])).rejects.toMatchObject({
-                failureReason: RecommendationsFailureReason.FEATURE_DISABLED,
-                message: "Recommendations is blocked"
+                failureReason: RecommendationsFailureReason.RATE_LIMIT_EXCEEDED,
+                message: "Rate limit exceeded"
             });
         });
 

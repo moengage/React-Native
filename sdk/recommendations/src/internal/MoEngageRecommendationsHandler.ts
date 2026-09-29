@@ -27,16 +27,17 @@ export default class MoEngageRecommendationsHandler {
         itemId: string,
         includedFields: string[]
     ): Promise<RecommendedItems> {
+        let response: string;
         try {
             const payload = PayloadBuilder.buildFetchRecommendationsPayload(
                 this.appId, recommendationId, itemId, includedFields
             );
             MoEngageLogger.verbose(`${this.TAG} fetchRecommendations() : ${payload}`);
-            const response = await MoEngageRecommendationsBridge.fetchRecommendations(payload);
-            return Parser.parseRecommendedItems(response);
+            response = await MoEngageRecommendationsBridge.fetchRecommendations(payload);
         } catch (error) {
             MoEngageLogger.error(`${this.TAG} fetchRecommendations() : `, error);
             throw Parser.parseRecommendationsFailure(error);
         }
+        return Parser.parseRecommendedItems(response);
     }
 }

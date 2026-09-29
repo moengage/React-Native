@@ -93,7 +93,7 @@ describe("PayloadParser", () => {
             (reason) => {
                 const payload = JSON.stringify({
                     accountMeta: { appId: "app_id" },
-                    error: { code: reason, message: "native message" }
+                    data: { reason, message: "native message" }
                 });
                 const nativeError = Object.assign(new Error(payload), { code: "RECOMMENDATIONS_ERROR" });
                 const failure = parseRecommendationsFailure(nativeError);
@@ -103,8 +103,11 @@ describe("PayloadParser", () => {
             }
         );
 
-        it("reads an iOS payload without accountMeta (missing app id)", () => {
-            const payload = JSON.stringify({ error: { code: "UNKNOWN_ERROR", message: "no app id" } });
+        it("reads an iOS payload with an empty app id", () => {
+            const payload = JSON.stringify({
+                accountMeta: { appId: "" },
+                data: { reason: "UNKNOWN_ERROR", message: "no app id" }
+            });
             const failure = parseRecommendationsFailure(
                 Object.assign(new Error(payload), { code: "RECOMMENDATIONS_ERROR" })
             );
@@ -112,8 +115,8 @@ describe("PayloadParser", () => {
             expect(failure.message).toBe("no app id");
         });
 
-        it("maps an unknown code inside the iOS payload to UNKNOWN_ERROR", () => {
-            const payload = JSON.stringify({ error: { code: "SOMETHING_NEW", message: "m" } });
+        it("maps an unknown reason inside the iOS payload to UNKNOWN_ERROR", () => {
+            const payload = JSON.stringify({ data: { reason: "SOMETHING_NEW", message: "m" } });
             const failure = parseRecommendationsFailure(
                 Object.assign(new Error(payload), { code: "RECOMMENDATIONS_ERROR" })
             );
@@ -121,7 +124,7 @@ describe("PayloadParser", () => {
         });
 
         it("uses an empty message when the iOS payload has no string message", () => {
-            const payload = JSON.stringify({ error: { code: "NETWORK_ERROR", message: 42 } });
+            const payload = JSON.stringify({ data: { reason: "NETWORK_ERROR", message: 42 } });
             const failure = parseRecommendationsFailure(
                 Object.assign(new Error(payload), { code: "RECOMMENDATIONS_ERROR" })
             );
@@ -130,8 +133,8 @@ describe("PayloadParser", () => {
         });
 
         it.each([
-            ["a JSON object without an error block", JSON.stringify({ detail: "x" })],
-            ["a JSON object whose error is a string", JSON.stringify({ error: "boom" })],
+            ["a JSON object without a data block", JSON.stringify({ detail: "x" })],
+            ["a JSON object whose data has no reason", JSON.stringify({ data: { items: [] } })],
             ["a JSON value that is not an object", "123"],
         ])("falls back to the rejection code when the message is %s", (_, message) => {
             const failure = parseRecommendationsFailure(
@@ -176,11 +179,6 @@ describe("PayloadParser", () => {
             const failure = parseRecommendationsFailure("boom");
             expect(failure.failureReason).toBe(RecommendationsFailureReason.UNKNOWN_ERROR);
             expect(failure.message).toBe("boom");
-        });
-
-        it("passes an existing RecommendationsFailure through unchanged", () => {
-            const original = new RecommendationsFailure(RecommendationsFailureReason.PARSE_ERROR, "bad");
-            expect(parseRecommendationsFailure(original)).toBe(original);
         });
     });
 
