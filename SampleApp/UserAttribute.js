@@ -334,6 +334,31 @@ export class UserAttribute extends React.Component {
                 MoEngageLogger.debug("getIdentities: ", await ReactMoE.getUserIdentities())
               }
             },
+            {
+              id: "19",
+              title: "Unset User Attribute",
+              action: () => {
+                fire({
+                  title: 'Enter Attribute Name',
+                  message: null,
+                  actions: [
+                    { text: 'Cancel' },
+                    {
+                      text: 'OK',
+                      onPress: async result => {
+                        MoEngageLogger.debug("unsetUserAttribute: ", await ReactMoE.unsetUserAttribute(result.attributeName))
+                      }
+                    },
+                  ],
+                  fields: [
+                    {
+                      name: 'attributeName',
+                      placeholder: 'e.g. USER_ATTRIBUTE_USER_EMAIL',
+                    },
+                  ],
+                });
+              },
+            },
           ]}
           renderItem={({ item, separators }) => (
             <TouchableOpacity

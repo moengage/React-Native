@@ -1,5 +1,8 @@
-import { userIdentityStringObjectType, logoutCompleteIosPayload, logoutCompleteAndroidPayload, logoutCompleteInvalidPayload, appId, authenticationErrorIosPayload, authenticationErrorAndroidPayload, authenticationErrorInvalidPayload } from "../../__mocks__/JsonDataProvider";
-import { getUserIdentitiesData, getLogoutCompleteData, getAuthenticationErrorData } from "../../moeParser/MoEngagePayloadParser";
+import { userIdentityStringObjectType, logoutCompleteIosPayload, logoutCompleteAndroidPayload, logoutCompleteInvalidPayload, appId, authenticationErrorIosPayload, authenticationErrorAndroidPayload, authenticationErrorInvalidPayload, unsetUserAttributeSuccessPayload, unsetUserAttributeFailurePayload, unsetUserAttributeUnknownReasonPayload } from "../../__mocks__/JsonDataProvider";
+import { getUserIdentitiesData, getLogoutCompleteData, getAuthenticationErrorData, getUnsetUserAttributeResult } from "../../moeParser/MoEngagePayloadParser";
+import MoEUnsetUserAttributeResult from "../../models/MoEUnsetUserAttributeResult";
+import { MoERequestFailureReason } from "../../models/MoERequestFailureReason";
+import { MoEUserAttributeLevel } from "../../models/MoEUserAttributeLevel";
 import MoELogoutCompleteData from "../../models/MoELogoutCompleteData";
 import MoEAuthenticationErrorData from "../../models/MoEAuthenticationErrorData";
 import MoEJwtAuthenticationErrorData from "../../models/MoEJwtAuthenticationErrorData";
@@ -65,6 +68,32 @@ describe('MoEngagePayloadParser', () => {
         it('invalid payload missing accountMeta should return null', () => {
             const result = getAuthenticationErrorData(JSON.parse(authenticationErrorInvalidPayload));
             expect(result).toBeNull();
+        });
+    });
+
+    describe('getUnsetUserAttributeResult', () => {
+        it('success payload should return a result without failure', () => {
+            const result = getUnsetUserAttributeResult(unsetUserAttributeSuccessPayload);
+            expect(result).toBeInstanceOf(MoEUnsetUserAttributeResult);
+            expect(result.accountMeta.appId).toEqual(appId);
+            expect(result.isUnsetSuccess).toBe(true);
+            expect(result.attributeName).toEqual("trial_status");
+            expect(result.attributeLevel).toEqual(MoEUserAttributeLevel.Project);
+            expect(result.failure).toBeNull();
+        });
+
+        it('failure payload should return the failure reason and message', () => {
+            const result = getUnsetUserAttributeResult(unsetUserAttributeFailurePayload);
+            expect(result.isUnsetSuccess).toBe(false);
+            expect(result.attributeName).toEqual("loyalty_tier");
+            expect(result.attributeLevel).toEqual(MoEUserAttributeLevel.Portfolio);
+            expect(result.failure?.reason).toEqual(MoERequestFailureReason.InvalidInitialisationConfiguration);
+            expect(result.failure?.message).toEqual("Portfolio level requires a configured project id.");
+        });
+
+        it('unknown failure reason should fall back to UnknownError', () => {
+            const result = getUnsetUserAttributeResult(unsetUserAttributeUnknownReasonPayload);
+            expect(result.failure?.reason).toEqual(MoERequestFailureReason.UnknownError);
         });
     });
 });

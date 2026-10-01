@@ -4,13 +4,23 @@ import MoEngagePersimissionResultData from "../models/MoEngagePersimissionResult
 import UserDeletionData from "../models/UserDeletionData";
 import MoEAuthenticationErrorData from "../models/MoEAuthenticationErrorData";
 import MoEJwtAuthenticationErrorData from "../models/MoEJwtAuthenticationErrorData";
+import MoEUnsetUserAttributeResult from "../models/MoEUnsetUserAttributeResult";
+import MoERequestFailure from "../models/MoERequestFailure";
+import { MoERequestFailureReason } from "../models/MoERequestFailureReason";
+import { MoEUserAttributeLevel } from "../models/MoEUserAttributeLevel";
 import {
     ACCOUNT_META,
     APP_ID,
+    ATTRIBUTE_LEVEL,
+    ATTRIBUTE_NAME,
     AUTHENTICATION_TYPE,
     AUTH_ERROR_CODE,
     AUTH_ERROR_MESSAGE,
+    FAILURE_MESSAGE,
+    FAILURE_REASON,
+    IS_UNSET_SUCCESS,
     IS_USER_DELETION_SUCCESS,
+    REQUEST_FAILURE,
     MOE_DATA,
     MOE_PERMISSION_STATE,
     MOE_PERMISSION_TYPE,
@@ -107,4 +117,31 @@ export function getUserIdentitiesData(payload: string | null): { [k: string]: st
         mappedIdentities[key] = value;
     }
     return mappedIdentities;
+}
+
+/**
+ * Create an instance of {@link MoEUnsetUserAttributeResult} from the stringified native reply
+ *
+ * @param payload - stringified JSON Object with required keys
+ * @returns instance of {@link MoEUnsetUserAttributeResult}
+ * @since 13.1.0
+ */
+export function getUnsetUserAttributeResult(payload: string): MoEUnsetUserAttributeResult {
+    const payloadJsonObject = JSON.parse(payload);
+    const data = payloadJsonObject[MOE_DATA];
+    const failure = data[REQUEST_FAILURE];
+    return new MoEUnsetUserAttributeResult(
+        getMoEAccountMeta(payloadJsonObject[ACCOUNT_META]),
+        data[IS_UNSET_SUCCESS] === true,
+        data[ATTRIBUTE_NAME],
+        data[ATTRIBUTE_LEVEL] === MoEUserAttributeLevel.Portfolio ? MoEUserAttributeLevel.Portfolio : MoEUserAttributeLevel.Project,
+        failure ? new MoERequestFailure(getRequestFailureReason(failure[FAILURE_REASON]), failure[FAILURE_MESSAGE] ?? "") : null
+    );
+}
+
+// Unknown reasons fall back to UnknownError, so a reason added later does not break parsing
+function getRequestFailureReason(value: unknown): MoERequestFailureReason {
+    return Object.values(MoERequestFailureReason).includes(value as MoERequestFailureReason)
+        ? value as MoERequestFailureReason
+        : MoERequestFailureReason.UnknownError;
 }

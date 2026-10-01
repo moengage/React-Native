@@ -29,7 +29,8 @@ import {
   getPermissionResponseJson,
   getNudgeDisplayJson,
   getIdentifyUserPayload,
-  getAuthenticationDetailsJson
+  getAuthenticationDetailsJson,
+  getUnsetUserAttributeJson
 } from "./utils/MoEJsonBuilder";
 import {
   USER_ATTRIBUTE_UNIQUE_ID,
@@ -59,7 +60,7 @@ import MoEReactBridge from "./NativeMoEngage";
 import MoEPushToken from "../src/models/MoEPushToken";
 import MoEPushPayload from "../src/models/MoEPushPayload";
 import MoEInAppData from "../src/models/MoEInAppData";
-import { getUserDeletionData, getUserIdentitiesData } from "../src/moeParser/MoEngagePayloadParser";
+import { getUnsetUserAttributeResult, getUserDeletionData, getUserIdentitiesData } from "../src/moeParser/MoEngagePayloadParser";
 import { getFirebaseInstallationIdResult } from "../src/moeParser/MoEPushNotificationParser";
 import MoEFirebaseInstallationIdResult from "../src/models/MoEFirebaseInstallationIdResult";
 import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
@@ -80,6 +81,10 @@ import MoEAuthenticationErrorDetails from "./models/MoEAuthenticationErrorDetail
 import { MoEAuthenticationType } from "./models/MoEAuthenticationType";
 import { MoEJwtErrorCode } from "./models/MoEJwtErrorCode";
 import { MoEngageFailureReason } from "./models/MoEngageFailureReason";
+import MoEUnsetUserAttributeResult from "./models/MoEUnsetUserAttributeResult";
+import MoERequestFailure from "./models/MoERequestFailure";
+import { MoERequestFailureReason } from "./models/MoERequestFailureReason";
+import { MoEUserAttributeLevel } from "./models/MoEUserAttributeLevel";
 
 const PLATFORM_IOS = "ios";
 const PLATFORM_ANDROID = "android";
@@ -883,6 +888,34 @@ var ReactMoE = {
       MoEngageLogger.debug("This api is not supported on iOS platform.");
       return null;
     }
+  },
+
+  /**
+   * Remove a user attribute from the user's profile.
+   *
+   * @param attributeName name of the attribute to remove; standard attributes use the MoEngage name, e.g. USER_ATTRIBUTE_USER_EMAIL
+   * @param attributeLevel level to remove the attribute from, {@link MoEUserAttributeLevel.Project} by default
+   * @returns instance of {@link MoEUnsetUserAttributeResult}; when isUnsetSuccess is false, failure has the reason
+   * @since 13.1.0
+   */
+  unsetUserAttribute: async function (
+    attributeName: string,
+    attributeLevel: MoEUserAttributeLevel = MoEUserAttributeLevel.Project
+  ): Promise<MoEUnsetUserAttributeResult> {
+    MoEngageLogger.verbose("Will unset user attribute", attributeName);
+    try {
+      const response = await MoEReactBridge.unsetUserAttribute(getUnsetUserAttributeJson(attributeName, attributeLevel, moeAppId));
+      return getUnsetUserAttributeResult(response);
+    } catch (error) {
+      MoEngageLogger.error(`unsetUserAttribute(): ${error}`);
+      return new MoEUnsetUserAttributeResult(
+        new MoEAccountMeta(moeAppId),
+        false,
+        attributeName,
+        attributeLevel,
+        new MoERequestFailure(MoERequestFailureReason.UnknownError, `${error}`)
+      );
+    }
   }
 };
 
@@ -911,7 +944,11 @@ export {
   MoEAuthenticationType,
   MoEJwtErrorCode,
   MoEFirebaseInstallationIdResult,
-  MoEngageFailureReason
+  MoEngageFailureReason,
+  MoEUnsetUserAttributeResult,
+  MoERequestFailure,
+  MoERequestFailureReason,
+  MoEUserAttributeLevel
 };
 export type { MoEAuthenticationData };
 export default ReactMoE;
