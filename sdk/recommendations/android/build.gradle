@@ -1,0 +1,54 @@
+ext {
+    moengageNativeBOMVersion = "4.4.0"
+    moengagePluginBaseBOMVersion = "4.1.0"
+    kotlinVersion = "2.3.20"
+}
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:9.1.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "com.moengage.android.hybrid.module.config.plugin:com.moengage.android.hybrid.module.config.plugin.gradle.plugin:2.0.0"
+    }
+}
+
+apply plugin: 'com.moengage.android.hybrid.module.config.plugin'
+apply plugin: 'com.facebook.react'
+
+// In AGP 9+ built-in Kotlin's default is true
+def builtInKotlin = providers.gradleProperty("android.builtInKotlin")
+        .map { it.toBoolean() }
+        .orElse(true)
+        .get()
+if (!builtInKotlin) {
+    apply plugin: 'kotlin-android'
+}
+
+hybridModuleConfig.configurePlugin {
+    kotlinOptions {
+        enableJvmTarget = false
+        compilerArgs = ['-Xjvm-default=all']
+    }
+}
+
+android {
+    namespace "com.moengage.react.recommendations"
+}
+
+dependencies {
+    compileOnly('com.facebook.react:react-native')
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+    implementation(platform("com.moengage:android-bom:$moengageNativeBOMVersion"))
+    api("com.moengage:recommendations")
+
+    implementation(platform("com.moengage:plugin-base-bom:$moengagePluginBaseBOMVersion"))
+    implementation("com.moengage:plugin-base-recommendations")
+    compileOnly("com.moengage:plugin-base")
+}

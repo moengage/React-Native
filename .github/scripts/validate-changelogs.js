@@ -33,7 +33,7 @@ const indentOf = l => l.length - l.trimStart().length;
 
 const files = process.argv.slice(2).length
   ? process.argv.slice(2)
-  : ['core', 'cards', 'geofence', 'inbox', 'personalize'].map(m =>
+  : ['core', 'cards', 'geofence', 'inbox', 'personalize', 'recommendations'].map(m =>
       path.join('sdk', m, 'CHANGELOG.md')
     );
 
