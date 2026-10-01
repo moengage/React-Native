@@ -174,6 +174,25 @@
     }];
 }
 
+#pragma mark- Unset User Attribute
+-(void)unsetUserAttribute:(NSString *)payload resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+    NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
+    [[MoEngagePluginBridge sharedInstance] unsetUserAttribute:jsonPayload completionHandler:^(NSDictionary<NSString *,id> * _Nonnull result) {
+        NSError *err;
+        NSData * jsonData = [NSJSONSerialization dataWithJSONObject:result options:0 error:&err];
+        if (jsonData) {
+            NSString *strPayload = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                resolve(strPayload);
+            });
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                reject(@"Error", @"Error in parsing Unset User Attribute Payload", err ? : [NSError errorWithDomain:@"" code:400 userInfo:@{@"Error reason": @"Error in parsing Unset User Attribute Payload"}]);
+            });
+        }
+    }];
+}
+
 #pragma mark- Delegate Method
 - (void)sendMessageWithEvent:(NSString *)event message:(NSDictionary<NSString *,id> *)message {
     NSMutableDictionary* updatedDict = [NSMutableDictionary dictionary];

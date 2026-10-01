@@ -112,3 +112,28 @@ export const pushClickedWithoutActionAndroidPayload = JSON.stringify({
         payload: { gcm_title: "dummyTitle" }
     }
 });
+
+export const unsetUserAttributeSuccessPayload = JSON.stringify({
+    accountMeta: { appId: appId },
+    data: { isUnsetSuccess: true, attributeName: "trial_status", attributeLevel: "project" }
+});
+
+export const unsetUserAttributeFailurePayload = JSON.stringify({
+    accountMeta: { appId: appId },
+    data: {
+        isUnsetSuccess: false,
+        attributeName: "loyalty_tier",
+        attributeLevel: "portfolio",
+        failure: { reason: "INVALID_INITIALISATION_CONFIGURATION", message: "Portfolio level requires a configured project id." }
+    }
+});
+
+export const unsetUserAttributeUnknownReasonPayload = JSON.stringify({
+    accountMeta: { appId: appId },
+    data: {
+        isUnsetSuccess: false,
+        attributeName: "trial_status",
+        attributeLevel: "project",
+        failure: { reason: "SOME_NEW_REASON", message: "" }
+    }
+});

@@ -1,3 +1,9 @@
+# Release Date
+
+## Release Version
+
+- [minor] Added `ReactMoE.unsetUserAttribute()` to remove a user attribute from the user's profile, at project or portfolio level.
+
 # 01-10-2026
 
 ## 13.0.0

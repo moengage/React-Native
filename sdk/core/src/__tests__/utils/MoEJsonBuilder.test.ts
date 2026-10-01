@@ -1,8 +1,9 @@
 import { appId, expectedUserIdentityStringObjectTypePayload, expectedUserIdentityStringTypePayload, userIdentityStringObjectType, userIdentityStringType } from "../../__mocks__/JsonDataProvider";
 import MoEngageLogger from "../../logger/MoEngageLogger";
 import MoEInAppRules from "../../models/MoEInAppRules";
-import { getDisplayRulesJson, getIdentifyUserPayload, getAuthenticationDetailsJson, getFirebaseInstallationIdJson } from "../../utils/MoEJsonBuilder";
+import { getDisplayRulesJson, getIdentifyUserPayload, getAuthenticationDetailsJson, getFirebaseInstallationIdJson, getUnsetUserAttributeJson } from "../../utils/MoEJsonBuilder";
 import { MoEAuthenticationType } from "../../models/MoEAuthenticationType";
+import { MoEUserAttributeLevel } from "../../models/MoEUserAttributeLevel";
 
 describe('MoEJsonBuilder', () => {
 
@@ -41,6 +42,24 @@ describe('MoEJsonBuilder', () => {
                 data: { installationId: "sample-installation-id" }
             };
             expect(getFirebaseInstallationIdJson("sample-installation-id", appId)).toEqual(JSON.stringify(expected));
+        });
+    });
+
+    describe('getUnsetUserAttributeJson', () => {
+        it('should build the project level payload expected by the native SDK', () => {
+            const expected = {
+                accountMeta: { appId: appId },
+                data: { attributeName: "trial_status", attributeLevel: "project" }
+            };
+            expect(getUnsetUserAttributeJson("trial_status", MoEUserAttributeLevel.Project, appId)).toEqual(JSON.stringify(expected));
+        });
+
+        it('should build the portfolio level payload expected by the native SDK', () => {
+            const expected = {
+                accountMeta: { appId: appId },
+                data: { attributeName: "loyalty_tier", attributeLevel: "portfolio" }
+            };
+            expect(getUnsetUserAttributeJson("loyalty_tier", MoEUserAttributeLevel.Portfolio, appId)).toEqual(JSON.stringify(expected));
         });
     });
 });
