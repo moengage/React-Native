@@ -1,10 +1,12 @@
+import { MoEngageFailureReason } from "react-native-moengage";
+
 /**
- * Reason a recommendations request failed.
+ * Failure reasons specific to recommendations, on top of {@link MoEngageFailureReason}.
  *
  * @author MoEngage
  * @since 1.0.0
  */
-export enum RecommendationsFailureReason {
+export enum RecommendationsSpecificFailureReason {
   /** The `recommendationId` was blank, or the server rejected the request — HTTP 400. */
   INVALID_REQUEST = "INVALID_REQUEST",
 
@@ -16,22 +18,29 @@ export enum RecommendationsFailureReason {
 
   /** The server failed to process the request — HTTP 500. */
   INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR",
-
-  /** Recommendations is blocked from the dashboard, or disabled in the SDK configuration. */
-  FEATURE_DISABLED = "FEATURE_DISABLED",
-
-  /** The SDK is not initialized, or is not in a state that allows the operation. */
-  SDK_STATE = "SDK_STATE",
-
-  /** A network error occurred while making the request. */
-  NETWORK_ERROR = "NETWORK_ERROR",
-
-  /** The response could not be parsed. */
-  PARSE_ERROR = "PARSE_ERROR",
-
-  /** The server responded with an unhandled status code, or the failure could not be classified. */
-  UNKNOWN_ERROR = "UNKNOWN_ERROR",
 }
+
+/**
+ * Reason a recommendations request failed: every {@link MoEngageFailureReason}
+ * (`SDK_STATE`, `FEATURE_DISABLED`, `NETWORK_ERROR`, `PARSE_ERROR`, `INVALID_PARAMETERS`,
+ * `SERVER_ERROR`, `AUTHENTICATION_FAILED`, `UNKNOWN_ERROR`) plus the
+ * {@link RecommendationsSpecificFailureReason} values.
+ *
+ * TypeScript enums cannot extend one another, so this is a frozen object combining both enums,
+ * paired with a same-named union type — use it exactly like an enum
+ * (e.g. `RecommendationsFailureReason.RATE_LIMIT_EXCEEDED`).
+ *
+ * @author MoEngage
+ * @since 1.0.0
+ */
+export const RecommendationsFailureReason = Object.freeze({
+  ...MoEngageFailureReason,
+  ...RecommendationsSpecificFailureReason,
+});
+
+export type RecommendationsFailureReason =
+  | MoEngageFailureReason
+  | RecommendationsSpecificFailureReason;
 
 /**
  * Set of all known failure reasons. Used to validate reasons reported by the native layer and
@@ -39,17 +48,9 @@ export enum RecommendationsFailureReason {
  *
  * @since 1.0.0
  */
-export const KNOWN_FAILURE_REASONS: ReadonlySet<string> = new Set<string>([
-  RecommendationsFailureReason.INVALID_REQUEST,
-  RecommendationsFailureReason.PAYLOAD_TOO_LARGE,
-  RecommendationsFailureReason.RATE_LIMIT_EXCEEDED,
-  RecommendationsFailureReason.INTERNAL_SERVER_ERROR,
-  RecommendationsFailureReason.FEATURE_DISABLED,
-  RecommendationsFailureReason.SDK_STATE,
-  RecommendationsFailureReason.NETWORK_ERROR,
-  RecommendationsFailureReason.PARSE_ERROR,
-  RecommendationsFailureReason.UNKNOWN_ERROR,
-]);
+export const KNOWN_FAILURE_REASONS: ReadonlySet<string> = new Set<string>(
+  Object.values(RecommendationsFailureReason)
+);
 
 /**
  * Maps a failure reason reported by the native layer to {@link RecommendationsFailureReason}.

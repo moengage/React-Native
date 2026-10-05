@@ -34,7 +34,15 @@ export function parseRecommendedItems(payload: string): RecommendedItems {
     }
 
     const items = data[keyItems];
-    return new RecommendedItems(Array.isArray(items) ? items : []);
+    if (!Array.isArray(items)) {
+        return new RecommendedItems([]);
+    }
+    // Items are catalog objects; anything else in the array is dropped so the result matches its type.
+    const recordItems = items.filter(isRecord);
+    if (recordItems.length !== items.length) {
+        MoEngageLogger.warn(`${TAG} parseRecommendedItems() : dropped ${items.length - recordItems.length} item(s) that are not objects`);
+    }
+    return new RecommendedItems(recordItems);
 }
 
 /**

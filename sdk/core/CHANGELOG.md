@@ -3,6 +3,7 @@
 ## Release Version
 
 - [major] Removed old architecture support
+- [minor] Added `MoEngageFailureReason` — common failure reasons extended by feature modules
 - Android
   - [major] AGP version updated from `8.13.2` to `9.1.1`
   - [major] Kotlin version updated from `1.9.23` to `2.3.20`

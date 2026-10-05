@@ -79,6 +79,7 @@ import MoEAuthenticationDetails from "./models/MoEAuthenticationDetails";
 import MoEAuthenticationErrorDetails from "./models/MoEAuthenticationErrorDetails";
 import { MoEAuthenticationType } from "./models/MoEAuthenticationType";
 import { MoEJwtErrorCode } from "./models/MoEJwtErrorCode";
+import { MoEngageFailureReason } from "./models/MoEngageFailureReason";
 
 const PLATFORM_IOS = "ios";
 const PLATFORM_ANDROID = "android";
@@ -909,7 +910,8 @@ export {
   MoEAuthenticationErrorDetails,
   MoEAuthenticationType,
   MoEJwtErrorCode,
-  MoEFirebaseInstallationIdResult
+  MoEFirebaseInstallationIdResult,
+  MoEngageFailureReason
 };
 export type { MoEAuthenticationData };
 export default ReactMoE;

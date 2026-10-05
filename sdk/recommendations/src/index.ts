@@ -1,6 +1,9 @@
 import RecommendedItems from "./model/RecommendedItems";
 import RecommendationsFailure from "./model/RecommendationsFailure";
-import { RecommendationsFailureReason } from "./model/RecommendationsFailureReason";
+import {
+  RecommendationsFailureReason,
+  RecommendationsSpecificFailureReason
+} from "./model/RecommendationsFailureReason";
 import MoEngageRecommendationsHandler from "./internal/MoEngageRecommendationsHandler";
 import { MoEngageLogger } from "react-native-moengage";
 import { MODULE_TAG } from "./internal/Constants";
@@ -58,6 +61,7 @@ export {
   RecommendedItems,
   RecommendationsFailure,
   RecommendationsFailureReason,
+  RecommendationsSpecificFailureReason,
 };
 
 export default ReactMoEngageRecommendations;
