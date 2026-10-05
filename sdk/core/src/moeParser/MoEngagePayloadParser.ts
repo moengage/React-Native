@@ -123,20 +123,31 @@ export function getUserIdentitiesData(payload: string | null): { [k: string]: st
  * Create an instance of {@link MoEUnsetUserAttributeResult} from the stringified native reply
  *
  * @param payload - stringified JSON Object with required keys
- * @returns instance of {@link MoEUnsetUserAttributeResult}
- * @since 13.1.0
+ * @returns instance of {@link MoEUnsetUserAttributeResult} if the unset succeeded, else {@link MoERequestFailure}
  */
-export function getUnsetUserAttributeResult(payload: string): MoEUnsetUserAttributeResult {
+export function getUnsetUserAttributeResult(payload: string): MoEUnsetUserAttributeResult | MoERequestFailure {
     const payloadJsonObject = JSON.parse(payload);
     const data = payloadJsonObject[MOE_DATA];
-    const failure = data[REQUEST_FAILURE];
+    if (data[IS_UNSET_SUCCESS] !== true) {
+        const failure = data[REQUEST_FAILURE];
+        return new MoERequestFailure(getRequestFailureReason(failure?.[FAILURE_REASON]), failure?.[FAILURE_MESSAGE] ?? "");
+    }
     return new MoEUnsetUserAttributeResult(
         getMoEAccountMeta(payloadJsonObject[ACCOUNT_META]),
-        data[IS_UNSET_SUCCESS] === true,
         data[ATTRIBUTE_NAME],
-        data[ATTRIBUTE_LEVEL] === MoEUserAttributeLevel.Portfolio ? MoEUserAttributeLevel.Portfolio : MoEUserAttributeLevel.Project,
-        failure ? new MoERequestFailure(getRequestFailureReason(failure[FAILURE_REASON]), failure[FAILURE_MESSAGE] ?? "") : null
+        data[ATTRIBUTE_LEVEL] === MoEUserAttributeLevel.Portfolio ? MoEUserAttributeLevel.Portfolio : MoEUserAttributeLevel.Project
     );
+}
+
+/**
+ * Create an instance of {@link MoERequestFailure} from a native promise rejection, which carries
+ * the failure reason as the code and the failure message as the message
+ *
+ * @param error - error with which the native promise was rejected
+ * @returns instance of {@link MoERequestFailure}
+ */
+export function getRequestFailureFromError(error: any): MoERequestFailure {
+    return new MoERequestFailure(getRequestFailureReason(error?.code), error?.message ?? `${error}`);
 }
 
 // Unknown reasons fall back to UnknownError, so a reason added later does not break parsing

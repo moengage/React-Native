@@ -346,7 +346,11 @@ export class UserAttribute extends React.Component {
                     {
                       text: 'OK',
                       onPress: async result => {
-                        MoEngageLogger.debug("unsetUserAttribute: ", await ReactMoE.unsetUserAttribute(result.attributeName))
+                        try {
+                          MoEngageLogger.debug("unsetUserAttribute: ", await ReactMoE.unsetUserAttribute(result.attributeName))
+                        } catch (failure) {
+                          MoEngageLogger.debug("unsetUserAttribute failed: ", failure.reason, failure.message)
+                        }
                       }
                     },
                   ],

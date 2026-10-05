@@ -1,5 +1,4 @@
 import MoEAccountMeta from "./MoEAccountMeta";
-import MoERequestFailure from "./MoERequestFailure";
 import { MoEUserAttributeLevel } from "./MoEUserAttributeLevel";
 
 /**
@@ -15,12 +14,6 @@ export default class MoEUnsetUserAttributeResult {
     accountMeta: MoEAccountMeta;
 
     /**
-     * true if the unset was validated and saved on the device, else false.
-     * It does not mean the server has processed it.
-     */
-    isUnsetSuccess: boolean;
-
-    /**
      * Name of the attribute passed to the unset call.
      */
     attributeName: string;
@@ -30,22 +23,13 @@ export default class MoEUnsetUserAttributeResult {
      */
     attributeLevel: MoEUserAttributeLevel;
 
-    /**
-     * Failure details when isUnsetSuccess is false, else null.
-     */
-    failure: MoERequestFailure | null;
-
     constructor(
         accountMeta: MoEAccountMeta,
-        isUnsetSuccess: boolean,
         attributeName: string,
-        attributeLevel: MoEUserAttributeLevel,
-        failure: MoERequestFailure | null = null
+        attributeLevel: MoEUserAttributeLevel
     ) {
         this.accountMeta = accountMeta;
-        this.isUnsetSuccess = isUnsetSuccess;
         this.attributeName = attributeName;
         this.attributeLevel = attributeLevel;
-        this.failure = failure;
     }
 }

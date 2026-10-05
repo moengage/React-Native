@@ -60,7 +60,7 @@ import MoEReactBridge from "./NativeMoEngage";
 import MoEPushToken from "../src/models/MoEPushToken";
 import MoEPushPayload from "../src/models/MoEPushPayload";
 import MoEInAppData from "../src/models/MoEInAppData";
-import { getUnsetUserAttributeResult, getUserDeletionData, getUserIdentitiesData } from "../src/moeParser/MoEngagePayloadParser";
+import { getRequestFailureFromError, getUnsetUserAttributeResult, getUserDeletionData, getUserIdentitiesData } from "../src/moeParser/MoEngagePayloadParser";
 import { getFirebaseInstallationIdResult } from "../src/moeParser/MoEPushNotificationParser";
 import MoEFirebaseInstallationIdResult from "../src/models/MoEFirebaseInstallationIdResult";
 import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
@@ -895,7 +895,8 @@ var ReactMoE = {
    *
    * @param attributeName name of the attribute to remove; standard attributes use the MoEngage name, e.g. USER_ATTRIBUTE_USER_EMAIL
    * @param attributeLevel level to remove the attribute from, {@link MoEUserAttributeLevel.Project} by default
-   * @returns instance of {@link MoEUnsetUserAttributeResult}; when isUnsetSuccess is false, failure has the reason
+   * @returns instance of {@link MoEUnsetUserAttributeResult}; on failure the promise is rejected with
+   * an instance of {@link MoERequestFailure} having the reason and message
    * @since 13.1.0
    */
   unsetUserAttribute: async function (
@@ -903,19 +904,18 @@ var ReactMoE = {
     attributeLevel: MoEUserAttributeLevel = MoEUserAttributeLevel.Project
   ): Promise<MoEUnsetUserAttributeResult> {
     MoEngageLogger.verbose("Will unset user attribute", attributeName);
+    let result: MoEUnsetUserAttributeResult | MoERequestFailure;
     try {
       const response = await MoEReactBridge.unsetUserAttribute(getUnsetUserAttributeJson(attributeName, attributeLevel, moeAppId));
-      return getUnsetUserAttributeResult(response);
+      result = getUnsetUserAttributeResult(response);
     } catch (error) {
-      MoEngageLogger.error(`unsetUserAttribute(): ${error}`);
-      return new MoEUnsetUserAttributeResult(
-        new MoEAccountMeta(moeAppId),
-        false,
-        attributeName,
-        attributeLevel,
-        new MoERequestFailure(MoERequestFailureReason.UnknownError, `${error}`)
-      );
+      result = getRequestFailureFromError(error);
     }
+    if (result instanceof MoERequestFailure) {
+      MoEngageLogger.error(`unsetUserAttribute(): ${result.reason} ${result.message}`);
+      throw result;
+    }
+    return result;
   }
 };
 
