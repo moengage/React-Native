@@ -103,6 +103,10 @@ describe('MoEngagePayloadParser', () => {
             expect(result.message).toEqual("Attribute name is empty");
         });
 
+        it.each(Object.values(MoEngageFailureReason))('native code %s should map to the matching reason', (code) => {
+            expect(getRequestFailureFromError(Object.assign(new Error("x"), { code })).reason).toEqual(code);
+        });
+
         it('unknown or missing code should fall back to UNKNOWN_ERROR', () => {
             expect(getRequestFailureFromError(Object.assign(new Error("x"), { code: "Error" })).reason).toEqual(MoEngageFailureReason.UNKNOWN_ERROR);
             expect(getRequestFailureFromError(new Error("x")).reason).toEqual(MoEngageFailureReason.UNKNOWN_ERROR);

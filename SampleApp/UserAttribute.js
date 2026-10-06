@@ -10,6 +10,7 @@ import { AlertBox, fire } from "react-native-alertbox";
 import ReactMoE, {
   MoEGeoLocation,
   MoEngageLogger,
+  MoEUserAttributeLevel,
 } from "react-native-moengage";
 
 export class UserAttribute extends React.Component {
@@ -340,19 +341,22 @@ export class UserAttribute extends React.Component {
               action: () => {
                 fire({
                   title: 'Enter Attribute Name',
-                  message: null,
+                  message: 'Choose the level to unset it from',
                   actions: [
                     { text: 'Cancel' },
-                    {
-                      text: 'OK',
+                    ...[
+                      { text: 'Project', level: MoEUserAttributeLevel.PROJECT },
+                      { text: 'Portfolio', level: MoEUserAttributeLevel.PORTFOLIO },
+                    ].map(({ text, level }) => ({
+                      text,
                       onPress: async result => {
                         try {
-                          MoEngageLogger.debug("unsetUserAttribute: ", await ReactMoE.unsetUserAttribute(result.attributeName))
+                          MoEngageLogger.debug("unsetUserAttribute: ", await ReactMoE.unsetUserAttribute(result.attributeName ?? "", level))
                         } catch (failure) {
                           MoEngageLogger.debug("unsetUserAttribute failed: ", failure.reason, failure.message)
                         }
                       }
-                    },
+                    })),
                   ],
                   fields: [
                     {

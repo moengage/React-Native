@@ -2,8 +2,6 @@ import { MoEUserAttributeLevel } from "./MoEUserAttributeLevel";
 
 /**
  * Result of {@link ReactMoE.unsetUserAttribute}.
- *
- * @since 13.1.0
  */
 export default class MoEUnsetUserAttributeResult {
 
