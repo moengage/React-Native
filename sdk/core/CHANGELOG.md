@@ -1,3 +1,10 @@
+# Release Date
+
+## Release Version
+
+- iOS
+  - [patch] Registered the `MoEInstallationIdAvailable` event in the bridge's supported events so the `firebaseInstallationIdAvailable` event can be emitted on iOS without React Native rejecting it as an unsupported event.
+
 # 01-10-2026
 
 ## 13.0.0

@@ -45,3 +45,4 @@ NSString* const kPushClicked        = @"MoEPushClicked";
 NSString* const kPermissionResult   = @"MoEPermissionResult";
 NSString* const kLogoutComplete     = @"MoELogoutComplete";
 NSString* const kAuthenticationError = @"MoEAuthenticationError";
+NSString* const kInstallationIdAvailable = @"MoEInstallationIdAvailable";
