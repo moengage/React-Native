@@ -4,6 +4,6 @@
  * @since 13.1.0
  */
 export enum MoEUserAttributeLevel {
-    Project = "project",
-    Portfolio = "portfolio"
+    PROJECT = "project",
+    PORTFOLIO = "portfolio"
 }

@@ -2,7 +2,7 @@ import { userIdentityStringObjectType, logoutCompleteIosPayload, logoutCompleteA
 import { getUserIdentitiesData, getLogoutCompleteData, getAuthenticationErrorData, getUnsetUserAttributeResult, getRequestFailureFromError } from "../../moeParser/MoEngagePayloadParser";
 import MoEUnsetUserAttributeResult from "../../models/MoEUnsetUserAttributeResult";
 import MoERequestFailure from "../../models/MoERequestFailure";
-import { MoERequestFailureReason } from "../../models/MoERequestFailureReason";
+import { MoEngageFailureReason } from "../../models/MoEngageFailureReason";
 import { MoEUserAttributeLevel } from "../../models/MoEUserAttributeLevel";
 import MoELogoutCompleteData from "../../models/MoELogoutCompleteData";
 import MoEAuthenticationErrorData from "../../models/MoEAuthenticationErrorData";
@@ -76,22 +76,21 @@ describe('MoEngagePayloadParser', () => {
         it('success payload should return the unset result', () => {
             const result = getUnsetUserAttributeResult(unsetUserAttributeSuccessPayload) as MoEUnsetUserAttributeResult;
             expect(result).toBeInstanceOf(MoEUnsetUserAttributeResult);
-            expect(result.accountMeta.appId).toEqual(appId);
             expect(result.attributeName).toEqual("trial_status");
-            expect(result.attributeLevel).toEqual(MoEUserAttributeLevel.Project);
+            expect(result.attributeLevel).toEqual(MoEUserAttributeLevel.PROJECT);
         });
 
         it('failure payload should return a failure with reason and message', () => {
             const result = getUnsetUserAttributeResult(unsetUserAttributeFailurePayload) as MoERequestFailure;
             expect(result).toBeInstanceOf(MoERequestFailure);
-            expect(result.reason).toEqual(MoERequestFailureReason.InvalidInitialisationConfiguration);
+            expect(result.reason).toEqual(MoEngageFailureReason.INVALID_INITIALISATION_CONFIGURATION);
             expect(result.message).toEqual("Portfolio level requires a configured project id.");
         });
 
-        it('unknown failure reason should fall back to UnknownError', () => {
+        it('unknown failure reason should fall back to UNKNOWN_ERROR', () => {
             const result = getUnsetUserAttributeResult(unsetUserAttributeUnknownReasonPayload) as MoERequestFailure;
             expect(result).toBeInstanceOf(MoERequestFailure);
-            expect(result.reason).toEqual(MoERequestFailureReason.UnknownError);
+            expect(result.reason).toEqual(MoEngageFailureReason.UNKNOWN_ERROR);
         });
     });
 
@@ -100,13 +99,13 @@ describe('MoEngagePayloadParser', () => {
             const error = Object.assign(new Error("Attribute name is empty"), { code: "INVALID_PARAMETERS" });
             const result = getRequestFailureFromError(error);
             expect(result).toBeInstanceOf(MoERequestFailure);
-            expect(result.reason).toEqual(MoERequestFailureReason.InvalidParameters);
+            expect(result.reason).toEqual(MoEngageFailureReason.INVALID_PARAMETERS);
             expect(result.message).toEqual("Attribute name is empty");
         });
 
-        it('unknown or missing code should fall back to UnknownError', () => {
-            expect(getRequestFailureFromError(Object.assign(new Error("x"), { code: "Error" })).reason).toEqual(MoERequestFailureReason.UnknownError);
-            expect(getRequestFailureFromError(new Error("x")).reason).toEqual(MoERequestFailureReason.UnknownError);
+        it('unknown or missing code should fall back to UNKNOWN_ERROR', () => {
+            expect(getRequestFailureFromError(Object.assign(new Error("x"), { code: "Error" })).reason).toEqual(MoEngageFailureReason.UNKNOWN_ERROR);
+            expect(getRequestFailureFromError(new Error("x")).reason).toEqual(MoEngageFailureReason.UNKNOWN_ERROR);
         });
     });
 });

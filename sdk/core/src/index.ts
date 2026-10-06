@@ -83,7 +83,6 @@ import { MoEJwtErrorCode } from "./models/MoEJwtErrorCode";
 import { MoEngageFailureReason } from "./models/MoEngageFailureReason";
 import MoEUnsetUserAttributeResult from "./models/MoEUnsetUserAttributeResult";
 import MoERequestFailure from "./models/MoERequestFailure";
-import { MoERequestFailureReason } from "./models/MoERequestFailureReason";
 import { MoEUserAttributeLevel } from "./models/MoEUserAttributeLevel";
 
 const PLATFORM_IOS = "ios";
@@ -894,14 +893,14 @@ var ReactMoE = {
    * Remove a user attribute from the user's profile.
    *
    * @param attributeName name of the attribute to remove; standard attributes use the MoEngage name, e.g. USER_ATTRIBUTE_USER_EMAIL
-   * @param attributeLevel level to remove the attribute from, {@link MoEUserAttributeLevel.Project} by default
+   * @param attributeLevel level to remove the attribute from, {@link MoEUserAttributeLevel.PROJECT} by default
    * @returns instance of {@link MoEUnsetUserAttributeResult}; on failure the promise is rejected with
    * an instance of {@link MoERequestFailure} having the reason and message
    * @since 13.1.0
    */
   unsetUserAttribute: async function (
     attributeName: string,
-    attributeLevel: MoEUserAttributeLevel = MoEUserAttributeLevel.Project
+    attributeLevel: MoEUserAttributeLevel = MoEUserAttributeLevel.PROJECT
   ): Promise<MoEUnsetUserAttributeResult> {
     MoEngageLogger.verbose("Will unset user attribute", attributeName);
     let result: MoEUnsetUserAttributeResult | MoERequestFailure;
@@ -947,7 +946,6 @@ export {
   MoEngageFailureReason,
   MoEUnsetUserAttributeResult,
   MoERequestFailure,
-  MoERequestFailureReason,
   MoEUserAttributeLevel
 };
 export type { MoEAuthenticationData };

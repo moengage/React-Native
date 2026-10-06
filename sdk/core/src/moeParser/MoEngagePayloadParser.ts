@@ -6,7 +6,7 @@ import MoEAuthenticationErrorData from "../models/MoEAuthenticationErrorData";
 import MoEJwtAuthenticationErrorData from "../models/MoEJwtAuthenticationErrorData";
 import MoEUnsetUserAttributeResult from "../models/MoEUnsetUserAttributeResult";
 import MoERequestFailure from "../models/MoERequestFailure";
-import { MoERequestFailureReason } from "../models/MoERequestFailureReason";
+import { MoEngageFailureReason } from "../models/MoEngageFailureReason";
 import { MoEUserAttributeLevel } from "../models/MoEUserAttributeLevel";
 import {
     ACCOUNT_META,
@@ -133,9 +133,8 @@ export function getUnsetUserAttributeResult(payload: string): MoEUnsetUserAttrib
         return new MoERequestFailure(getRequestFailureReason(failure?.[FAILURE_REASON]), failure?.[FAILURE_MESSAGE] ?? "");
     }
     return new MoEUnsetUserAttributeResult(
-        getMoEAccountMeta(payloadJsonObject[ACCOUNT_META]),
         data[ATTRIBUTE_NAME],
-        data[ATTRIBUTE_LEVEL] === MoEUserAttributeLevel.Portfolio ? MoEUserAttributeLevel.Portfolio : MoEUserAttributeLevel.Project
+        data[ATTRIBUTE_LEVEL] === MoEUserAttributeLevel.PORTFOLIO ? MoEUserAttributeLevel.PORTFOLIO : MoEUserAttributeLevel.PROJECT
     );
 }
 
@@ -150,9 +149,9 @@ export function getRequestFailureFromError(error: any): MoERequestFailure {
     return new MoERequestFailure(getRequestFailureReason(error?.code), error?.message ?? `${error}`);
 }
 
-// Unknown reasons fall back to UnknownError, so a reason added later does not break parsing
-function getRequestFailureReason(value: unknown): MoERequestFailureReason {
-    return Object.values(MoERequestFailureReason).includes(value as MoERequestFailureReason)
-        ? value as MoERequestFailureReason
-        : MoERequestFailureReason.UnknownError;
+// Unknown reasons fall back to UNKNOWN_ERROR, so a reason added later does not break parsing
+function getRequestFailureReason(value: unknown): MoEngageFailureReason {
+    return Object.values(MoEngageFailureReason).includes(value as MoEngageFailureReason)
+        ? value as MoEngageFailureReason
+        : MoEngageFailureReason.UNKNOWN_ERROR;
 }

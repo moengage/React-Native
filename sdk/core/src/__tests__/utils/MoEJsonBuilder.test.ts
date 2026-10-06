@@ -51,7 +51,7 @@ describe('MoEJsonBuilder', () => {
                 accountMeta: { appId: appId },
                 data: { attributeName: "trial_status", attributeLevel: "project" }
             };
-            expect(getUnsetUserAttributeJson("trial_status", MoEUserAttributeLevel.Project, appId)).toEqual(JSON.stringify(expected));
+            expect(getUnsetUserAttributeJson("trial_status", MoEUserAttributeLevel.PROJECT, appId)).toEqual(JSON.stringify(expected));
         });
 
         it('should build the portfolio level payload expected by the native SDK', () => {
@@ -59,7 +59,7 @@ describe('MoEJsonBuilder', () => {
                 accountMeta: { appId: appId },
                 data: { attributeName: "loyalty_tier", attributeLevel: "portfolio" }
             };
-            expect(getUnsetUserAttributeJson("loyalty_tier", MoEUserAttributeLevel.Portfolio, appId)).toEqual(JSON.stringify(expected));
+            expect(getUnsetUserAttributeJson("loyalty_tier", MoEUserAttributeLevel.PORTFOLIO, appId)).toEqual(JSON.stringify(expected));
         });
     });
 });

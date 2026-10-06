@@ -1,4 +1,3 @@
-import MoEAccountMeta from "./MoEAccountMeta";
 import { MoEUserAttributeLevel } from "./MoEUserAttributeLevel";
 
 /**
@@ -7,11 +6,6 @@ import { MoEUserAttributeLevel } from "./MoEUserAttributeLevel";
  * @since 13.1.0
  */
 export default class MoEUnsetUserAttributeResult {
-
-    /**
-     * Account Data, instance of {@link MoEAccountMeta}
-     */
-    accountMeta: MoEAccountMeta;
 
     /**
      * Name of the attribute passed to the unset call.
@@ -24,11 +18,9 @@ export default class MoEUnsetUserAttributeResult {
     attributeLevel: MoEUserAttributeLevel;
 
     constructor(
-        accountMeta: MoEAccountMeta,
         attributeName: string,
         attributeLevel: MoEUserAttributeLevel
     ) {
-        this.accountMeta = accountMeta;
         this.attributeName = attributeName;
         this.attributeLevel = attributeLevel;
     }
