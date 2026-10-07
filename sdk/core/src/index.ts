@@ -894,8 +894,10 @@ var ReactMoE = {
    *
    * @param attributeName name of the attribute to remove; standard attributes use the MoEngage name, e.g. USER_ATTRIBUTE_USER_EMAIL
    * @param attributeLevel level to remove the attribute from, {@link MoEUserAttributeLevel.PROJECT} by default
-   * @returns instance of {@link MoEUnsetUserAttributeResult}; on failure the promise is rejected with
-   * an instance of {@link MoERequestFailure} having the reason and message
+   * @returns instance of {@link MoEUnsetUserAttributeResult}
+   * @throws {@link MoERequestFailure} with the reason and message when the unset fails, including
+   * INVALID_PARAMETERS when attributeName is not a string or attributeLevel is not a {@link MoEUserAttributeLevel}.
+   * It is a plain object, not an Error.
    * @since 13.1.0
    */
   unsetUserAttribute: async function (
@@ -904,11 +906,19 @@ var ReactMoE = {
   ): Promise<MoEUnsetUserAttributeResult> {
     MoEngageLogger.verbose("Will unset user attribute", attributeName);
     let result: MoEUnsetUserAttributeResult | MoERequestFailure;
-    try {
-      const response = await MoEReactBridge.unsetUserAttribute(getUnsetUserAttributeJson(attributeName, attributeLevel, moeAppId));
-      result = getUnsetUserAttributeResult(response);
-    } catch (error) {
-      result = getRequestFailureFromError(error);
+    // Plain JS callers can pass any value, so wrong types are rejected here to behave the same on both platforms.
+    // A blank name still goes to native, which rejects it.
+    if (typeof attributeName !== "string") {
+      result = new MoERequestFailure(MoEngageFailureReason.INVALID_PARAMETERS, "attributeName must be a string");
+    } else if (!Object.values(MoEUserAttributeLevel).includes(attributeLevel)) {
+      result = new MoERequestFailure(MoEngageFailureReason.INVALID_PARAMETERS, `attributeLevel must be one of ${Object.values(MoEUserAttributeLevel).join(", ")}`);
+    } else {
+      try {
+        const response = await MoEReactBridge.unsetUserAttribute(getUnsetUserAttributeJson(attributeName, attributeLevel, moeAppId));
+        result = getUnsetUserAttributeResult(response);
+      } catch (error) {
+        result = getRequestFailureFromError(error);
+      }
     }
     if (result instanceof MoERequestFailure) {
       MoEngageLogger.error(`unsetUserAttribute(): ${result.reason} ${result.message}`);
