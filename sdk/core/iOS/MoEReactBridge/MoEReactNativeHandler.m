@@ -179,7 +179,10 @@
     NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
     [[MoEngagePluginBridge sharedInstance] unsetUserAttribute:jsonPayload completionHandler:^(NSDictionary<NSString *,id> * _Nonnull result) {
         NSError *err;
-        NSData * jsonData = [NSJSONSerialization dataWithJSONObject:result options:0 error:&err];
+        // dataWithJSONObject raises an exception, rather than returning nil, for an invalid object
+        NSData * jsonData = [NSJSONSerialization isValidJSONObject:result]
+            ? [NSJSONSerialization dataWithJSONObject:result options:0 error:&err]
+            : nil;
         if (jsonData) {
             NSString *strPayload = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -187,7 +190,7 @@
             });
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                reject(@"Error", @"Error in parsing Unset User Attribute Payload", err ? : [NSError errorWithDomain:@"" code:400 userInfo:@{@"Error reason": @"Error in parsing Unset User Attribute Payload"}]);
+                reject(@"PARSE_ERROR", @"Failed to serialize unset user attribute response", err);
             });
         }
     }];
