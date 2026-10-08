@@ -20,6 +20,13 @@ const coreApiActions = [
     },
   },
   {
+    text: 'Unset User Attribute',
+    action: () => {
+      ReactMoE.unsetUserAttribute('user_email').then((result) => console.log('unsetUserAttribute: ', result))
+        .catch((failure) => console.log('unsetUserAttribute failed: ', failure.reason, failure.message));
+    },
+  },
+  {
     text: 'Logout',
     action: () => {
       ReactMoE.logout();

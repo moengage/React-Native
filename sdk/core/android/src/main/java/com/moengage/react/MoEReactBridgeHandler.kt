@@ -24,6 +24,8 @@
  import com.moengage.plugin.base.internal.firebaseInstallationIdResultToJson
  import com.moengage.plugin.base.internal.selfHandledInAppsToJson
  import com.moengage.plugin.base.internal.setEventEmitter
+ import com.moengage.plugin.base.internal.unsetUserAttributeFailureToJson
+ import com.moengage.plugin.base.internal.unsetUserAttributeResultToJson
  import com.moengage.plugin.base.internal.userDeletionDataToJson
  import org.json.JSONObject
 
@@ -351,6 +353,29 @@
                 }
         } catch (t: Throwable) {
             Logger.record(PlatformLogLevel.ERROR, t) { "$tag getFirebaseInstallationId() : " }
+            promise.reject(t)
+        }
+    }
+
+    /**
+     * Unset a user attribute at the given level. The promise always resolves with the result
+     * payload, carrying the failure details when the native task is rejected.
+     */
+    fun unsetUserAttribute(payload: String, promise: Promise) {
+        try {
+            Logger.record { "$tag unsetUserAttribute() : $payload" }
+            pluginHelper.unsetUserAttribute(context, payload)
+                .onSuccess { result ->
+                    promise.resolve(unsetUserAttributeResultToJson(payload, result).toString())
+                }
+                .onFailure { failure ->
+                    Logger.record(PlatformLogLevel.ERROR) {
+                        "$tag unsetUserAttribute() : failed with reason: ${failure.reason} and message: ${failure.message}"
+                    }
+                    promise.resolve(unsetUserAttributeFailureToJson(payload, failure).toString())
+                }
+        } catch (t: Throwable) {
+            Logger.record(PlatformLogLevel.ERROR, t) { "$tag unsetUserAttribute() : " }
             promise.reject(t)
         }
     }

@@ -174,6 +174,28 @@
     }];
 }
 
+#pragma mark- Unset User Attribute
+-(void)unsetUserAttribute:(NSString *)payload resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+    NSDictionary* jsonPayload = [MoEngageReactUtils getJSONRepresentation:payload];
+    [[MoEngagePluginBridge sharedInstance] unsetUserAttribute:jsonPayload completionHandler:^(NSDictionary<NSString *,id> * _Nonnull result) {
+        NSError *err;
+        // dataWithJSONObject raises an exception, rather than returning nil, for an invalid object
+        NSData * jsonData = [NSJSONSerialization isValidJSONObject:result]
+            ? [NSJSONSerialization dataWithJSONObject:result options:0 error:&err]
+            : nil;
+        if (jsonData) {
+            NSString *strPayload = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                resolve(strPayload);
+            });
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                reject(@"PARSE_ERROR", @"Failed to serialize unset user attribute response", err);
+            });
+        }
+    }];
+}
+
 #pragma mark- Delegate Method
 - (void)sendMessageWithEvent:(NSString *)event message:(NSDictionary<NSString *,id> *)message {
     NSMutableDictionary* updatedDict = [NSMutableDictionary dictionary];

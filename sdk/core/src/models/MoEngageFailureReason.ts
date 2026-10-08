@@ -21,8 +21,14 @@ export enum MoEngageFailureReason {
   /** One or more parameters passed to the API are invalid. */
   INVALID_PARAMETERS = "INVALID_PARAMETERS",
 
+  /** The configuration used to initialise the SDK does not support the request. */
+  INVALID_INITIALISATION_CONFIGURATION = "INVALID_INITIALISATION_CONFIGURATION",
+
   /** The server failed to process the request. */
   SERVER_ERROR = "SERVER_ERROR",
+
+  /** The API was called again before the earlier call completed; only the last call is processed. */
+  DUPLICATE_FUNCTION_CALL = "DUPLICATE_FUNCTION_CALL",
 
   /** The request could not be authenticated. */
   AUTHENTICATION_FAILED = "AUTHENTICATION_FAILED",

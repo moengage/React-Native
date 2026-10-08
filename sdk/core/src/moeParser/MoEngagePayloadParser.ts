@@ -4,13 +4,23 @@ import MoEngagePersimissionResultData from "../models/MoEngagePersimissionResult
 import UserDeletionData from "../models/UserDeletionData";
 import MoEAuthenticationErrorData from "../models/MoEAuthenticationErrorData";
 import MoEJwtAuthenticationErrorData from "../models/MoEJwtAuthenticationErrorData";
+import MoEUnsetUserAttributeResult from "../models/MoEUnsetUserAttributeResult";
+import MoERequestFailure from "../models/MoERequestFailure";
+import { MoEngageFailureReason } from "../models/MoEngageFailureReason";
+import { MoEUserAttributeLevel } from "../models/MoEUserAttributeLevel";
 import {
     ACCOUNT_META,
     APP_ID,
+    ATTRIBUTE_LEVEL,
+    ATTRIBUTE_NAME,
     AUTHENTICATION_TYPE,
     AUTH_ERROR_CODE,
     AUTH_ERROR_MESSAGE,
+    FAILURE_MESSAGE,
+    FAILURE_REASON,
+    IS_UNSET_SUCCESS,
     IS_USER_DELETION_SUCCESS,
+    REQUEST_FAILURE,
     MOE_DATA,
     MOE_PERMISSION_STATE,
     MOE_PERMISSION_TYPE,
@@ -107,4 +117,41 @@ export function getUserIdentitiesData(payload: string | null): { [k: string]: st
         mappedIdentities[key] = value;
     }
     return mappedIdentities;
+}
+
+/**
+ * Create an instance of {@link MoEUnsetUserAttributeResult} from the stringified native reply
+ *
+ * @param payload - stringified JSON Object with required keys
+ * @returns instance of {@link MoEUnsetUserAttributeResult} if the unset succeeded, else {@link MoERequestFailure}
+ */
+export function getUnsetUserAttributeResult(payload: string): MoEUnsetUserAttributeResult | MoERequestFailure {
+    const payloadJsonObject = JSON.parse(payload);
+    const data = payloadJsonObject[MOE_DATA];
+    if (data[IS_UNSET_SUCCESS] !== true) {
+        const failure = data[REQUEST_FAILURE];
+        return new MoERequestFailure(getRequestFailureReason(failure?.[FAILURE_REASON]), failure?.[FAILURE_MESSAGE] ?? "");
+    }
+    return new MoEUnsetUserAttributeResult(
+        data[ATTRIBUTE_NAME],
+        data[ATTRIBUTE_LEVEL] === MoEUserAttributeLevel.PORTFOLIO ? MoEUserAttributeLevel.PORTFOLIO : MoEUserAttributeLevel.PROJECT
+    );
+}
+
+/**
+ * Create an instance of {@link MoERequestFailure} from a native promise rejection, which carries
+ * the failure reason as the code and the failure message as the message
+ *
+ * @param error - error with which the native promise was rejected
+ * @returns instance of {@link MoERequestFailure}
+ */
+export function getRequestFailureFromError(error: any): MoERequestFailure {
+    return new MoERequestFailure(getRequestFailureReason(error?.code), error?.message ?? `${error}`);
+}
+
+// Unknown reasons fall back to UNKNOWN_ERROR, so a reason added later does not break parsing
+function getRequestFailureReason(value: unknown): MoEngageFailureReason {
+    return Object.values(MoEngageFailureReason).includes(value as MoEngageFailureReason)
+        ? value as MoEngageFailureReason
+        : MoEngageFailureReason.UNKNOWN_ERROR;
 }
