@@ -66,3 +66,4 @@ extern NSString* const kPushClicked;
 extern NSString* const kPermissionResult;
 extern NSString* const kLogoutComplete;
 extern NSString* const kAuthenticationError;
+extern NSString* const kInstallationIdAvailable;

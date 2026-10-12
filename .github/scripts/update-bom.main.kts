@@ -64,6 +64,12 @@ val moduleConfigs = listOf(
         changelogPath = "sdk/personalize/CHANGELOG.md",
         androidBomArtifacts = setOf("moe-android-sdk", "personalization-core"),
         pluginBaseBomArtifacts = setOf("plugin-base-personalization")
+    ),
+    ModuleConfig(
+        gradleFilePath = "sdk/recommendations/android/build.gradle",
+        changelogPath = "sdk/recommendations/CHANGELOG.md",
+        androidBomArtifacts = setOf("moe-android-sdk", "recommendations"),
+        pluginBaseBomArtifacts = setOf("plugin-base-recommendations")
     )
 )
 

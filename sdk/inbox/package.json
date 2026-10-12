@@ -1,6 +1,6 @@
 {
   "name": "react-native-moengage-inbox",
-  "version": "6.5.1",
+  "version": "7.0.0",
   "description": "Inbox Module for the MoEngage Platform",
   "main": "src/index.ts",
   "files": [
@@ -36,7 +36,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "peerDependencies": {
-    "react-native-moengage": "^12.0.0"
+    "react-native-moengage": "^13.0.0"
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "devDependencies": {
