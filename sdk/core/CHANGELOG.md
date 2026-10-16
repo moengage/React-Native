@@ -7,6 +7,7 @@
   - [minor] updating `android-bom` to `4.6.0`
 - iOS
   - [patch] Registered the `MoEInstallationIdAvailable` event in the bridge's supported events so the `firebaseInstallationIdAvailable` event can be emitted on iOS without React Native rejecting it as an unsupported event.
+  - [minor] Updated `MoEngage-iOS-SDK` to `11.03.0`
 
 # 01-10-2026
 
