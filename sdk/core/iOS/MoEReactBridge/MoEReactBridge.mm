@@ -192,6 +192,10 @@ RCT_EXPORT_METHOD(passAuthenticationDetails:(NSString *)payload) {
     [[MoEReactNativeHandler sharedInstance] passAuthenticationDetails:payload];
 }
 
+RCT_EXPORT_METHOD(unsetUserAttribute:(NSString *)payload resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
+    [[MoEReactNativeHandler sharedInstance] unsetUserAttribute:payload resolve:resolve reject:reject];
+}
+
 // MARK: Unimplemented method
 
 RCT_EXPORT_METHOD(deleteUser:(NSString *)payload) {

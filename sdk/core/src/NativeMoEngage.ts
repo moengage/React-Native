@@ -241,6 +241,14 @@ export interface Spec extends TurboModule {
    * @param payload Stringified JSON payload
    */
   getFirebaseInstallationId: (payload: string) => Promise<string | null>;
+
+  /**
+   * Remove a user attribute from the user's profile.
+   *
+   * @param payload Stringified JSON payload
+   * @returns Stringified JSON result, with failure details when the unset is rejected
+   */
+  unsetUserAttribute: (payload: string) => Promise<string>;
 }
 
 const MoEReactBridge = TurboModuleRegistry.getEnforcing<Spec>('MoEReactBridge');

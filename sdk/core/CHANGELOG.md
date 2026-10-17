@@ -3,6 +3,7 @@
 ## Release Version
 
 - [minor] Added `MoEngageFailureReason` — common failure reasons extended by feature modules
+- [minor] Added `ReactMoE.unsetUserAttribute()` to remove a user attribute from the user's profile, at project or portfolio level.
 - Android
   - [minor] updating `android-bom` to `4.6.0`
 - iOS

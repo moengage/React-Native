@@ -11,9 +11,10 @@ import { MoEngageNudgePosition } from "../models/MoEngageNudgePosition";
 import { MoESupportedAttributes } from "../models/MoESupportedAttributes";
 import MoESelfHandledCampaign from "../models/MoESelfHandledCampaign";
 import MoEInAppRules from "../models/MoEInAppRules";
-import { ACCOUNT_META, APP_ID, AUTHENTICATION_TYPE, MOE_DATA, MOE_INSTALLATION_ID, MOE_TOKEN, USER_IDENTIFIER, USER_IDENTITY, USER_UNIQUE_IDENTITY } from "./MoEConstants";
+import { ACCOUNT_META, APP_ID, ATTRIBUTE_LEVEL, ATTRIBUTE_NAME, AUTHENTICATION_TYPE, MOE_DATA, MOE_INSTALLATION_ID, MOE_TOKEN, USER_IDENTIFIER, USER_IDENTITY, USER_UNIQUE_IDENTITY } from "./MoEConstants";
 import MoEAuthenticationData from "../models/MoEAuthenticationData";
 import MoEJwtAuthenticationData from "../models/MoEJwtAuthenticationData";
+import { MoEUserAttributeLevel } from "../models/MoEUserAttributeLevel";
 
 export function getInAppCampaignJson(moEInAppData: MoEInAppData, type: string, appId: String) {
   var json: { [k: string]: any } = {
@@ -360,6 +361,24 @@ export function getFirebaseInstallationIdJson(installationId: string, appId: Str
     },
     data: {
       [MOE_INSTALLATION_ID]: installationId
+    }
+  }
+  return JSON.stringify(json);
+}
+
+/**
+ * Build the payload for {@link ReactMoE.unsetUserAttribute}.
+ *
+ * @since 13.1.0
+ */
+export function getUnsetUserAttributeJson(attributeName: string, attributeLevel: MoEUserAttributeLevel, appId: String) {
+  var json: { [k: string]: any } = {
+    [ACCOUNT_META]: {
+      [APP_ID]: appId
+    },
+    [MOE_DATA]: {
+      [ATTRIBUTE_NAME]: attributeName,
+      [ATTRIBUTE_LEVEL]: attributeLevel
     }
   }
   return JSON.stringify(json);

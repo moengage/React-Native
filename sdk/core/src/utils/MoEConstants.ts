@@ -101,3 +101,11 @@ export const KEY_ACCESSIBILITY_HINT = 'hint';
 
 // FIREBASE INSTALLATION ID
 export const MOE_INSTALLATION_ID = 'installationId';
+
+// UNSET USER ATTRIBUTE
+export const ATTRIBUTE_NAME = 'attributeName';
+export const ATTRIBUTE_LEVEL = 'attributeLevel';
+export const IS_UNSET_SUCCESS = 'isUnsetSuccess';
+export const REQUEST_FAILURE = 'failure';
+export const FAILURE_REASON = 'reason';
+export const FAILURE_MESSAGE = 'message';

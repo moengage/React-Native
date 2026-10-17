@@ -50,4 +50,5 @@ typedef void (^RCTPromiseRejectBlock)(NSString *code, NSString *message, NSError
 -(void)identifyUser:(NSString *)payload;
 -(void)getUserIdentities:(NSString *)payload resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject;
 -(void)passAuthenticationDetails:(NSString *)payload;
+-(void)unsetUserAttribute:(NSString *)payload resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject;
 @end

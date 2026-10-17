@@ -168,4 +168,8 @@ class MoEReactBridge(reactContext: ReactApplicationContext) : NativeMoEngageSpec
     override fun getFirebaseInstallationId(payload: String, promise: Promise) {
         bridgeHandler.getFirebaseInstallationId(payload, promise)
     }
+
+    override fun unsetUserAttribute(payload: String, promise: Promise) {
+        bridgeHandler.unsetUserAttribute(payload, promise)
+    }
 }
