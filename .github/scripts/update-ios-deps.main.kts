@@ -28,7 +28,8 @@ val podConfigs = listOf(
     PodConfig("MoEngagePluginInbox",       "apple-plugin-inbox",       "sdk/inbox/ReactNativeMoEngageInbox.podspec",             "sdk/inbox/CHANGELOG.md",       "sdk/inbox/Package.swift"),
     PodConfig("MoEngagePluginCards",       "apple-plugin-cards",       "sdk/cards/ReactNativeMoEngageCards.podspec",             "sdk/cards/CHANGELOG.md",       "sdk/cards/Package.swift"),
     PodConfig("MoEngagePluginGeofence",    "apple-plugin-geofence",    "sdk/geofence/ReactNativeMoEngageGeofence.podspec",       "sdk/geofence/CHANGELOG.md",    "sdk/geofence/Package.swift"),
-    PodConfig("MoEngagePluginPersonalize", "apple-plugin-personalize", "sdk/personalize/ReactNativeMoEngagePersonalize.podspec", "sdk/personalize/CHANGELOG.md", "sdk/personalize/Package.swift")
+    PodConfig("MoEngagePluginPersonalize", "apple-plugin-personalize", "sdk/personalize/ReactNativeMoEngagePersonalize.podspec", "sdk/personalize/CHANGELOG.md", "sdk/personalize/Package.swift"),
+    PodConfig("MoEngagePluginRecommendations", "apple-plugin-recommendations", "sdk/recommendations/ReactNativeMoEngageRecommendations.podspec", "sdk/recommendations/CHANGELOG.md", "sdk/recommendations/Package.swift")
 )
 
 // ── GitHub API: fetch upstream package.json ────────────────────────────────────

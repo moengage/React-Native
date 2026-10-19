@@ -248,6 +248,13 @@ export const HomeScreen = (props) => {
             action: () => {
               props.navigation.navigate("PersonalizeScreen");
             },
+          },
+          {
+            id: "26",
+            title: "Recommendations",
+            action: () => {
+              props.navigation.navigate("RecommendationsScreen");
+            },
           }
         ]}
         renderItem={({ item, separators }) => (

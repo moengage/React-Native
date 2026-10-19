@@ -3,6 +3,12 @@
 ## Release Version
 
 - [patch] Updated `react-native-moengage` peer dependency to `^13.0.0`
+- Android
+  - [minor] updating `android-bom` to `4.6.0`
+- iOS
+  - [minor] Updated `MoEngage-iOS-SDK` to `11.04.0`
+  - [patch] Updated `MoEngageInbox` to `3.04.1`
+
 
 # 01-10-2026
 
