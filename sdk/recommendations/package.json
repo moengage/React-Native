@@ -1,6 +1,6 @@
 {
   "name": "react-native-moengage-recommendations",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Recommendations Module for the MoEngage Platform",
   "main": "src/index.ts",
   "files": [
