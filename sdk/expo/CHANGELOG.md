@@ -3,6 +3,8 @@
 ## Release Version
 
 - [patch] Updated `react-native-moengage` peer dependency to `^13.0.0`
+- Android
+  - [patch] Updating `gradle-config-plugin` to `2.0.2`
 
 # 01-10-2026
 
