@@ -1,14 +1,14 @@
-# Release Date
+# 20-10-2026
 
-## Release Version
+## 13.1.0
 
-- [minor] Added `MoEngageFailureReason` — common failure reasons extended by feature modules
+- Added `MoEngageFailureReason` — common failure reasons extended by feature modules
 - Android
-  - [minor] updating `android-bom` to `4.6.0`
-  - [patch] Updating `gradle-config-plugin` to `2.0.2`
+  - updating `android-bom` to `4.6.0`
+  - Updating `gradle-config-plugin` to `2.0.2`
 - iOS
-  - [patch] Registered the `MoEInstallationIdAvailable` event in the bridge's supported events so the `firebaseInstallationIdAvailable` event can be emitted on iOS without React Native rejecting it as an unsupported event.
-  - [minor] Updated `MoEngage-iOS-SDK` to `11.03.0`
+  - Registered the `MoEInstallationIdAvailable` event in the bridge's supported events so the `firebaseInstallationIdAvailable` event can be emitted on iOS without React Native rejecting it as an unsupported event.
+  - Updated `MoEngage-iOS-SDK` to `11.03.0`
 
 # 01-10-2026
 

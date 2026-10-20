@@ -1,14 +1,14 @@
-# Release Date
+# 20-10-2026
 
-## Release Version
+## 2.1.0
 
-- [patch] Updated `react-native-moengage` peer dependency to `^13.0.0`
+- Updated `react-native-moengage` peer dependency to `^13.0.0`
 - Android
-  - [minor] updating `android-bom` to `4.6.0`
-  - [patch] Updating `gradle-config-plugin` to `2.0.2`
+  - updating `android-bom` to `4.6.0`
+  - Updating `gradle-config-plugin` to `2.0.2`
 - iOS
-  - [minor] Updated `MoEngage-iOS-SDK` to `11.04.0`
-  - [minor] Updated `MoEngagePersonalization` to `1.5.0`
+  - Updated `MoEngage-iOS-SDK` to `11.04.0`
+  - Updated `MoEngagePersonalization` to `1.5.0`
 # 01-10-2026
 
 ## 2.0.0
