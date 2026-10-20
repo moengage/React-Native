@@ -1,1 +1,8 @@
-[]
+[
+    "sdk/cards",
+    "sdk/core",
+    "sdk/expo",
+    "sdk/geofence",
+    "sdk/inbox",
+    "sdk/personalize"
+]
