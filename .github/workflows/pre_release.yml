@@ -28,7 +28,7 @@ jobs:
     steps:
       # Bootstrap checkout: needed so `./source/.github/actions/npm-automation-repo-setup` exists.
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
         with:
           path: source
           fetch-depth: 0
