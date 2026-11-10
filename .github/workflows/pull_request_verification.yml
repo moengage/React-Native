@@ -11,7 +11,7 @@ jobs:
     if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Validate changelog format
         run: node .github/scripts/validate-changelogs.js
 
@@ -20,13 +20,13 @@ jobs:
     if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checkout sdk automation scripts
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: moengage/sdk-automation-scripts
           path: sdk-automation-scripts
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: source
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
@@ -34,7 +34,7 @@ jobs:
       # setup-apple-spm.js into this shared cache, keyed by the RN version,
       # for the SpmSampleApp verification that runs as part of Verify iOS.
       - name: Cache React Native SwiftPM artifacts
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/Library/Caches/ReactNative
           key: rn-spm-artifacts-${{ hashFiles('source/SpmSampleApp/package-lock.json') }}
@@ -55,13 +55,13 @@ jobs:
     if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checkout sdk automation scripts
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: moengage/sdk-automation-scripts
           path: sdk-automation-scripts
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: source
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
@@ -83,13 +83,13 @@ jobs:
     if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checkout sdk automation scripts
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: moengage/sdk-automation-scripts
           path: sdk-automation-scripts
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: source
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
@@ -111,19 +111,19 @@ jobs:
     if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checkout sdk automation scripts
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: moengage/sdk-automation-scripts
           path: sdk-automation-scripts
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: source
           token: ${{ secrets.SDK_BOT_ACCESS_TOKEN }}
       - name: Cache ExpoSampleApp android
         id: expo-prebuild-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             source/ExpoSampleApp/android

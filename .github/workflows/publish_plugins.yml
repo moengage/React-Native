@@ -26,7 +26,7 @@ jobs:
       # Always publish from master: the plugins must be published from the freshly
       # merged master, regardless of the ref this workflow was triggered on.
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
         with:
           path: source
           ref: master
