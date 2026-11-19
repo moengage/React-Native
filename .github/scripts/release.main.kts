@@ -27,16 +27,39 @@ private fun releasePlugins() {
         return
     }
 
-    val tags = pluginsToBeReleased.map { pluginPath ->
-    releaseAndTagPlugin(
-        isBuildRequired = true,
-        pluginPath = pluginPath,
-        releaseVersion = getPluginVersionFromPackage(pluginPath)
-        )
+    // publish each plugin, then immediately tag it and create its GitHub release, so a failure
+    // on a later plugin never leaves an earlier, already-published plugin without a tag/release.
+    // Every step is skipped if already done, so a failed run can simply be re-run.
+    for (pluginPath in pluginsToBeReleased) {
+        val releaseVersion = getPluginVersionFromPackage(pluginPath)
+        // same tag prefix rule as releaseAndTagPlugin: moengage.moduleName, else the folder name
+        val tagPrefix = getPluginNameFromPackage(pluginPath).ifBlank { pluginPath.split("/").last() }
+        val tag = getTagName(releaseVersion, tagPrefix)
+
+        val shouldCreateRelease = !isGitReleaseCreated(tag)
+        if (!shouldCreateRelease) {
+            println("::notice:: GitHub release for $tag already exists, skipping")
+        }
+
+        if (isVersionPublishedOnNpm(pluginPath, releaseVersion)) {
+            println("::notice:: Skipping publish of $pluginPath, version $releaseVersion is already on npm")
+            if (isTagOnRemote(tag)) {
+                println("::notice:: Tag $tag already exists on remote, skipping")
+                if (shouldCreateRelease) createGitRelease(tag, releaseNotes)
+            } else {
+                // creates and pushes the tag, and creates the GitHub release if it is missing
+                tagModuleWithLatestVersion(releaseVersion, tagPrefix, shouldCreateRelease, releaseNotes)
+            }
+        } else {
+            releaseAndTagPlugin(
+                isBuildRequired = true,
+                pluginPath = pluginPath,
+                releaseVersion = releaseVersion
+            )
+            executeCommandOrExitOnFailure("git push origin $tag")
+            if (shouldCreateRelease) createGitRelease(tag, releaseNotes)
+        }
     }
-    // push tags, then create the GitHub release for every released plugin
-    pushLocalTags()
-    tags.forEach { createGitRelease(it, releaseNotes) }
 }
 
 private fun getReleasePlugins(): List<String> {
