@@ -1,12 +1,12 @@
-# Release Date
+# 19-11-2026
 
-## Release Version
+## 7.2.0
 
 - Android
-  - [minor] updating `android-bom` to `4.7.0`
+  - updating `android-bom` to `4.7.0`
 
 - iOS
-  - [minor] updating `MoEngagePluginInbox` to `5.04.0`
+  - updating `MoEngagePluginInbox` to `5.04.0`
 # 20-10-2026
 
 ## 7.1.0

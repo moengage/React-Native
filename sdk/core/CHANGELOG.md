@@ -1,13 +1,13 @@
-# Release Date
+# 19-11-2026
 
-## Release Version
+## 13.2.0
 
 - Android
-  - [minor] updating `android-bom` to `4.7.0`
+  - updating `android-bom` to `4.7.0`
 
 - iOS
-  - [minor] updating `MoEngagePluginBase` to `7.04.0`
-  - [minor] updating `MoEngage-iOS-SDK` to `11.05.0`
+  - updating `MoEngagePluginBase` to `7.04.0`
+  - updating `MoEngage-iOS-SDK` to `11.05.0`
 # 20-10-2026
 
 ## 13.1.0

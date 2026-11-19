@@ -1,12 +1,12 @@
-# Release Date
+# 19-11-2026
 
-## Release Version
+## 1.1.0
 
 - Android
-  - [minor] updating `android-bom` to `4.7.0`
+  - updating `android-bom` to `4.7.0`
 
 - iOS
-  - [minor] updating `MoEngagePluginRecommendations` to `1.1.0`
+  - updating `MoEngagePluginRecommendations` to `1.1.0`
 # 20-10-2026
 
 ## 1.0.0
