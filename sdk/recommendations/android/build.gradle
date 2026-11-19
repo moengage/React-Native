@@ -1,5 +1,5 @@
 ext {
-    moengageNativeBOMVersion = "4.6.0"
+    moengageNativeBOMVersion = "4.7.0"
     moengagePluginBaseBOMVersion = "5.0.0"
     kotlinVersion = "2.3.20"
 }

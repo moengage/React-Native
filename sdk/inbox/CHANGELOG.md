@@ -1,3 +1,12 @@
+# Release Date
+
+## Release Version
+
+- Android
+  - [minor] updating `android-bom` to `4.7.0`
+
+- iOS
+  - [minor] updating `MoEngagePluginInbox` to `5.04.0`
 # 20-10-2026
 
 ## 7.1.0
