@@ -16,7 +16,7 @@ on:
 
 jobs:
   pre-release:
-    if: contains(fromJSON('["umangmoe", "arshiya-moengage"]'), github.actor)
+    if: contains(fromJSON('["abhishek-engg-mobilesdk", "abhishek-moe", "arshiya-moengage"]'), github.actor)
     uses: ./.github/workflows/pre_release.yml
     with:
       releaseNotes: ${{ github.event.inputs.releaseNotes }}
