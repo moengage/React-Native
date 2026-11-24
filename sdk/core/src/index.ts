@@ -64,7 +64,7 @@ import { getFirebaseInstallationIdResult } from "../src/moeParser/MoEPushNotific
 import MoEFirebaseInstallationIdResult from "../src/models/MoEFirebaseInstallationIdResult";
 import { MoEngageNudgePosition } from "../src/models/MoEngageNudgePosition";
 import MoEAnalyticsConfig from "../src/models/MoEAnalyticsConfig";
-import { MoESupportedAttributes } from "./models/MoESupportedAttributes";
+import { type MoESupportedAttributes } from "./models/MoESupportedAttributes";
 import * as MoECoreHandler from "./utils/MoECoreHandler";
 import MoEAccessibilityData from "./models/campaignsCore/MoEAccessibilityData";
 import { KEY_ACCESSIBILITY } from "./utils/MoEConstants";
